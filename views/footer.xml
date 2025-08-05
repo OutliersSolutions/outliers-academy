@@ -1,21 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <!-- Website Slides Course Template Customization -->
-    <template id="course_main_body" inherit_id="website_slides.course_main"
-        name="Outliers Academy Course Main">
-        <xpath expr="//div[@id='wrap']" position="attributes">
-            <attribute name="class">oa-course-detail</attribute>
-        </xpath>
-    </template>
-
-    <!-- Add custom CSS class to slides pages -->
-    <template id="slides_index_custom" inherit_id="website_slides.slides_index"
-        name="Outliers Academy Slides Index">
-        <xpath expr="//div[@id='wrap']" position="attributes">
-            <attribute name="class">oa-slides-index</attribute>
-        </xpath>
-    </template>
 
     <!-- Course Progress Template -->
     <template id="course_progress_template" name="Course Progress Bar">
