@@ -1,0 +1,192 @@
+// ========================================
+// Outliers Academy Theme - Typography
+// ========================================
+
+// Google Fonts Import
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  // Font Family Variables
+  --oa-font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --oa-font-headings: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --oa-font-mono: 'JetBrains Mono', 'SF Mono', Monaco, Inconsolata, 'Roboto Mono', monospace;
+
+  // Font Weight Variables
+  --oa-font-light: 300;
+  --oa-font-normal: 400;
+  --oa-font-medium: 500;
+  --oa-font-semibold: 600;
+  --oa-font-bold: 700;
+  --oa-font-extrabold: 800;
+
+  // Line Height Variables
+  --oa-leading-tight: 1.25;
+  --oa-leading-snug: 1.375;
+  --oa-leading-normal: 1.5;
+  --oa-leading-relaxed: 1.625;
+  --oa-leading-loose: 2;
+}
+
+// Base Typography Setup
+body {
+  font-family: var(--oa-font-primary);
+  font-weight: var(--oa-font-normal);
+  line-height: var(--oa-leading-normal);
+  color: var(--oa-text);
+  font-size: var(--oa-text-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Heading Styles
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: var(--oa-font-headings);
+  font-weight: var(--oa-font-semibold);
+  line-height: var(--oa-leading-tight);
+  color: var(--oa-text);
+  margin-bottom: var(--oa-space-md);
+}
+
+h1, .h1 {
+  font-size: var(--oa-text-4xl);
+  font-weight: var(--oa-font-bold);
+  line-height: var(--oa-leading-tight);
+}
+
+h2, .h2 {
+  font-size: var(--oa-text-3xl);
+  font-weight: var(--oa-font-semibold);
+}
+
+h3, .h3 {
+  font-size: var(--oa-text-2xl);
+  font-weight: var(--oa-font-semibold);
+}
+
+h4, .h4 {
+  font-size: var(--oa-text-xl);
+  font-weight: var(--oa-font-medium);
+}
+
+h5, .h5 {
+  font-size: var(--oa-text-lg);
+  font-weight: var(--oa-font-medium);
+}
+
+h6, .h6 {
+  font-size: var(--oa-text-base);
+  font-weight: var(--oa-font-medium);
+}
+
+// Text Utility Classes
+.oa-text-xs { font-size: var(--oa-text-xs); }
+.oa-text-sm { font-size: var(--oa-text-sm); }
+.oa-text-base { font-size: var(--oa-text-base); }
+.oa-text-lg { font-size: var(--oa-text-lg); }
+.oa-text-xl { font-size: var(--oa-text-xl); }
+.oa-text-2xl { font-size: var(--oa-text-2xl); }
+.oa-text-3xl { font-size: var(--oa-text-3xl); }
+.oa-text-4xl { font-size: var(--oa-text-4xl); }
+.oa-text-5xl { font-size: var(--oa-text-5xl); }
+
+// Font Weight Classes
+.oa-font-light { font-weight: var(--oa-font-light); }
+.oa-font-normal { font-weight: var(--oa-font-normal); }
+.oa-font-medium { font-weight: var(--oa-font-medium); }
+.oa-font-semibold { font-weight: var(--oa-font-semibold); }
+.oa-font-bold { font-weight: var(--oa-font-bold); }
+.oa-font-extrabold { font-weight: var(--oa-font-extrabold); }
+
+// Code and Monospace
+code, kbd, samp, pre {
+  font-family: var(--oa-font-mono);
+  font-size: 0.9em;
+}
+
+pre {
+  background-color: var(--oa-bg-alt);
+  border: 1px solid var(--oa-surface);
+  border-radius: var(--oa-border-radius);
+  padding: var(--oa-space-md);
+  overflow-x: auto;
+  line-height: var(--oa-leading-relaxed);
+}
+
+code {
+  background-color: var(--oa-bg-alt);
+  padding: var(--oa-space-xs) var(--oa-space-sm);
+  border-radius: var(--oa-border-radius);
+  color: var(--oa-primary);
+  font-weight: var(--oa-font-medium);
+}
+
+// Links
+a {
+  color: var(--oa-primary);
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    color: var(--oa-accent);
+    text-decoration: underline;
+  }
+
+  &:focus {
+    outline: 2px solid var(--oa-accent);
+    outline-offset: 2px;
+  }
+}
+
+// Text Color Utilities
+.oa-text-primary { color: var(--oa-primary); }
+.oa-text-accent { color: var(--oa-accent); }
+.oa-text-secondary { color: var(--oa-gray-medium); }
+.oa-text-muted { color: var(--oa-gray-light); }
+.oa-text-success { color: var(--oa-success); }
+.oa-text-warning { color: var(--oa-warning); }
+.oa-text-error { color: var(--oa-error); }
+.oa-text-info { color: var(--oa-info); }
+
+// Special Typography for E-learning
+.oa-course-title {
+  font-family: var(--oa-font-headings);
+  font-size: var(--oa-text-2xl);
+  font-weight: var(--oa-font-bold);
+  color: var(--oa-text);
+  line-height: var(--oa-leading-tight);
+}
+
+.oa-lesson-title {
+  font-family: var(--oa-font-headings);
+  font-size: var(--oa-text-lg);
+  font-weight: var(--oa-font-semibold);
+  color: var(--oa-text);
+}
+
+.oa-instructor-name {
+  font-family: var(--oa-font-primary);
+  font-size: var(--oa-text-sm);
+  font-weight: var(--oa-font-medium);
+  color: var(--oa-gray-medium);
+}
+
+.oa-course-meta {
+  font-family: var(--oa-font-primary);
+  font-size: var(--oa-text-xs);
+  font-weight: var(--oa-font-normal);
+  color: var(--oa-gray-light);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+// Responsive Typography
+@media (max-width: 768px) {
+  h1, .h1 { font-size: var(--oa-text-3xl); }
+  h2, .h2 { font-size: var(--oa-text-2xl); }
+  h3, .h3 { font-size: var(--oa-text-xl); }
+  
+  .oa-course-title {
+    font-size: var(--oa-text-xl);
+  }
+}

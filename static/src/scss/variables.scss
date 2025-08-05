@@ -1,0 +1,93 @@
+// ========================================
+// Outliers Academy Theme - Color Variables
+// ========================================
+
+:root {
+  // Brand Colors - Core Identity
+  --oa-text: #050315;           // Maximum legibility primary text
+  --oa-primary: #2F27CE;        // Distinctive blue - primary buttons, links
+  --oa-accent: #433BFF;         // Bright blue - highlights, hover states
+  --oa-secondary: #DEDCFF;      // Soft lavender - secondary backgrounds, badges
+
+  // System State Colors
+  --oa-success: #22C55E;        // Green - completed, approved, success
+  --oa-error: #EF4444;          // Red - errors, failures, critical warnings
+  --oa-warning: #CE965E;        // Earth orange - warnings, pending states
+  --oa-info: #F97316;           // Orange - information, notifications
+  --oa-yellow: #FFD700;         // Gold - certifications, achievements, stars
+
+  // Functional Neutrals
+  --oa-gray-medium: #6B7280;    // Secondary text, metadata
+  --oa-gray-light: #9CA3AF;     // Placeholders, disabled elements
+
+  // Backgrounds & Surfaces
+  --oa-bg-main: #FBFBFE;        // Main background - clean and professional
+  --oa-bg-alt: #F1F3F9;         // Alternative background - sections, cards
+  --oa-surface: #EAEEF7;        // Elevated surfaces - modals, dropdowns
+
+  // Bootstrap & Odoo Override Variables
+  --primary: var(--oa-primary);
+  --secondary: var(--oa-secondary);
+  --success: var(--oa-success);
+  --danger: var(--oa-error);
+  --warning: var(--oa-warning);
+  --info: var(--oa-info);
+  --light: var(--oa-bg-alt);
+  --dark: var(--oa-text);
+
+  // Additional Theme Variables
+  --oa-border-radius: 8px;
+  --oa-border-radius-lg: 12px;
+  --oa-border-radius-xl: 16px;
+  --oa-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --oa-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --oa-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  
+  // Spacing Scale
+  --oa-space-xs: 0.25rem;   // 4px
+  --oa-space-sm: 0.5rem;    // 8px
+  --oa-space-md: 1rem;      // 16px
+  --oa-space-lg: 1.5rem;    // 24px
+  --oa-space-xl: 2rem;      // 32px
+  --oa-space-2xl: 3rem;     // 48px
+  --oa-space-3xl: 4rem;     // 64px
+
+  // Typography Scale
+  --oa-text-xs: 0.75rem;    // 12px
+  --oa-text-sm: 0.875rem;   // 14px
+  --oa-text-base: 1rem;     // 16px
+  --oa-text-lg: 1.125rem;   // 18px
+  --oa-text-xl: 1.25rem;    // 20px
+  --oa-text-2xl: 1.5rem;    // 24px
+  --oa-text-3xl: 1.875rem;  // 30px
+  --oa-text-4xl: 2.25rem;   // 36px
+  --oa-text-5xl: 3rem;      // 48px
+
+  // Progress & Learning State Colors
+  --oa-progress-bg: var(--oa-bg-alt);
+  --oa-progress-complete: var(--oa-success);
+  --oa-progress-in-progress: var(--oa-accent);
+  --oa-progress-not-started: var(--oa-gray-light);
+  
+  // Course Difficulty Colors
+  --oa-level-beginner: var(--oa-success);
+  --oa-level-intermediate: var(--oa-warning);
+  --oa-level-advanced: var(--oa-error);
+
+  // Interactive States
+  --oa-hover-opacity: 0.8;
+  --oa-active-opacity: 0.9;
+  --oa-disabled-opacity: 0.5;
+}
+
+// Dark mode support (optional)
+@media (prefers-color-scheme: dark) {
+  :root {
+    --oa-text: #F8FAFC;
+    --oa-bg-main: #0F172A;
+    --oa-bg-alt: #1E293B;
+    --oa-surface: #334155;
+    --oa-gray-medium: #94A3B8;
+    --oa-gray-light: #64748B;
+  }
+}

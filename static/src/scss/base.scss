@@ -1,0 +1,191 @@
+// ========================================
+// Outliers Academy Theme - Base Styles
+// ========================================
+
+// Reset and normalize
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  background-color: var(--oa-bg-main);
+  color: var(--oa-text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+// Main content area
+#wrapwrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+// Container utilities
+.oa-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--oa-space-md);
+}
+
+.oa-container-fluid {
+  padding: 0 var(--oa-space-md);
+}
+
+.oa-container-wide {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 var(--oa-space-md);
+}
+
+// Grid utilities
+.oa-grid {
+  display: grid;
+  gap: var(--oa-space-md);
+}
+
+.oa-grid-2 { grid-template-columns: repeat(2, 1fr); }
+.oa-grid-3 { grid-template-columns: repeat(3, 1fr); }
+.oa-grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+@media (max-width: 768px) {
+  .oa-grid-2,
+  .oa-grid-3,
+  .oa-grid-4 {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Flexbox utilities
+.oa-flex { display: flex; }
+.oa-flex-col { flex-direction: column; }
+.oa-flex-wrap { flex-wrap: wrap; }
+.oa-items-center { align-items: center; }
+.oa-items-start { align-items: flex-start; }
+.oa-items-end { align-items: flex-end; }
+.oa-justify-center { justify-content: center; }
+.oa-justify-between { justify-content: space-between; }
+.oa-justify-around { justify-content: space-around; }
+.oa-justify-start { justify-content: flex-start; }
+.oa-justify-end { justify-content: flex-end; }
+
+// Spacing utilities
+.oa-p-0 { padding: 0; }
+.oa-p-xs { padding: var(--oa-space-xs); }
+.oa-p-sm { padding: var(--oa-space-sm); }
+.oa-p-md { padding: var(--oa-space-md); }
+.oa-p-lg { padding: var(--oa-space-lg); }
+.oa-p-xl { padding: var(--oa-space-xl); }
+.oa-p-2xl { padding: var(--oa-space-2xl); }
+
+.oa-m-0 { margin: 0; }
+.oa-m-xs { margin: var(--oa-space-xs); }
+.oa-m-sm { margin: var(--oa-space-sm); }
+.oa-m-md { margin: var(--oa-space-md); }
+.oa-m-lg { margin: var(--oa-space-lg); }
+.oa-m-xl { margin: var(--oa-space-xl); }
+.oa-m-2xl { margin: var(--oa-space-2xl); }
+
+// Margin auto utilities
+.oa-mx-auto { margin-left: auto; margin-right: auto; }
+.oa-my-auto { margin-top: auto; margin-bottom: auto; }
+
+// Background utilities
+.oa-bg-main { background-color: var(--oa-bg-main); }
+.oa-bg-alt { background-color: var(--oa-bg-alt); }
+.oa-bg-surface { background-color: var(--oa-surface); }
+.oa-bg-primary { background-color: var(--oa-primary); }
+.oa-bg-secondary { background-color: var(--oa-secondary); }
+
+// Border utilities
+.oa-border { border: 1px solid var(--oa-surface); }
+.oa-border-t { border-top: 1px solid var(--oa-surface); }
+.oa-border-b { border-bottom: 1px solid var(--oa-surface); }
+.oa-border-l { border-left: 1px solid var(--oa-surface); }
+.oa-border-r { border-right: 1px solid var(--oa-surface); }
+
+.oa-rounded { border-radius: var(--oa-border-radius); }
+.oa-rounded-lg { border-radius: var(--oa-border-radius-lg); }
+.oa-rounded-xl { border-radius: var(--oa-border-radius-xl); }
+.oa-rounded-full { border-radius: 50%; }
+
+// Shadow utilities
+.oa-shadow-sm { box-shadow: var(--oa-shadow-sm); }
+.oa-shadow { box-shadow: var(--oa-shadow); }
+.oa-shadow-lg { box-shadow: var(--oa-shadow-lg); }
+
+// Interactive states
+.oa-hover-lift {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--oa-shadow-lg);
+  }
+}
+
+.oa-hover-scale {
+  transition: transform 0.2s ease-in-out;
+  
+  &:hover {
+    transform: scale(1.02);
+  }
+}
+
+// Focus states
+.oa-focus-ring {
+  &:focus {
+    outline: 2px solid var(--oa-accent);
+    outline-offset: 2px;
+  }
+}
+
+// Visibility utilities
+.oa-hidden { display: none; }
+.oa-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+// Responsive utilities
+@media (max-width: 768px) {
+  .oa-hidden-mobile { display: none; }
+}
+
+@media (min-width: 769px) {
+  .oa-hidden-desktop { display: none; }
+}
+
+// Print styles
+@media print {
+  .oa-no-print { display: none; }
+  
+  body {
+    background: white;
+    color: black;
+  }
+  
+  a {
+    color: black;
+    text-decoration: underline;
+  }
+}

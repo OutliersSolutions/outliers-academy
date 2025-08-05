@@ -1,0 +1,41 @@
+{
+    'name': 'Outliers Academy Theme',
+    'description': 'Modern e-learning theme for Outliers Academy platform',
+    'category': 'Theme',
+    'version': '17.0.1.0.0',
+    'author': 'Outliers Academy',
+    'website': 'https://outliersacademy.com',
+    'license': 'LGPL-3',
+    'depends': [
+        'website',
+        'website_slides',
+        'website_forum',
+        'website_blog',
+        'portal',
+    ],
+    'data': [
+        'views/layout.xml',
+        'views/header.xml',
+        'views/footer.xml',
+        'views/course_templates.xml',
+        'views/assets.xml',
+    ],
+    'assets': {
+        'web.assets_frontend': [
+            'theme_outliers_academy/static/src/scss/variables.scss',
+            'theme_outliers_academy/static/src/scss/fonts.scss',
+            'theme_outliers_academy/static/src/scss/base.scss',
+            'theme_outliers_academy/static/src/scss/layout.scss',
+            'theme_outliers_academy/static/src/scss/components.scss',
+            'theme_outliers_academy/static/src/scss/courses.scss',
+            'theme_outliers_academy/static/src/js/theme.js',
+        ],
+    },
+    'images': [
+        'static/description/icon.png',
+        'static/description/theme_screenshot.png',
+    ],
+    'installable': True,
+    'auto_install': False,
+    'application': False,
+}
