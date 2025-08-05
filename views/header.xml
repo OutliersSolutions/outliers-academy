@@ -27,9 +27,10 @@
                             <!-- Search Bar -->
                             <div class="oa-navbar-search d-none d-md-block">
                                 <form class="oa-search-form" action="/slides" method="get">
-                                    <input type="text" name="search" class="oa-search-input" placeholder="Buscar cursos..."/>
+                                    <input type="text" name="search" class="oa-search-input"
+                                        placeholder="Buscar cursos..." />
                                     <button type="submit" class="oa-search-btn">
-                                        <i class="fa fa-search"/>
+                                        <i class="fa fa-search" />
                                     </button>
                                 </form>
                             </div>
@@ -38,27 +39,46 @@
                             <div class="oa-navbar-actions">
                                 <t t-if="not user_id or user_id == website.user_id">
                                     <!-- Not logged in -->
-                                    <a href="/web/login" class="oa-btn oa-btn-outline oa-btn-sm">Iniciar Sesión</a>
-                                    <a href="/web/signup" class="oa-btn oa-btn-primary oa-btn-sm">Registrarse</a>
+                                    <a href="/web/login" class="oa-btn oa-btn-outline oa-btn-sm">Iniciar
+                                        Sesión</a>
+                                    <a href="/web/signup" class="oa-btn oa-btn-primary oa-btn-sm">
+                                        Registrarse</a>
                                 </t>
                                 <t t-else="">
                                     <!-- Logged in -->
                                     <div class="dropdown">
-                                        <button class="oa-user-toggle dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                                            <span t-esc="user_id.name"/>
-                                            <i class="fa fa-chevron-down"/>
+                                        <button class="oa-user-toggle dropdown-toggle" type="button"
+                                            data-bs-toggle="dropdown">
+                                            <span t-esc="user_id.name" />
+                                            <i class="fa fa-chevron-down" />
                                         </button>
                                         <ul class="dropdown-menu oa-dropdown-menu">
-                                            <li><a href="/my" class="dropdown-item oa-dropdown-item">Mi Perfil</a></li>
-                                            <li><a href="/slides/my" class="dropdown-item oa-dropdown-item">Mis Cursos</a></li>
-                                            <li><hr class="dropdown-divider oa-dropdown-divider"/></li>
-                                            <li><a href="/web/session/logout" class="dropdown-item oa-dropdown-item">Cerrar Sesión</a></li>
+                                            <li>
+                                                <a href="/my" class="dropdown-item oa-dropdown-item">Mi
+                                                    Perfil</a>
+                                            </li>
+                                            <li>
+                                                <a href="/slides/my"
+                                                    class="dropdown-item oa-dropdown-item">Mis
+                                                    Cursos</a>
+                                            </li>
+                                            <li>
+                                                <hr class="dropdown-divider oa-dropdown-divider" />
+                                            </li>
+                                            <li>
+                                                <a href="/web/session/logout"
+                                                    class="dropdown-item oa-dropdown-item">Cerrar
+                                                    Sesión</a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </t>
 
                                 <!-- Mobile menu toggle -->
-                                <button class="oa-menu-toggle d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#oaMobileMenu" aria-controls="oaMobileMenu" aria-expanded="false" aria-label="Toggle navigation">
+                                <button class="oa-menu-toggle d-lg-none" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#oaMobileMenu"
+                                    aria-controls="oaMobileMenu" aria-expanded="false"
+                                    aria-label="Toggle navigation">
                                     <span class="oa-hamburger"></span>
                                     <span class="oa-hamburger"></span>
                                     <span class="oa-hamburger"></span>
@@ -70,9 +90,10 @@
                         <div class="collapse oa-mobile-menu d-lg-none" id="oaMobileMenu">
                             <div class="oa-mobile-search">
                                 <form class="oa-search-form" action="/slides" method="get">
-                                    <input type="text" name="search" class="oa-search-input" placeholder="Buscar cursos..."/>
+                                    <input type="text" name="search" class="oa-search-input"
+                                        placeholder="Buscar cursos..." />
                                     <button type="submit" class="oa-search-btn">
-                                        <i class="fa fa-search"/>
+                                        <i class="fa fa-search" />
                                     </button>
                                 </form>
                             </div>
@@ -103,21 +124,22 @@
                                     <span class="oa-logo-text">Outliers Academy</span>
                                 </div>
                                 <p class="oa-footer-description">
-                                    Transformamos vidas a través de la educación online de calidad. 
-                                    Únete a miles de estudiantes que ya han cambiado su futuro profesional.
+                                    Transformamos vidas a través de la educación online de calidad.
+                                    Únete a miles de estudiantes que ya han cambiado su futuro
+                                    profesional.
                                 </p>
                                 <div class="oa-social-links">
                                     <a href="#" class="oa-social-link" aria-label="Facebook">
-                                        <i class="fa fa-facebook"/>
+                                        <i class="fa fa-facebook" />
                                     </a>
                                     <a href="#" class="oa-social-link" aria-label="Twitter">
-                                        <i class="fa fa-twitter"/>
+                                        <i class="fa fa-twitter" />
                                     </a>
                                     <a href="#" class="oa-social-link" aria-label="LinkedIn">
-                                        <i class="fa fa-linkedin"/>
+                                        <i class="fa fa-linkedin" />
                                     </a>
                                     <a href="#" class="oa-social-link" aria-label="Instagram">
-                                        <i class="fa fa-instagram"/>
+                                        <i class="fa fa-instagram" />
                                     </a>
                                 </div>
                             </div>
@@ -126,10 +148,18 @@
                             <div class="oa-footer-section">
                                 <h4 class="oa-footer-title">Enlaces Rápidos</h4>
                                 <ul class="oa-footer-links">
-                                    <li><a href="/slides">Todos los Cursos</a></li>
-                                    <li><a href="/blog">Blog</a></li>
-                                    <li><a href="/forum">Comunidad</a></li>
-                                    <li><a href="/aboutus">Acerca de</a></li>
+                                    <li>
+                                        <a href="/slides">Todos los Cursos</a>
+                                    </li>
+                                    <li>
+                                        <a href="/blog">Blog</a>
+                                    </li>
+                                    <li>
+                                        <a href="/forum">Comunidad</a>
+                                    </li>
+                                    <li>
+                                        <a href="/aboutus">Acerca de</a>
+                                    </li>
                                 </ul>
                             </div>
 
@@ -137,9 +167,15 @@
                             <div class="oa-footer-section">
                                 <h4 class="oa-footer-title">Soporte</h4>
                                 <ul class="oa-footer-links">
-                                    <li><a href="/contactus">Contacto</a></li>
-                                    <li><a href="/website/info">Términos de Uso</a></li>
-                                    <li><a href="/website/info">Política de Privacidad</a></li>
+                                    <li>
+                                        <a href="/contactus">Contacto</a>
+                                    </li>
+                                    <li>
+                                        <a href="/website/info">Términos de Uso</a>
+                                    </li>
+                                    <li>
+                                        <a href="/website/info">Política de Privacidad</a>
+                                    </li>
                                 </ul>
                             </div>
 
@@ -147,9 +183,12 @@
                             <div class="oa-footer-section">
                                 <h4 class="oa-footer-title">Newsletter</h4>
                                 <p>Mantente al día con nuestros últimos cursos y ofertas especiales.</p>
-                                <form class="oa-newsletter-form" action="/website/mailing/subscribe" method="post">
-                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                                    <input type="email" name="email" class="oa-newsletter-input" placeholder="Tu email" required=""/>
+                                <form class="oa-newsletter-form" action="/website/mailing/subscribe"
+                                    method="post">
+                                    <input type="hidden" name="csrf_token"
+                                        t-att-value="request.csrf_token()" />
+                                    <input type="email" name="email" class="oa-newsletter-input"
+                                        placeholder="Tu email" required="" />
                                     <button type="submit" class="oa-btn oa-btn-primary oa-btn-sm">
                                         Suscribirse
                                     </button>
@@ -160,9 +199,8 @@
 
                     <div class="oa-footer-bottom">
                         <div class="oa-footer-bottom-content">
-                            <p class="oa-copyright">
-                                © <span t-esc="datetime.datetime.now().year"/> Outliers Academy. Todos los derechos reservados.
-                            </p>
+                            <p class="oa-copyright"> © <span t-esc="datetime.datetime.now().year" />
+                                Outliers Academy. Todos los derechos reservados. </p>
                             <div class="oa-footer-bottom-links">
                                 <a href="/website/info">Términos</a>
                                 <a href="/website/info">Privacidad</a>
@@ -174,7 +212,7 @@
 
                 <!-- Scroll to top button -->
                 <button class="oa-scroll-top" aria-label="Scroll to top">
-                    <i class="fa fa-chevron-up"/>
+                    <i class="fa fa-chevron-up" />
                 </button>
             </footer>
         </xpath>

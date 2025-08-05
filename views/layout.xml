@@ -6,7 +6,7 @@
         <xpath expr="//body" position="attributes">
             <attribute name="class">oa-theme</attribute>
         </xpath>
-        
+
         <!-- Add custom CSS classes to main wrapper -->
         <xpath expr="//div[@id='wrapwrap']" position="attributes">
             <attribute name="class">oa-wrapwrap</attribute>
@@ -23,7 +23,8 @@
                             <!-- Logo -->
                             <div class="oa-navbar-brand">
                                 <a href="/" class="oa-logo">
-                                    <img src="/theme_outliers_academy/static/src/img/logo.svg" alt="Outliers Academy" class="oa-logo-img"/>
+                                    <img src="/theme_outliers_academy/static/src/img/logo.svg"
+                                        alt="Outliers Academy" class="oa-logo-img" />
                                     <span class="oa-logo-text">Outliers Academy</span>
                                 </a>
                             </div>
@@ -41,9 +42,10 @@
                             <!-- Search Bar -->
                             <div class="oa-navbar-search d-none d-md-block">
                                 <form class="oa-search-form" action="/search" method="get">
-                                    <input type="text" name="search" class="oa-search-input" placeholder="Buscar cursos..."/>
+                                    <input type="text" name="search" class="oa-search-input"
+                                        placeholder="Buscar cursos..." />
                                     <button type="submit" class="oa-search-btn">
-                                        <i class="fa fa-search"/>
+                                        <i class="fa fa-search" />
                                     </button>
                                 </form>
                             </div>
@@ -52,32 +54,39 @@
                             <div class="oa-navbar-actions">
                                 <t t-if="not user_id or user_id == website.user_id">
                                     <!-- Not logged in -->
-                                    <a href="/web/login" class="oa-btn oa-btn-outline oa-btn-sm">Iniciar Sesión</a>
-                                    <a href="/web/signup" class="oa-btn oa-btn-primary oa-btn-sm">Registrarse</a>
+                                    <a href="/web/login" class="oa-btn oa-btn-outline oa-btn-sm">Iniciar
+                                        Sesión</a>
+                                    <a href="/web/signup" class="oa-btn oa-btn-primary oa-btn-sm">
+                                        Registrarse</a>
                                 </t>
                                 <t t-else="">
                                     <!-- Logged in -->
                                     <div class="oa-user-menu">
                                         <button class="oa-user-toggle" data-toggle="dropdown">
-                                            <img t-att-src="user_id.avatar_128" class="oa-avatar" alt="User Avatar"/>
-                                            <span t-esc="user_id.name"/>
-                                            <i class="fa fa-chevron-down"/>
+                                            <img t-att-src="user_id.avatar_128" class="oa-avatar"
+                                                alt="User Avatar" />
+                                            <span t-esc="user_id.name" />
+                                            <i class="fa fa-chevron-down" />
                                         </button>
                                         <div class="oa-dropdown-menu">
                                             <a href="/my" class="oa-dropdown-item">Mi Perfil</a>
-                                            <a href="/my/courses" class="oa-dropdown-item">Mis Cursos</a>
-                                            <a href="/my/certificates" class="oa-dropdown-item">Certificados</a>
-                                            <div class="oa-dropdown-divider"/>
-                                            <a href="/web/session/logout" class="oa-dropdown-item">Cerrar Sesión</a>
+                                            <a href="/my/courses" class="oa-dropdown-item">Mis
+                                                Cursos</a>
+                                            <a href="/my/certificates" class="oa-dropdown-item">
+                                                Certificados</a>
+                                            <div class="oa-dropdown-divider" />
+                                            <a href="/web/session/logout" class="oa-dropdown-item">Cerrar
+                                                Sesión</a>
                                         </div>
                                     </div>
                                 </t>
 
                                 <!-- Mobile menu toggle -->
-                                <button class="oa-menu-toggle d-lg-none" aria-label="Toggle navigation">
-                                    <span class="oa-hamburger"/>
-                                    <span class="oa-hamburger"/>
-                                    <span class="oa-hamburger"/>
+                                <button class="oa-menu-toggle d-lg-none"
+                                    aria-label="Toggle navigation">
+                                    <span class="oa-hamburger" />
+                                    <span class="oa-hamburger" />
+                                    <span class="oa-hamburger" />
                                 </button>
                             </div>
                         </div>
@@ -86,9 +95,10 @@
                         <div class="oa-mobile-menu d-lg-none">
                             <div class="oa-mobile-search">
                                 <form class="oa-search-form" action="/search" method="get">
-                                    <input type="text" name="search" class="oa-search-input" placeholder="Buscar cursos..."/>
+                                    <input type="text" name="search" class="oa-search-input"
+                                        placeholder="Buscar cursos..." />
                                     <button type="submit" class="oa-search-btn">
-                                        <i class="fa fa-search"/>
+                                        <i class="fa fa-search" />
                                     </button>
                                 </form>
                             </div>
@@ -117,25 +127,27 @@
                             <!-- Company Info -->
                             <div class="oa-footer-section">
                                 <div class="oa-footer-logo">
-                                    <img src="/theme_outliers_academy/static/src/img/logo.svg" alt="Outliers Academy" class="oa-logo-img"/>
+                                    <img src="/theme_outliers_academy/static/src/img/logo.svg"
+                                        alt="Outliers Academy" class="oa-logo-img" />
                                     <span class="oa-logo-text">Outliers Academy</span>
                                 </div>
                                 <p class="oa-footer-description">
-                                    Transformamos vidas a través de la educación online de calidad. 
-                                    Únete a miles de estudiantes que ya han cambiado su futuro profesional.
+                                    Transformamos vidas a través de la educación online de calidad.
+                                    Únete a miles de estudiantes que ya han cambiado su futuro
+                                    profesional.
                                 </p>
                                 <div class="oa-social-links">
                                     <a href="#" class="oa-social-link" aria-label="Facebook">
-                                        <i class="fa fa-facebook"/>
+                                        <i class="fa fa-facebook" />
                                     </a>
                                     <a href="#" class="oa-social-link" aria-label="Twitter">
-                                        <i class="fa fa-twitter"/>
+                                        <i class="fa fa-twitter" />
                                     </a>
                                     <a href="#" class="oa-social-link" aria-label="LinkedIn">
-                                        <i class="fa fa-linkedin"/>
+                                        <i class="fa fa-linkedin" />
                                     </a>
                                     <a href="#" class="oa-social-link" aria-label="Instagram">
-                                        <i class="fa fa-instagram"/>
+                                        <i class="fa fa-instagram" />
                                     </a>
                                 </div>
                             </div>
@@ -144,11 +156,21 @@
                             <div class="oa-footer-section">
                                 <h4 class="oa-footer-title">Enlaces Rápidos</h4>
                                 <ul class="oa-footer-links">
-                                    <li><a href="/courses">Todos los Cursos</a></li>
-                                    <li><a href="/programs">Programas</a></li>
-                                    <li><a href="/instructors">Instructores</a></li>
-                                    <li><a href="/pricing">Precios</a></li>
-                                    <li><a href="/about">Acerca de</a></li>
+                                    <li>
+                                        <a href="/courses">Todos los Cursos</a>
+                                    </li>
+                                    <li>
+                                        <a href="/programs">Programas</a>
+                                    </li>
+                                    <li>
+                                        <a href="/instructors">Instructores</a>
+                                    </li>
+                                    <li>
+                                        <a href="/pricing">Precios</a>
+                                    </li>
+                                    <li>
+                                        <a href="/about">Acerca de</a>
+                                    </li>
                                 </ul>
                             </div>
 
@@ -156,11 +178,21 @@
                             <div class="oa-footer-section">
                                 <h4 class="oa-footer-title">Soporte</h4>
                                 <ul class="oa-footer-links">
-                                    <li><a href="/help">Centro de Ayuda</a></li>
-                                    <li><a href="/contact">Contacto</a></li>
-                                    <li><a href="/faq">Preguntas Frecuentes</a></li>
-                                    <li><a href="/terms">Términos de Uso</a></li>
-                                    <li><a href="/privacy">Política de Privacidad</a></li>
+                                    <li>
+                                        <a href="/help">Centro de Ayuda</a>
+                                    </li>
+                                    <li>
+                                        <a href="/contact">Contacto</a>
+                                    </li>
+                                    <li>
+                                        <a href="/faq">Preguntas Frecuentes</a>
+                                    </li>
+                                    <li>
+                                        <a href="/terms">Términos de Uso</a>
+                                    </li>
+                                    <li>
+                                        <a href="/privacy">Política de Privacidad</a>
+                                    </li>
                                 </ul>
                             </div>
 
@@ -168,8 +200,10 @@
                             <div class="oa-footer-section">
                                 <h4 class="oa-footer-title">Newsletter</h4>
                                 <p>Mantente al día con nuestros últimos cursos y ofertas especiales.</p>
-                                <form class="oa-newsletter-form" action="/newsletter/subscribe" method="post">
-                                    <input type="email" name="email" class="oa-newsletter-input" placeholder="Tu email" required=""/>
+                                <form class="oa-newsletter-form" action="/newsletter/subscribe"
+                                    method="post">
+                                    <input type="email" name="email" class="oa-newsletter-input"
+                                        placeholder="Tu email" required="" />
                                     <button type="submit" class="oa-btn oa-btn-primary oa-btn-sm">
                                         Suscribirse
                                     </button>
@@ -194,7 +228,7 @@
 
                 <!-- Scroll to top button -->
                 <button class="oa-scroll-top" aria-label="Scroll to top">
-                    <i class="fa fa-chevron-up"/>
+                    <i class="fa fa-chevron-up" />
                 </button>
             </footer>
         </xpath>

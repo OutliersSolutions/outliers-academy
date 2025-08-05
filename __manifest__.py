@@ -22,13 +22,13 @@
     ],
     'assets': {
         'web.assets_frontend': [
-            'theme_outliers_academy/static/src/scss/variables.scss',
-            'theme_outliers_academy/static/src/scss/fonts.scss',
-            'theme_outliers_academy/static/src/scss/base.scss',
-            'theme_outliers_academy/static/src/scss/layout.scss',
-            'theme_outliers_academy/static/src/scss/components.scss',
-            'theme_outliers_academy/static/src/scss/courses.scss',
-            'theme_outliers_academy/static/src/js/theme.js',
+            'theme-outliers-academy/static/src/scss/variables.scss',
+            'theme-outliers-academy/static/src/scss/fonts.scss',
+            'theme-outliers-academy/static/src/scss/base.scss',
+            'theme-outliers-academy/static/src/scss/layout.scss',
+            'theme-outliers-academy/static/src/scss/components.scss',
+            'theme-outliers-academy/static/src/scss/courses.scss',
+            'theme-outliers-academy/static/src/js/theme.js',
         ],
     },
     'images': [

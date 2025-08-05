@@ -2,160 +2,42 @@
 <odoo>
 
     <!-- Website Slides Course Template Customization -->
-    <template id="course_main" inherit_id="website_slides.course_main" name="Outliers Academy Course Main">
+    <template id="course_main_body" inherit_id="website_slides.course_main"
+        name="Outliers Academy Course Main">
         <xpath expr="//div[@id='wrap']" position="attributes">
             <attribute name="class">oa-course-detail</attribute>
         </xpath>
     </template>
 
-    <!-- Course Channel Template -->
-    <template id="slides_course_main" inherit_id="website_slides.course_main" name="Outliers Academy Course Page">
-        <!-- Override course header -->
-        <xpath expr="//div[hasclass('bg-white')]" position="replace">
-            <div class="oa-course-hero oa-bg-primary">
-                <div class="oa-container">
-                    <div class="oa-course-hero-content">
-                        <div class="oa-course-hero-info">
-                            <div class="oa-course-breadcrumb">
-                                <a href="/slides">Cursos</a>
-                                <span>/</span>
-                                <span t-esc="channel.category_id.name or 'General'"/>
-                            </div>
-                            <h1 class="oa-course-hero-title" t-esc="channel.name"/>
-                            <p class="oa-course-hero-description" t-esc="channel.description"/>
-                            
-                            <div class="oa-course-hero-meta">
-                                <div class="oa-course-rating" t-if="channel.rating_avg_stars">
-                                    <div class="oa-stars">
-                                        <t t-foreach="range(int(channel.rating_avg_stars))" t-as="star">
-                                            <i class="fa fa-star"/>
-                                        </t>
-                                        <t t-if="channel.rating_avg_stars % 1 >= 0.5">
-                                            <i class="fa fa-star-half-o"/>
-                                        </t>
-                                        <t t-foreach="range(5 - int(channel.rating_avg_stars) - (1 if channel.rating_avg_stars % 1 >= 0.5 else 0))" t-as="empty_star">
-                                            <i class="fa fa-star-o"/>
-                                        </t>
-                                    </div>
-                                    <span class="oa-rating-text">
-                                        <t t-esc="channel.rating_avg_stars"/> (<t t-esc="channel.rating_count"/> reseñas)
-                                    </span>
-                                </div>
-                                
-                                <div class="oa-course-stats">
-                                    <span class="oa-stat">
-                                        <i class="fa fa-users"/>
-                                        <t t-esc="channel.members_count"/> estudiantes
-                                    </span>
-                                    <span class="oa-stat">
-                                        <i class="fa fa-play-circle"/>
-                                        <t t-esc="channel.slide_content_count"/> lecciones
-                                    </span>
-                                    <span class="oa-stat" t-if="channel.total_time">
-                                        <i class="fa fa-clock-o"/>
-                                        <t t-esc="channel.total_time"/> horas
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="oa-course-hero-video" t-if="channel.cover_image">
-                            <div class="oa-video-preview">
-                                <img t-att-src="channel.cover_image" alt="Course Preview" class="oa-video-thumbnail"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- Add custom CSS class to slides pages -->
+    <template id="slides_index_custom" inherit_id="website_slides.slides_index"
+        name="Outliers Academy Slides Index">
+        <xpath expr="//div[@id='wrap']" position="attributes">
+            <attribute name="class">oa-slides-index</attribute>
         </xpath>
     </template>
 
-    <!-- Course Cards in Slides Index -->
-    <template id="slides_index_course_card" inherit_id="website_slides.slides_index" name="Outliers Academy Course Cards">
-        <xpath expr="//div[hasclass('card')]" position="replace">
-            <div class="oa-course-card">
-                <div class="oa-course-card-image">
-                    <img t-att-src="channel.cover_image or '/website_slides/static/src/img/slide_default_cover.jpg'" 
-                         t-att-alt="channel.name" class="img-fluid"/>
-                    <div class="oa-course-card-overlay">
-                        <a t-attf-href="/slides/#{slug(channel)}" class="oa-btn oa-btn-primary oa-btn-sm">
-                            Ver Curso
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="oa-course-card-content">
-                    <div class="oa-course-card-meta">
-                        <span class="oa-badge oa-badge-primary" t-esc="channel.category_id.name or 'General'"/>
-                        <span class="oa-course-duration" t-if="channel.total_time">
-                            <t t-esc="channel.total_time"/>h
-                        </span>
-                    </div>
-                    
-                    <h3 class="oa-course-title">
-                        <a t-attf-href="/slides/#{slug(channel)}" t-esc="channel.name"/>
-                    </h3>
-                    
-                    <p class="oa-course-description" t-esc="channel.description"/>
-                    
-                    <div class="oa-course-card-footer">
-                        <div class="oa-course-stats">
-                            <span>
-                                <i class="fa fa-users"/>
-                                <t t-esc="channel.members_count"/>
-                            </span>
-                            <span>
-                                <i class="fa fa-play-circle"/>
-                                <t t-esc="channel.slide_content_count"/>
-                            </span>
-                        </div>
-                        
-                        <div class="oa-course-rating" t-if="channel.rating_avg_stars">
-                            <div class="oa-stars">
-                                <t t-foreach="range(int(channel.rating_avg_stars))" t-as="star">
-                                    <i class="fa fa-star"/>
-                                </t>
-                                <t t-foreach="range(5 - int(channel.rating_avg_stars))" t-as="empty_star">
-                                    <i class="fa fa-star-o"/>
-                                </t>
-                            </div>
-                            <span class="oa-rating-count">(<t t-esc="channel.rating_count"/>)</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </xpath>
-    </template>
-
-    <!-- Course Progress -->
+    <!-- Course Progress Template -->
     <template id="course_progress_template" name="Course Progress Bar">
         <div class="oa-progress-container" t-if="progress">
             <div class="oa-progress-info">
                 <span class="oa-progress-label">Progreso del Curso</span>
-                <span class="oa-progress-percentage"><t t-esc="int(progress)"/>%</span>
+                <span class="oa-progress-percentage"><t t-esc="int(progress)" />%</span>
             </div>
             <div class="oa-progress-bar" t-att-data-progress="int(progress)">
-                <div class="oa-progress-fill" t-att-style="'width: ' + str(int(progress)) + '%'"/>
+                <div class="oa-progress-fill" t-att-style="'width: ' + str(int(progress)) + '%'" />
             </div>
         </div>
-    </template>
-
-    <!-- Slide Fullscreen Template Override -->
-    <template id="slide_fullscreen" inherit_id="website_slides.slide_fullscreen" name="Outliers Academy Slide Player">
-        <xpath expr="//body" position="attributes">
-            <attribute name="class">oa-slide-player</attribute>
-        </xpath>
     </template>
 
     <!-- Course Completion Certificate -->
     <template id="course_completion_template" name="Course Completion">
         <div class="oa-completion-card">
             <div class="oa-completion-icon">
-                <i class="fa fa-certificate"/>
+                <i class="fa fa-certificate" />
             </div>
             <h3>¡Felicidades!</h3>
             <p>Has completado exitosamente el curso</p>
-            <h4 t-esc="channel.name"/>
             <div class="oa-completion-actions">
                 <a href="#" class="oa-btn oa-btn-primary">Descargar Certificado</a>
                 <a href="/slides" class="oa-btn oa-btn-outline">Explorar Más Cursos</a>
