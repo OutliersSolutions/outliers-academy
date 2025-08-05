@@ -1,5 +1,5 @@
 {
-    'name': 'Outliers Academy Theme',
+    'name': 'Outliers Academy Theme V2',
     'description': 'Modern e-learning theme for Outliers Academy platform',
     'category': 'Theme',
     'version': '17.0.1.0.0',
