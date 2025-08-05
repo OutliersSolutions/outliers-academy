@@ -1,28 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <!-- Inherit main layout to include our custom assets -->
-    <template id="assets_frontend" inherit_id="website.assets_frontend"
-        name="Outliers Academy Assets">
-        <xpath expr="." position="inside">
-            <!-- SCSS Files -->
-            <link rel="stylesheet" type="text/scss"
-                href="/theme-outliers-academy/static/src/scss/variables.scss" />
-            <link rel="stylesheet" type="text/scss"
-                href="/theme-outliers-academy/static/src/scss/fonts.scss" />
-            <link rel="stylesheet" type="text/scss"
-                href="/theme-outliers-academy/static/src/scss/base.scss" />
-            <link rel="stylesheet" type="text/scss"
-                href="/theme-outliers-academy/static/src/scss/layout.scss" />
-            <link rel="stylesheet" type="text/scss"
-                href="/theme-outliers-academy/static/src/scss/components.scss" />
-            <link rel="stylesheet" type="text/scss"
-                href="/theme-outliers-academy/static/src/scss/courses.scss" />
-
-            <!-- JavaScript -->
-            <script type="text/javascript" src="/theme-outliers-academy/static/src/js/theme.js" />
-        </xpath>
-    </template>
 
     <!-- Custom snippet for homepage hero section -->
     <template id="snippet_hero_outliers" name="Outliers Hero Section">

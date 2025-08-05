@@ -8,9 +8,6 @@
     'license': 'LGPL-3',
     'depends': [
         'website',
-        'website_slides',
-        'website_forum',
-        'website_blog',
         'portal',
     ],
     'data': [
