@@ -79,3 +79,5 @@ AUTH_SECRET=change_me
 - If Odoo env vars are missing, `CourseGrid` uses mock data.
 - If next-intl plugin isn’t picked up in some environments, fallback import ensures pages still render.
 - Middleware must match root and localized paths, not static assets.
+
+# DO NOT USE EMOJIS
