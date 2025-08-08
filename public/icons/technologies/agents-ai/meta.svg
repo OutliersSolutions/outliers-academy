@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="833" height="807" viewBox="0 0 833 807">
+  <defs>
+    <filter id="Rectangle_1" x="52" y="43" width="730" height="730" filterUnits="userSpaceOnUse">
+      <feOffset dy="4" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feFlood/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Rectangle_1-2" x="52" y="43" width="730" height="730" filterUnits="userSpaceOnUse">
+      <feOffset dx="-5" dy="5" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="7.5" result="blur-2"/>
+      <feFlood flood-color="#fff" result="color"/>
+      <feComposite operator="out" in="SourceGraphic" in2="blur-2"/>
+      <feComposite operator="in" in="color"/>
+      <feComposite operator="in" in2="SourceGraphic"/>
+    </filter>
+    <clipPath id="clip-Web_1920_5">
+      <rect width="833" height="807"/>
+    </clipPath>
+  </defs>
+  <g id="Web_1920_5" data-name="Web 1920 – 5" clip-path="url(#clip-Web_1920_5)">
+    <g data-type="innerShadowGroup">
+      <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Rectangle_1)">
+        <rect id="Rectangle_1-3" data-name="Rectangle 1" width="700" height="700" rx="200" transform="translate(67 54)" fill="#fff"/>
+      </g>
+      <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Rectangle_1-2)">
+        <rect id="Rectangle_1-4" data-name="Rectangle 1" width="700" height="700" rx="200" transform="translate(67 54)" fill="#fff"/>
+      </g>
+    </g>
+    <path id="meta" d="M139.392,4.049C99.721,4.049,65.15,29.851,41.2,66.8,14.191,108.427,0,162.349,0,214.074a176.72,176.72,0,0,0,4.233,39.772,133.532,133.532,0,0,0,5.342,17.336,106.779,106.779,0,0,0,7.479,15.34c14.03,23.363,36.647,38.844,72.427,38.844,30.176,0,53.076-13.526,79.926-49.266,15.32-20.4,23.061-32.777,53.68-87.082l15.239-26.991,3.749-6.551c1.23,2.016,2.439,3.951,3.689,6.047l43.38,72.468c14.594,24.391,33.563,51.524,49.79,66.8,21.085,19.9,40.154,24.593,61.683,24.593,21.67,0,37.816-7.156,49.488-16.993a75.451,75.451,0,0,0,16.328-19.614c10.926-18.928,17.356-42.876,17.356-75.491,0-54.829-13.727-107.986-42.009-150.176C415.937,24.57,382.173,4.049,346.715,4.049c-21.105,0-42.09,9.414-61.542,26.366-13.143,11.49-25.338,26-36.687,41.324C234.577,54.1,221.575,40.555,209.017,30.295,185.19,10.822,162.351,4.029,139.392,4.029ZM344.2,45.433c23.121,0,44.105,15.28,60.312,40.3,22.819,35.236,33.2,84.562,33.2,129.01,0,31.2-7.418,58.458-37.07,58.458-11.692,0-20.7-4.636-33.543-20.239-10-12.115-27.072-37.856-57.087-87.848L297.57,144.388q-12.126-20.283-25.3-39.913c1.411-2.2,2.842-4.515,4.253-6.592,22.577-33.6,42.694-52.451,67.69-52.451ZM138.565,56.581c25.5,0,41.485,15.945,53.922,29.148,6.188,6.592,14.856,17.558,24.875,31.829L196.8,149.125c-15.26,23.444-37.937,60.816-57.188,87.445C115.605,269.81,103.128,273.2,89.5,273.2c-10.563,0-20.924-4.777-27.878-16.005-5.3-8.587-9.353-22.778-9.353-41.243,0-44.771,12.7-91.416,33.462-122.721,9.152-13.848,19.432-24.714,30.9-30.9a45.637,45.637,0,0,1,21.932-5.745Z" transform="translate(174.605 238.793)" fill="#0885fb"/>
+  </g>
+</svg>

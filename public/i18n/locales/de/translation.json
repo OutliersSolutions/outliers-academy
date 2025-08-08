@@ -1,0 +1,375 @@
+{
+    "header": {
+        "menu": {
+            "home": "Startseite",
+            "services": "Dienstleistungen",
+            "results": "Ergebnisse",
+            "privacy_policy": "Datenschutzrichtlinie",
+            "services_submenu": {
+                "marketing": "Webentwicklung und digitales Marketing",
+                "systems": "Maßgeschneiderte Systeme",
+                "ai_agents": "Automatisierung mit künstlicher Intelligenz"
+            }
+        }
+    },
+    "home": {
+        "hero_outlier_section": {
+            "subtitle": "Code — mit Vision",
+            "title": "OUTLIERS SOLUTIONS",
+            "animated_services": [
+                "Branding & Webs",
+                "Digitales Marketing",
+                "Individuelle CRMs",
+                "Odoo Systeme",
+                "KI-Agenten für WhatsApp",
+                "KI-Chatbots für Webseiten",
+                "Intelligente Automatisierungen",
+                "KI-Lösungen"
+            ],
+            "description": "Wir gestalten Ihre Marke, steigern Ihre Online-Präsenz, erhöhen Ihre Verkaufszahlen und optimieren Ihre Prozesse mit Software und künstlicher Intelligenz. Wir haben dies bereits für unzählige Unternehmen getan — jetzt sind Sie an der Reihe!",
+            "button": "Termin vereinbaren"
+        },
+        "service_section": {
+            "title": "Unsere <span class='text-coral'>Dienstleistungen</span>",
+            "description": "Wir entwerfen intelligente Lösungen, die Design, Automatisierung und künstliche Intelligenz kombinieren, um Ihr Unternehmen zu transformieren.",
+            "services": {
+                "marketing": {
+                    "title": "WWebentwicklung und digitales Marketing",
+                    "description": "Steigern Sie Ihre Online-Präsenz und verwandeln Sie Besucher in Verkäufe mit integrierten Web- und Marketinglösungen.",
+                    "tags": [
+                        "Markenidentität",
+                        "Unternehmenswebseite",
+                        "E-Commerce",
+                        "SEO",
+                        "Werbung",
+                        "Soziale Medien"
+                    ]
+                },
+                "sistemas": {
+                    "title": "Maßgeschneiderte Systeme",
+                    "description": "Transformieren Sie Ihr Unternehmen durch gesteigerte Effizienz und Prozesskontrolle mit individuell entwickelten Systemen.",
+                    "tags": [
+                        "ERP",
+                        "CRM",
+                        "Plattformen",
+                        "Apps",
+                        "Berichte",
+                        "Odoo"
+                    ]
+                },
+                "ia": {
+                    "title": "Automatisierung mit künstlicher Intelligenz",
+                    "description": "Zeit ist Geld: Hören Sie auf, es zu verschwenden, und automatisieren Sie Ihre Prozesse mit KI.",
+                    "tags": [
+                        "Automatisierungen",
+                        "Chatbots",
+                        "KI-Agenten",
+                        "Datenanalyse",
+                        "Schulungen",
+                        "Beratungen"
+                    ]
+                }
+            },
+            "button": "Mehr erfahren",
+            "tags_title": "Fähigkeiten"
+        }
+    },
+    "results": {
+        "testimonial_section": {
+            "title": "Outliers Solutions <span class='bg-coral bg-clip-text text-transparent'>Ergebnisse</span>",
+            "subtitle": "Über 10 zufriedene Kunden können sich nicht irren!",
+            "testimonials": [
+                {
+                    "name": "Marcelo Gallardo",
+                    "position": "Mathematiker, PUCP",
+                    "quote": "Ich freue mich, meine uneingeschränkte Zufriedenheit auszudrücken und die Dienstleistungen von Outliers Solutions uneingeschränkt weiterzuempfehlen. Ich habe Outliers Solutions kontaktiert, um meine persönliche akademische Website neu zu gestalten, da die vorherige Version verschiedene Funktionalitäten und Organisation vermissen ließ. Das Team von Outliers Solutions übernahm vollständig das Design, die Struktur, die Bedienbarkeit und die Organisation meiner Website und erzielte ein äußerst zufriedenstellendes Ergebnis. Besonders hervorheben möchte ich die ständige, effektive und präzise Kommunikation sowie den erheblichen Wettbewerbsvorteil in Bezug auf die Kosten. Es ist offensichtlich, dass Outliers Solutions ein hochkompetitives Unternehmen auf dem Markt ist, mit innovativer Technologie und einer effizienten Kostenstruktur, die es ihnen ermöglicht, Dienstleistungen von höchster Qualität zu einem äußerst günstigen Preis anzubieten.",
+                    "image": "/images/testimonios/marcelo-gallardo-burga-testimonio.webp"
+                },
+                {
+                    "name": "Nicole & Caroline",
+                    "position": "Gründerinnen von GIVE",
+                    "quote": "Wir benötigten eine Website für unsere gemeinnützige Organisation GIVE. Obwohl wir nur Teenager sind, die diesen Spendenkreis gründen, hatten wir einige Ideen für diese Website, die Sie in die Realität umgesetzt haben. Wir kamen mit einem einfachen Entwurf zu Ihnen, und Sie haben daraus eine detaillierte, professionelle und interaktive Website gemacht. Wir schätzten sehr, wie verständnisvoll und geduldig Sie bei jeder Änderung oder Aktualisierung waren, die wir angefordert haben. Der Kundenservice war ausgezeichnet: Sie haben stets eine positive Haltung bewahrt und waren freundlich bei jeder Aktualisierung. Wir würden diesen Service definitiv weiterempfehlen, da er äußerst hilfreich und sehr gut umgesetzt war.",
+                    "image": "/images/testimonios/thegivecirlcle-testimonio.webp"
+                }
+            ],
+            "button": "Eine Demo buchen",
+            "see_more": "Mehr anzeigen...",
+            "see_less": "Weniger anzeigen"
+        }
+    },
+    "privacy_policy": {
+        "title": "Datenschutzerklärung",
+        "description": "Ihre Privatsphäre hat für uns höchste Priorität. Wir verpflichten uns, Ihre persönlichen Daten zu schützen und zu respektieren.",
+        "sections": [
+            {
+                "title": "Datenerfassung",
+                "content": "Wir erfassen nur die notwendigen Informationen zur Terminvereinbarung, wie Ihren Namen, Ihre E-Mail-Adresse und Ihre Telefonnummer. Außerdem sammeln wir begrenzte Informationen während Ihrer Interaktionen in unserem Live-Chat."
+            },
+            {
+                "title": "Nutzung der Informationen",
+                "content": "Wir verwenden Ihre Daten ausschließlich zur Terminvereinbarung, zur Personalisierung Ihrer Erfahrung und zur Verbesserung unserer Dienstleistungen im Bereich digitales Marketing, Softwareentwicklung und KI-gestützte Automatisierung. Wir verkaufen, vermieten oder teilen Ihre persönlichen Daten nicht mit Dritten."
+            },
+            {
+                "title": "Datenschutz",
+                "content": "Wir wenden fortschrittliche Sicherheitsmaßnahmen an, um Ihre persönlichen Daten zu schützen, einschließlich SSL-Verschlüsselung, interner Datenschutzrichtlinien und branchenüblicher Best Practices für Informationssicherheit."
+            },
+            {
+                "title": "Ihre Rechte",
+                "content": "Sie haben das Recht, jederzeit auf Ihre persönlichen Daten zuzugreifen, diese zu berichtigen, zu aktualisieren oder deren Löschung zu verlangen. Sie können sich auch gegen den Erhalt von Werbemitteilungen entscheiden."
+            }
+        ],
+        "consent": {
+            "title": "Einwilligung",
+            "content": "Durch die Nutzung unserer Website und unserer interaktiven Chat-Dienste stimmen Sie unserer Datenschutzerklärung zu und willigen in die Verarbeitung Ihrer persönlichen Daten wie hierin beschrieben ein."
+        },
+        "contact": {
+            "title": "Kontakt",
+            "content": "Wenn Sie Fragen, Anliegen haben oder Ihre Rechte in Bezug auf Ihre persönlichen Daten ausüben möchten, können Sie uns kontaktieren:",
+            "email": "privacy@outlierssolutions.com"
+        }
+    },
+    "marketing": {
+        "hero_marketing_section": {
+            "title": "Webentwicklung <span class='text-coral'>&</span> Digitales Marketing",
+            "description": "Wir kombinieren maßgeschneidertes Webdesign und ergebnisorientierte digitale Strategien, um Ihre Online-Präsenz auszubauen und Ihren Umsatz zu steigern.",
+            "features": [
+                "Webdesign und -entwicklung",
+                "Online-Shops (E-Commerce)",
+                "SEO und Analytik",
+                "PPC-Kampagnen",
+                "E-Mail-Marketing",
+                "Soziale Netzwerke"
+            ],
+            "button": "Demo anfordern",
+            "ecommerce_illustration": {
+                "products": [
+                    {
+                        "title": "Bestseller-Produkt",
+                        "price": "$59.99",
+                        "img": "/icons/marketing/camisa-icon.webp"
+                    },
+                    {
+                        "title": "Favorit des Monats",
+                        "price": "$42.50",
+                        "img": "/icons/marketing/vestido-icon.webp"
+                    }
+                ],
+                "benefits": [
+                    {
+                        "label": "Schneller Versand"
+                    },
+                    {
+                        "label": "Sichere Käufe"
+                    },
+                    {
+                        "label": "24/7 Support"
+                    }
+                ]
+            }
+        },
+        "portfolio_section": {
+            "projects": [
+                {
+                    "title": "Fashion Button",
+                    "subtitle": "Wir haben einen Online-Shop für Fashion Button erstellt, spezialisiert auf den Verkauf von Knöpfen und Nähzubehör. Die Website besticht durch einfache Navigation und ein Design, das das Einkaufserlebnis verbessert.",
+                    "technologies": [
+                        "eCommerce",
+                        "SEO",
+                        "UX/UI"
+                    ]
+                },
+                {
+                    "title": "Carolina Oleas, CPA",
+                    "subtitle": "Wir haben die professionelle Website von Carolina Oleas, einer Wirtschaftsprüferin in New York, entwickelt, ihre Dienstleistungen hervorgehoben und die Kontaktaufnahme mit potenziellen Kunden erleichtert.",
+                    "technologies": [
+                        "Unternehmenswebseite",
+                        "Branding",
+                        "SEO"
+                    ]
+                },
+                {
+                    "title": "Marcelo Gallardo Burga",
+                    "subtitle": "Wir haben eine akademische Website für Marcelo Gallardo, Mathematiker und Forscher an der PUCP, entworfen, um seine Publikationen, Forschungslinien und sein professionelles Profil klar und zugänglich zu präsentieren.",
+                    "technologies": [
+                        "UX/UI",
+                        "Forschungswebsite",
+                        "Akademisches SEO"
+                    ]
+                },
+                {
+                    "title": "TheGiveCircle",
+                    "subtitle": "Wir haben mit TheGiveCircle, einer NGO zur Förderung des Englischunterrichts für Lateinamerikaner in den USA, zusammengearbeitet und eine funktionale und ansprechende Website erstellt, die ihre Mission kommuniziert.",
+                    "technologies": [
+                        "Institutionelle Webseite",
+                        "UX/UI",
+                        "Bildung"
+                    ]
+                },
+                {
+                    "title": "D'carlos",
+                    "subtitle": "Wir haben eine Website für D'carlos entwickelt, auf der ihre Schuhkollektionen und ihr spezialisierter Reinigungsservice präsentiert werden. Wir kombinierten modernes Design mit klarer Servicepräsentation.",
+                    "technologies": [
+                        "WEB",
+                        "UX/UI",
+                        "Produktportfolio"
+                    ]
+                },
+                {
+                    "title": "Adrián Díaz Marro",
+                    "subtitle": "Wir haben eine persönliche Website für Adrián Díaz Marro erstellt, einen spanischen Unternehmer und Berater in China, auf der er seine Erfahrungen, Geschäftsentwicklungsdienste und Reisen authentisch dokumentiert.",
+                    "technologies": [
+                        "WordPress",
+                        "Blog",
+                        "Personal Branding"
+                    ]
+                }
+            ]
+        }
+    },
+    "systems": {
+        "hero_system_section": {
+            "title": "Steigern Sie Ihr Unternehmen mit <span class='text-coral'>maßgeschneiderten Systemen</span> und <span class='text-coral'>Apps</span>",
+            "description": "Optimieren Sie Ihre Prozesse, verbessern Sie die Kontrolle und skalieren Sie Ihr Geschäft mit 100% maßgeschneiderten Lösungen.",
+            "button": "Beratung vereinbaren",
+            "features": [
+                {
+                    "title": "Maßgeschneiderte Systeme",
+                    "description": "Individuelle Software zur Optimierung Ihrer Prozesse."
+                },
+                {
+                    "title": "Angepasste ERP- und CRM-Systeme",
+                    "description": "Verwalten Sie Ihre Abläufe mit maßgeschneiderten Plattformen."
+                },
+                {
+                    "title": "Berichte und Analytik",
+                    "description": "Visualisieren und analysieren Sie Ihre Daten in klaren Dashboards."
+                },
+                {
+                    "title": "Management-Plattformen",
+                    "description": "Verwalten Sie alle Ihre Abteilungen in einem einzigen System."
+                }
+            ],
+            "benefits": [
+                "Prozessautomatisierung",
+                "Datenzentralisierung",
+                "Ressourcenoptimierung",
+                "Echtzeitanalyse",
+                "Abteilungsintegration"
+            ]
+        },
+        "odoo_section": {
+            "title": "Experten für <span class='text-coral'>Odoo</span> Anpassung",
+            "description": "Odoo ist eine komplette Unternehmensplattform mit MRP, MES, PLM, Wartung und mehr.",
+            "benefits": [
+                {
+                    "title": "Geschäftsautomatisierung",
+                    "description": "Vereinfachen Sie Ihre täglichen Abläufe mit intelligenten Lösungen."
+                },
+                {
+                    "title": "Bestandsverwaltung",
+                    "description": "Steuern und optimieren Sie Ihr Inventar in Echtzeit."
+                },
+                {
+                    "title": "Verkauf und Einkauf",
+                    "description": "Optimieren Sie Ihre Verkaufs-, Rechnungs- und Bestellprozesse."
+                },
+                {
+                    "title": "Produktion und Fertigung",
+                    "description": "Verwalten Sie Ihre Produktion mit MRP- und MES-Modulen."
+                },
+                {
+                    "title": "Individuelle Anpassungen",
+                    "description": "Wir passen Odoo an die spezifischen Bedürfnisse Ihres Unternehmens an."
+                }
+            ],
+            "stats": {
+                "monthly_sales": "Monatliche Verkäufe",
+                "production": "Produktion",
+                "annual_performance": "Jährliche Leistung",
+                "sales": "Verkäufe",
+                "costs": "Kosten"
+            },
+            "tasks": {
+                "update_inventory": "Inventar aktualisieren",
+                "pending_orders": "Ausstehende Bestellungen prüfen",
+                "in_progress": "In Bearbeitung",
+                "completed": "Abgeschlossen"
+            }
+        }
+    },
+    "ai_agents": {
+        "hero_section": {
+            "section_label": "KI-gestützte Lösungen",
+            "title": "Transformieren Sie Ihr Unternehmen mit <span class='bg-coral bg-clip-text text-transparent'>künstlicher Intelligenz</span>",
+            "description": "Steigern Sie Ihre Prozesse, den Kundenservice und die Entscheidungsfindung mit virtuellen Assistenten, intelligenten Automatisierungen, Chatbots und Datenanalyse in Ihrem Unternehmen.",
+            "buttons": {
+                "schedule_demo": "Demo vereinbaren",
+                "explore_solutions": "Lösungen entdecken"
+            },
+            "benefits": [
+                "Intelligente Automatisierung",
+                "Prozessoptimierung",
+                "24/7 Kundensupport",
+                "Prädiktive Analytik",
+                "Kostensenkung",
+                "Unternehmensskalierung"
+            ]
+        },
+        "chat_phone_section": {
+            "phone": {
+                "welcome_message": "Hallo, ich bin dein virtueller Assistent. Wie kann ich dir heute helfen?",
+                "chat_status": "Online",
+                "placeholder_input": "Schreibe hier deine Nachricht..."
+            },
+            "title": "Steigern Sie Ihre Produktivität mit unserer <span class='text-coral'>Künstlichen Intelligenz</span>",
+            "description": "Automatisieren Sie komplexe Aufgaben, lösen Sie Probleme und verbessern Sie Ihre Effizienz, ohne technisches Wissen zu benötigen. Unsere KI passt sich Ihren Bedürfnissen an und bietet personalisierte und effektive Lösungen.",
+            "button": "Chatbot in Aktion testen"
+        },
+        "chatbot_section": {
+            "title": "Implementieren Sie Ihren eigenen <span class='text-coral'>KI-Agenten</span>",
+            "description": "Warum weiterhin langweilige und repetitive Aufgaben erledigen, wenn KI das für Sie tun kann? Automatisieren Sie Kundensupport, E-Mail-Antworten, Verkäufe und mehr mit einem intelligenten Agenten, der auf Ihre Unternehmensdaten trainiert ist. Sparen Sie Zeit, senken Sie Kosten und konzentrieren Sie sich auf das Wesentliche.",
+            "button": "Steigern Sie Ihr Geschäft mit KI-Lösungen",
+            "chat_bubbles": [
+                "🤖 Interagieren Sie mit Ihren Dokumenten oder SQL-Datenbank",
+                "📞 Automatisieren Sie den Kundensupport",
+                "🗓️ Planen Sie Meetings und Aufgaben für Sie",
+                "📈 Senden Sie wöchentliche Berichte",
+                "💬 Beantworten Sie WhatsApp-Nachrichten für Unternehmen",
+                "🙌 Danke, alles läuft viel besser!"
+            ]
+        }
+    },
+    "calendly": {
+        "title": "Vereinbare deine <span class='text-coral'>Beratung</span>",
+        "description": "Plane den Moment, an dem die Automatisierung und Transformation deines Unternehmens beginnen. Du bringst die Herausforderungen, wir die Lösungen."
+    },
+    "footer": {
+        "about": {
+            "title": "Outliers Solutions",
+            "description": "Wir schaffen Markenidentitäten, entwickeln maßgeschneiderte Softwarelösungen, fördern das digitale Marketing Ihres Unternehmens und automatisieren Ihre Prozesse von Anfang bis Ende.",
+            "slogan": "Automatisieren Sie Ihr Geschäft: Tauschen Sie keine Zeit mehr gegen Geld!"
+        },
+        "navigation": {
+            "title": "Navigation",
+            "home": "Startseite",
+            "results": "Ergebnisse",
+            "schedule": "Termin vereinbaren",
+            "privacy_policy": "Datenschutzrichtlinie"
+        },
+        "services": {
+            "title": "Dienstleistungen",
+            "marketing": "Webentwicklung und Marketing",
+            "systems": "Maßgeschneiderte Systeme",
+            "ai_automation": "Automatisierung mit künstlicher Intelligenz"
+        },
+        "contact": {
+            "title": "Kontakt",
+            "email": "contact@outlierssolutions.com",
+            "phone": "+1 (929) 822-6066"
+        },
+        "social": {
+            "title": "Folge uns"
+        },
+        "bottom_text": "© {{year}} Outliers Solutions. Gemacht mit ☕ und viel ❤️"
+    }
+}

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="833" height="807" viewBox="0 0 833 807">
+  <defs>
+    <filter id="Rectangle_1" x="52" y="43" width="730" height="730" filterUnits="userSpaceOnUse">
+      <feOffset dy="4" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feFlood/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Rectangle_1-2" x="52" y="43" width="730" height="730" filterUnits="userSpaceOnUse">
+      <feOffset dx="-5" dy="5" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="7.5" result="blur-2"/>
+      <feFlood flood-color="#fff" result="color"/>
+      <feComposite operator="out" in="SourceGraphic" in2="blur-2"/>
+      <feComposite operator="in" in="color"/>
+      <feComposite operator="in" in2="SourceGraphic"/>
+    </filter>
+    <clipPath id="clip-Web_1920_3">
+      <rect width="833" height="807"/>
+    </clipPath>
+  </defs>
+  <g id="Web_1920_3" data-name="Web 1920 – 3" clip-path="url(#clip-Web_1920_3)">
+    <g data-type="innerShadowGroup">
+      <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Rectangle_1)">
+        <rect id="Rectangle_1-3" data-name="Rectangle 1" width="700" height="700" rx="200" transform="translate(67 54)" fill="#eb5175"/>
+      </g>
+      <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Rectangle_1-2)">
+        <rect id="Rectangle_1-4" data-name="Rectangle 1" width="700" height="700" rx="200" transform="translate(67 54)" fill="#fff"/>
+      </g>
+    </g>
+    <path id="n8n" d="M452.168,5.684a53.22,53.22,0,0,0-51.522,39.9h-60.97A53.2,53.2,0,0,0,287.2,90.032l-2.186,13.118a26.6,26.6,0,0,1-26.237,22.226H237.711a53.214,53.214,0,0,0-103.042,0H104.716a53.192,53.192,0,1,0,0,26.6h29.949a53.214,53.214,0,0,0,103.042,0h21.074A26.6,26.6,0,0,1,285.017,174.2l2.186,13.117a53.2,53.2,0,0,0,52.474,44.451h7.774a53.2,53.2,0,1,0,0-26.6h-7.774a26.6,26.6,0,0,1-26.237-22.229l-2.183-13.115a53.063,53.063,0,0,0-17.288-31.151,53.063,53.063,0,0,0,17.288-31.151l2.186-13.118A26.6,26.6,0,0,1,339.676,72.18h60.97a53.2,53.2,0,1,0,51.522-66.5m0,26.6a26.6,26.6,0,1,1-26.6,26.595,26.6,26.6,0,0,1,26.6-26.595M53.2,112.076a26.6,26.6,0,1,1-26.6,26.6,26.6,26.6,0,0,1,26.6-26.6m132.989,0a26.6,26.6,0,1,1-26.6,26.6,26.6,26.6,0,0,1,26.6-26.6m212.784,79.795a26.6,26.6,0,1,1-26.6,26.595,26.6,26.6,0,0,1,26.6-26.595" transform="translate(163.818 264.825)" fill="#fff"/>
+  </g>
+</svg>

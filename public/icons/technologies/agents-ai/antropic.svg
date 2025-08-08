@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="833" height="807" viewBox="0 0 833 807">
+  <defs>
+    <filter id="Rectangle_1" x="52" y="43" width="730" height="730" filterUnits="userSpaceOnUse">
+      <feOffset dy="4" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feFlood/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Rectangle_1-2" x="52" y="43" width="730" height="730" filterUnits="userSpaceOnUse">
+      <feOffset dx="-5" dy="5" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="7.5" result="blur-2"/>
+      <feFlood flood-color="#fff" result="color"/>
+      <feComposite operator="out" in="SourceGraphic" in2="blur-2"/>
+      <feComposite operator="in" in="color"/>
+      <feComposite operator="in" in2="SourceGraphic"/>
+    </filter>
+    <clipPath id="clip-Web_1920_6">
+      <rect width="833" height="807"/>
+    </clipPath>
+  </defs>
+  <g id="Web_1920_6" data-name="Web 1920 – 6" clip-path="url(#clip-Web_1920_6)">
+    <g data-type="innerShadowGroup">
+      <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Rectangle_1)">
+        <rect id="Rectangle_1-3" data-name="Rectangle 1" width="700" height="700" rx="200" transform="translate(67 54)" fill="#e7bfa4"/>
+      </g>
+      <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Rectangle_1-2)">
+        <rect id="Rectangle_1-4" data-name="Rectangle 1" width="700" height="700" rx="200" transform="translate(67 54)" fill="#fff"/>
+      </g>
+    </g>
+    <path id="anthropic" d="M318.718,3.543h-67.63L374.42,315.149h67.628Zm-195.389,0L0,315.149H68.963l25.221-65.436H223.21l25.221,65.438h68.963L194.064,3.541Zm-6.837,188.3L158.7,82.33l42.2,109.51Z" transform="translate(195.476 244.154)"/>
+  </g>
+</svg>

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="833" height="807" viewBox="0 0 833 807">
+  <defs>
+    <filter id="Rectangle_1" x="52" y="43" width="730" height="730" filterUnits="userSpaceOnUse">
+      <feOffset dy="4" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feFlood/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Rectangle_1-2" x="52" y="43" width="730" height="730" filterUnits="userSpaceOnUse">
+      <feOffset dx="-5" dy="5" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="7.5" result="blur-2"/>
+      <feFlood flood-color="#fff" result="color"/>
+      <feComposite operator="out" in="SourceGraphic" in2="blur-2"/>
+      <feComposite operator="in" in="color"/>
+      <feComposite operator="in" in2="SourceGraphic"/>
+    </filter>
+    <clipPath id="clip-Web_1920_14">
+      <rect width="833" height="807"/>
+    </clipPath>
+  </defs>
+  <g id="Web_1920_14" data-name="Web 1920 – 14" clip-path="url(#clip-Web_1920_14)">
+    <g data-type="innerShadowGroup">
+      <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Rectangle_1)">
+        <rect id="Rectangle_1-3" data-name="Rectangle 1" width="700" height="700" rx="200" transform="translate(67 54)" fill="#028cb0"/>
+      </g>
+      <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Rectangle_1-2)">
+        <rect id="Rectangle_1-4" data-name="Rectangle 1" width="700" height="700" rx="200" transform="translate(67 54)" fill="#fff"/>
+      </g>
+    </g>
+    <path id="wordpress" d="M361.395,114.888A181.762,181.762,0,0,1,293.3,358.971L348.77,198.6c10.352-25.923,13.8-46.645,13.8-65.044a142.539,142.539,0,0,0-1.178-18.685m-134.347,1.768c10.891-.505,20.739-1.768,20.739-1.768,9.8-1.262,8.652-15.655-1.128-15.133,0,0-29.542,2.272-48.48,2.272-17.911,0-47.975-2.525-47.975-2.525-9.847-.5-11.127,14.393-1.262,14.9,0,0,9.09,1.027,18.938,1.515l28.28,77.517-39.9,119.18L90.126,116.15c10.925-.5,20.772-1.683,20.772-1.683,9.847-1.262,8.686-15.655-1.094-15.083,0,0-29.391,2.323-48.379,2.323-3.367,0-7.373-.135-11.615-.252,32.859-48.43,88.813-81,152.19-81A180.817,180.817,0,0,1,324.648,68.141c-.774-.05-1.532-.151-2.374-.151-17.843,0-30.5,15.537-30.5,32.219,0,14.982,8.635,27.657,17.843,42.605,6.918,12.12,14.982,27.657,14.982,50.113,0,15.4-5.959,33.566-13.82,58.563l-18.1,60.347L227.031,116.4l.017.236ZM202,383.531a181.743,181.743,0,0,1-51.308-7.356L205.181,217.84l55.8,152.964a27.089,27.089,0,0,0,1.313,2.508A181.754,181.754,0,0,1,202,383.564M20.385,202a180.672,180.672,0,0,1,15.739-73.9l86.591,237.333A181.7,181.7,0,0,1,20.385,202M202,0C90.648,0,0,90.648,0,202S90.648,404,202,404s202-90.647,202-202S313.353,0,202,0" transform="translate(215 202)" fill="#fff"/>
+  </g>
+</svg>
