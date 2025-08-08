@@ -1,0 +1,32 @@
+{
+    "home": {
+        "badge": "Learn at your own pace",
+        "headline": {
+            "part1": "Develop your",
+            "highlight": "skills",
+            "part2": "in tech"
+        },
+        "subhead": "Grow your career and unlock new opportunities with hands-on courses in AI, data, web, and more.",
+        "cta": {
+            "primary": "Explore catalog",
+            "secondary": "How it works"
+        },
+        "topCourses": "Top courses",
+        "topCoursesDesc": "Content designed for progress with practical projects.",
+        "platform": {
+            "title": "Learn by doing",
+            "guidance": {
+                "title": "Step-by-step guidance",
+                "desc": "Learning paths with clear goals and continuous feedback."
+            },
+            "editor": {
+                "title": "Integrated editor",
+                "desc": "Write and run code from your browser with no setup."
+            },
+            "live": {
+                "title": "Interactive practice",
+                "desc": "Check your code and solidify concepts with challenges."
+            }
+        }
+    }
+}

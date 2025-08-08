@@ -1,0 +1,32 @@
+{
+    "home": {
+        "badge": "Aprende a tu ritmo",
+        "headline": {
+            "part1": "Desarrolla tus",
+            "highlight": "habilidades",
+            "part2": "en tecnología"
+        },
+        "subhead": "Crecé en tu carrera y desbloqueá nuevas oportunidades con cursos prácticos en IA, data, web, y más.",
+        "cta": {
+            "primary": "Explorar catálogo",
+            "secondary": "Cómo funciona"
+        },
+        "topCourses": "Cursos destacados",
+        "topCoursesDesc": "Contenidos diseñados para el progreso con proyectos prácticos.",
+        "platform": {
+            "title": "Aprende haciendo",
+            "guidance": {
+                "title": "Guía paso a paso",
+                "desc": "Rutas de aprendizaje con objetivos claros y feedback continuo."
+            },
+            "editor": {
+                "title": "Editor integrado",
+                "desc": "Escribe y ejecuta código desde tu navegador sin instalaciones."
+            },
+            "live": {
+                "title": "Práctica interactiva",
+                "desc": "Comprueba tu código y consolida conceptos con desafíos."
+            }
+        }
+    }
+}
