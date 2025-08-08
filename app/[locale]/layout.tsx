@@ -1,4 +1,3 @@
-import '@/styles/globals.css';
 import type {Metadata} from 'next';
 import {NextIntlClientProvider} from 'next-intl';
 import {getMessages, unstable_setRequestLocale} from 'next-intl/server';
@@ -27,7 +26,6 @@ export default async function RootLayout({
   try {
     messages = await getMessages();
   } catch {
-    // Fallback: carga directa de mensajes cuando el plugin/config de next-intl no está disponible en runtime
     const m = await import(`../../messages/${params.locale}.json`);
     messages = m.default;
   }
