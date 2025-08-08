@@ -1,21 +1,14 @@
 import Link from 'next/link';
-
-function apiUrl(path: string) {
-  const base = process.env.NEXT_PUBLIC_APP_URL || '';
-  return base ? `${base}${path}` : path;
-}
-
-async function getCourses() {
-  const res = await fetch(apiUrl('/api/courses'), {
-    // Ensure runtime fetch, not during static build
-    cache: 'no-store'
-  });
-  if (!res.ok) return [];
-  return res.json();
-}
+import {fetchCourses} from '@/lib/odooClient';
 
 export async function CourseGrid() {
-  const courses: Array<{id: number; slug: string; title: string; description: string}> = await getCourses();
+  let courses: Array<{id: number; slug: string; title: string; description: string}> = [];
+  try {
+    const data = await fetchCourses();
+    courses = data;
+  } catch (e) {
+    courses = [];
+  }
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

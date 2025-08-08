@@ -1,20 +1,16 @@
 import {notFound} from 'next/navigation';
-
-function apiUrl(path: string) {
-  const base = process.env.NEXT_PUBLIC_APP_URL || '';
-  return base ? `${base}${path}` : path;
-}
-
-async function getCourse(slug: string) {
-  const res = await fetch(apiUrl(`/api/courses?slug=${encodeURIComponent(slug)}`), {
-    cache: 'no-store'
-  });
-  if (!res.ok) return null;
-  const data = await res.json();
-  return Array.isArray(data) ? data.find((c: any) => c.slug === slug) : data;
-}
+import {fetchCourses} from '@/lib/odooClient';
 
 export const dynamic = 'force-dynamic';
+
+async function getCourse(slug: string) {
+  try {
+    const list = await fetchCourses({slug});
+    return Array.isArray(list) ? list[0] : list;
+  } catch (e) {
+    return null;
+  }
+}
 
 export default async function CoursePage({params}: {params: {slug: string}}) {
   const course = await getCourse(params.slug);

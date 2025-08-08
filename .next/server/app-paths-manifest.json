@@ -1,9 +1,0 @@
-{
-  "/_not-found/page": "app/_not-found/page.js",
-  "/api/stripe/checkout/route": "app/api/stripe/checkout/route.js",
-  "/api/courses/route": "app/api/courses/route.js",
-  "/api/stripe/webhook/route": "app/api/stripe/webhook/route.js",
-  "/[locale]/catalog/page": "app/[locale]/catalog/page.js",
-  "/[locale]/course/[slug]/page": "app/[locale]/course/[slug]/page.js",
-  "/[locale]/page": "app/[locale]/page.js"
-}

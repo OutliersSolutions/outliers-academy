@@ -5,14 +5,17 @@ type JsonRpcResponse<T> = {
   error?: {code: number; message: string; data?: any};
 };
 
-const ODOO_URL = process.env.ODOO_URL as string;
-const ODOO_DB = process.env.ODOO_DB as string;
-const ODOO_USERNAME = process.env.ODOO_USERNAME as string;
-const ODOO_PASSWORD = process.env.ODOO_PASSWORD as string;
+const ODOO_URL = process.env.ODOO_URL as string | undefined;
+const ODOO_DB = process.env.ODOO_DB as string | undefined;
+const ODOO_USERNAME = process.env.ODOO_USERNAME as string | undefined;
+const ODOO_PASSWORD = process.env.ODOO_PASSWORD as string | undefined;
+
+const isOdooConfigured = Boolean(ODOO_URL && ODOO_DB && ODOO_USERNAME && ODOO_PASSWORD);
 
 let uidCache: number | null = null;
 
 async function jsonRpc<T>(endpoint: string, payload: any): Promise<T> {
+  if (!ODOO_URL) throw new Error('ODOO_URL is not set');
   const res = await fetch(`${ODOO_URL}${endpoint}`, {
     method: 'POST',
     headers: {
@@ -27,6 +30,7 @@ async function jsonRpc<T>(endpoint: string, payload: any): Promise<T> {
 }
 
 async function authenticate(): Promise<number> {
+  if (!isOdooConfigured) throw new Error('Odoo is not configured');
   if (uidCache) return uidCache;
   const uid = await jsonRpc<number>('/jsonrpc', {
     method: 'call',
@@ -52,7 +56,39 @@ export async function odooExecuteKw(model: string, method: string, args: any[], 
   });
 }
 
+const devSampleCourses = [
+  {
+    id: 1,
+    title: 'Introducción a la Programación',
+    slug: 'intro-programacion',
+    description: 'Aprende los fundamentos: variables, control de flujo y funciones.',
+    price: 0,
+    sections: [{title: 'Variables'}, {title: 'Condicionales'}, {title: 'Funciones'}]
+  },
+  {
+    id: 2,
+    title: 'Desarrollo Web con Next.js',
+    slug: 'nextjs-web',
+    description: 'Crea sitios modernos con React, rutas y API Routes en Next.js.',
+    price: 49,
+    sections: [{title: 'App Router'}, {title: 'SSR/SSG'}, {title: 'API Routes'}]
+  },
+  {
+    id: 3,
+    title: 'Fundamentos de Data Science',
+    slug: 'data-science',
+    description: 'Pandas, visualización y modelos básicos para análisis de datos.',
+    price: 79,
+    sections: [{title: 'Pandas'}, {title: 'Visualización'}, {title: 'Modelos'}]
+  }
+];
+
 export async function fetchCourses(options?: {slug?: string}) {
+  if (!isOdooConfigured) {
+    if (options?.slug) return devSampleCourses.filter((c) => c.slug === options.slug);
+    return devSampleCourses;
+  }
+
   const domain: any[] = [];
   if (options?.slug) domain.push(['slug', '=', options.slug]);
   const fields = ['id', 'name', 'slug', 'short_description', 'price', 'sections'];
