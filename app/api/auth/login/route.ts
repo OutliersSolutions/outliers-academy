@@ -16,14 +16,28 @@ async function jsonRpc<T>(endpoint: string, payload: any): Promise<T> {
   });
   if (!res.ok) throw new Error(`Odoo HTTP ${res.status}`);
   const data = await res.json();
-  if (data.error) throw new Error(data.error.message);
+  if (data.error) {
+    const detail = data.error?.data?.message || data.error?.data?.name || data.error?.message || 'Odoo Server Error';
+    throw new Error(detail);
+  }
   return data.result as T;
 }
 
 export async function POST(request: Request) {
   try {
-    const {login, password} = await request.json();
+    let body: any = null;
+    try {
+      body = await request.json();
+    } catch {
+      return NextResponse.json({error: 'Invalid JSON body'}, {status: 400});
+    }
+
+    const {login, password} = body || {};
     if (!login || !password) return NextResponse.json({error: 'Missing credentials'}, {status: 400});
+
+    if (!process.env.ODOO_DB || !process.env.ODOO_URL) {
+      return NextResponse.json({error: 'Server missing Odoo configuration'}, {status: 503});
+    }
 
     const uid = await jsonRpc<number>('/jsonrpc', {
       method: 'call',
@@ -42,6 +56,7 @@ export async function POST(request: Request) {
     resJson.headers.set('Set-Cookie', `${AUTH_COOKIE}=${token}; HttpOnly; Path=/; SameSite=Lax`);
     return resJson;
   } catch (err: any) {
-    return NextResponse.json({error: err.message}, {status: 500});
+    console.error('Login error:', err?.message || err);
+    return NextResponse.json({error: err.message || 'Internal error'}, {status: 500});
   }
 } 

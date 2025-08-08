@@ -27,7 +27,10 @@ async function jsonRpc<T>(endpoint: string, payload: any): Promise<T> {
   });
   if (!res.ok) throw new Error(`Odoo RPC HTTP ${res.status}`);
   const data = (await res.json()) as JsonRpcResponse<T>;
-  if (data.error) throw new Error(data.error.message);
+  if (data.error) {
+    const detail = data.error?.data?.message || data.error?.data?.name || data.error?.message || 'Odoo Server Error';
+    throw new Error(detail);
+  }
   return data.result as T;
 }
 
