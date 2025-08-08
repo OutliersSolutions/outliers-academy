@@ -1,10 +1,10 @@
-import createNextIntlPlugin from 'next-intl/plugin';
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true
+  async redirects() {
+    return [
+      { source: '/:locale(en|es)/odoo', destination: '/odoo', permanent: true },
+      { source: '/:locale(en|es)/odoo/:path*', destination: '/odoo/:path*', permanent: true }
+    ];
+  }
 };
-
-const withNextIntl = createNextIntlPlugin('./i18n.ts');
-
-export default withNextIntl(nextConfig); 
+export default nextConfig;
