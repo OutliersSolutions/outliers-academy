@@ -5,7 +5,7 @@ type JsonRpcResponse<T> = {
   error?: {code: number; message: string; data?: any};
 };
 
-const ODOO_URL = process.env.ODOO_URL as string | undefined;
+const ODOO_URL = (process.env.ODOO_URL as string | undefined)?.replace(/\/+$/, '');
 const ODOO_DB = process.env.ODOO_DB as string | undefined;
 const ODOO_USERNAME = process.env.ODOO_USERNAME as string | undefined;
 const ODOO_PASSWORD = process.env.ODOO_PASSWORD as string | undefined;
@@ -16,7 +16,9 @@ let uidCache: number | null = null;
 
 async function jsonRpc<T>(endpoint: string, payload: any): Promise<T> {
   if (!ODOO_URL) throw new Error('ODOO_URL is not set');
-  const res = await fetch(`${ODOO_URL}${endpoint}`, {
+  const base = ODOO_URL.replace(/\/+$/, '');
+  const ep = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+  const res = await fetch(`${base}${ep}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
