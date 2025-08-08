@@ -8,6 +8,7 @@ export default createMiddleware({
 
 export const config = {
   matcher: [
-    '/((?!api|_next|.*\..*|static|odoo|longpolling|favicon.ico|robots.txt|sitemap.xml).*)'
+    '/',
+    '/(es|en)/:path*'
   ]
 };
