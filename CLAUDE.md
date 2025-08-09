@@ -104,3 +104,5 @@ Contenido multimedia servido por Odoo /web/image/... o URL pública definida.
 Credenciales de Odoo solo en el servidor.
 HTTPS obligatorio (Strict-Transport-Security + Content-Security-Policy).
 Cookies firmadas y con HttpOnly.
+
+# Make less verbose code
