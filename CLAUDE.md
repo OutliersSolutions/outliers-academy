@@ -84,3 +84,23 @@ AUTH_SECRET=change_me
 
 # MADE THE CHECKOUT ODOO-CENTRIC
 Dejas que Odoo gestione el cobro con sus payment providers (Stripe, PayPal, etc.).
+
+# Flujo de Cursos y Pagos (Odoo-Céntrico)
+1. Gestión de cursos
+Crear curso en eLearning (slide.channel).
+Asociar un producto (product_id) y habilitar "Se vende".
+Publicar en web para que aparezca en catálogo (website_published = true).
+
+2. Venta y cobro
+El usuario inicia sesión en Next.js y selecciona un curso de pago.
+Next.js obtiene desde Odoo el product_id y redirige a /shop/product/... de Odoo (checkout nativo) o llama a un endpoint tuyo que usa website.sale para iniciar la orden.
+Odoo gestiona el flujo de pago con Stripe/PayPal y actualiza el acceso al curso automáticamente (slide.channel.partner).
+
+3. Consumo de cursos
+Usuarios autenticados en Next.js consultan sus cursos (slide.channel.partner) y lecciones (slide.slide).
+Contenido multimedia servido por Odoo /web/image/... o URL pública definida.
+
+4. Seguridad
+Credenciales de Odoo solo en el servidor.
+HTTPS obligatorio (Strict-Transport-Security + Content-Security-Policy).
+Cookies firmadas y con HttpOnly.
