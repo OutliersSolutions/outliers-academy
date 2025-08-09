@@ -1,6 +1,14 @@
 "use client";
 
-export function CheckoutButton({priceId, successUrl, cancelUrl, children}: {priceId: string; successUrl: string; cancelUrl: string; children: React.ReactNode;}) {
+interface CheckoutButtonProps {
+  priceId: string; 
+  successUrl: string; 
+  cancelUrl: string; 
+  children: React.ReactNode;
+  className?: string;
+}
+
+export function CheckoutButton({priceId, successUrl, cancelUrl, children, className = "btn-primary"}: CheckoutButtonProps) {
   async function onClick() {
     try {
       const res = await fetch('/api/stripe/checkout', {
@@ -17,6 +25,6 @@ export function CheckoutButton({priceId, successUrl, cancelUrl, children}: {pric
   }
 
   return (
-    <button className="btn-primary" onClick={onClick}>{children}</button>
+    <button className={className} onClick={onClick}>{children}</button>
   );
 } 
