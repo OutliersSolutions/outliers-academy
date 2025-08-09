@@ -3,7 +3,12 @@ import type {Metadata} from 'next';
 
 export const metadata: Metadata = {
   title: 'Outliers Academy',
-  description: 'Aprende habilidades en demanda con cursos interactivos.'
+  description: 'Aprende habilidades en demanda con cursos interactivos.',
+  icons: {
+    icon: '/logo.ico',
+    shortcut: '/logo.ico',
+    apple: '/logo.ico'
+  }
 };
 
 export default function RootLayout({children}: {children: React.ReactNode}) {

@@ -17,8 +17,11 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-muted bg-white/70 backdrop-blur">
       <div className="container flex h-16 items-center justify-between">
-        <Link href={`/${locale}`} className="font-extrabold text-xl">
-          <span className="text-text">Outliers</span> <span style={{color: 'var(--color-primary)'}}>Academy</span>
+        <Link href={`/${locale}`} className="flex items-center gap-3">
+          <img src="/icons/logo.png" alt="Outliers Academy" className="w-8 h-8 object-contain" />
+          <span className="font-extrabold text-xl">
+            <span className="text-text">Outliers</span> <span style={{color: 'var(--color-primary)'}}>Academy</span>
+          </span>
         </Link>
         <nav className="hidden md:flex items-center gap-6 text-sm font-semibold">
           <Link href={`/${locale}/catalog`}>Catalog</Link>
