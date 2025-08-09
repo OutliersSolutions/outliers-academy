@@ -88,24 +88,40 @@ const devSampleCourses = [
   }
 ];
 
+// Helper function to create slug from name and id
+function createSlug(name: string, id: number): string {
+  return `${name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}-${id}`;
+}
+
 export async function fetchCourses(options?: {slug?: string}) {
   if (!isOdooConfigured) {
     if (options?.slug) return devSampleCourses.filter((c) => c.slug === options.slug);
     return devSampleCourses;
   }
 
-  const domain: any[] = [['website_published', '=', true]];
-  if (options?.slug) domain.push(['slug', '=', options.slug]);
+  let domain: any[] = [['website_published', '=', true]];
   
-  const fields = ['id', 'name', 'slug', 'short_description', 'price', 'product_id', 'website_published'];
+  // Si se proporciona un slug, extraer el ID y buscarlo
+  if (options?.slug) {
+    const idMatch = options.slug.match(/-(\d+)$/);
+    if (idMatch) {
+      const id = parseInt(idMatch[1]);
+      domain.push(['id', '=', id]);
+    } else {
+      // Si no hay ID en el slug, buscar por nombre aproximado
+      domain.push(['name', 'ilike', options.slug.replace(/-/g, ' ')]);
+    }
+  }
+  
+  const fields = ['id', 'name', 'short_description', 'price', 'product_id', 'website_published'];
   const channels = await odooExecuteKw('slide.channel', 'search_read', [domain], {fields, limit: 24});
   
   return (channels || []).map((c: any) => ({
     id: c.id,
     title: c.name,
-    slug: c.slug,
-    description: c.short_description,
-    price: c.price,
+    slug: createSlug(c.name, c.id),
+    description: c.short_description || '',
+    price: c.price || 0,
     product_id: c.product_id?.[0],
     published: c.website_published
   }));
@@ -115,7 +131,7 @@ export async function fetchUserCourses(userId: number) {
   if (!isOdooConfigured) return [];
   
   const domain = [['partner_ids', 'in', [userId]]];
-  const fields = ['id', 'name', 'slug', 'completion', 'slides_count'];
+  const fields = ['id', 'name', 'completion', 'slides_count'];
   
   const enrollments = await odooExecuteKw('slide.channel.partner', 'search_read', [domain], {fields});
   return enrollments || [];

@@ -1,5 +1,5 @@
 import { ParticlesBackground } from '@/components/ui/ParticlesBackground';
-import { ChatbotViewer3D } from '@/components/3D/ChatbotModel3D';
+import { ChatbotViewerSafe } from '@/components/ChatbotViewerSafe';
 
 export default function ContactPage() {
   return (
@@ -109,7 +109,7 @@ export default function ContactPage() {
               <div className="bg-white rounded-2xl shadow-lg p-6">
                 <h3 className="text-xl font-bold mb-4 text-center">Nuestro Asistente Virtual</h3>
                 <div className="h-64">
-                  <ChatbotViewer3D className="w-full h-full" />
+                  <ChatbotViewerSafe className="w-full h-full" />
                 </div>
                 <p className="text-center text-sm text-neutral-600 mt-4">
                   ¡Pronto tendrás acceso a nuestro asistente de IA para resolver tus dudas al instante!

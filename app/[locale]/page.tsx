@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import {useTranslations} from 'next-intl';
 import {CourseGrid} from '@/components/CourseGrid';
-import {ChatbotViewer3D} from '@/components/3D/ChatbotModel3D';
+import {ChatbotViewerSafe} from '@/components/ChatbotViewerSafe';
 import {ParticlesBackground} from '@/components/ui/ParticlesBackground';
 import type {Route} from 'next';
 
@@ -86,7 +86,7 @@ export default function HomePage() {
                   </div>
                   
                   <div className="h-80 bg-gradient-to-br from-neutral-50 to-neutral-100 rounded-lg mb-4 relative overflow-hidden">
-                    <ChatbotViewer3D className="w-full h-full" />
+                    <ChatbotViewerSafe className="w-full h-full" />
                     
                     <div className="absolute top-4 right-4 text-xs text-neutral-500 bg-white px-2 py-1 rounded-full">
                       AI Assistant

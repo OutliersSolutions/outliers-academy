@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface ParticlesBackgroundProps {
   particleColor?: string;
@@ -14,8 +14,14 @@ export function ParticlesBackground({
   opacity = 0.3,
 }: ParticlesBackgroundProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [isClient, setIsClient] = useState(false);
+  
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   useEffect(() => {
+    if (!isClient) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -145,7 +151,11 @@ export function ParticlesBackground({
       window.removeEventListener('resize', resizeCanvas);
       canvas.removeEventListener('mousemove', handleMouseMove);
     };
-  }, [particleColor, particleSize, opacity]);
+  }, [particleColor, particleSize, opacity, isClient]);
+
+  if (!isClient) {
+    return null;
+  }
 
   return (
     <canvas
