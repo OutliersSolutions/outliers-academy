@@ -4,35 +4,29 @@ import Link from 'next/link';
 import {usePathname} from 'next/navigation';
 import {useLocale} from 'next-intl';
 import { useEffect, useState, useRef } from 'react';
+import { Sun, Moon, ChevronDown } from 'lucide-react';
 
 export function Navbar() {
   const pathname = usePathname();
   const locale = useLocale();
   const [isDark, setIsDark] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const langBtnRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    // Initialize theme from localStorage
     const saved = typeof window !== 'undefined' ? localStorage.getItem('theme') : null;
     const prefersDark = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     const enabled = saved ? saved === 'dark' : prefersDark;
     document.documentElement.classList.toggle('dark', enabled);
     setIsDark(enabled);
-  }, []);
 
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+    const onClickOutside = (e: MouseEvent) => {
+      if (langBtnRef.current && !langBtnRef.current.parentElement?.contains(e.target as Node)) {
         setLangOpen(false);
       }
-    }
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
     };
+    document.addEventListener('click', onClickOutside);
+    return () => document.removeEventListener('click', onClickOutside);
   }, []);
 
   const switchLocalePath = (target: string) => {
@@ -47,6 +41,12 @@ export function Navbar() {
     document.documentElement.classList.toggle('dark', next);
     localStorage.setItem('theme', next ? 'dark' : 'light');
   };
+
+  const currentFlag = locale === 'es' ? '/icons/flags/spain-flag-icon.svg'
+                      : locale === 'en' ? '/icons/flags/united-states-flag-icon.svg'
+                      : locale === 'pt' ? '/icons/flags/brazil-flag-icon.svg'
+                      : locale === 'de' ? '/icons/flags/deutsch-flag-icon.png'
+                      : '/icons/flags/china-flag-icon.svg';
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-muted bg-white/70 backdrop-blur dark:bg-surface/70">
@@ -67,50 +67,42 @@ export function Navbar() {
         </nav>
         <div className="flex items-center gap-2 relative">
           {/* Dark mode toggle */}
-          <button aria-label="Toggle theme" onClick={toggleTheme} className="px-2 py-1 rounded text-sm font-semibold border border-muted bg-surface hover:opacity-90">
-            {isDark ? (
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-              </svg>
-            ) : (
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-              </svg>
-            )}
+          <button aria-label="Toggle theme" onClick={toggleTheme} className="px-2 py-1 rounded text-sm font-semibold border border-muted bg-surface hover:opacity-90 flex items-center gap-1">
+            {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
           </button>
 
           {/* Language dropdown */}
-          <div className="relative" ref={dropdownRef}>
-            <button onClick={() => setLangOpen((v) => !v)} className="px-2 py-1 rounded text-sm font-semibold border border-muted bg-surface flex items-center gap-2 hover:opacity-90 transition-opacity">
-              <img src={locale === 'es' ? '/icons/flags/spain-flag-icon.svg' : '/icons/flags/united-states-flag-icon.svg'} alt="lang" className="w-4 h-4" />
+          <div className="relative">
+            <button ref={langBtnRef} onClick={() => setLangOpen((v) => !v)} className="px-2 py-1 rounded text-sm font-semibold border border-muted bg-surface flex items-center gap-2">
+              <img src={currentFlag} alt="lang" className="w-4 h-4" />
               <span className="uppercase">{locale}</span>
-              <svg className="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" /></svg>
+              <ChevronDown className="w-3 h-3" />
             </button>
             {langOpen && (
-              <div className="absolute right-0 mt-2 w-36 rounded-md border border-muted bg-white shadow-lg dark:bg-surface">
+              <div className="absolute right-0 mt-2 w-36 rounded-md border border-muted bg-white shadow-lg dark:bg-surface z-50">
                 <ul className="py-1 text-sm">
                   <li>
-                    <Link onClick={() => setLangOpen(false)} href={switchLocalePath('es')} className="flex items-center gap-2 px-3 py-2 hover:bg-muted/50">
+                    <Link href={switchLocalePath('es')} className="flex items-center gap-2 px-3 py-2 hover:bg-muted/50" onClick={() => setLangOpen(false)}>
                       <img src="/icons/flags/spain-flag-icon.svg" alt="ES" className="w-4 h-4" /> ES
                     </Link>
                   </li>
                   <li>
-                    <Link onClick={() => setLangOpen(false)} href={switchLocalePath('en')} className="flex items-center gap-2 px-3 py-2 hover:bg-muted/50">
+                    <Link href={switchLocalePath('en')} className="flex items-center gap-2 px-3 py-2 hover:bg-muted/50" onClick={() => setLangOpen(false)}>
                       <img src="/icons/flags/united-states-flag-icon.svg" alt="EN" className="w-4 h-4" /> EN
                     </Link>
                   </li>
                   <li>
-                    <Link onClick={() => setLangOpen(false)} href={switchLocalePath('pt')} className="flex items-center gap-2 px-3 py-2 hover:bg-muted/50">
+                    <Link href={switchLocalePath('pt')} className="flex items-center gap-2 px-3 py-2 hover:bg-muted/50" onClick={() => setLangOpen(false)}>
                       <img src="/icons/flags/brazil-flag-icon.svg" alt="PT" className="w-4 h-4" /> PT
                     </Link>
                   </li>
                   <li>
-                    <Link onClick={() => setLangOpen(false)} href={switchLocalePath('de')} className="flex items-center gap-2 px-3 py-2 hover:bg-muted/50">
+                    <Link href={switchLocalePath('de')} className="flex items-center gap-2 px-3 py-2 hover:bg-muted/50" onClick={() => setLangOpen(false)}>
                       <img src="/icons/flags/deutsch-flag-icon.png" alt="DE" className="w-4 h-4" /> DE
                     </Link>
                   </li>
                   <li>
-                    <Link onClick={() => setLangOpen(false)} href={switchLocalePath('cn')} className="flex items-center gap-2 px-3 py-2 hover:bg-muted/50">
+                    <Link href={switchLocalePath('cn')} className="flex items-center gap-2 px-3 py-2 hover:bg-muted/50" onClick={() => setLangOpen(false)}>
                       <img src="/icons/flags/china-flag-icon.svg" alt="CN" className="w-4 h-4" /> CN
                     </Link>
                   </li>
