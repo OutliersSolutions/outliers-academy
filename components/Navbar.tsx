@@ -27,6 +27,7 @@ export function Navbar() {
           <Link href={`/${locale}/catalog`}>Catalog</Link>
           <Link href={`/${locale}/about`}>About</Link>
           <Link href={`/${locale}/pricing`}>Pricing</Link>
+          <Link href={`/${locale}/contact`}>Contact</Link>
           <Link href={`/${locale}/login`} className="btn-secondary">Sign in</Link>
           <Link href={`/${locale}/signup`} className="btn-primary">Sign up</Link>
         </nav>

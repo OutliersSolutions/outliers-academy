@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import {useTranslations} from 'next-intl';
 import {CourseGrid} from '@/components/CourseGrid';
-import {ChatbotViewer} from '@/components/ChatbotViewer';
+import {ChatbotViewer3D} from '@/components/3D/ChatbotModel3D';
+import {ParticlesBackground} from '@/components/ui/ParticlesBackground';
 import type {Route} from 'next';
 
 export const dynamic = 'force-dynamic';
@@ -11,6 +12,7 @@ export default function HomePage() {
 
   return (
     <div>
+      <ParticlesBackground particleColor="#6366f1" opacity={0.1} />
       <section className="hero-gradient relative overflow-hidden">
         <div className="container mx-auto px-6 py-20 md:py-32 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -83,8 +85,8 @@ export default function HomePage() {
                     <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                   </div>
                   
-                  <div className="h-48 bg-gradient-to-br from-neutral-50 to-neutral-100 rounded-lg mb-4 relative overflow-hidden">
-                    <ChatbotViewer />
+                  <div className="h-80 bg-gradient-to-br from-neutral-50 to-neutral-100 rounded-lg mb-4 relative overflow-hidden">
+                    <ChatbotViewer3D className="w-full h-full" />
                     
                     <div className="absolute top-4 right-4 text-xs text-neutral-500 bg-white px-2 py-1 rounded-full">
                       AI Assistant
