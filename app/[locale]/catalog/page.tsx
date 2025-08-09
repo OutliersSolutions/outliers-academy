@@ -142,7 +142,7 @@ export default function CatalogPage() {
             
             {searchTerm && (
               <span className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 text-primary rounded-full text-sm">
-                Búsqueda: "{searchTerm}"
+                Búsqueda: &quot;{searchTerm}&quot;
                 <button
                   onClick={() => setSearchTerm('')}
                   className="hover:bg-primary/20 rounded-full p-0.5"

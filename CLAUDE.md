@@ -81,3 +81,6 @@ AUTH_SECRET=change_me
 - Middleware must match root and localized paths, not static assets.
 
 # DO NOT USE EMOJIS
+
+# MADE THE CHECKOUT ODOO-CENTRIC
+Dejas que Odoo gestione el cobro con sus payment providers (Stripe, PayPal, etc.).
