@@ -1,4 +1,5 @@
 import crypto from 'crypto';
+import {NextRequest} from 'next/server';
 
 const DEFAULT_SECRET = 'dev-secret-change-me';
 const AUTH_COOKIE = 'oa_session';
@@ -31,6 +32,24 @@ export function verifySigned(signed: string): SessionPayload | null {
   try {
     const json = Buffer.from(data, 'base64url').toString();
     return JSON.parse(json) as SessionPayload;
+  } catch {
+    return null;
+  }
+}
+
+export async function verifyAuth(request: NextRequest): Promise<SessionPayload | null> {
+  try {
+    const cookieValue = request.cookies.get(AUTH_COOKIE)?.value;
+    if (!cookieValue) return null;
+    
+    const session = verifySigned(cookieValue);
+    if (!session) return null;
+    
+    // Check if session is not too old (24 hours)
+    const maxAge = 24 * 60 * 60 * 1000; // 24 hours in ms
+    if (Date.now() - session.issuedAt > maxAge) return null;
+    
+    return session;
   } catch {
     return null;
   }

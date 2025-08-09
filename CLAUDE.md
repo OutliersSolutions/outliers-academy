@@ -80,29 +80,45 @@ AUTH_SECRET=change_me
 - If next-intl plugin isn’t picked up in some environments, fallback import ensures pages still render.
 - Middleware must match root and localized paths, not static assets.
 
-# DO NOT USE EMOJIS
+# Flujo de Cursos y Pagos (Odoo-Céntrico) - IMPLEMENTADO
 
-# MADE THE CHECKOUT ODOO-CENTRIC
-Dejas que Odoo gestione el cobro con sus payment providers (Stripe, PayPal, etc.).
+## 1. Gestión de cursos
+- Crear curso en eLearning (slide.channel)
+- Asociar un producto (product_id) y habilitar "Se vende"
+- Publicar en web para que aparezca en catálogo (website_published = true)
 
-# Flujo de Cursos y Pagos (Odoo-Céntrico)
-1. Gestión de cursos
-Crear curso en eLearning (slide.channel).
-Asociar un producto (product_id) y habilitar "Se vende".
-Publicar en web para que aparezca en catálogo (website_published = true).
+## 2. Venta y cobro - IMPLEMENTADO
+- Usuario inicia sesión en Next.js y selecciona curso
+- CheckoutButton redirige a /api/odoo/checkout
+- Crea sale.order en Odoo con product_id
+- Redirige a Odoo /shop/cart para checkout nativo
+- Odoo gestiona pagos y actualiza acceso automáticamente
 
-2. Venta y cobro
-El usuario inicia sesión en Next.js y selecciona un curso de pago.
-Next.js obtiene desde Odoo el product_id y redirige a /shop/product/... de Odoo (checkout nativo) o llama a un endpoint tuyo que usa website.sale para iniciar la orden.
-Odoo gestiona el flujo de pago con Stripe/PayPal y actualiza el acceso al curso automáticamente (slide.channel.partner).
+## 3. Consumo de cursos - IMPLEMENTADO
+- API /api/odoo/courses para cursos del usuario
+- API /api/odoo/courses/[id]/content para contenido con verificación de acceso
+- Multimedia servida por Odoo /web/image/ o URLs públicas
 
-3. Consumo de cursos
-Usuarios autenticados en Next.js consultan sus cursos (slide.channel.partner) y lecciones (slide.slide).
-Contenido multimedia servido por Odoo /web/image/... o URL pública definida.
+## 4. Seguridad - IMPLEMENTADO
+- Credenciales Odoo solo en servidor
+- Headers de seguridad: HSTS, CSP, X-Frame-Options
+- Cookies HttpOnly, Secure, SameSite=Strict, Max-Age=24h
+- Rate limiting en middleware
+- Session validation con timeout de 24h
 
-4. Seguridad
-Credenciales de Odoo solo en el servidor.
-HTTPS obligatorio (Strict-Transport-Security + Content-Security-Policy).
-Cookies firmadas y con HttpOnly.
+## APIs Implementadas
+- POST /api/odoo/checkout - Crear orden y redirigir a Odoo
+- GET /api/odoo/courses - Cursos del usuario autenticado  
+- GET /api/odoo/courses/[id]/content - Contenido con verificación de acceso
 
-# Make less verbose code
+## Multimedia y Branding - IMPLEMENTADO
+- Modelo 3D chatbot.glb integrado en hero section
+- Imágenes de instructores desde /images/
+- Iconos de tecnologías desde /icons/technologies/
+- Videos de demostración desde /videos/
+
+## Funciones Odoo Client Añadidas
+- fetchUserCourses() - Cursos matriculados del usuario
+- fetchCourseContent() - Slides con verificación de acceso
+- createSaleOrder() - Crear orden de venta
+- getUserProfile() - Perfil del usuario

@@ -35,11 +35,13 @@ export async function CourseGrid() {
       students: 1420,
       rating: 4.8,
       price: 49,
-      image: '/icons/technologies/systems/python.svg'
+      image: '/icons/technologies/systems/python.svg',
+      instructor: 'Dr. Ana García',
+      instructorImage: '/images/adriandiazmarro-ia.webp'
     },
     {
       id: 2,
-      slug: 'react-development',
+      slug: 'react-development', 
       title: 'React Development',
       description: 'Domina React.js y construye aplicaciones web modernas con hooks, context y mejores prácticas.',
       level: 'Intermedio',
@@ -47,10 +49,26 @@ export async function CourseGrid() {
       students: 892,
       rating: 4.9,
       price: 79,
-      image: '/icons/technologies/systems/reactjs.svg'
+      image: '/icons/technologies/systems/reactjs.svg',
+      instructor: 'Carlos Mendoza',
+      instructorImage: '/images/dcarlos-ia.webp'
     },
     {
       id: 3,
+      slug: 'ai-agents',
+      title: 'Agentes de IA Avanzados',
+      description: 'Construye agentes inteligentes con LangGraph, OpenAI y técnicas de vanguardia en IA.',
+      level: 'Avanzado',
+      duration: '16 semanas',
+      students: 324,
+      rating: 4.9,
+      price: 149,
+      image: '/icons/technologies/agents-ai/langraph.svg',
+      instructor: 'Marcelo Gallardo',
+      instructorImage: '/images/marcelogallardoburga-ia.webp'
+    },
+    {
+      id: 4,
       slug: 'node-backend',
       title: 'Node.js Backend',
       description: 'Crea APIs robustas y escalables con Node.js, Express y bases de datos modernas.',
@@ -59,7 +77,9 @@ export async function CourseGrid() {
       students: 654,
       rating: 4.7,
       price: 69,
-      image: '/icons/technologies/systems/nodejs.svg'
+      image: '/icons/technologies/systems/nodejs.svg',
+      instructor: 'Carolina Oleas',
+      instructorImage: '/images/carolinaoleascpa-ia.webp'
     }
   ];
 

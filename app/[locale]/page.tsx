@@ -73,22 +73,44 @@ export default function HomePage() {
             </div>
 
             <div className="relative">
-              <div className="relative bg-white rounded-2xl shadow-2xl p-6 transform rotate-2 hover:rotate-0 transition-transform duration-300">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                  <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                  <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                </div>
-                <div className="bg-gradient-to-r from-primary to-accent h-2 rounded mb-3"></div>
-                <div className="space-y-2">
-                  <div className="bg-gray-200 h-4 rounded w-3/4"></div>
-                  <div className="bg-gray-200 h-4 rounded w-1/2"></div>
-                  <div className="bg-gray-200 h-4 rounded w-5/6"></div>
+              <div className="relative bg-white rounded-2xl shadow-2xl p-6 transform rotate-2 hover:rotate-0 transition-transform duration-300 overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5"></div>
+                <div className="relative z-10">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                  </div>
+                  
+                  <div className="flex items-center justify-center h-48 bg-gradient-to-br from-neutral-50 to-neutral-100 rounded-lg mb-4 relative overflow-hidden">
+                    <div className="w-32 h-32 relative">
+                      <div className="w-full h-full bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center animate-pulse">
+                        <svg className="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                      </div>
+                      
+                      <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-400 rounded-full flex items-center justify-center">
+                        <div className="w-2 h-2 bg-white rounded-full animate-bounce"></div>
+                      </div>
+                    </div>
+                    
+                    <div className="absolute top-4 right-4 text-xs text-neutral-500 bg-white px-2 py-1 rounded-full">
+                      AI Assistant
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <div className="bg-gradient-to-r from-green-400 to-blue-500 h-2 rounded"></div>
+                    <div className="bg-gray-200 h-3 rounded w-3/4"></div>
+                    <div className="bg-gray-200 h-3 rounded w-1/2"></div>
+                    <div className="bg-gradient-to-r from-purple-400 to-pink-500 h-2 rounded w-5/6"></div>
+                  </div>
                 </div>
               </div>
               
               <div className="absolute -bottom-4 -right-4 bg-accent text-white rounded-lg px-3 py-2 text-sm font-semibold shadow-lg">
-                ¡Código en vivo!
+                IA Interactiva
               </div>
             </div>
           </div>

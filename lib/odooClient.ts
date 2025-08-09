@@ -94,16 +94,78 @@ export async function fetchCourses(options?: {slug?: string}) {
     return devSampleCourses;
   }
 
-  const domain: any[] = [];
+  const domain: any[] = [['website_published', '=', true]];
   if (options?.slug) domain.push(['slug', '=', options.slug]);
-  const fields = ['id', 'name', 'slug', 'short_description', 'price', 'sections'];
-  const courses = await odooExecuteKw('oa.course', 'search_read', [domain], {fields, limit: 24});
-  return (courses || []).map((c: any) => ({
+  
+  const fields = ['id', 'name', 'slug', 'short_description', 'price', 'product_id', 'website_published'];
+  const channels = await odooExecuteKw('slide.channel', 'search_read', [domain], {fields, limit: 24});
+  
+  return (channels || []).map((c: any) => ({
     id: c.id,
     title: c.name,
     slug: c.slug,
     description: c.short_description,
     price: c.price,
-    sections: c.sections
+    product_id: c.product_id?.[0],
+    published: c.website_published
   }));
+}
+
+export async function fetchUserCourses(userId: number) {
+  if (!isOdooConfigured) return [];
+  
+  const domain = [['partner_ids', 'in', [userId]]];
+  const fields = ['id', 'name', 'slug', 'completion', 'slides_count'];
+  
+  const enrollments = await odooExecuteKw('slide.channel.partner', 'search_read', [domain], {fields});
+  return enrollments || [];
+}
+
+export async function fetchCourseContent(courseId: number, userId?: number) {
+  if (!isOdooConfigured) return null;
+  
+  // Check if user has access
+  if (userId) {
+    const access = await odooExecuteKw('slide.channel.partner', 'search_count', [
+      [['channel_id', '=', courseId], ['partner_id', '=', userId]]
+    ]);
+    if (!access) throw new Error('Access denied to this course');
+  }
+  
+  const fields = ['id', 'name', 'slug', 'sequence', 'slide_type', 'duration', 'preview'];
+  const slides = await odooExecuteKw('slide.slide', 'search_read', [
+    [['channel_id', '=', courseId]]
+  ], {fields, order: 'sequence ASC'});
+  
+  return slides || [];
+}
+
+export async function createSaleOrder(userId: number, productId: number) {
+  if (!isOdooConfigured) throw new Error('Odoo not configured');
+  
+  // Create sale order
+  const orderId = await odooExecuteKw('sale.order', 'create', [{
+    partner_id: userId,
+    state: 'draft'
+  }]);
+  
+  // Add product line
+  await odooExecuteKw('sale.order.line', 'create', [{
+    order_id: orderId,
+    product_id: productId,
+    product_uom_qty: 1
+  }]);
+  
+  return orderId;
+}
+
+export async function getUserProfile(userId: number) {
+  if (!isOdooConfigured) return null;
+  
+  const fields = ['id', 'name', 'email', 'image_1920'];
+  const partners = await odooExecuteKw('res.partner', 'search_read', [
+    [['id', '=', userId]]
+  ], {fields});
+  
+  return partners?.[0] || null;
 } 
