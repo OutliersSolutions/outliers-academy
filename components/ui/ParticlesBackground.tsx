@@ -6,12 +6,16 @@ interface ParticlesBackgroundProps {
   particleColor?: string;
   particleSize?: number;
   opacity?: number;
+  drawLines?: boolean;
+  className?: string;
 }
 
 export function ParticlesBackground({
   particleColor = '#6366f1',
   particleSize = 1,
   opacity = 0.3,
+  drawLines = true,
+  className,
 }: ParticlesBackgroundProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isClient, setIsClient] = useState(false);
@@ -92,22 +96,24 @@ export function ParticlesBackground({
       });
 
       // Draw connections between nearby particles
-      ctx.globalAlpha = opacity * 0.3;
-      ctx.strokeStyle = particleColor;
-      ctx.lineWidth = 0.5;
-      
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-          
-          if (distance < 100) {
-            ctx.globalAlpha = (opacity * 0.3) * (1 - distance / 100);
-            ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.stroke();
+      if (drawLines) {
+        ctx.globalAlpha = opacity * 0.3;
+        ctx.strokeStyle = particleColor;
+        ctx.lineWidth = 0.5;
+        
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            if (distance < 100) {
+              ctx.globalAlpha = (opacity * 0.3) * (1 - distance / 100);
+              ctx.beginPath();
+              ctx.moveTo(particles[i].x, particles[i].y);
+              ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.stroke();
+            }
           }
         }
       }
@@ -151,7 +157,7 @@ export function ParticlesBackground({
       window.removeEventListener('resize', resizeCanvas);
       canvas.removeEventListener('mousemove', handleMouseMove);
     };
-  }, [particleColor, particleSize, opacity, isClient]);
+  }, [particleColor, particleSize, opacity, isClient, drawLines, className]);
 
   if (!isClient) {
     return null;
@@ -160,7 +166,7 @@ export function ParticlesBackground({
   return (
     <canvas
       ref={canvasRef}
-      className="fixed top-0 left-0 w-full h-full pointer-events-none z-[-1]"
+      className={`${className ? className : 'fixed top-0 left-0 w-full h-full'} pointer-events-none z-[-1]`}
       style={{ 
         background: 'transparent',
       }}

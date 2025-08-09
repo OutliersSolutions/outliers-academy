@@ -12,7 +12,7 @@ export default function HomePage() {
 
   return (
     <div>
-      <ParticlesBackground particleColor="#6366f1" opacity={0.1} />
+      <ParticlesBackground particleColor="#ff5a1f" opacity={0.35} particleSize={1.2} drawLines={false} className="fixed top-0 left-0 w-full h-full" />
       <section className="hero-gradient relative overflow-hidden">
         <div className="container mx-auto px-6 py-20 md:py-32 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
