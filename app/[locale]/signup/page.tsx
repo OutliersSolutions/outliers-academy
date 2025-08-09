@@ -23,10 +23,11 @@ export default function SignupPage() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Signup error');
-      router.push(`/${locale}`);
+      
+      // Force full page reload to ensure cookies are set
+      window.location.href = `/${locale}`;
     } catch (e) {
       alert((e as Error).message);
-    } finally {
       setLoading(false);
     }
   }

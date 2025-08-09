@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import {useTranslations} from 'next-intl';
 import {CourseGrid} from '@/components/CourseGrid';
+import {ChatbotViewer} from '@/components/ChatbotViewer';
 import type {Route} from 'next';
 
 export const dynamic = 'force-dynamic';
@@ -82,18 +83,8 @@ export default function HomePage() {
                     <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                   </div>
                   
-                  <div className="flex items-center justify-center h-48 bg-gradient-to-br from-neutral-50 to-neutral-100 rounded-lg mb-4 relative overflow-hidden">
-                    <div className="w-32 h-32 relative">
-                      <div className="w-full h-full bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center animate-pulse">
-                        <svg className="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                        </svg>
-                      </div>
-                      
-                      <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-400 rounded-full flex items-center justify-center">
-                        <div className="w-2 h-2 bg-white rounded-full animate-bounce"></div>
-                      </div>
-                    </div>
+                  <div className="h-48 bg-gradient-to-br from-neutral-50 to-neutral-100 rounded-lg mb-4 relative overflow-hidden">
+                    <ChatbotViewer />
                     
                     <div className="absolute top-4 right-4 text-xs text-neutral-500 bg-white px-2 py-1 rounded-full">
                       AI Assistant
@@ -182,6 +173,50 @@ export default function HomePage() {
                 <p className="p-lead text-neutral-600">{t('platform.live.desc')}</p>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16 md:py-20 bg-white">
+        <div className="container">
+          <div className="text-center mb-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-neutral-900 mb-4">Tecnologías que aprenderás</h2>
+            <p className="text-neutral-600 max-w-2xl mx-auto">Domina las herramientas y frameworks más demandados en la industria</p>
+          </div>
+          
+          <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-8 items-center justify-items-center opacity-70 hover:opacity-100 transition-opacity duration-500">
+            {[
+              { name: 'React', icon: '/icons/technologies/systems/reactjs.svg' },
+              { name: 'Node.js', icon: '/icons/technologies/systems/nodejs.svg' },
+              { name: 'Python', icon: '/icons/technologies/systems/python.svg' },
+              { name: 'JavaScript', icon: '/icons/technologies/systems/js.svg' },
+              { name: 'HTML5', icon: '/icons/technologies/systems/html.svg' },
+              { name: 'CSS3', icon: '/icons/technologies/systems/css.svg' },
+              { name: 'Tailwind', icon: '/icons/technologies/systems/tailwind.svg' },
+              { name: 'MongoDB', icon: '/icons/technologies/systems/mongodb.svg' },
+              { name: 'PostgreSQL', icon: '/icons/technologies/systems/postgresql.svg' },
+              { name: 'Git', icon: '/icons/technologies/systems/git.svg' },
+              { name: 'Vue.js', icon: '/icons/technologies/systems/vue.svg' },
+              { name: 'Laravel', icon: '/icons/technologies/systems/laravel.svg' },
+              { name: 'Angular', icon: '/icons/technologies/systems/angular.svg' },
+              { name: 'Java', icon: '/icons/technologies/systems/java.svg' },
+              { name: 'PHP', icon: '/icons/technologies/systems/php.svg' },
+              { name: 'Vercel', icon: '/icons/technologies/systems/vercel.svg' }
+            ].map((tech, index) => (
+              <div key={tech.name} className="group flex flex-col items-center gap-2 p-3 rounded-lg hover:bg-neutral-50 transition-all duration-300">
+                <div className="w-12 h-12 flex items-center justify-center grayscale group-hover:grayscale-0 transition-all duration-300 transform group-hover:scale-110">
+                  <img 
+                    src={tech.icon} 
+                    alt={tech.name} 
+                    className="w-8 h-8 object-contain"
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                  />
+                </div>
+                <span className="text-xs font-medium text-neutral-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  {tech.name}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
       </section>
