@@ -4,6 +4,7 @@ import {getMessages, unstable_setRequestLocale} from 'next-intl/server';
 import {Inter, Manrope} from 'next/font/google';
 import {Navbar} from '@/components/Navbar';
 import {Footer} from '@/components/Footer';
+import {WhatsAppButton} from '@/components/ui/WhatsAppButton';
 
 const inter = Inter({subsets: ['latin']});
 const manrope = Manrope({subsets: ['latin']});
@@ -38,6 +39,7 @@ export default async function RootLayout({
             <Navbar />
             <main className="flex-1">{children}</main>
             <Footer />
+            <WhatsAppButton />
           </div>
         </NextIntlClientProvider>
       </body>
