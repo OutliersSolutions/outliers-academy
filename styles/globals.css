@@ -14,6 +14,19 @@
   --color-yellow: #FFFF01;
 }
 
+/* Dark theme variables (applied when .dark class is on html/body) */
+.dark {
+  --color-text: #e6e6f0;
+  --color-primary: #8b83ff;
+  --color-accent: #6c63ff;
+  --color-gold: #f0b37e;
+  --color-secondary: #1e1e2a;
+  --color-muted: #2a2a3a;
+  --color-surface: #12121b;
+  --color-bg: #0b0b13;
+  --color-yellow: #ffd400;
+}
+
 html, body, #__next {
   height: 100%;
 }
@@ -21,6 +34,7 @@ html, body, #__next {
 body {
   color: var(--color-text);
   background: var(--color-bg);
+  transition: background-color .2s ease, color .2s ease;
 }
 
 /* Typography */

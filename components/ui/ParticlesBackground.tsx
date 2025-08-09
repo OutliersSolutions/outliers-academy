@@ -8,6 +8,7 @@ interface ParticlesBackgroundProps {
   opacity?: number;
   drawLines?: boolean;
   className?: string;
+  density?: number; // pixels per particle (lower = more particles)
 }
 
 export function ParticlesBackground({
@@ -16,6 +17,7 @@ export function ParticlesBackground({
   opacity = 0.3,
   drawLines = true,
   className,
+  density = 12000,
 }: ParticlesBackgroundProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isClient, setIsClient] = useState(false);
@@ -79,7 +81,7 @@ export function ParticlesBackground({
       
       // Recreate particles for new canvas size
       particles = [];
-      const particleCount = Math.floor((canvas.width * canvas.height) / 15000);
+      const particleCount = Math.floor((canvas.width * canvas.height) / Math.max(1000, density));
       for (let i = 0; i < particleCount; i++) {
         particles.push(new Particle(canvas));
       }
@@ -157,7 +159,7 @@ export function ParticlesBackground({
       window.removeEventListener('resize', resizeCanvas);
       canvas.removeEventListener('mousemove', handleMouseMove);
     };
-  }, [particleColor, particleSize, opacity, isClient, drawLines, className]);
+  }, [particleColor, particleSize, opacity, isClient, drawLines, className, density]);
 
   if (!isClient) {
     return null;
@@ -166,7 +168,7 @@ export function ParticlesBackground({
   return (
     <canvas
       ref={canvasRef}
-      className={`${className ? className : 'fixed top-0 left-0 w-full h-full'} pointer-events-none z-[-1]`}
+      className={`${className ? className : 'fixed top-0 left-0 w-full h-full z-0'} pointer-events-none`}
       style={{ 
         background: 'transparent',
       }}

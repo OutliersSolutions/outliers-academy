@@ -7,6 +7,7 @@ const config: Config = {
     './pages/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}'
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
