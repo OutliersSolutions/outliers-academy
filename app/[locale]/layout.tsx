@@ -5,6 +5,7 @@ import {Inter, Manrope} from 'next/font/google';
 import {Navbar} from '@/components/Navbar';
 import {Footer} from '@/components/Footer';
 import {WhatsAppButton} from '@/components/ui/WhatsAppButton';
+import { ThemeProvider } from 'next-themes';
 
 const inter = Inter({subsets: ['latin']});
 const manrope = Manrope({subsets: ['latin']});
@@ -34,14 +35,16 @@ export default async function RootLayout({
   return (
     <html lang={params.locale} className={`${inter.className} ${manrope.className}`}>
       <body>
-        <NextIntlClientProvider messages={messages} locale={params.locale} timeZone={Intl.DateTimeFormat().resolvedOptions().timeZone}>
-          <div className="min-h-dvh flex flex-col">
-            <Navbar />
-            <main className="flex-1">{children}</main>
-            <Footer />
-            <WhatsAppButton />
-          </div>
-        </NextIntlClientProvider>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+          <NextIntlClientProvider messages={messages} locale={params.locale} timeZone={Intl.DateTimeFormat().resolvedOptions().timeZone}>
+            <div className="min-h-dvh flex flex-col">
+              <Navbar />
+              <main className="flex-1">{children}</main>
+              <Footer />
+              <WhatsAppButton />
+            </div>
+          </NextIntlClientProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
