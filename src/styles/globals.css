@@ -1,0 +1,252 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Root Variables */
+@layer base {
+  :root {
+    /* Outliers Academy color palette */
+    --color-text: #050315;
+    --color-primary: #2F27CE;
+    --color-accent: #433BFF;
+    --color-gold: #CE965E;
+    --color-secondary: #DEDCFF;
+    --color-muted: #EAEEF7;
+    --color-surface: #F1F3F9;
+    --color-bg: #FBFBFE;
+    --color-yellow: #FFFF01;
+
+    /* Shadcn/ui variables */
+    --background: 0 0% 98%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.5rem;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+  }
+
+  /* Dark theme variables */
+  .dark {
+    /* Outliers Academy dark palette */
+    --color-text: #e6e6f0;
+    --color-primary: #8b83ff;
+    --color-accent: #6c63ff;
+    --color-gold: #f0b37e;
+    --color-secondary: #1e1e2a;
+    --color-muted: #2a2a3a;
+    --color-surface: #12121b;
+    --color-bg: #0b0b13;
+    --color-yellow: #ffd400;
+
+    /* Shadcn/ui dark variables */
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+
+  body {
+    @apply font-inter text-black antialiased;
+  }
+
+  h1, h2 {
+    @apply font-heading;
+  }
+
+  * {
+    @apply border-border;
+  }
+}
+
+html, body, #__next {
+  height: 100%;
+}
+
+body {
+  color: var(--color-text);
+  background: var(--color-bg);
+  transition: background-color .2s ease, color .2s ease;
+}
+
+/* Navigation Links */
+.header-link {
+  position: relative;
+  @apply text-foreground/80 hover:text-primary transition-colors duration-300 ease-in-out px-3 py-2;
+}
+
+.header-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  @apply bg-primary;
+  transition: width 0.3s ease-in-out;
+}
+
+.header-link:hover::after {
+  width: 100%;
+}
+
+.active-link {
+  @apply text-primary;
+}
+
+.active-link::after {
+  width: 100%;
+}
+
+/* Typography */
+.h1-hero {
+  @apply text-4xl md:text-6xl font-extrabold tracking-tight;
+}
+.h2-section {
+  @apply text-2xl md:text-3xl font-bold;
+}
+.p-lead {
+  @apply text-base md:text-lg text-neutral-700;
+}
+
+/* Buttons */
+.btn-primary {
+  @apply inline-flex items-center gap-2 rounded-full px-5 py-3 font-semibold text-white transition-all duration-200;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+}
+.btn-primary:hover {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 25px rgba(47, 39, 206, 0.3);
+}
+.btn-primary.btn-lg {
+  @apply px-8 py-4 text-lg;
+}
+.btn-secondary {
+  @apply inline-flex items-center gap-2 rounded-full px-5 py-3 font-semibold text-text bg-secondary transition-all duration-200;
+}
+.btn-secondary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(47, 39, 206, 0.15);
+}
+.btn-outline {
+  @apply inline-flex items-center gap-2 rounded-full px-6 py-3 font-semibold text-primary border-2 border-primary bg-transparent transition-all duration-200;
+}
+.btn-outline:hover {
+  @apply bg-primary text-white;
+  transform: translateY(-1px);
+}
+
+/* Cards */
+.card {
+  @apply rounded-2xl border border-muted bg-white shadow-sm;
+}
+
+/* Aesthetic accents */
+.hero-gradient {
+  background: radial-gradient(1000px 600px at 80% -10%, var(--color-secondary), transparent 60%),
+              radial-gradient(800px 500px at 10% 0%, var(--color-muted), transparent 60%),
+              linear-gradient(180deg, var(--color-bg), var(--color-bg));
+}
+
+/* Animations */
+@keyframes sunburst-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.sunburst-animation:hover {
+  animation: sunburst-spin 20s linear infinite;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.portfolio-card {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+/* Hover Effects */
+.hover-overlay {
+  @apply absolute inset-0 bg-black/0 transition-colors duration-300;
+}
+
+.hover-overlay:hover {
+  @apply bg-black/75;
+}
+
+.hover-content {
+  @apply opacity-0 transform translate-y-4 transition-all duration-300;
+}
+
+.group:hover .hover-content {
+  @apply opacity-100 translate-y-0;
+}
+
+/* Custom Utilities */
+.scrollbar-hidden {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+} 
