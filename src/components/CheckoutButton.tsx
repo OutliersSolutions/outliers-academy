@@ -51,7 +51,7 @@ export function CheckoutButton({
       }
     } catch (e) {
       console.error('Checkout error:', e);
-      aler/* t( */(e as Error).message);
+      alert((e as Error).message);
     }
   }
 

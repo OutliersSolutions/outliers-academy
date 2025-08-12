@@ -3,11 +3,11 @@ import { useEffect, useRef } from "react"
 export const AISpectrumCircular = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
-  useEffect() => {
+  useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
 
-    const ctx = canvas.getContex/* t( */"2d")
+    const ctx = canvas.getContext("2d")
     if (!ctx) return
 
     const setCanvasDimensions = () => {
@@ -47,7 +47,7 @@ export const AISpectrumCircular = () => {
           const angle = ((Math.PI * 2) / pointCount) * i
           const x = centerX + Math.cos(angle) * baseRadius
           const y = centerY + Math.sin(angle) * baseRadius
-          this.points.push(new CircularPoin/* t( */x, y, angle, baseRadius))
+          this.points.push(new CircularPoint(x, y, angle, baseRadius))
         }
       }
 
@@ -86,7 +86,7 @@ export const AISpectrumCircular = () => {
 
         for (let i = 0; i < this.points.length; i += 4) {
           const point = this.points[i]
-          const gradient = ctx.createRadialGradien/* t( */point.x, point.y, 0, point.x, point.y, 5)
+          const gradient = ctx.createRadialGradient(point.x, point.y, 0, point.x, point.y, 5)
           gradient.addColorStop(0, this.color)
           gradient.addColorStop(1, "rgba(0, 0, 0, 0)")
 
@@ -185,7 +185,7 @@ export const AISpectrumCircular = () => {
     }
 
     const animate = () => {
-      ctx.clearRec/* t( */0, 0, canvas.width, canvas.height)
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
       for (const particle of particles) {
         particle.update()
         particle.draw()
@@ -196,7 +196,7 @@ export const AISpectrumCircular = () => {
         wave.draw()
       }
 
-      const gradient = ctx.createRadialGradien/* t( */centerX, centerY, 0, centerX, centerY, 50)
+      const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, 50)
       gradient.addColorStop(0, "rgba(255, 82, 82, 0.3)")
       gradient.addColorStop(1, "rgba(255, 82, 82, 0)")
 
@@ -208,14 +208,14 @@ export const AISpectrumCircular = () => {
       requestAnimationFrame(animate)
     }
 
-    ini/* t( */)
+    init()
     animate()
 
     window.addEventListener("resize", () => {
       setCanvasDimensions()
       centerX = canvas.width / 2
       centerY = canvas.height / 2
-      ini/* t( */)
+      init()
     })
 
     return () => {

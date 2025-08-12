@@ -10,7 +10,7 @@ export function ChatbotViewerSafe({ className = "w-full h-[400px]" }: ChatbotVie
   const containerRef = useRef<HTMLDivElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  useEffect() => {
+  useEffect(() => {
     let mounted = true;
 
     const loadModelViewer = async () => {
@@ -18,8 +18,8 @@ export function ChatbotViewerSafe({ className = "w-full h-[400px]" }: ChatbotVie
 
       try {
         // Intentar cargar model-viewer si está disponible
-        if (!customElements.ge/* t( */'model-viewer')) {
-          const script = document.createElemen/* t( */'script');
+        if (!customElements.get('model-viewer')) {
+          const script = document.createElement('script');
           script.type = 'module';
           script.src = 'https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js';
           
@@ -51,7 +51,7 @@ export function ChatbotViewerSafe({ className = "w-full h-[400px]" }: ChatbotVie
       if (!containerRef.current || !mounted) return;
 
       try {
-        const modelViewer = document.createElemen/* t( */'model-viewer');
+        const modelViewer = document.createElement('model-viewer');
         modelViewer.setAttribute('src', '/3d/chatbot.glb');
         modelViewer.setAttribute('alt', 'AI Chatbot 3D Model');
         modelViewer.setAttribute('auto-rotate', '');

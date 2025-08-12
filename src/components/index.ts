@@ -33,7 +33,6 @@ export * from './Sections/services/SoftwareDevelopment/OdooSystems.section';
 
 //TEAM
 export * from './Sections/team/Team.section';
-export * from './Sections/Calendly.section'
 export * from './Sections/zoom/zoom.section'
 
 

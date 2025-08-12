@@ -13,7 +13,7 @@ export const ParticlesBackground = ({
 }: RotatingParticlesBackgroundProps) => {
     const containerRef = useRef<HTMLDivElement>(null);
 
-    useEffect() => {
+    useEffect(() => {
         const container = containerRef.current;
         if (!container) return;
 
@@ -67,7 +67,7 @@ export const ParticlesBackground = ({
             materials.push(material);
 
             const points = new THREE.Points(geometry, material);
-            points.rotation.se/* t( */
+            points.rotation.set(
                 Math.random() * 6,
                 Math.random() * 6,
                 Math.random() * 6
@@ -81,7 +81,7 @@ export const ParticlesBackground = ({
 
             camera.position.x += (mouseX - camera.position.x) * 0.05;
             camera.position.y += (-mouseY - camera.position.y) * 0.05;
-            camera.lookA/* t( */scene.position);
+            camera.lookAt(scene.position);
 
             pointsArray.forEach((points, i) => {
                 points.rotation.y = time * (i < 4 ? i + 1 : -(i + 1));

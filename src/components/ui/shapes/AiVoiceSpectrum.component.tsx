@@ -3,11 +3,11 @@ import { useEffect, useRef } from "react"
 export const AIVoiceSpectrum = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null)
 
-    useEffect() => {
+    useEffect(() => {
         const canvas = canvasRef.current
         if (!canvas) return
 
-        const ctx = canvas.getContex/* t( */"2d")
+        const ctx = canvas.getContext("2d")
         if (!ctx) return
 
         // Set canvas dimensions
@@ -107,7 +107,7 @@ export const AIVoiceSpectrum = () => {
                     const point = this.points[i]
 
                     // Draw glow
-                    const gradient = ctx.createRadialGradien/* t( */point.x, point.y, 0, point.x, point.y, 8)
+                    const gradient = ctx.createRadialGradient(point.x, point.y, 0, point.x, point.y, 8)
                     gradient.addColorStop(0, this.color)
                     gradient.addColorStop(1, "rgba(0, 0, 0, 0)")
 
@@ -225,7 +225,7 @@ export const AIVoiceSpectrum = () => {
             requestAnimationFrame(animate)
         }
 
-        ini/* t( */)
+        init()
         animate()
 
         return () => {

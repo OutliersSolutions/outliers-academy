@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import Link from 'next/link';
 import { Badge } from '../Badge.component';
 
 
@@ -38,9 +39,9 @@ export const ProjectCard: React.FC<ProjectInterface> = ({
   };
 
   return (
-    <NavLink
+    <Link
       key={id}
-      to={link}
+      href={link}
       target='_blank'
       className="relative h-[800px] overflow-visible group flex flex-col bg-white shadow-lg rounded-xl border border-gray-200 hover:shadow-xl transition-shadow duration-300 dark:bg-gray-800 dark:border-gray-700 dark:hover:shadow-2xl"
       onMouseEnter={handleMouseEnter}
@@ -93,6 +94,6 @@ export const ProjectCard: React.FC<ProjectInterface> = ({
           {subtitle}
         </p>
       </div>
-    </NavLink>
+    </Link>
   );
 };

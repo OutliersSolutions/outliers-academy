@@ -15,7 +15,7 @@ import { chartData, fadeInUp, staggerContainer } from "@/data";
 export const OdooSystemSection = () => {
   const [mounted, setMounted] = useState(false);
 
-  useEffect() => {
+  useEffect(() => {
     setMounted(true);
   }, []);
 
@@ -41,10 +41,10 @@ export const OdooSystemSection = () => {
             <motion.div variants={fadeInUp} className="space-y-2">
               <h2
                 className="font-heading text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-gray-600 dark:text-gray-300 leading-relaxed"
-                dangerouslySetInnerHTML={{ __html: /* t( */'systems.odoo_section.title') }}
+                dangerouslySetInnerHTML={{ __html: t('systems.odoo_section.title') }}
               />
               <p className="mt-4 text-base md:text-lg">
-                {/* t( */'systems.odoo_section.description')}
+                {t('systems.odoo_section.description')}
               </p>
             </motion.div>
 
@@ -63,7 +63,7 @@ export const OdooSystemSection = () => {
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-coral-50 dark:bg-gray-700 transition-colors group-hover:bg-coral-100">
                     {/* Íconos fijos */}
                     {[BarChart3, Calendar, ShoppingCart, Factory, Settings][index % 5] && (
-                      React.createElemen/* t( */[BarChart3, Calendar, ShoppingCart, Factory, Settings][index % 5], {
+                      React.createElement([BarChart3, Calendar, ShoppingCart, Factory, Settings][index % 5], {
                         className: "w-5 h-5 text-coral dark:text-coral"
                       })
                     )}
@@ -114,14 +114,14 @@ export const OdooSystemSection = () => {
                   {/* Estadísticas */}
                   <div className="mb-5 grid grid-cols-2 gap-4">
                     <div className="rounded-lg bg-gray-50 dark:bg-gray-900 p-3">
-                      <p className="text-xs">{/* t( */'systems.odoo_section.stats.monthly_sales')}</p>
+                      <p className="text-xs">{t('systems.odoo_section.stats.monthly_sales')}</p>
                       <p className="text-lg font-semibold">$128,430</p>
                       <div className="mt-2 h-1.5 w-full rounded-full bg-gray-200 dark:bg-gray-700">
                         <div className="h-1.5 w-3/4 rounded-full bg-OdooPrimary" />
                       </div>
                     </div>
                     <div className="rounded-lg bg-gray-50 dark:bg-gray-900 p-3">
-                      <p className="text-xs">{/* t( */'systems.odoo_section.stats.production')}</p>
+                      <p className="text-xs">{t('systems.odoo_section.stats.production')}</p>
                       <p className="text-lg font-semibold">1,240 unidades</p>
                       <div className="mt-2 h-1.5 w-full rounded-full bg-gray-200 dark:bg-gray-700">
                         <div className="h-1.5 w-4/5 rounded-full bg-OdooPrimary" />
@@ -132,13 +132,13 @@ export const OdooSystemSection = () => {
                   {/* Gráfico de barras */}
                   <div className="mb-5 rounded-lg bg-white dark:bg-gray-800 p-4 shadow-sm ring-1 ring-gray-200 dark:ring-gray-700">
                     <div className="mb-3 flex items-center justify-between">
-                      <p className="text-xs font-semibold">{/* t( */'systems.odoo_section.stats.annual_performance')}</p>
+                      <p className="text-xs font-semibold">{t('systems.odoo_section.stats.annual_performance')}</p>
                       <div className="flex items-center gap-3 text-xs">
                         <div className="flex items-center gap-1">
-                          <span className="h-2 w-2 rounded-full bg-OdooPrimary"></span> {/* t( */'systems.odoo_section.stats.sales')}
+                          <span className="h-2 w-2 rounded-full bg-OdooPrimary"></span> {t('systems.odoo_section.stats.sales')}
                         </div>
                         <div className="flex items-center gap-1">
-                          <span className="h-2 w-2 rounded-full bg-OdooSecondary"></span> {/* t( */'systems.odoo_section.stats.costs')}
+                          <span className="h-2 w-2 rounded-full bg-OdooSecondary"></span> {t('systems.odoo_section.stats.costs')}
                         </div>
                       </div>
                     </div>
@@ -162,15 +162,15 @@ export const OdooSystemSection = () => {
                   {/* Tareas */}
                   <div className="space-y-2">
                     <div className="flex items-center justify-between rounded-md bg-gray-50 dark:bg-gray-800 p-2">
-                      <span className="text-xs font-medium">{/* t( */'systems.odoo_section.tasks.update_inventory')}</span>
+                      <span className="text-xs font-medium">{t('systems.odoo_section.tasks.update_inventory')}</span>
                       <span className="rounded-full bg-yellow-100 dark:bg-yellow-900 px-2 py-0.5 text-xs font-medium text-yellow-700 dark:text-yellow-300">
-                        {/* t( */'systems.odoo_section.tasks.in_progress')}
+                        {t('systems.odoo_section.tasks.in_progress')}
                       </span>
                     </div>
                     <div className="flex items-center justify-between rounded-md bg-gray-50 dark:bg-gray-800 p-2">
-                      <span className="text-xs font-medium">{/* t( */'systems.odoo_section.tasks.pending_orders')}</span>
+                      <span className="text-xs font-medium">{t('systems.odoo_section.tasks.pending_orders')}</span>
                       <span className="rounded-full bg-green-100 dark:bg-green-900 px-2 py-0.5 text-xs font-medium text-green-700 dark:text-green-300">
-                        {/* t( */'systems.odoo_section.tasks.completed')}
+                        {t('systems.odoo_section.tasks.completed')}
                       </span>
                     </div>
                   </div>

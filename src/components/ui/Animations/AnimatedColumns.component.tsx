@@ -16,13 +16,13 @@ export const AnimatedColumn = ({
     const scrollerRef = useRef<HTMLDivElement>(null)
     const [start, setStart] = useState(false)
 
-    useEffect() => {
+    useEffect(() => {
         if (scrollerRef.current) {
             const children = Array.from(scrollerRef.current.children)
             children.forEach((child) => {
                 scrollerRef.current!.appendChild(child.cloneNode(true))
             })
-            setStar/* t( */true)
+            setStart(true)
         }
 
         if (containerRef.current) {

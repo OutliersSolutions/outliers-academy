@@ -16,25 +16,25 @@ export function WhatsAppButton({
   const [isVisible, setIsVisible] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
 
-  useEffect() => {
+  useEffect(() => {
     // Show button after a delay
-    const timer = setTimeou/* t( */() => {
+    const timer = setTimeout(() => {
       setIsVisible(true);
     }, 2000);
 
-    return () => clearTimeou/* t( */timer);
+    return () => clearTimeout(timer);
   }, []);
 
   const handleClick = () => {
     setIsAnimating(true);
-    const encodedMessage = encodeURIComponen/* t( */message);
+    const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/${phoneNumber.replace(/[^\d]/g, '')}?text=${encodedMessage}`;
     
     // Open WhatsApp in a new tab
     window.open(whatsappUrl, '_blank');
     
     // Reset animation after a delay
-    setTimeou/* t( */() => {
+    setTimeout(() => {
       setIsAnimating(false);
     }, 300);
   };

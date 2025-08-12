@@ -26,7 +26,7 @@ export const Header: React.FC = () => {
     const [openMobileSubmenus, setOpenMobileSubmenus] = useState<Record<string, boolean>>({});
     const [mounted, setMounted] = useState(false);
 
-    useEffect() => {
+    useEffect(() => {
         setMounted(true);
         const handleScroll = () => setScrolled(window.scrollY > 10);
         window.addEventListener("scroll", handleScroll);
@@ -55,7 +55,7 @@ export const Header: React.FC = () => {
         { code: 'en', name: 'English', flag: '🇺🇸' }
     ];
 
-    useEffect() => {
+    useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (languageMenuRef.current && !languageMenuRef.current.contains(event.target as Node)) {
                 setOpenLanguageMenu(false);

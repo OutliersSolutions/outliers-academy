@@ -15,7 +15,7 @@ interface TestimonialCardProps {
 
 const TestimonialCard = ({ testimonial, index }: TestimonialCardProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const words = testimonial.fullTestimonial.spli/* t( */" ");
+  const words = testimonial.fullTestimonial.split(" ");
   const shortQuote = words.slice(0, 30).join(" ") + (words.length > 30 ? "..." : "");
 
   return (

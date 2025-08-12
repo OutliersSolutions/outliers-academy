@@ -135,16 +135,16 @@ export const IconsBackground = () => {
         ]
     });
 
-    useEffect() => {
+    useEffect(() => {
         initParticlesEngine(async (engine) => {
             await loadSlim(engine);
         }).then(() => {
-            setIni/* t( */true);
+            setInit(true);
         });
     }, []);
 
     // Actualiza la configuración del fondo según el tema
-    useEffect() => {
+    useEffect(() => {
         setOptions((prevOptions) => ({
             ...prevOptions,
             background: {

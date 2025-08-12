@@ -22,16 +22,16 @@ export function ParticlesBackground({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isClient, setIsClient] = useState(false);
   
-  useEffect() => {
-    setIsClien/* t( */true);
+  useEffect(() => {
+    setIsClient(true);
   }, []);
 
-  useEffect() => {
+  useEffect(() => {
     if (!isClient) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContex/* t( */'2d');
+    const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
     let animationId: number;
@@ -90,7 +90,7 @@ export function ParticlesBackground({
     function animate() {
       if (!ctx || !canvas) return;
       
-      ctx.clearRec/* t( */0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
       
       particles.forEach(particle => {
         particle.update(canvas);
@@ -107,7 +107,7 @@ export function ParticlesBackground({
           for (let j = i + 1; j < particles.length; j++) {
             const dx = particles[i].x - particles[j].x;
             const dy = particles[i].y - particles[j].y;
-            const distance = Math.sqr/* t( */dx * dx + dy * dy);
+            const distance = Math.sqrt(dx * dx + dy * dy);
             
             if (distance < 100) {
               ctx.globalAlpha = (opacity * 0.3) * (1 - distance / 100);
@@ -142,7 +142,7 @@ export function ParticlesBackground({
       particles.forEach(particle => {
         const dx = mouseX - particle.x;
         const dy = mouseY - particle.y;
-        const distance = Math.sqr/* t( */dx * dx + dy * dy);
+        const distance = Math.sqrt(dx * dx + dy * dy);
         
         if (distance < 100) {
           const force = (100 - distance) / 100;

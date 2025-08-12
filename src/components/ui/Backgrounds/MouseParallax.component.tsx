@@ -7,7 +7,11 @@ export interface MouseParallaxProps {
   strength?: number;
 }
 
-export const MouseParallax = ({ children, className = "", strength = 0.01 }: MouseParallaxProps) => {
+export const MouseParallax = ({
+  children,
+  className = "",
+  strength = 0.01,
+}: MouseParallaxProps): JSX.Element => {
   const ref = useRef<HTMLDivElement>(null);
 
   const x = useMotionValue(0);
@@ -16,24 +20,24 @@ export const MouseParallax = ({ children, className = "", strength = 0.01 }: Mou
   const springX = useSpring(x, { stiffness: 25, damping: 20 });
   const springY = useSpring(y, { stiffness: 25, damping: 20 });
 
-  useEffect() => {
+  useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (!ref.current) return;
 
-      const rect = ref.current.getBoundingClientRec/* t( */);
+      const rect = ref.current.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
 
       const offsetX = (e.clientX - centerX) * strength;
       const offsetY = (e.clientY - centerY) * strength;
 
-      x.se/* t( */offsetX);
-      y.se/* t( */offsetY);
+      x.set(offsetX);
+      y.set(offsetY);
     };
 
     const handleMouseLeave = () => {
-      x.se/* t( */0);
-      y.se/* t( */0);
+      x.set(0);
+      y.set(0);
     };
 
     window.addEventListener("mousemove", handleMouseMove);

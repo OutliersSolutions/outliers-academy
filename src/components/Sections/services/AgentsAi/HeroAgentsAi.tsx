@@ -55,12 +55,12 @@ export const HeroAgentsAiSection = () => {
                             <div className="flex items-center gap-2">
                                 <div className="h-1 w-10 rounded-full bg-coral" />
                                 <p className="text-sm font-semibold uppercase tracking-wider text-coral">
-                                    {/* t( */'ai_agents.hero_section.section_label')}
+                                    {t('ai_agents.hero_section.section_label')}
                                 </p>
                             </div>
                             <h1
                                 className="text-3xl sm:text-5xl md:text-5xl lg:text-5xl xl:text-5xl font-extrabold tracking-tight text-gray-900 dark:text-white filter drop-shadow-[0_0_10px_rgba(255,255,255,0.7)]"
-                                dangerouslySetInnerHTML={{ __html: /* t( */'ai_agents.hero_section.title') }}
+                                dangerouslySetInnerHTML={{ __html: t('ai_agents.hero_section.title') }}
                             />
                         </motion.div>
 
@@ -72,7 +72,7 @@ export const HeroAgentsAiSection = () => {
                             transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
                             className="text-base md:text-lg"
                         >
-                            {/* t( */'ai_agents.hero_section.description')}
+                            {t('ai_agents.hero_section.description')}
                         </motion.p>
 
                         {/* Botones */}
@@ -89,7 +89,7 @@ export const HeroAgentsAiSection = () => {
                                 to="https://calendly.com/outlierssolutions108/discovery-meeting"
                                 className="inline-flex items-center justify-center bg-coral hover:bg-coral text-white px-4 py-3 rounded-md text-sm font-medium shadow-lg hover:shadow-xl transition-all no-underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-coral"
                             >
-                                {/* t( */'ai_agents.hero_section.buttons.schedule_demo')}
+                                {t('ai_agents.hero_section.buttons.schedule_demo')}
                                 <SquareArrowOutUpRight className="ml-2 h-5" />
                             </NavLink>
 
@@ -98,7 +98,7 @@ export const HeroAgentsAiSection = () => {
                                 to="/"
                                 className="inline-flex items-center justify-center bg-white text-gray-700 border border-gray-300 hover:border-[#FF6B6B] hover:text-[#FF6B6B] dark:bg-gray-800 dark:border-gray-600 dark:text-gray-200 dark:hover:text-[#FF6B6B] px-4 py-3 rounded-md text-sm font-medium shadow-lg hover:shadow-xl transition-all no-underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-coral"
                             >
-                                {/* t( */'ai_agents.hero_section.buttons.explore_solutions')}
+                                {t('ai_agents.hero_section.buttons.explore_solutions')}
                             </NavLink>
                         </motion.div>
 

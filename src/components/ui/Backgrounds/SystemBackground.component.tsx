@@ -4,7 +4,7 @@ import * as THREE from 'three';
 export const SystemBackground = () => {
     const containerRef = useRef<HTMLDivElement>(null);
 
-    useEffect() => {
+    useEffect(() => {
         // 🎨 Colores configurables
         const PARTICLE_COLOR_HEX = '#FF6B6B';
 
@@ -28,8 +28,8 @@ export const SystemBackground = () => {
             10000
         );
         // Posicionamos la cámara cerca de la parte superior de las olas:
-        camera.position.se/* t( */0, 280, 200);
-        camera.lookA/* t( */new THREE.Vector3(0, 0, 0));
+        camera.position.set(0, 280, 200);
+        camera.lookAt(new THREE.Vector3(0, 0, 0));
 
         const renderer = new THREE.WebGLRenderer({ alpha: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
@@ -50,7 +50,7 @@ export const SystemBackground = () => {
                 const y = 0;
                 const z = iy * SEPARATION - (AMOUNTY * SEPARATION) / 2;
 
-                positions.se/* t( */[x, y, z], i * 3);
+                positions.set([x, y, z], i * 3);
                 scales[i] = 1;
                 i++;
             }
@@ -115,7 +115,7 @@ export const SystemBackground = () => {
                 camera.position.x += (mouseX - camera.position.x) * 0.05;
                 camera.position.y += (-mouseY - camera.position.y) * 0.05;
             }
-            camera.lookA/* t( */new THREE.Vector3(0, 0, 0));
+            camera.lookAt(new THREE.Vector3(0, 0, 0));
 
             renderer.render(scene, camera);
             count += 0.1;

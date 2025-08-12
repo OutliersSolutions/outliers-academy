@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react';
 export function ChatbotViewer() {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useEffect() => {
+  useEffect(() => {
     let mounted = true;
 
     const loadModel = async () => {
@@ -13,7 +13,7 @@ export function ChatbotViewer() {
 
       try {
         // Create model-viewer element
-        const modelViewer = document.createElemen/* t( */'model-viewer');
+        const modelViewer = document.createElement('model-viewer');
         modelViewer.setAttribute('src', '/3d/chatbot.glb');
         modelViewer.setAttribute('alt', 'AI Chatbot 3D Model');
         modelViewer.setAttribute('auto-rotate', '');
@@ -47,8 +47,8 @@ export function ChatbotViewer() {
     };
 
     // Load model-viewer script if not already loaded
-    if (!window.customElements.ge/* t( */'model-viewer')) {
-      const script = document.createElemen/* t( */'script');
+    if (!window.customElements.get('model-viewer')) {
+      const script = document.createElement('script');
       script.type = 'module';
       script.src = 'https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js';
       script.onload = () => loadModel();
