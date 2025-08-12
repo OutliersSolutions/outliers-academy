@@ -15,7 +15,9 @@ export default function SignupPage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [oauthLoading, setOauthLoading] = useState<string | null>(null);
   const router = useRouter();
@@ -45,6 +47,20 @@ export default function SignupPage() {
   const handleEmailSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    
+    // Validar que las contraseñas coincidan
+    if (password !== confirmPassword) {
+      alert(locale === 'es' ? 'Las contraseñas no coinciden' : 'Passwords do not match');
+      setLoading(false);
+      return;
+    }
+
+    // Validar longitud mínima
+    if (password.length < 8) {
+      alert(locale === 'es' ? 'La contraseña debe tener al menos 8 caracteres' : 'Password must be at least 8 characters');
+      setLoading(false);
+      return;
+    }
     
     try {
       const res = await fetch('/api/auth/signup', {
@@ -189,6 +205,39 @@ export default function SignupPage() {
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
               </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="confirmPassword" className="text-sm font-medium">
+                {locale === 'es' ? 'Confirmar Contraseña' : 'Confirm Password'}
+              </Label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                <Input
+                  id="confirmPassword"
+                  type={showConfirmPassword ? 'text' : 'password'}
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="pl-10 pr-10 h-11"
+                  placeholder={locale === 'es' ? 'Repite tu contraseña' : 'Repeat your password'}
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={(e: React.MouseEvent) => {
+                    e.preventDefault();
+                    setShowConfirmPassword(!showConfirmPassword);
+                  }}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                >
+                  {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </button>
+              </div>
+              {confirmPassword && password !== confirmPassword && (
+                <p className="text-sm text-red-500">
+                  {locale === 'es' ? 'Las contraseñas no coinciden' : 'Passwords do not match'}
+                </p>
+              )}
             </div>
 
             <Button 

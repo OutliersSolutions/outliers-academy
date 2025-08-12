@@ -4,7 +4,7 @@ import Link from 'next/link';
 import {usePathname} from 'next/navigation';
 import {useLocale, useTranslations} from 'next-intl';
 import {useEffect, useRef, useState} from 'react';
-import {Sun, Moon, ChevronDown, Search, User, LogOut, BarChart3} from 'lucide-react';
+import {Sun, Moon, ChevronDown, Search, User, LogOut, BarChart3, BookOpen} from 'lucide-react';
 import {useTheme} from 'next-themes';
 import {useSession, signOut} from 'next-auth/react';
 import {SearchOverlay} from '@/components/ui/SearchOverlay';
@@ -183,6 +183,26 @@ export function Navbar() {
                             >
                               <BarChart3 className="w-4 h-4" />
                               <span>Dashboard</span>
+                            </Link>
+                          </li>
+                          <li>
+                            <Link
+                              href={`/${locale}/my-courses`}
+                              className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                              onClick={() => setUserMenuOpen(false)}
+                            >
+                              <BookOpen className="w-4 h-4" />
+                              <span>My Courses</span>
+                            </Link>
+                          </li>
+                          <li>
+                            <Link
+                              href={`/${locale}/profile`}
+                              className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                              onClick={() => setUserMenuOpen(false)}
+                            >
+                              <User className="w-4 h-4" />
+                              <span>Profile</span>
                             </Link>
                           </li>
                           <li>

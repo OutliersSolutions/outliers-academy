@@ -46,7 +46,6 @@ export default function LoginPage() {
     setLoading(true);
     
     try {
-      // First try NextAuth credentials (if you want to keep legacy support)
       const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -54,10 +53,14 @@ export default function LoginPage() {
       });
       
       if (res.ok) {
-        router.push(`/${locale}/dashboard`);
+        const data = await res.json();
+        console.log('Login successful:', data);
+        
+        // Forzar recarga completa para asegurar que las cookies se establezcan
+        window.location.href = `/${locale}/dashboard`;
       } else {
         const data = await res.json();
-        throw new Error(data.error || 'Error de inicio de sesión');
+        throw new Error(data.error || (locale === 'es' ? 'Error de inicio de sesión' : 'Sign in error'));
       }
     } catch (error) {
       console.error('Email signin error:', error);

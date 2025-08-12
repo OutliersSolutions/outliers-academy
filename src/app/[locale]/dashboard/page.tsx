@@ -3,6 +3,7 @@
 import { useSession, signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
+import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -21,7 +22,7 @@ interface Course {
 }
 
 export default function DashboardPage() {
-  const { data: session, status } = useSession();
+  const { isAuthenticated, isLoading: authLoading, user } = useAuth();
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
@@ -31,15 +32,15 @@ export default function DashboardPage() {
   const isSpanish = locale === 'es';
 
   useEffect(() => {
-    if (status === "unauthenticated") {
+    if (!authLoading && !isAuthenticated) {
       router.push(`/${locale}/login`);
       return;
     }
 
-    if (status === "authenticated" && session?.user?.odooUserId) {
+    if (isAuthenticated && user?.odooUserId) {
       fetchUserCourses();
     }
-  }, [status, session, router, locale]);
+  }, [isAuthenticated, authLoading, user, router, locale]);
 
   const fetchUserCourses = async () => {
     try {
@@ -55,11 +56,19 @@ export default function DashboardPage() {
     }
   };
 
-  const handleSignOut = () => {
-    signOut({ callbackUrl: `/${locale}` });
+  const handleSignOut = async () => {
+    // Handle both NextAuth and legacy logout
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+      signOut({ callbackUrl: `/${locale}` });
+    } catch (error) {
+      // Fallback to just clearing cookies and redirecting
+      document.cookie = 'oa_session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+      window.location.href = `/${locale}`;
+    }
   };
 
-  if (status === "loading" || loading) {
+  if (authLoading || loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center space-y-4">
@@ -72,7 +81,7 @@ export default function DashboardPage() {
     );
   }
 
-  if (!session) {
+  if (!isAuthenticated || !user) {
     return null;
   }
 
@@ -86,14 +95,14 @@ export default function DashboardPage() {
         <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
           <div className="flex items-center space-x-4 mb-4 md:mb-0">
             <Avatar className="h-16 w-16">
-              <AvatarImage src={session.user.image || undefined} />
+              <AvatarImage src={user.image || undefined} />
               <AvatarFallback>
-                {session.user.name?.split(' ').map(n => n[0]).join('') || session.user.email?.[0].toUpperCase()}
+                {user.name?.split(' ').map(n => n[0]).join('') || user.email?.[0]?.toUpperCase() || 'U'}
               </AvatarFallback>
             </Avatar>
             <div>
               <h1 className="text-2xl font-bold">
-                {isSpanish ? '¡Hola, ' : 'Hello, '}{session.user.name || session.user.email}!
+                {isSpanish ? '¡Hola, ' : 'Hello, '}{user.name || user.email}!
               </h1>
               <p className="text-muted-foreground">
                 {isSpanish ? 'Bienvenido a tu panel de estudiante' : 'Welcome to your student dashboard'}
@@ -102,9 +111,17 @@ export default function DashboardPage() {
           </div>
           
           <div className="flex items-center space-x-2">
-            <Button variant="outline" size="sm">
-              <Settings className="h-4 w-4 mr-2" />
-              {isSpanish ? 'Configuración' : 'Settings'}
+            <Button variant="outline" size="sm" asChild>
+              <Link href={`/${locale}/my-courses`}>
+                <BookOpen className="h-4 w-4 mr-2" />
+                {isSpanish ? 'Mis Cursos' : 'My Courses'}
+              </Link>
+            </Button>
+            <Button variant="outline" size="sm" asChild>
+              <Link href={`/${locale}/profile`}>
+                <User className="h-4 w-4 mr-2" />
+                {isSpanish ? 'Perfil' : 'Profile'}
+              </Link>
             </Button>
             <Button variant="outline" size="sm" onClick={handleSignOut}>
               <LogOut className="h-4 w-4 mr-2" />
