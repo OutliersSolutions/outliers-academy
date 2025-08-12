@@ -36,7 +36,7 @@ export default async function RootLayout({
       <div className="min-h-dvh flex flex-col">
         <Navbar />
         <main className="flex-1">{children}</main>
-        <Footer />
+        <Footer locale={params.locale} />
         <WhatsAppButton />
       </div>
     </NextIntlClientProvider>

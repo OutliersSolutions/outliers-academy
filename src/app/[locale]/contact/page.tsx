@@ -1,130 +1,186 @@
 import { ParticlesBackground } from '@/components/ui/ParticlesBackground';
 import { ChatbotViewerSafe } from '@/components/ChatbotViewerSafe';
+import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
+import { ArrowRight, MessageCircle, Mail, Clock, HelpCircle, Send } from 'lucide-react';
 
-export default function ContactPage() {
+export default async function ContactPage({
+  params
+}: {
+  params: { locale: string };
+}) {
+  unstable_setRequestLocale(params.locale);
+  const t = await getTranslations('contact');
+  const robotT = await getTranslations('robot');
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-bg to-surface/30 relative">
-      <ParticlesBackground particleColor="#6366f1" opacity={0.05} />
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-slate-900 relative">
+      <ParticlesBackground particleColor="#6366f1" opacity={0.03} />
       
-      <section className="py-20 md:py-28 relative z-10">
+      {/* Hero Section */}
+      <section className="relative z-10 pt-20 pb-16">
         <div className="container">
-          <div className="text-center mb-16">
-            <h1 className="h1-hero mb-6">
-              Contacta con <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">Outliers Academy</span>
-            </h1>
-            <p className="p-lead max-w-2xl mx-auto">
-              ¿Tienes preguntas sobre nuestros cursos o necesitas ayuda? Estamos aquí para ayudarte en tu 
-              camino hacia el dominio tecnológico.
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-            {/* Formulario de Contacto */}
-            <div className="bg-white rounded-2xl shadow-lg p-8">
-              <h2 className="text-2xl font-bold mb-6">Envíanos un mensaje</h2>
-              <form className="space-y-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label htmlFor="firstName" className="block text-sm font-semibold text-neutral-700 mb-2">
-                      Nombre
-                    </label>
-                    <input
-                      type="text"
-                      id="firstName"
-                      className="w-full px-4 py-3 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-                      placeholder="Tu nombre"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="lastName" className="block text-sm font-semibold text-neutral-700 mb-2">
-                      Apellidos
-                    </label>
-                    <input
-                      type="text"
-                      id="lastName"
-                      className="w-full px-4 py-3 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-                      placeholder="Tus apellidos"
-                    />
-                  </div>
-                </div>
-                
-                <div>
-                  <label htmlFor="email" className="block text-sm font-semibold text-neutral-700 mb-2">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    className="w-full px-4 py-3 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-                    placeholder="tu@email.com"
-                    required
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="subject" className="block text-sm font-semibold text-neutral-700 mb-2">
-                    Asunto
-                  </label>
-                  <select
-                    id="subject"
-                    className="w-full px-4 py-3 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-                  >
-                    <option value="">Selecciona un tema</option>
-                    <option value="courses">Información sobre cursos</option>
-                    <option value="pricing">Precios y planes</option>
-                    <option value="technical">Soporte técnico</option>
-                    <option value="business">Oportunidades de negocio</option>
-                    <option value="other">Otro</option>
-                  </select>
-                </div>
-                
-                <div>
-                  <label htmlFor="message" className="block text-sm font-semibold text-neutral-700 mb-2">
-                    Mensaje
-                  </label>
-                  <textarea
-                    id="message"
-                    rows={5}
-                    className="w-full px-4 py-3 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
-                    placeholder="Cuéntanos en qué podemos ayudarte..."
-                    required
-                  ></textarea>
-                </div>
-                
-                <button
-                  type="submit"
-                  className="w-full btn-primary btn-lg justify-center"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                  </svg>
-                  Enviar mensaje
-                </button>
-              </form>
+          <div className="text-center max-w-4xl mx-auto">
+            <div className="inline-flex items-center gap-2 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 px-4 py-2 rounded-full text-sm font-medium mb-6">
+              <MessageCircle className="w-4 h-4" />
+              {t('contactInfo')}
             </div>
             
-            {/* Información de contacto y 3D */}
+            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
+              {t('title')}
+            </h1>
+            
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed">
+              {t('description')}
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Main Content */}
+      <section className="relative z-10 pb-20">
+        <div className="container">
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            
+            {/* Contact Form - Left Column */}
+            <div className="xl:col-span-2">
+              <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-100 dark:border-gray-700 p-8 md:p-10">
+                <div className="flex items-center gap-3 mb-8">
+                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
+                    <Send className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+                      {robotT('sendMessage')}
+                    </h2>
+                    <p className="text-gray-600 dark:text-gray-400">
+                      {t('contactMethods')}
+                    </p>
+                  </div>
+                </div>
+
+                <form className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <label htmlFor="firstName" className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
+                        {robotT('firstName')}
+                      </label>
+                      <input
+                        type="text"
+                        id="firstName"
+                        className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+                        placeholder={robotT('firstNamePlaceholder')}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label htmlFor="lastName" className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
+                        {robotT('lastName')}
+                      </label>
+                      <input
+                        type="text"
+                        id="lastName"
+                        className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+                        placeholder={robotT('lastNamePlaceholder')}
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <label htmlFor="email" className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
+                      {robotT('email')}
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+                      placeholder={robotT('emailPlaceholder')}
+                      required
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <label htmlFor="subject" className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
+                      {robotT('subject')}
+                    </label>
+                    <select
+                      id="subject"
+                      className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 dark:text-white"
+                    >
+                      <option value="">{robotT('subjectPlaceholder')}</option>
+                      <option value="courses">{robotT('subjectOptions.courses')}</option>
+                      <option value="pricing">{robotT('subjectOptions.pricing')}</option>
+                      <option value="technical">{robotT('subjectOptions.technical')}</option>
+                      <option value="business">{robotT('subjectOptions.business')}</option>
+                      <option value="other">{robotT('subjectOptions.other')}</option>
+                    </select>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <label htmlFor="message" className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
+                      {robotT('message')}
+                    </label>
+                    <textarea
+                      id="message"
+                      rows={5}
+                      className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 resize-none"
+                      placeholder={robotT('messagePlaceholder')}
+                      required
+                    ></textarea>
+                  </div>
+                  
+                  <button
+                    type="submit"
+                    className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg flex items-center justify-center gap-2"
+                  >
+                    {robotT('sendButton')}
+                    <ArrowRight className="w-5 h-5" />
+                  </button>
+                </form>
+              </div>
+            </div>
+            
+            {/* Right Column */}
             <div className="space-y-8">
-              {/* Modelo 3D */}
-              <div className="bg-white rounded-2xl shadow-lg p-6">
-                <h3 className="text-xl font-bold mb-4 text-center">Nuestro Asistente Virtual</h3>
-                <div className="h-64">
+              {/* AI Assistant */}
+              <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-100 dark:border-gray-700 overflow-hidden">
+                <div className="p-6">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center">
+                      <HelpCircle className="w-5 h-5 text-white" />
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                      {robotT('virtualAssistant')}
+                    </h3>
+                  </div>
+                </div>
+                
+                <div className="h-64 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-700 dark:to-gray-800">
                   <ChatbotViewerSafe className="w-full h-full" />
                 </div>
-                <p className="text-center text-sm text-neutral-600 mt-4">
-                  ¡Pronto tendrás acceso a nuestro asistente de IA para resolver tus dudas al instante!
-                </p>
+                
+                <div className="p-6 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20">
+                  <p className="text-sm text-gray-700 dark:text-gray-300 text-center">
+                    {robotT('comingSoon')}
+                  </p>
+                </div>
               </div>
               
-              {/* Métodos de contacto */}
-              <div className="bg-white rounded-2xl shadow-lg p-8">
-                <h3 className="text-xl font-bold mb-6">Otras formas de contactarnos</h3>
-                <div className="space-y-6">
+              {/* Contact Methods */}
+              <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-100 dark:border-gray-700 p-6">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center">
+                    <MessageCircle className="w-5 h-5 text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                    {robotT('otherWays')}
+                  </h3>
+                </div>
+                
+                <div className="space-y-4">
                   <a 
                     href="https://wa.me/+51999999999" 
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-4 p-4 rounded-xl border border-neutral-200 hover:border-primary hover:bg-primary/5 transition-all group"
+                    className="flex items-center gap-4 p-4 rounded-xl bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 hover:bg-green-100 dark:hover:bg-green-900/30 transition-all group"
                   >
                     <div className="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
                       <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -132,91 +188,36 @@ export default function ContactPage() {
                       </svg>
                     </div>
                     <div>
-                      <h4 className="font-semibold text-neutral-900 group-hover:text-primary transition-colors">WhatsApp</h4>
-                      <p className="text-neutral-600 text-sm">Contacto directo e inmediato</p>
+                      <h4 className="font-semibold text-gray-900 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">WhatsApp</h4>
+                      <p className="text-gray-600 dark:text-gray-400 text-sm">{robotT('directContact')}</p>
                     </div>
                   </a>
                   
                   <a 
                     href="mailto:info@outliers.academy"
-                    className="flex items-center gap-4 p-4 rounded-xl border border-neutral-200 hover:border-primary hover:bg-primary/5 transition-all group"
+                    className="flex items-center gap-4 p-4 rounded-xl bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-all group"
                   >
-                    <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                      </svg>
+                    <div className="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <Mail className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                      <h4 className="font-semibold text-neutral-900 group-hover:text-primary transition-colors">Email</h4>
-                      <p className="text-neutral-600 text-sm">info@outliers.academy</p>
+                      <h4 className="font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Email</h4>
+                      <p className="text-gray-600 dark:text-gray-400 text-sm">info@outliers.academy</p>
                     </div>
                   </a>
                   
-                  <div className="flex items-center gap-4 p-4 rounded-xl border border-neutral-200">
-                    <div className="w-12 h-12 bg-accent rounded-xl flex items-center justify-center">
-                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
+                  <div className="flex items-center gap-4 p-4 rounded-xl bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800">
+                    <div className="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center">
+                      <Clock className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                      <h4 className="font-semibold text-neutral-900">Horario de atención</h4>
-                      <p className="text-neutral-600 text-sm">Lun - Vie: 9:00 AM - 6:00 PM (GMT-5)</p>
+                      <h4 className="font-semibold text-gray-900 dark:text-white">{robotT('officeHours')}</h4>
+                      <p className="text-gray-600 dark:text-gray-400 text-sm">{robotT('officeHoursText')}</p>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-      
-      {/* FAQ Section */}
-      <section className="py-16 md:py-20 bg-white relative z-10">
-        <div className="container">
-          <div className="text-center mb-12">
-            <h2 className="h2-section mb-4">Preguntas Frecuentes</h2>
-            <p className="p-lead max-w-2xl mx-auto">
-              Encuentra respuestas a las preguntas más comunes sobre nuestros cursos y servicios.
-            </p>
-          </div>
-          
-          <div className="max-w-3xl mx-auto space-y-6">
-            {[
-              {
-                question: "¿Cómo puedo inscribirme en un curso?",
-                answer: "Puedes inscribirte directamente desde la página de cada curso. Solo necesitas crear una cuenta y proceder con el pago a través de nuestro sistema seguro."
-              },
-              {
-                question: "¿Los cursos incluyen certificado?",
-                answer: "Sí, todos nuestros cursos incluyen un certificado de finalización que puedes descargar una vez hayas completado todo el contenido y los ejercicios."
-              },
-              {
-                question: "¿Puedo acceder al contenido desde cualquier dispositivo?",
-                answer: "Absolutamente. Nuestra plataforma está optimizada para funcionar en computadoras, tablets y móviles, para que puedas aprender desde donde quieras."
-              },
-              {
-                question: "¿Hay soporte técnico disponible?",
-                answer: "Sí, contamos con un equipo de soporte técnico disponible para ayudarte con cualquier problema técnico que puedas experimentar en la plataforma."
-              },
-              {
-                question: "¿Los cursos tienen fecha de vencimiento?",
-                answer: "No, una vez que adquieres un curso, tienes acceso de por vida al contenido, incluyendo futuras actualizaciones."
-              }
-            ].map((faq, index) => (
-              <details key={index} className="group border border-neutral-200 rounded-xl">
-                <summary className="p-6 cursor-pointer hover:bg-neutral-50 transition-colors">
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-semibold text-neutral-900">{faq.question}</h3>
-                    <svg className="w-5 h-5 text-neutral-500 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </div>
-                </summary>
-                <div className="px-6 pb-6">
-                  <p className="text-neutral-600 leading-relaxed">{faq.answer}</p>
-                </div>
-              </details>
-            ))}
           </div>
         </div>
       </section>

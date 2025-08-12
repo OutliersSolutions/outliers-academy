@@ -64,7 +64,8 @@
         "pricing": "Pricing",
         "contact": "Contact",
         "signIn": "Sign in",
-        "signUp": "Sign up"
+        "signUp": "Sign up",
+        "faq": "FAQ"
     },
     "footer": {
         "description": "We transform ideas into digital realities through visionary code and innovative marketing strategies.",
@@ -74,6 +75,7 @@
         "about": "About",
         "catalog": "Catalog",
         "schedule": "Schedule",
+        "faq": "FAQ",
         "services": "Services",
         "digitalMarketing": "Digital Marketing",
         "systemDevelopment": "System Development",
@@ -114,6 +116,7 @@
     },
     "contact": {
         "title": "Contact Form",
+        "description": "We are here to help. Send us a message and we will respond as soon as possible.",
         "contactInfo": "Contact information and 3D",
         "contactMethods": "Contact methods",
         "directContact": "Direct and immediate contact",
@@ -154,6 +157,102 @@
         "aiAssistant": "AI Assistant",
         "question": "What do you want to learn?",
         "startFree": "Start any course for free.",
-        "whatsappTooltip": "Contact us on WhatsApp!"
+        "whatsappTooltip": "Contact us on WhatsApp!",
+        "comingSoon": "Coming soon! You will have access to our AI assistant to resolve your doubts instantly!",
+        "virtualAssistant": "Our Virtual Assistant",
+        "otherWays": "Other ways to contact us",
+        "directContact": "Direct and immediate contact",
+        "officeHours": "Office hours",
+        "officeHoursText": "Mon - Fri: 9:00 AM - 6:00 PM (GMT-5)",
+        "sendMessage": "Send us a message",
+        "firstName": "First Name",
+        "firstNamePlaceholder": "Your first name",
+        "lastName": "Last Name",
+        "lastNamePlaceholder": "Your last name",
+        "email": "Email",
+        "emailPlaceholder": "your@email.com",
+        "subject": "Subject",
+        "subjectPlaceholder": "Select a topic",
+        "message": "Message",
+        "messagePlaceholder": "Tell us how we can help you...",
+        "sendButton": "Send message",
+        "subjectOptions": {
+            "courses": "Course information",
+            "pricing": "Pricing and plans",
+            "technical": "Technical support",
+            "business": "Business opportunities",
+            "other": "Other"
+        }
+    },
+    "faq": {
+        "hero": {
+            "badge": "Help Center",
+            "title": "Frequently Asked Questions",
+            "description": "Find answers to the most common questions about our courses, platform, and services.",
+            "searchPlaceholder": "Search for answers..."
+        },
+        "categories": {
+            "general": {
+                "title": "General Questions",
+                "description": "Basic information about our courses and platform",
+                "faqs": {
+                    "enrollment": {
+                        "question": "How can I enroll in a course?",
+                        "answer": "You can enroll directly from each course page. You just need to create an account and proceed with payment through our secure system."
+                    },
+                    "certificate": {
+                        "question": "Do courses include a certificate?",
+                        "answer": "Yes, all our courses include a completion certificate that you can download once you have completed all the content and exercises."
+                    },
+                    "devices": {
+                        "question": "Can I access content from any device?",
+                        "answer": "Absolutely. Our platform is optimized to work on computers, tablets and mobile devices, so you can learn from wherever you want."
+                    }
+                }
+            },
+            "technical": {
+                "title": "Technical Support",
+                "description": "Technical issues and platform questions",
+                "faqs": {
+                    "support": {
+                        "question": "Is technical support available?",
+                        "answer": "Yes, we have a technical support team available to help you with any technical issues you may experience on the platform."
+                    },
+                    "platform": {
+                        "question": "What browsers are supported?",
+                        "answer": "Our platform works best with Chrome, Firefox, Safari, and Edge. We recommend using the latest version of your browser."
+                    },
+                    "browser": {
+                        "question": "Can I use the platform offline?",
+                        "answer": "Currently, our platform requires an internet connection to access course content and track your progress."
+                    }
+                }
+            },
+            "billing": {
+                "title": "Billing & Payments",
+                "description": "Payment methods, refunds, and billing questions",
+                "faqs": {
+                    "expiration": {
+                        "question": "Do courses have an expiration date?",
+                        "answer": "No, once you purchase a course, you have lifetime access to the content, including future updates."
+                    },
+                    "refund": {
+                        "question": "What is your refund policy?",
+                        "answer": "We offer a 30-day money-back guarantee. If you are not satisfied with your course, you can request a full refund within 30 days of purchase."
+                    },
+                    "payment": {
+                        "question": "What payment methods do you accept?",
+                        "answer": "We accept all major credit cards, PayPal, and bank transfers. All payments are processed securely through our payment partners."
+                    }
+                }
+            }
+        },
+        "cta": {
+            "badge": "Still need help?",
+            "title": "Can't find what you're looking for?",
+            "description": "Our support team is here to help you with any questions or issues you may have.",
+            "contactButton": "Contact Support",
+            "responseTime": "Response within 24 hours"
+        }
     }
 }

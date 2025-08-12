@@ -64,7 +64,8 @@
         "pricing": "Precios",
         "contact": "Contacto",
         "signIn": "Iniciar sesión",
-        "signUp": "Registrarse"
+        "signUp": "Registrarse",
+        "faq": "FAQ"
     },
     "footer": {
         "description": "Transformamos ideas en realidades digitales a través de código visionario y estrategias de marketing innovadoras.",
@@ -74,6 +75,7 @@
         "about": "Nosotros",
         "catalog": "Catálogo",
         "schedule": "Agendar",
+        "faq": "FAQ",
         "services": "Servicios",
         "digitalMarketing": "Marketing Digital",
         "systemDevelopment": "Desarrollo de Sistemas",
@@ -114,6 +116,7 @@
     },
     "contact": {
         "title": "Formulario de Contacto",
+        "description": "Estamos aquí para ayudarte. Envíanos un mensaje y te responderemos lo antes posible.",
         "contactInfo": "Información de contacto y 3D",
         "contactMethods": "Métodos de contacto",
         "directContact": "Contacto directo e inmediato",
@@ -154,6 +157,102 @@
         "aiAssistant": "Asistente de IA",
         "question": "¿Qué quieres aprender?",
         "startFree": "Inicia cualquier curso gratis.",
-        "whatsappTooltip": "¡Contáctanos por WhatsApp!"
+        "whatsappTooltip": "¡Contáctanos por WhatsApp!",
+        "comingSoon": "¡Pronto tendrás acceso a nuestro asistente de IA para resolver tus dudas al instante!",
+        "virtualAssistant": "Nuestro Asistente Virtual",
+        "otherWays": "Otras formas de contactarnos",
+        "directContact": "Contacto directo e inmediato",
+        "officeHours": "Horario de atención",
+        "officeHoursText": "Lun - Vie: 9:00 AM - 6:00 PM (GMT-5)",
+        "sendMessage": "Envíanos un mensaje",
+        "firstName": "Nombre",
+        "firstNamePlaceholder": "Tu nombre",
+        "lastName": "Apellidos",
+        "lastNamePlaceholder": "Tus apellidos",
+        "email": "Email",
+        "emailPlaceholder": "tu@email.com",
+        "subject": "Asunto",
+        "subjectPlaceholder": "Selecciona un tema",
+        "message": "Mensaje",
+        "messagePlaceholder": "Cuéntanos en qué podemos ayudarte...",
+        "sendButton": "Enviar mensaje",
+        "subjectOptions": {
+            "courses": "Información sobre cursos",
+            "pricing": "Precios y planes",
+            "technical": "Soporte técnico",
+            "business": "Oportunidades de negocio",
+            "other": "Otro"
+        }
+    },
+    "faq": {
+        "hero": {
+            "badge": "Centro de Ayuda",
+            "title": "Preguntas Frecuentes",
+            "description": "Encuentra respuestas a las preguntas más comunes sobre nuestros cursos, plataforma y servicios.",
+            "searchPlaceholder": "Buscar respuestas..."
+        },
+        "categories": {
+            "general": {
+                "title": "Preguntas Generales",
+                "description": "Información básica sobre nuestros cursos y plataforma",
+                "faqs": {
+                    "enrollment": {
+                        "question": "¿Cómo puedo inscribirme en un curso?",
+                        "answer": "Puedes inscribirte directamente desde la página de cada curso. Solo necesitas crear una cuenta y proceder con el pago a través de nuestro sistema seguro."
+                    },
+                    "certificate": {
+                        "question": "¿Los cursos incluyen certificado?",
+                        "answer": "Sí, todos nuestros cursos incluyen un certificado de finalización que puedes descargar una vez hayas completado todo el contenido y los ejercicios."
+                    },
+                    "devices": {
+                        "question": "¿Puedo acceder al contenido desde cualquier dispositivo?",
+                        "answer": "Absolutamente. Nuestra plataforma está optimizada para funcionar en computadoras, tablets y móviles, para que puedas aprender desde donde quieras."
+                    }
+                }
+            },
+            "technical": {
+                "title": "Soporte Técnico",
+                "description": "Problemas técnicos y preguntas sobre la plataforma",
+                "faqs": {
+                    "support": {
+                        "question": "¿Hay soporte técnico disponible?",
+                        "answer": "Sí, contamos con un equipo de soporte técnico disponible para ayudarte con cualquier problema técnico que puedas experimentar en la plataforma."
+                    },
+                    "platform": {
+                        "question": "¿Qué navegadores son compatibles?",
+                        "answer": "Nuestra plataforma funciona mejor con Chrome, Firefox, Safari y Edge. Recomendamos usar la versión más reciente de tu navegador."
+                    },
+                    "browser": {
+                        "question": "¿Puedo usar la plataforma sin conexión?",
+                        "answer": "Actualmente, nuestra plataforma requiere una conexión a internet para acceder al contenido de los cursos y rastrear tu progreso."
+                    }
+                }
+            },
+            "billing": {
+                "title": "Facturación y Pagos",
+                "description": "Métodos de pago, reembolsos y preguntas de facturación",
+                "faqs": {
+                    "expiration": {
+                        "question": "¿Los cursos tienen fecha de vencimiento?",
+                        "answer": "No, una vez que adquieres un curso, tienes acceso de por vida al contenido, incluyendo futuras actualizaciones."
+                    },
+                    "refund": {
+                        "question": "¿Cuál es su política de reembolso?",
+                        "answer": "Ofrecemos una garantía de devolución de dinero de 30 días. Si no estás satisfecho con tu curso, puedes solicitar un reembolso completo dentro de los 30 días posteriores a la compra."
+                    },
+                    "payment": {
+                        "question": "¿Qué métodos de pago aceptan?",
+                        "answer": "Aceptamos todas las tarjetas de crédito principales, PayPal y transferencias bancarias. Todos los pagos se procesan de forma segura a través de nuestros socios de pago."
+                    }
+                }
+            }
+        },
+        "cta": {
+            "badge": "¿Aún necesitas ayuda?",
+            "title": "¿No encuentras lo que buscas?",
+            "description": "Nuestro equipo de soporte está aquí para ayudarte con cualquier pregunta o problema que puedas tener.",
+            "contactButton": "Contactar Soporte",
+            "responseTime": "Respuesta en 24 horas"
+        }
     }
 }

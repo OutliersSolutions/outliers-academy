@@ -2,7 +2,11 @@ import Link from "next/link";
 import { Facebook, Instagram, Linkedin } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
-export const Footer = async () => {
+interface FooterProps {
+    locale: string;
+}
+
+export const Footer = async ({ locale }: FooterProps) => {
     const t = await getTranslations('footer');
 
     return (
@@ -13,12 +17,12 @@ export const Footer = async () => {
                     {/* Logo y descripción */}
                     <div className="md:col-span-4">
                         <div className="flex items-center mb-4">
-                            <a href="/" className="flex items-center">
+                            <Link href={`/${locale}`} className="flex items-center">
                                 <img src="/icons/logo.png" alt="Logo" className="h-8 w-auto mr-2" />
                                 <span className="text-xl font-extrabold font-inter dark:text-white">
                                     Outliers Academy
                                 </span>
-                            </a>
+                            </Link>
                         </div>
                         <p className="text-base font-normal font-inter">
                             {t('description')}
@@ -31,10 +35,11 @@ export const Footer = async () => {
                     <div className="md:col-span-2">
                         <h3 className="text-base font-semibold mb-4 font-inter dark:text-white">{t('navigation')}</h3>
                         <ul className="space-y-3 font-inter text-sm font-normal">
-                            <li><Link href="/" className="hover:text-coral-500">{t('home')}</Link></li>
-                            <li><Link href="/about" className="hover:text-coral-500">{t('about')}</Link></li>
-                            <li><Link href="/catalog" className="hover:text-coral-500">{t('catalog')}</Link></li>
+                            <li><Link href={`/${locale}`} className="hover:text-coral-500">{t('home')}</Link></li>
+                            <li><Link href={`/${locale}/about`} className="hover:text-coral-500">{t('about')}</Link></li>
+                            <li><Link href={`/${locale}/catalog`} className="hover:text-coral-500">{t('catalog')}</Link></li>
                             <li><a href="https://calendly.com/outlierssolutions108/discovery-meeting" target="_blank" rel="noopener noreferrer" className="hover:text-coral-500">{t('schedule')}</a></li>
+                            <li><Link href={`/${locale}/faq`} className="hover:text-coral-500">{t('faq')}</Link></li>
                         </ul>
                     </div>
 
@@ -42,9 +47,9 @@ export const Footer = async () => {
                     <div className="md:col-span-2">
                         <h3 className="text-base font-semibold mb-4 font-inter dark:text-white">{t('services')}</h3>
                         <ul className="space-y-3 font-inter text-sm font-normal">
-                            <li><Link href="/services/marketing" className="hover:text-coral-500">{t('digitalMarketing')}</Link></li>
-                            <li><Link href="/services/systems" className="hover:text-coral-500">{t('systemDevelopment')}</Link></li>
-                            <li><Link href="/services/ai-agents" className="hover:text-coral-500">{t('aiAgents')}</Link></li>
+                            <li><Link href={`/${locale}/services/marketing`} className="hover:text-coral-500">{t('digitalMarketing')}</Link></li>
+                            <li><Link href={`/${locale}/services/systems`} className="hover:text-coral-500">{t('systemDevelopment')}</Link></li>
+                            <li><Link href={`/${locale}/services/ai-agents`} className="hover:text-coral-500">{t('aiAgents')}</Link></li>
                         </ul>
                     </div>
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import { Search, Sparkles } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
@@ -17,8 +17,7 @@ export function ChatbotViewerSafe({ className = "w-full h-[400px]" }: ChatbotVie
   const [animatedPlaceholder, setAnimatedPlaceholder] = useState('');
   const [currentPlaceholderIndex, setCurrentPlaceholderIndex] = useState(0);
 
-  // Placeholder texts to animate
-  const placeholderTexts = [
+  const placeholderTexts = useMemo(() => [
     'Inteligencia Artificial...',
     'Desarrollo Web...',
     'Ciberseguridad...',
@@ -27,7 +26,7 @@ export function ChatbotViewerSafe({ className = "w-full h-[400px]" }: ChatbotVie
     'React.js...',
     'Python...',
     'JavaScript...'
-  ];
+  ], []);
 
   useEffect(() => {
     setIsClient(true);
