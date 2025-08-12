@@ -113,15 +113,39 @@ export async function fetchCourses(options?: {slug?: string}) {
     }
   }
   
-  const fields = ['id', 'name', 'short_description', 'price', 'product_id', 'website_published'];
+  const fields = ['id', 'name', 'description', 'product_id', 'website_published'];
   const channels = await odooExecuteKw('slide.channel', 'search_read', [domain], {fields, limit: 24});
   
+  // Get all unique product IDs
+  const productIds = [...new Set(
+    (channels || [])
+      .map((c: any) => c.product_id && Array.isArray(c.product_id) ? c.product_id[0] : null)
+      .filter(Boolean)
+  )];
+  
+  // Fetch all product prices in one call if there are any products
+  const productPrices: Record<number, number> = {};
+  if (productIds.length > 0) {
+    try {
+      const products = await odooExecuteKw('product.product', 'search_read', 
+        [[['id', 'in', productIds]]], 
+        {fields: ['id', 'list_price']}
+      );
+      for (const product of products || []) {
+        productPrices[product.id] = product.list_price || 0;
+      }
+    } catch (error) {
+      console.warn('Failed to fetch product prices:', error);
+    }
+  }
+  
+  // Map channels with their prices
   return (channels || []).map((c: any) => ({
     id: c.id,
     title: c.name,
     slug: createSlug(c.name, c.id),
-    description: c.short_description || '',
-    price: c.price || 0,
+    description: c.description || '',
+    price: c.product_id?.[0] ? (productPrices[c.product_id[0]] || 0) : 0,
     product_id: c.product_id?.[0],
     published: c.website_published
   }));
