@@ -4,11 +4,14 @@ export const AIVoiceSpectrum = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null)
 
     useEffect(() => {
-        const canvas = canvasRef.current
-        if (!canvas) return
+        const canvasEl = canvasRef.current
+        if (!canvasEl) return
 
-        const ctx = canvas.getContext("2d")
-        if (!ctx) return
+        const ctxEl = canvasEl.getContext("2d")
+        if (!ctxEl) return
+
+        const canvas = canvasEl as HTMLCanvasElement
+        const ctx = ctxEl as CanvasRenderingContext2D
 
         // Set canvas dimensions
         const setCanvasDimensions = () => {

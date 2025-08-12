@@ -2,8 +2,8 @@ import { useRef, useState } from "react";
 import { LucideProps } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ExternalLink } from "lucide-react";
-import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import Link from "next/link";
 
 export interface ServiceTag {
   id: number;
@@ -142,8 +142,8 @@ export const ServiceCard = ({
           whileTap={{ scale: 0.95 }}
           className="inline-block"
         >
-          <NavLink
-            to={link}
+          <Link
+            href={link}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 px-4 sm:px-6 md:px-6 lg:px-6 py-2 sm:py-2 md:py-2 lg:py-2 bg-coral text-white rounded-md duration-300 ease-in-out"
@@ -152,7 +152,7 @@ export const ServiceCard = ({
               {t("home.service_section.button")}
             </span>
             <ExternalLink size={18} />
-          </NavLink>
+          </Link>
         </motion.div>
 
         {/* TagsPanel interno - visible solo en móvil y laptops */}

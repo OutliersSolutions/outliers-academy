@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
@@ -10,10 +11,12 @@ import {
 import { Button } from "@/components/ui/Buttons/Button.component";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { chartData, fadeInUp, staggerContainer } from "@/data";
+import { useTranslation } from "react-i18next";
 
 
 export const OdooSystemSection = () => {
   const [mounted, setMounted] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     setMounted(true);

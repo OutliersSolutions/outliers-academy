@@ -3,8 +3,8 @@ export const GetEnvVariables = () => {
 
     return {
 
-        VITE_API_URL: import.meta.env.VITE_API_URL,
-        VITE_API_KEY: import.meta.env.VITE_API_KEY,
+        VITE_API_URL: process.env.NEXT_PUBLIC_API_URL ?? "",
+        VITE_API_KEY: process.env.NEXT_PUBLIC_API_KEY ?? "",
 
     }
 }

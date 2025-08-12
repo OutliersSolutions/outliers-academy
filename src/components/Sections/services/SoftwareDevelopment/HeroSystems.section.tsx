@@ -1,13 +1,16 @@
+"use client";
 import { Bolt, ChartNoAxesCombined, Code, Database, GitCompare, Layers, LayoutPanelLeft, SquareArrowOutUpRight, Zap } from 'lucide-react';
 import { FeaturedCard, BenefitChip } from '@/components';
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 
 export const HeroSystemSection = () => {
 
     const benefitsRef = useRef(null);
     const isBenefitsInView = useInView(benefitsRef, { once: true });
+    const { t } = useTranslation();
 
     const features = [] as {
         title: string;

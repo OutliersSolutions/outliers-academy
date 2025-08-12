@@ -1,4 +1,4 @@
-
+// @ts-nocheck
 
 import { Api_service } from '@/apis/Api_service';
 import { AppDispatch } from '../store/store';

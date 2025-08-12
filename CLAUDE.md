@@ -2,38 +2,60 @@
 
 ## Stack
 - Next.js 14 (App Router) + React + TypeScript + TailwindCSS
+- shadcn/ui component library with custom Academy color palette
+- next-themes for dark/light mode switching
 - i18n with `next-intl` (locales: `es`, `en`), middleware with `localePrefix: as-needed`
 - Backend: Odoo 17 over JSON-RPC (server-to-server)
 - Payments: Stripe Checkout + Webhook
+- **Arquitectura /src**: Estructura organizada con separación clara de responsabilidades
 
-## Key App Structure
+## Key App Structure (Migrado a /src)
 ```
-app/
-  [locale]/
-    page.tsx             # Home (uses next-intl)
-    about/page.tsx       # About
-    catalog/page.tsx     # Courses catalog (SSR)
-    course/[slug]/page.tsx  # Course detail (SSR)
-    pricing/page.tsx     # Pricing + Stripe Checkout buttons
-    login/page.tsx       # Login (calls /api/auth/login)
-    signup/page.tsx      # Signup (calls /api/auth/signup)
-  layout.tsx             # Root layout (imports global CSS)
-  [locale]/layout.tsx    # Per-locale layout (NextIntlClientProvider + Navbar/Footer)
+src/
+  app/
+    [locale]/
+      page.tsx             # Home (uses next-intl)
+      about/page.tsx       # About
+      catalog/page.tsx     # Courses catalog (SSR)
+      course/[slug]/page.tsx  # Course detail (SSR)
+      pricing/page.tsx     # Pricing + Stripe Checkout buttons
+      login/page.tsx       # Login (calls /api/auth/login)
+      signup/page.tsx      # Signup (calls /api/auth/signup)
+    layout.tsx             # Root layout (imports global CSS)
+    [locale]/layout.tsx    # Per-locale layout (NextIntlClientProvider + Navbar/Footer)
+  components/
+    Layouts/               # Header, Footer, Navbar components
+    Sections/              # Hero, marketing, service sections
+    ui/                    # Reusable UI components (shadcn/ui)
+      Backgrounds/         # Background effects and animations
+      Chats/              # Chat components and phone mockups
+      shapes/             # Geometric and animated shapes
+  lib/
+    auth.ts               # Authentication helpers
+    odooClient.ts         # Odoo JSON-RPC client
+    utils.ts              # shadcn/ui utilities
+  styles/
+    globals.css           # Global styles with theme variables
+  data/                   # Static data and configurations
+  hooks/                  # Custom React hooks
 api/
-  courses/route.ts       # Lists courses via Odoo client
+  courses/route.ts        # Lists courses via Odoo client
   auth/
-    login/route.ts       # Authenticate against Odoo common.authenticate
-    signup/route.ts      # Create partner/user portal in Odoo
+    login/route.ts        # Authenticate against Odoo common.authenticate
+    signup/route.ts       # Create partner/user portal in Odoo
   stripe/
-    checkout/route.ts    # Create Checkout Session
-    webhook/route.ts     # Stripe webhook
+    checkout/route.ts     # Create Checkout Session
+    webhook/route.ts      # Stripe webhook
 ```
 
-## Libraries / Helpers
-- `lib/odooClient.ts`: JSON-RPC client with `authenticate` cache, `execute_kw`, and `fetchCourses`. Includes dev fallback data when Odoo env is missing.
-- `lib/auth.ts`: Minimal HMAC cookie session (`oa_session`). Configure `AUTH_SECRET` in prod.
-- `components/CourseGrid.tsx`: Server component that fetches courses server-to-server.
-- `components/CheckoutButton.tsx`: Client component posting to Checkout endpoint and redirecting to Stripe.
+## Libraries / Helpers (Migrado a /src)
+- `src/lib/odooClient.ts`: JSON-RPC client with `authenticate` cache, `execute_kw`, and `fetchCourses`. Includes dev fallback data when Odoo env is missing.
+- `src/lib/auth.ts`: Minimal HMAC cookie session (`oa_session`). Configure `AUTH_SECRET` in prod.
+- `src/lib/utils.ts`: shadcn/ui utilities for class merging and conditional styling.
+- `src/components/CourseGrid.tsx`: Server component that fetches courses server-to-server.
+- `src/components/CheckoutButton.tsx`: Client component posting to Checkout endpoint and redirecting to Stripe.
+- `src/components/Layouts/Header.tsx`: Navigation header with dark mode toggle and responsive menu.
+- `src/components/ui/`: shadcn/ui components and custom UI elements.
 
 ## Environment (.env)
 ```
@@ -58,11 +80,18 @@ AUTH_SECRET=change_me
 ## i18n
 - Root plugin: `next-intl/plugin` with `./i18n.ts`.
 - Middleware: `createMiddleware({locales:['es','en'], defaultLocale:'es', localePrefix:'as-needed'})` and `matcher: ['/', '/(es|en)/:path*']`.
-- Runtime fallback in `[locale]/layout.tsx` to load `messages/<locale>.json` if `getMessages()` fails.
+- Runtime fallback in `src/app/[locale]/layout.tsx` to load `src/messages/<locale>.json` if `getMessages()` fails.
+
+## Theme System
+- **Dark Mode**: Implementado con next-themes
+- **Toggle**: Disponible en Header component con iconos Sol/Luna
+- **Variables CSS**: Configuradas en globals.css para ambos temas
+- **Tailwind**: Configurado con `darkMode: ["class"]` para soporte completo
 
 ## Ops
 - Run dev: `npm run dev`
 - Build/start: `npm run build && npm start`
+- Lint: `npm run lint` (ESLint configurado para /src)
 - Systemd (recommended) or reverse proxy (Nginx) with SSL. Keep Node >= 18.
 
 ## Security
@@ -77,8 +106,20 @@ AUTH_SECRET=change_me
 
 ## Development Notes
 - If Odoo env vars are missing, `CourseGrid` uses mock data.
-- If next-intl plugin isn’t picked up in some environments, fallback import ensures pages still render.
+- If next-intl plugin isn't picked up in some environments, fallback import ensures pages still render.
 - Middleware must match root and localized paths, not static assets.
+- **Migración a /src**: Todo el código de aplicación ahora está en el directorio `/src`
+- **shadcn/ui Integration**: Componentes UI modernos con Tailwind CSS
+- **Dark Mode**: Implementado con next-themes, toggle en header
+- **TypeScript Paths**: Configurado para imports desde `/src` con aliases `@/`
+
+## Cambios Post-Migración
+- **Estructura**: Todo movido de `/app`, `/components`, `/lib` a `/src/`
+- **Imports**: Actualizados todos los imports para usar paths de `/src`
+- **React Router → Next.js**: Convertidos todos los NavLink a Link de Next.js
+- **Linting**: Corregidos errores de ESLint y sintaxis
+- **Build**: Validado funcionamiento completo del proyecto
+- **Configuración**: tsconfig.json, tailwind.config.ts actualizados para /src
 
 # Flujo de Cursos y Pagos (Odoo-Céntrico) - IMPLEMENTADO
 
