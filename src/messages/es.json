@@ -4,7 +4,11 @@
         "headline": {
             "part1": "Desarrolla tus",
             "highlight": "habilidades",
-            "part2": "en tecnología"
+            "part2": "en tecnología",
+            "animated": {
+                "baseText": "Desarrolla tu ",
+                "words": ["potencial", "futuro", "carrera", "talento", "equipo", "visión", "expertise", "pasión"]
+            }
         },
         "subhead": "Crecé en tu carrera y desbloqueá nuevas oportunidades con cursos prácticos en IA, data, web, y más.",
         "cta": {

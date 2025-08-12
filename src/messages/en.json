@@ -4,7 +4,11 @@
         "headline": {
             "part1": "Develop your",
             "highlight": "skills",
-            "part2": "in tech"
+            "part2": "in tech",
+            "animated": {
+                "baseText": "Develop your ",
+                "words": ["potential", "future", "career", "talent", "team", "vision", "expertise", "passion"]
+            }
         },
         "subhead": "Grow your career and unlock new opportunities with hands-on courses in AI, data, web, and more.",
         "cta": {

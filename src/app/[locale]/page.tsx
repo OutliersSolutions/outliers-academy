@@ -6,6 +6,7 @@ import {ParticlesBackground} from '@/components/ui/ParticlesBackground';
 import {StarRating} from '@/components/ui/StarRating';
 import {UserAvatars} from '@/components/ui/UserAvatars';
 import {ArrowIcon} from '@/components/ui/ArrowIcon';
+import {AnimatedText} from '@/components/ui/AnimatedText';
 import {technologies} from '@/data/technologies';
 import type {Route} from 'next';
 
@@ -36,7 +37,15 @@ export default async function HomePage({
               </span>
               
               <h1 className="h1-hero mb-6">
-                {t('headline.part1')} <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">{t('headline.highlight')}</span> {t('headline.part2')}
+                <AnimatedText 
+                  baseText={t('headline.animated.baseText')}
+                  words={t.raw('headline.animated.words')}
+                  effect="typing"
+                  typingSpeed={150}
+                  deletingSpeed={100}
+                  pauseDuration={3000}
+                  className="h1-hero"
+                />
               </h1>
               
               <p className="p-lead mb-8 max-w-xl">{t('subhead')}</p>
