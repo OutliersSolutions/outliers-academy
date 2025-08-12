@@ -61,7 +61,7 @@ export function AcademyStats({ locale }: AcademyStatsProps) {
           <span className="bg-gray-200 h-4 w-24 rounded"></span>
         </div>
         <div className="flex items-center gap-1">
-          <StarRating />
+          <StarRating rating={4.8} />
           <span className="bg-gray-200 h-4 w-20 rounded"></span>
         </div>
       </div>
@@ -101,7 +101,7 @@ export function AcademyStats({ locale }: AcademyStatsProps) {
         <span className="font-medium">{studentsText}</span>
       </div>
       <div className="flex items-center gap-1">
-        <StarRating />
+        <StarRating rating={stats.averageRating} />
         <span className="font-medium">{reviewsText}</span>
       </div>
     </div>
