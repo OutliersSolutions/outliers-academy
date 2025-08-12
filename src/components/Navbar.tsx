@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import {usePathname} from 'next/navigation';
-import {useLocale} from 'next-intl';
+import {useLocale, useTranslations} from 'next-intl';
 import {useEffect, useRef, useState} from 'react';
 import {Sun, Moon, ChevronDown} from 'lucide-react';
 import {useTheme} from 'next-themes';
@@ -10,6 +10,7 @@ import {useTheme} from 'next-themes';
 export function Navbar() {
   const pathname = usePathname();
   const locale = useLocale();
+  const t = useTranslations('nav');
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -52,12 +53,12 @@ export function Navbar() {
         </Link>
 
         <nav className="hidden md:flex items-center gap-6 text-sm font-semibold">
-          <Link href={`/${locale}/catalog`}>Catalog</Link>
-          <Link href={`/${locale}/about`}>About</Link>
-          <Link href={`/${locale}/pricing`}>Pricing</Link>
-          <Link href={`/${locale}/contact`}>Contact</Link>
-          <Link href={`/${locale}/login`} className="btn-secondary">Sign in</Link>
-          <Link href={`/${locale}/signup`} className="btn-primary">Sign up</Link>
+          <Link href={`/${locale}/catalog`}>{t('catalog')}</Link>
+          <Link href={`/${locale}/about`}>{t('about')}</Link>
+          <Link href={`/${locale}/pricing`}>{t('pricing')}</Link>
+          <Link href={`/${locale}/contact`}>{t('contact')}</Link>
+          <Link href={`/${locale}/login`} className="btn-secondary">{t('signIn')}</Link>
+          <Link href={`/${locale}/signup`} className="btn-primary">{t('signUp')}</Link>
         </nav>
 
         <div className="flex items-center gap-2" ref={dropdownRef}>

@@ -57,5 +57,13 @@
             "primary": "Comenzar ahora",
             "secondary": "Ver precios"
         }
+    },
+    "nav": {
+        "catalog": "Catálogo",
+        "about": "Acerca de",
+        "pricing": "Precios",
+        "contact": "Contacto",
+        "signIn": "Iniciar sesión",
+        "signUp": "Registrarse"
     }
 }

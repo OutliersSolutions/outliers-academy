@@ -57,5 +57,13 @@
             "primary": "Start now",
             "secondary": "See pricing"
         }
+    },
+    "nav": {
+        "catalog": "Catalog",
+        "about": "About",
+        "pricing": "Pricing",
+        "contact": "Contact",
+        "signIn": "Sign in",
+        "signUp": "Sign up"
     }
 }
