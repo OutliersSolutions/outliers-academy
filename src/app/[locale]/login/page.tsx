@@ -1,46 +1,200 @@
 "use client";
 
-import {useState} from 'react';
-import {useRouter, usePathname} from 'next/navigation';
+import { useState } from 'react';
+import { signIn, getSession } from 'next-auth/react';
+import { useRouter, usePathname } from 'next/navigation';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
+import { Github, Chrome, Mail, Lock, Eye, EyeOff } from 'lucide-react';
+import Link from 'next/link';
 
 export default function LoginPage() {
-  const [login, setLogin] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [oauthLoading, setOauthLoading] = useState<string | null>(null);
   const router = useRouter();
   const pathname = usePathname();
   const locale = pathname.split('/')[1] || 'es';
 
-  async function onSubmit(e: React.FormEvent) {
+  const handleOAuthSignIn = async (provider: 'google' | 'github') => {
+    setOauthLoading(provider);
+    try {
+      const result = await signIn(provider, {
+        callbackUrl: `/${locale}/dashboard`,
+        redirect: false,
+      });
+      
+      if (result?.ok) {
+        router.push(`/${locale}/dashboard`);
+      } else if (result?.error) {
+        console.error('OAuth error:', result.error);
+      }
+    } catch (error) {
+      console.error('OAuth signin error:', error);
+    } finally {
+      setOauthLoading(null);
+    }
+  };
+
+  const handleEmailSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    
     try {
+      // First try NextAuth credentials (if you want to keep legacy support)
       const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({login, password})
+        body: JSON.stringify({login: email, password})
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Login error');
       
-      // Force full page reload to ensure cookies are set
-      window.location.href = `/${locale}`;
-    } catch (e) {
-      alert((e as Error).message);
+      if (res.ok) {
+        router.push(`/${locale}/dashboard`);
+      } else {
+        const data = await res.json();
+        throw new Error(data.error || 'Error de inicio de sesión');
+      }
+    } catch (error) {
+      console.error('Email signin error:', error);
+      alert((error as Error).message);
+    } finally {
       setLoading(false);
     }
-  }
+  };
 
   return (
-    <div className="container py-16 max-w-md">
-      <h1 className="h2-section">Iniciar sesión</h1>
-      <form className="mt-6 card p-6" onSubmit={onSubmit}>
-        <label className="block text-sm font-semibold">Email</label>
-        <input className="mt-1 w-full rounded border border-muted p-2" type="email" value={login} onChange={(e) => setLogin(e.target.value)} required />
-        <label className="block text-sm font-semibold mt-4">Contraseña</label>
-        <input className="mt-1 w-full rounded border border-muted p-2" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-        <button className="btn-primary mt-6 w-full" disabled={loading}>{loading ? 'Ingresando…' : 'Ingresar'}</button>
-      </form>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 via-background to-secondary/5 px-4">
+      <Card className="w-full max-w-md shadow-2xl border-0 bg-background/95 backdrop-blur">
+        <CardHeader className="space-y-1 text-center">
+          <CardTitle className="text-2xl font-bold tracking-tight">
+            {locale === 'es' ? 'Iniciar Sesión' : 'Sign In'}
+          </CardTitle>
+          <CardDescription className="text-muted-foreground">
+            {locale === 'es' 
+              ? 'Accede a tu cuenta de Outliers Academy' 
+              : 'Access your Outliers Academy account'}
+          </CardDescription>
+        </CardHeader>
+        
+        <CardContent className="space-y-4">
+          {/* OAuth Buttons */}
+          <div className="space-y-3">
+            <Button
+              onClick={() => handleOAuthSignIn('google')}
+              disabled={oauthLoading !== null}
+              variant="outline"
+              className="w-full h-11 font-medium"
+            >
+              {oauthLoading === 'google' ? (
+                <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+              ) : (
+                <Chrome className="h-4 w-4 mr-2" />
+              )}
+              {locale === 'es' ? 'Continuar con Google' : 'Continue with Google'}
+            </Button>
+            
+            <Button
+              onClick={() => handleOAuthSignIn('github')}
+              disabled={oauthLoading !== null}
+              variant="outline"
+              className="w-full h-11 font-medium"
+            >
+              {oauthLoading === 'github' ? (
+                <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+              ) : (
+                <Github className="h-4 w-4 mr-2" />
+              )}
+              {locale === 'es' ? 'Continuar con GitHub' : 'Continue with GitHub'}
+            </Button>
+          </div>
+
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <Separator className="w-full" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-background px-2 text-muted-foreground">
+                {locale === 'es' ? 'O continúa con' : 'Or continue with'}
+              </span>
+            </div>
+          </div>
+
+          {/* Email/Password Form */}
+          <form onSubmit={handleEmailSignIn} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="email" className="text-sm font-medium">
+                {locale === 'es' ? 'Correo electrónico' : 'Email'}
+              </Label>
+              <div className="relative">
+                <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                <Input
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="pl-10 h-11"
+                  placeholder={locale === 'es' ? 'tu@email.com' : 'you@email.com'}
+                  required
+                />
+              </div>
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="password" className="text-sm font-medium">
+                {locale === 'es' ? 'Contraseña' : 'Password'}
+              </Label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                <Input
+                  id="password"
+                  type={showPassword ? 'text' : 'password'}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="pl-10 pr-10 h-11"
+                  placeholder={locale === 'es' ? 'Tu contraseña' : 'Your password'}
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={(e: React.MouseEvent) => {
+                    e.preventDefault();
+                    setShowPassword(!showPassword);
+                  }}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                >
+                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </button>
+              </div>
+            </div>
+
+            <Button 
+              type="submit" 
+              disabled={loading || oauthLoading !== null}
+              className="w-full h-11 font-medium"
+            >
+              {loading ? (
+                <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent mr-2" />
+              ) : null}
+              {locale === 'es' ? 'Iniciar Sesión' : 'Sign In'}
+            </Button>
+          </form>
+
+          <div className="text-center text-sm text-muted-foreground">
+            {locale === 'es' ? '¿No tienes cuenta?' : "Don't have an account?"}{' '}
+            <Link 
+              href={`/${locale}/signup`}
+              className="font-medium text-primary hover:underline"
+            >
+              {locale === 'es' ? 'Regístrate' : 'Sign up'}
+            </Link>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 } 

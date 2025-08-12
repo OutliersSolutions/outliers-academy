@@ -4,17 +4,22 @@ import Link from 'next/link';
 import {usePathname} from 'next/navigation';
 import {useLocale, useTranslations} from 'next-intl';
 import {useEffect, useRef, useState} from 'react';
-import {Sun, Moon, ChevronDown, Search} from 'lucide-react';
+import {Sun, Moon, ChevronDown, Search, User, LogOut, BarChart3} from 'lucide-react';
 import {useTheme} from 'next-themes';
+import {useSession, signOut} from 'next-auth/react';
 import {SearchOverlay} from '@/components/ui/SearchOverlay';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 export function Navbar() {
   const pathname = usePathname();
   const locale = useLocale();
   const t = useTranslations('nav');
+  const { data: session, status } = useSession();
   const [open, setOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const userMenuRef = useRef<HTMLDivElement>(null);
 
   // next-themes
   const {theme, resolvedTheme, setTheme} = useTheme();
@@ -25,6 +30,9 @@ export function Navbar() {
     const onClickOutside = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setOpen(false);
+      }
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
+        setUserMenuOpen(false);
       }
     };
     document.addEventListener('click', onClickOutside);
@@ -137,20 +145,78 @@ export function Navbar() {
                 )}
               </div>
 
-              {/* Auth Buttons */}
+              {/* Auth Section */}
               <div className="hidden md:flex items-center gap-2">
-                <Link 
-                  href={`/${locale}/login`} 
-                  className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
-                >
-                  {t('signIn')}
-                </Link>
-                <Link 
-                  href={`/${locale}/signup`} 
-                  className="px-4 py-2 text-sm font-medium bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
-                >
-                  {t('signUp')}
-                </Link>
+                {status === "loading" ? (
+                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                ) : session ? (
+                  <div className="relative" ref={userMenuRef}>
+                    <button
+                      onClick={() => setUserMenuOpen(!userMenuOpen)}
+                      className="flex items-center gap-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    >
+                      <Avatar className="h-8 w-8">
+                        <AvatarImage src={session.user.image || undefined} />
+                        <AvatarFallback>
+                          {session.user.name?.split(' ').map(n => n[0]).join('') || session.user.email?.[0].toUpperCase()}
+                        </AvatarFallback>
+                      </Avatar>
+                      <ChevronDown className="w-3 h-3" />
+                    </button>
+                    
+                    {userMenuOpen && (
+                      <div className="absolute right-0 mt-2 w-48 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-lg z-50">
+                        <div className="p-3 border-b border-gray-200 dark:border-gray-700">
+                          <p className="text-sm font-medium text-gray-900 dark:text-white">
+                            {session.user.name || session.user.email}
+                          </p>
+                          <p className="text-xs text-gray-500 dark:text-gray-400">
+                            {session.user.email}
+                          </p>
+                        </div>
+                        <ul className="py-1">
+                          <li>
+                            <Link
+                              href={`/${locale}/dashboard`}
+                              className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                              onClick={() => setUserMenuOpen(false)}
+                            >
+                              <BarChart3 className="w-4 h-4" />
+                              <span>Dashboard</span>
+                            </Link>
+                          </li>
+                          <li>
+                            <button
+                              onClick={() => {
+                                setUserMenuOpen(false);
+                                signOut({ callbackUrl: `/${locale}` });
+                              }}
+                              className="flex items-center gap-2 w-full px-3 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-left"
+                            >
+                              <LogOut className="w-4 h-4" />
+                              <span>Sign out</span>
+                            </button>
+                          </li>
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <>
+                    <Link 
+                      href={`/${locale}/login`} 
+                      className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
+                    >
+                      {t('signIn')}
+                    </Link>
+                    <Link 
+                      href={`/${locale}/signup`} 
+                      className="px-4 py-2 text-sm font-medium bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
+                    >
+                      {t('signUp')}
+                    </Link>
+                  </>
+                )}
               </div>
 
               {/* Mobile Search Button */}

@@ -2,6 +2,7 @@ import '@/styles/globals.css';
 import type {Metadata} from 'next';
 import {Inter, Manrope, Source_Code_Pro, JetBrains_Mono, Fira_Code} from 'next/font/google';
 import { ThemeProvider } from 'next-themes';
+import { AuthProvider } from '@/components/AuthProvider';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -47,9 +48,11 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html suppressHydrationWarning className={`${inter.variable} ${manrope.variable} ${sourceCodePro.variable} ${jetbrainsMono.variable} ${firaCode.variable}`}>
       <body>
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
-          {children}
-        </ThemeProvider>
+        <AuthProvider>
+          <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+            {children}
+          </ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   );
