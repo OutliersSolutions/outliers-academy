@@ -16,7 +16,7 @@ const AnimatedText = dynamic(() => import('./AnimatedText').then(mod => ({ defau
   ssr: false,
   loading: () => (
     <span className="inline-block bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent opacity-50">
-      Desarrolla tu potencial
+      Loading...
     </span>
   )
 });

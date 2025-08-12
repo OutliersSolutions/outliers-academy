@@ -162,7 +162,14 @@ export function ParticlesBackground({
   }, [particleColor, particleSize, opacity, isClient, drawLines, className, density]);
 
   if (!isClient) {
-    return null;
+    return (
+      <div 
+        className={`${className ? className : 'fixed top-0 left-0 w-full h-full z-0'} pointer-events-none`}
+        style={{ 
+          background: 'transparent',
+        }}
+      />
+    );
   }
 
   return (

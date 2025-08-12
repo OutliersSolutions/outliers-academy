@@ -9,6 +9,11 @@ interface ChatbotViewerProps {
 export function ChatbotViewerSafe({ className = "w-full h-[400px]" }: ChatbotViewerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   useEffect(() => {
     let mounted = true;
@@ -77,12 +82,14 @@ export function ChatbotViewerSafe({ className = "w-full h-[400px]" }: ChatbotVie
       }
     };
 
-    loadModelViewer();
+    if (isClient) {
+      loadModelViewer();
+    }
 
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [isClient]);
 
   return (
     <div className={className}>

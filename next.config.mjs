@@ -3,10 +3,28 @@ import createNextIntlPlugin from 'next-intl/plugin';
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  logging: {
+  poweredByHeader: false,
+  compress: true,
+  logging: process.env.NODE_ENV === 'development' ? {
     fetches: {
       fullUrl: false
     }
+  } : undefined,
+  experimental: {
+    serverComponentsExternalPackages: ['@prisma/client']
+  },
+  headers: async () => {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'X-DNS-Prefetch-Control',
+            value: 'on'
+          }
+        ]
+      }
+    ];
   }
 };
 
