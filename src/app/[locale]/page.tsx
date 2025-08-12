@@ -6,7 +6,7 @@ import {ParticlesBackground} from '@/components/ui/ParticlesBackground';
 import {StarRating} from '@/components/ui/StarRating';
 import {UserAvatars} from '@/components/ui/UserAvatars';
 import {ArrowIcon} from '@/components/ui/ArrowIcon';
-import {AnimatedText} from '@/components/ui/AnimatedText';
+import {AnimatedTextWrapper} from '@/components/ui/AnimatedTextWrapper';
 import {technologies} from '@/data/technologies';
 import type {Route} from 'next';
 
@@ -37,7 +37,7 @@ export default async function HomePage({
               </span>
               
               <h1 className="h1-hero mb-6">
-                <AnimatedText 
+                <AnimatedTextWrapper 
                   baseText={t('headline.animated.baseText')}
                   words={t.raw('headline.animated.words')}
                   effect="typing"
