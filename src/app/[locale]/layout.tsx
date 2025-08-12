@@ -2,7 +2,7 @@ import type {Metadata} from 'next';
 import {NextIntlClientProvider} from 'next-intl';
 import {getMessages, unstable_setRequestLocale} from 'next-intl/server';
 import {Navbar} from '@/components/Navbar';
-import {Footer} from '@/components/Footer';
+import {Footer} from '@/components/Layouts/Footer';
 import {WhatsAppButton} from '@/components/ui/WhatsAppButton';
 
 export const metadata: Metadata = {

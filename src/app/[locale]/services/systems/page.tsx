@@ -48,7 +48,11 @@ const technologies = [
   { name: 'MongoDB', icon: '/icons/technologies/systems/mongodb.svg' },
 ];
 
-export default function SystemsPage() {
+export default function SystemsPage({
+  params
+}: {
+  params: { locale: string };
+}) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-bg to-surface/30 relative">
       <ParticlesBackground particleColor="#2F27CE" opacity={0.4} particleSize={1.2} drawLines={true} density={12000} className="absolute inset-0 w-full h-full z-0" />
@@ -89,7 +93,7 @@ export default function SystemsPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                   </svg>
                 </Link>
-                <Link href="/es/contact" className="btn-outline justify-center">
+                <Link href={`/${params.locale}/contact`} className="btn-outline justify-center">
                   Ver Proyectos
                 </Link>
               </div>
@@ -241,7 +245,7 @@ export default function SystemsPage() {
                   Consulta Técnica
                 </Link>
                 <Link 
-                  href="/es/contact" 
+                  href={`/${params.locale}/contact`} 
                   className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-primary transition-colors"
                 >
                   Ver Demo en Vivo

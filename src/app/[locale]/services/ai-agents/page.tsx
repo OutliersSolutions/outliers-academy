@@ -49,7 +49,11 @@ const aiTechnologies = [
   { name: 'React', icon: '/icons/technologies/agents-ai/react.svg' },
 ];
 
-export default function AIAgentsPage() {
+export default function AIAgentsPage({
+  params
+}: {
+  params: { locale: string };
+}) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-bg to-surface/30 relative">
       <ParticlesBackground particleColor="#433BFF" opacity={0.5} particleSize={1.5} drawLines={true} density={8000} className="absolute inset-0 w-full h-full z-0" />
@@ -90,7 +94,7 @@ export default function AIAgentsPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                   </svg>
                 </Link>
-                <Link href="/es/contact" className="btn-outline justify-center">
+                <Link href={`/${params.locale}/contact`} className="btn-outline justify-center">
                   Ver Demo IA
                 </Link>
               </div>
@@ -241,7 +245,7 @@ export default function AIAgentsPage() {
                   Demo de IA Gratis
                 </Link>
                 <Link 
-                  href="/es/contact" 
+                  href={`/${params.locale}/contact`} 
                   className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-primary transition-colors"
                 >
                   Hablar con Experto

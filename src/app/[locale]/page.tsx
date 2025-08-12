@@ -3,6 +3,10 @@ import {getTranslations, unstable_setRequestLocale} from 'next-intl/server';
 import {CourseGrid} from '@/components/CourseGrid';
 import {ChatbotViewerSafe} from '@/components/ChatbotViewerSafe';
 import {ParticlesBackground} from '@/components/ui/ParticlesBackground';
+import {StarRating} from '@/components/ui/StarRating';
+import {UserAvatars} from '@/components/ui/UserAvatars';
+import {ArrowIcon} from '@/components/ui/ArrowIcon';
+import {technologies} from '@/data/technologies';
 import type {Route} from 'next';
 
 export const dynamic = 'force-dynamic';
@@ -38,13 +42,11 @@ export default async function HomePage({
               <p className="p-lead mb-8 max-w-xl">{t('subhead')}</p>
               
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-8">
-                <Link href={"/es/catalog" as Route} className="btn-primary btn-lg group">
+                <Link href={`/${params.locale}/catalog` as Route} className="btn-primary btn-lg group">
                   {t('cta.primary')}
-                  <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
+                  <ArrowIcon className="w-5 h-5 transition-transform group-hover:translate-x-1" />
                 </Link>
-                <Link href={"/es/about" as Route} className="btn-secondary group">
+                <Link href={`/${params.locale}/about` as Route} className="btn-secondary group">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h6" />
                   </svg>
@@ -54,31 +56,11 @@ export default async function HomePage({
 
               <div className="flex items-center gap-8 text-sm text-neutral-600">
                 <div className="flex items-center gap-2">
-                  <div className="flex -space-x-2">
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-400 to-purple-400 border-2 border-white"></div>
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-r from-green-400 to-blue-400 border-2 border-white"></div>
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-r from-pink-400 to-red-400 border-2 border-white"></div>
-                  </div>
+                  <UserAvatars />
                   <span className="font-medium">+10,000 estudiantes</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <div className="flex text-yellow-400">
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                  </div>
+                  <StarRating />
                   <span className="font-medium">4.8 (2,340 reseñas)</span>
                 </div>
               </div>
@@ -131,11 +113,9 @@ export default async function HomePage({
           <CourseGrid />
           
           <div className="text-center mt-12">
-            <Link href={"/es/catalog" as Route} className="btn-outline">
+            <Link href={`/${params.locale}/catalog` as Route} className="btn-outline">
               Ver todos los cursos
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
+              <ArrowIcon />
             </Link>
           </div>
         </div>
@@ -196,24 +176,7 @@ export default async function HomePage({
           </div>
           
           <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-8 items-center justify-items-center opacity-70 hover:opacity-100 transition-opacity duration-500">
-            {[
-              { name: 'React', icon: '/icons/technologies/systems/reactjs.svg' },
-              { name: 'Node.js', icon: '/icons/technologies/systems/nodejs.svg' },
-              { name: 'Python', icon: '/icons/technologies/systems/python.svg' },
-              { name: 'JavaScript', icon: '/icons/technologies/systems/js.svg' },
-              { name: 'HTML5', icon: '/icons/technologies/systems/html.svg' },
-              { name: 'CSS3', icon: '/icons/technologies/systems/css.svg' },
-              { name: 'Tailwind', icon: '/icons/technologies/systems/tailwind.svg' },
-              { name: 'MongoDB', icon: '/icons/technologies/systems/mongodb.svg' },
-              { name: 'PostgreSQL', icon: '/icons/technologies/systems/postgresql.svg' },
-              { name: 'Git', icon: '/icons/technologies/systems/git.svg' },
-              { name: 'Vue.js', icon: '/icons/technologies/systems/vue.svg' },
-              { name: 'Laravel', icon: '/icons/technologies/systems/laravel.svg' },
-              { name: 'Angular', icon: '/icons/technologies/systems/angular.svg' },
-              { name: 'Java', icon: '/icons/technologies/systems/java.svg' },
-              { name: 'PHP', icon: '/icons/technologies/systems/php.svg' },
-              { name: 'Vercel', icon: '/icons/technologies/systems/vercel.svg' }
-            ].map((tech, index) => (
+            {technologies.map((tech, index) => (
               <div key={tech.name} className="group flex flex-col items-center gap-2 p-3 rounded-lg hover:bg-neutral-50 transition-all duration-300">
                 <div className="w-12 h-12 flex items-center justify-center grayscale group-hover:grayscale-0 transition-all duration-300 transform group-hover:scale-110">
                   <img 
@@ -239,10 +202,10 @@ export default async function HomePage({
               <h2 className="text-3xl md:text-4xl font-bold mb-6">¿Listo para transformar tu carrera?</h2>
               <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">Únete a miles de profesionales que ya están construyendo su futuro en tecnología</p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <Link href={"/es/catalog" as Route} className="bg-white text-primary px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-colors">
+                <Link href={`/${params.locale}/catalog` as Route} className="bg-white text-primary px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-colors">
                   Comenzar ahora
                 </Link>
-                <Link href={"/es/pricing" as Route} className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-primary transition-colors">
+                <Link href={`/${params.locale}/pricing` as Route} className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-primary transition-colors">
                   Ver precios
                 </Link>
               </div>
