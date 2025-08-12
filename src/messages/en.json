@@ -7,7 +7,16 @@
             "part2": "in tech",
             "animated": {
                 "baseText": "Develop your ",
-                "words": ["potential", "future", "career", "talent", "team", "vision", "expertise", "passion"]
+                "words": [
+                    "potential",
+                    "future",
+                    "career",
+                    "talent",
+                    "team",
+                    "vision",
+                    "expertise",
+                    "passion"
+                ]
             }
         },
         "subhead": "Grow your career and unlock new opportunities with hands-on courses in AI, data, web, and more.",
@@ -15,10 +24,16 @@
             "primary": "Explore catalog",
             "secondary": "How it works"
         },
+        "students": "+10,000 students",
+        "rating": "4.8 (2,340 reviews)",
+        "aiAssistant": "AI Assistant",
+        "interactiveAI": "Interactive AI",
+        "viewAllCourses": "View all courses",
         "topCourses": "Top courses",
         "topCoursesDesc": "Content designed for progress with practical projects.",
         "platform": {
             "title": "Learn by doing",
+            "subhead": "A learning experience designed to take you from concept to practice",
             "guidance": {
                 "title": "Step-by-step guidance",
                 "desc": "Learning paths with clear goals and continuous feedback."
@@ -31,6 +46,16 @@
                 "title": "Interactive practice",
                 "desc": "Check your code and solidify concepts with challenges."
             }
+        },
+        "technologies": {
+            "title": "Technologies you will learn",
+            "subhead": "Master the most in-demand tools and frameworks in the industry"
+        },
+        "ctaSection": {
+            "title": "Ready to transform your career?",
+            "desc": "Join thousands of professionals already building their future in technology",
+            "primary": "Start now",
+            "secondary": "See pricing"
         }
     }
 }

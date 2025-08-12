@@ -66,11 +66,11 @@ export default async function HomePage({
               <div className="flex items-center gap-8 text-sm text-neutral-600">
                 <div className="flex items-center gap-2">
                   <UserAvatars />
-                  <span className="font-medium">+10,000 estudiantes</span>
+                                     <span className="font-medium">{t('students')}</span>
                 </div>
                 <div className="flex items-center gap-1">
                   <StarRating />
-                  <span className="font-medium">4.8 (2,340 reseñas)</span>
+                  <span className="font-medium">{t('rating')}</span>
                 </div>
               </div>
             </div>
@@ -89,7 +89,7 @@ export default async function HomePage({
                     <ChatbotViewerSafe className="w-full h-full" />
                     
                     <div className="absolute top-4 right-4 text-xs text-neutral-500 bg-white px-2 py-1 rounded-full">
-                      AI Assistant
+                      {t('aiAssistant')}
                     </div>
                   </div>
                   
@@ -103,7 +103,7 @@ export default async function HomePage({
               </div>
               
               <div className="absolute -bottom-4 -right-4 bg-accent text-white rounded-lg px-3 py-2 text-sm font-semibold shadow-lg">
-                IA Interactiva
+                {t('interactiveAI')}
               </div>
             </div>
           </div>
@@ -123,7 +123,7 @@ export default async function HomePage({
           
           <div className="text-center mt-12">
             <Link href={`/${params.locale}/catalog` as Route} className="btn-outline">
-              Ver todos los cursos
+              {t('viewAllCourses')}
               <ArrowIcon />
             </Link>
           </div>
@@ -134,7 +134,7 @@ export default async function HomePage({
         <div className="container">
           <div className="text-center mb-16">
             <h2 className="h2-section mb-4">{t('platform.title')}</h2>
-            <p className="p-lead max-w-2xl mx-auto">Una experiencia de aprendizaje diseñada para llevarte del concepto a la práctica</p>
+            <p className="p-lead max-w-2xl mx-auto">{t('platform.subhead')}</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -180,8 +180,8 @@ export default async function HomePage({
       <section className="py-16 md:py-20 bg-white">
         <div className="container">
           <div className="text-center mb-12">
-            <h2 className="text-2xl md:text-3xl font-bold text-neutral-900 mb-4">Tecnologías que aprenderás</h2>
-            <p className="text-neutral-600 max-w-2xl mx-auto">Domina las herramientas y frameworks más demandados en la industria</p>
+            <h2 className="text-2xl md:text-3xl font-bold text-neutral-900 mb-4">{t('technologies.title')}</h2>
+            <p className="text-neutral-600 max-w-2xl mx-auto">{t('technologies.subhead')}</p>
           </div>
           
           <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-8 items-center justify-items-center opacity-70 hover:opacity-100 transition-opacity duration-500">
@@ -208,14 +208,14 @@ export default async function HomePage({
         <div className="container">
           <div className="bg-gradient-to-r from-primary to-accent rounded-3xl p-12 md:p-16 text-center text-white relative overflow-hidden">
             <div className="relative z-10">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">¿Listo para transformar tu carrera?</h2>
-              <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">Únete a miles de profesionales que ya están construyendo su futuro en tecnología</p>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">{t('ctaSection.title')}</h2>
+              <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">{t('ctaSection.desc')}</p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Link href={`/${params.locale}/catalog` as Route} className="bg-white text-primary px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-colors">
-                  Comenzar ahora
+                  {t('ctaSection.primary')}
                 </Link>
                 <Link href={`/${params.locale}/pricing` as Route} className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-primary transition-colors">
-                  Ver precios
+                  {t('ctaSection.secondary')}
                 </Link>
               </div>
             </div>

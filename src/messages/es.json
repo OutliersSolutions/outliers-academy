@@ -7,7 +7,16 @@
             "part2": "en tecnología",
             "animated": {
                 "baseText": "Desarrolla tu ",
-                "words": ["potencial", "futuro", "carrera", "talento", "equipo", "visión", "expertise", "pasión"]
+                "words": [
+                    "potencial",
+                    "futuro",
+                    "carrera",
+                    "talento",
+                    "equipo",
+                    "visión",
+                    "expertise",
+                    "pasión"
+                ]
             }
         },
         "subhead": "Crecé en tu carrera y desbloqueá nuevas oportunidades con cursos prácticos en IA, data, web, y más.",
@@ -15,10 +24,16 @@
             "primary": "Explorar catálogo",
             "secondary": "Cómo funciona"
         },
+        "students": "+10.000 estudiantes",
+        "rating": "4,8 (2.340 reseñas)",
+        "aiAssistant": "Asistente de IA",
+        "interactiveAI": "IA Interactiva",
+        "viewAllCourses": "Ver todos los cursos",
         "topCourses": "Cursos destacados",
         "topCoursesDesc": "Contenidos diseñados para el progreso con proyectos prácticos.",
         "platform": {
             "title": "Aprende haciendo",
+            "subhead": "Una experiencia de aprendizaje diseñada para llevarte del concepto a la práctica",
             "guidance": {
                 "title": "Guía paso a paso",
                 "desc": "Rutas de aprendizaje con objetivos claros y feedback continuo."
@@ -31,6 +46,16 @@
                 "title": "Práctica interactiva",
                 "desc": "Comprueba tu código y consolida conceptos con desafíos."
             }
+        },
+        "technologies": {
+            "title": "Tecnologías que aprenderás",
+            "subhead": "Domina las herramientas y frameworks más demandados en la industria"
+        },
+        "ctaSection": {
+            "title": "¿Listo para transformar tu carrera?",
+            "desc": "Únete a miles de profesionales que ya están construyendo su futuro en tecnología",
+            "primary": "Comenzar ahora",
+            "secondary": "Ver precios"
         }
     }
 }
