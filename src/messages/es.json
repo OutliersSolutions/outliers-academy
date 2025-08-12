@@ -65,5 +65,21 @@
         "contact": "Contacto",
         "signIn": "Iniciar sesión",
         "signUp": "Registrarse"
+    },
+    "footer": {
+        "description": "Transformamos ideas en realidades digitales a través de código visionario y estrategias de marketing innovadoras.",
+        "tagline": "Donde la visión se encuentra con la ejecución.",
+        "navigation": "Navegación",
+        "home": "Inicio",
+        "about": "Nosotros",
+        "catalog": "Catálogo",
+        "schedule": "Agendar",
+        "services": "Servicios",
+        "digitalMarketing": "Marketing Digital",
+        "systemDevelopment": "Desarrollo de Sistemas",
+        "aiAgents": "Agentes IA",
+        "contact": "Contacto",
+        "followUs": "Síguenos",
+        "allRightsReserved": "Todos los derechos reservados"
     }
 }

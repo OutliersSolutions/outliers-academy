@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { Facebook, Instagram, Linkedin } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 
-export const Footer = () => {
+export const Footer = async () => {
+    const t = await getTranslations('footer');
 
     return (
         <footer className="w-full z-50 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 leading-relaxed">
@@ -19,36 +21,36 @@ export const Footer = () => {
                             </a>
                         </div>
                         <p className="text-base font-normal font-inter">
-                            Transformamos ideas en realidades digitales a través de código visionario y estrategias de marketing innovadoras.
+                            {t('description')}
                             <br />
-                            <span className="font-semibold">Donde la visión se encuentra con la ejecución.</span>
+                            <span className="font-semibold">{t('tagline')}</span>
                         </p>
                     </div>
 
                     {/* Navegación */}
                     <div className="md:col-span-2">
-                        <h3 className="text-base font-semibold mb-4 font-inter dark:text-white">Navegación</h3>
+                        <h3 className="text-base font-semibold mb-4 font-inter dark:text-white">{t('navigation')}</h3>
                         <ul className="space-y-3 font-inter text-sm font-normal">
-                            <li><Link href="/" className="hover:text-coral-500">Inicio</Link></li>
-                            <li><Link href="/about" className="hover:text-coral-500">Nosotros</Link></li>
-                            <li><Link href="/catalog" className="hover:text-coral-500">Catálogo</Link></li>
-                            <li><a href="https://calendly.com/outlierssolutions108/discovery-meeting" target="_blank" rel="noopener noreferrer" className="hover:text-coral-500">Agendar</a></li>
+                            <li><Link href="/" className="hover:text-coral-500">{t('home')}</Link></li>
+                            <li><Link href="/about" className="hover:text-coral-500">{t('about')}</Link></li>
+                            <li><Link href="/catalog" className="hover:text-coral-500">{t('catalog')}</Link></li>
+                            <li><a href="https://calendly.com/outlierssolutions108/discovery-meeting" target="_blank" rel="noopener noreferrer" className="hover:text-coral-500">{t('schedule')}</a></li>
                         </ul>
                     </div>
 
                     {/* Servicios */}
                     <div className="md:col-span-2">
-                        <h3 className="text-base font-semibold mb-4 font-inter dark:text-white">Servicios</h3>
+                        <h3 className="text-base font-semibold mb-4 font-inter dark:text-white">{t('services')}</h3>
                         <ul className="space-y-3 font-inter text-sm font-normal">
-                            <li><Link href="/services/marketing" className="hover:text-coral-500">Marketing Digital</Link></li>
-                            <li><Link href="/services/systems" className="hover:text-coral-500">Desarrollo de Sistemas</Link></li>
-                            <li><Link href="/services/ai-agents" className="hover:text-coral-500">Agentes IA</Link></li>
+                            <li><Link href="/services/marketing" className="hover:text-coral-500">{t('digitalMarketing')}</Link></li>
+                            <li><Link href="/services/systems" className="hover:text-coral-500">{t('systemDevelopment')}</Link></li>
+                            <li><Link href="/services/ai-agents" className="hover:text-coral-500">{t('aiAgents')}</Link></li>
                         </ul>
                     </div>
 
                     {/* Contacto */}
                     <div className="md:col-span-2">
-                        <h3 className="text-base font-semibold mb-4 font-inter dark:text-white">Contacto</h3>
+                        <h3 className="text-base font-semibold mb-4 font-inter dark:text-white">{t('contact')}</h3>
                         <ul className="space-y-3 text-sm font-inter font-normal">
                             <li>
                                 <a href="mailto:contact@outlierssolutions.com" className="hover:text-coral-500">
@@ -70,7 +72,7 @@ export const Footer = () => {
 
                     {/* Redes sociales */}
                     <div className="md:col-span-2">
-                        <h3 className="text-base font-semibold mb-4 font-inter dark:text-white">Síguenos</h3>
+                        <h3 className="text-base font-semibold mb-4 font-inter dark:text-white">{t('followUs')}</h3>
                         <div className="flex sm:flex md:flex lg:flex space-x-4 sm:space-x-4 md:space-x-4 lg:space-x-2 xl:space-x-4">
                             <a target="_blank" href="https://www.linkedin.com/company/outliers-digital-solutions-inc/?viewAsMember=true" className="hover:text-coral-500"><Linkedin size={18} /></a>
                             <a target="_blank" href="https://www.instagram.com/outliers.solutions/" className="hover:text-coral-500"><Instagram size={18} /></a>
@@ -81,7 +83,7 @@ export const Footer = () => {
 
                 {/* Línea final */}
                 <div className="border-t border-gray-100 dark:border-gray-700 mt-12 pt-4 md:pt-8 text-xs text-center font-inter">
-                    © {new Date().getFullYear()} Outliers Academy. Todos los derechos reservados.
+                    © {new Date().getFullYear()} Outliers Academy. {t('allRightsReserved')}.
                 </div>
             </div>
         </footer>

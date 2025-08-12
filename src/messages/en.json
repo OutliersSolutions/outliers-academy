@@ -65,5 +65,21 @@
         "contact": "Contact",
         "signIn": "Sign in",
         "signUp": "Sign up"
+    },
+    "footer": {
+        "description": "We transform ideas into digital realities through visionary code and innovative marketing strategies.",
+        "tagline": "Where vision meets execution.",
+        "navigation": "Navigation",
+        "home": "Home",
+        "about": "About",
+        "catalog": "Catalog",
+        "schedule": "Schedule",
+        "services": "Services",
+        "digitalMarketing": "Digital Marketing",
+        "systemDevelopment": "System Development",
+        "aiAgents": "AI Agents",
+        "contact": "Contact",
+        "followUs": "Follow Us",
+        "allRightsReserved": "All rights reserved"
     }
 }
