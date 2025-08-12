@@ -1,10 +1,41 @@
-/* Import Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;700;800;900&display=swap');
+/* Fonts are now imported via Next.js font optimization in layout.tsx */
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Animations for search overlay */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-in {
+  animation: fadeIn 0.2s ease-out;
+}
+
+.fade-in {
+  animation: fadeIn 0.2s ease-out;
+}
+
+.slide-in {
+  animation: slideIn 0.2s ease-out;
+}
 
 /* Root Variables */
 @layer base {
@@ -89,11 +120,19 @@
   }
 
   body {
-    @apply font-inter text-black antialiased;
+    @apply font-sans text-black antialiased;
   }
 
-  h1, h2 {
+  h1, h2, h3, h4, h5, h6 {
     @apply font-heading;
+  }
+
+  code, pre, .code {
+    @apply font-mono;
+  }
+
+  .font-code {
+    @apply font-code;
   }
 
   * {

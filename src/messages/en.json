@@ -136,5 +136,18 @@
             "services": "Our AI Services",
             "question": "What AI services do you offer?"
         }
+    },
+    "search": {
+        "placeholder": "What are you learning today?",
+        "popularSearches": "Popular searches",
+        "recentSearches": "Recent searches",
+        "noResults": "No results found",
+        "noResultsDescription": "Try different terms or explore our complete catalog",
+        "types": {
+            "course": "Course",
+            "path": "Path",
+            "article": "Article",
+            "project": "Project"
+        }
     }
 }

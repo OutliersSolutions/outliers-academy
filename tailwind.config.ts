@@ -16,9 +16,22 @@ const config: Config = {
     },
     extend: {
       fontFamily: {
-        sans: ["Poppins", "Inter", "var(--font-sans)", "sans-serif"],
-        heading: ["Lexend", "sans-serif"],
-        inter: ["Inter", "sans-serif"],
+        sans: ["var(--font-inter)", "Inter", "sans-serif"],
+        heading: ["var(--font-manrope)", "Manrope", "sans-serif"],
+        mono: [
+          "var(--font-code-primary)",
+          "var(--font-code-secondary)", 
+          "var(--font-code-tertiary)",
+          "Source Code Pro",
+          "JetBrains Mono",
+          "Fira Code",
+          "monospace"
+        ],
+        code: [
+          "var(--font-code-primary)",
+          "Source Code Pro",
+          "monospace"
+        ]
       },
       colors: {
         // Outliers Academy color palette

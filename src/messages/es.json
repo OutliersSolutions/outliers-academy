@@ -136,5 +136,18 @@
             "services": "Nuestros Servicios de IA",
             "question": "¿Qué servicios de IA ofrecen?"
         }
+    },
+    "search": {
+        "placeholder": "¿Qué quieres aprender hoy?",
+        "popularSearches": "Búsquedas populares",
+        "recentSearches": "Búsquedas recientes",
+        "noResults": "No se encontraron resultados",
+        "noResultsDescription": "Intenta con términos diferentes o explora nuestro catálogo completo",
+        "types": {
+            "course": "Curso",
+            "path": "Ruta",
+            "article": "Artículo",
+            "project": "Proyecto"
+        }
     }
 }
