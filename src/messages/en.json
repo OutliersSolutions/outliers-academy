@@ -149,5 +149,11 @@
             "article": "Article",
             "project": "Project"
         }
+    },
+    "robot": {
+        "aiAssistant": "AI Assistant",
+        "question": "What do you want to learn?",
+        "startFree": "Start any course for free.",
+        "whatsappTooltip": "Contact us on WhatsApp!"
     }
 }

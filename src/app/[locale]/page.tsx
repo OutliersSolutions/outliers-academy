@@ -71,35 +71,7 @@ export default async function HomePage({
             </div>
 
             <div className="relative">
-              <div className="relative bg-white rounded-2xl shadow-2xl p-6 transform rotate-2 hover:rotate-0 transition-transform duration-300 overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5"></div>
-                <div className="relative z-10">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                    <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                  </div>
-                  
-                  <div className="h-80 bg-gradient-to-br from-neutral-50 to-neutral-100 rounded-lg mb-4 relative overflow-hidden">
-                    <ChatbotViewerSafe className="w-full h-full" />
-                    
-                    <div className="absolute top-4 right-4 text-xs text-neutral-500 bg-white px-2 py-1 rounded-full">
-                      {t('aiAssistant')}
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <div className="bg-gradient-to-r from-green-400 to-blue-500 h-2 rounded"></div>
-                    <div className="bg-gray-200 h-3 rounded w-3/4"></div>
-                    <div className="bg-gray-200 h-3 rounded w-1/2"></div>
-                    <div className="bg-gradient-to-r from-purple-400 to-pink-500 h-2 rounded w-5/6"></div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="absolute -bottom-4 -right-4 bg-accent text-white rounded-lg px-3 py-2 text-sm font-semibold shadow-lg">
-                {t('interactiveAI')}
-              </div>
+              <ChatbotViewerSafe className="w-full h-80" />
             </div>
           </div>
         </div>
