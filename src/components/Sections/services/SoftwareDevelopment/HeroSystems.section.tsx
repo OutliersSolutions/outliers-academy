@@ -9,12 +9,12 @@ export const HeroSystemSection = () => {
     const benefitsRef = useRef(null);
     const isBenefitsInView = useInView(benefitsRef, { once: true });
 
-    const features = /* t( */'systems.hero_system_section.features', { returnObjects: true }) as {
+    const features = [] as {
         title: string;
         description: string;
     }[];
 
-    const benefits = /* t( */'systems.hero_system_section.benefits', { returnObjects: true }) as string[];
+    const benefits = [] as string[];
 
     const featureIcons = [GitCompare, Database, ChartNoAxesCombined, LayoutPanelLeft];
     const benefitIcons = [Bolt, Database, Layers, ChartNoAxesCombined, LayoutPanelLeft];

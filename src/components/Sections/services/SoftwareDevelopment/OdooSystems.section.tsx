@@ -21,7 +21,7 @@ export const OdooSystemSection = () => {
 
   if (!mounted) return null;
 
-  const benefits = /* t( */'systems.odoo_section.benefits', { returnObjects: true }) as {
+  const benefits = [] as {
     title: string;
     description: string;
   }[];

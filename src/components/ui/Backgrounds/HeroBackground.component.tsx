@@ -71,7 +71,7 @@ export const HeroBackground = () => {
     window.addEventListener("resize", draw)
 
     return () => window.removeEventListener("resize", draw)
-  }, [])
+  }, [ColorPoints, ColorStroke])
 
   return <canvas ref={canvasRef} className="bg-gray-100 dark:bg-gray-900 fixed top-0 left-0 w-full h-full z-[-1] pointer-events-none overflow-hidden" aria-hidden="true" />
 }

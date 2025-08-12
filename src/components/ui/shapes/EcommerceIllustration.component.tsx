@@ -8,8 +8,8 @@ interface EcommerceIllustrationProps {
 export const EcommerceIllustration = ({ className }: EcommerceIllustrationProps) => {
 
 
-    const products = /* t( */'marketing.hero_marketing_section.ecommerce_illustration.products', { returnObjects: true }) as { title: string; price: string; img: string }[];
-    const benefits = /* t( */'marketing.hero_marketing_section.ecommerce_illustration.benefits', { returnObjects: true }) as { label: string }[];
+    const products = [{title: 'Producto 1', price: '$29.99', img: '/images/product1.jpg'}, {title: 'Producto 2', price: '$49.99', img: '/images/product2.jpg'}];
+    const benefits = [{label: 'Envío gratis'}, {label: 'Garantía'}, {label: 'Soporte 24/7'}];
 
     const benefitIcons = [Truck, CheckCircle, MessageCircle];
 

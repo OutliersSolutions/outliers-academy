@@ -4,11 +4,23 @@ import { projectMeta } from "@/data";
 
 export const PortfolioSection = () => {
 
-  const translatedProjects = /* t( */'marketing.portfolio_section.projects', { returnObjects: true }) as {
-    title: string;
-    subtitle: string;
-    technologies: string[];
-  }[];
+  const translatedProjects = [
+    {
+      title: 'E-commerce Platform',
+      subtitle: 'Plataforma completa de comercio electrónico',
+      technologies: ['React', 'Node.js', 'MongoDB']
+    },
+    {
+      title: 'Marketing Automation',
+      subtitle: 'Sistema de automatización de marketing digital',
+      technologies: ['Python', 'Django', 'PostgreSQL']
+    },
+    {
+      title: 'Analytics Dashboard',
+      subtitle: 'Dashboard de análisis y métricas',
+      technologies: ['Vue.js', 'Express', 'Redis']
+    }
+  ];
 
   return (
     <section

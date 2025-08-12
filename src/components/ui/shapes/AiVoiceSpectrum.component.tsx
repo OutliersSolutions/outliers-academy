@@ -47,7 +47,7 @@ export const AIVoiceSpectrum = () => {
                 for (let i = 0; i < pointCount; i++) {
                     const x = (canvas.width / pointCount) * i
                     const y = canvas.height / 2 + yOffset
-                    this.points.push(new Poin/* t( */x, y))
+                    this.points.push(new Point(x, y))
                 }
             }
 
@@ -203,12 +203,12 @@ export const AIVoiceSpectrum = () => {
 
         const animate = () => {
             // Create dark background with gradient
-            const gradient = ctx.createLinearGradien/* t( */0, 0, 0, canvas.height)
+            const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height)
             gradient.addColorStop(0, "rgba(10, 10, 40, 0.8)")
             gradient.addColorStop(1, "rgba(5, 5, 20, 0.8)")
 
             ctx.fillStyle = gradient
-            ctx.fillRec/* t( */0, 0, canvas.width, canvas.height)
+            ctx.fillRect(0, 0, canvas.width, canvas.height)
 
             // Update and draw particles
             for (const particle of particles) {

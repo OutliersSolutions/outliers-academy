@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 export const ChatbotSection = () => {
   const { t } = useTranslation();
 
-    const bubbles = /* t( */'ai_agents.chatbot_section.chat_bubbles', { returnObjects: true }) as string[];
+    const bubbles = ['¿Cómo puedo automatizar mi negocio?', '¿Qué servicios de IA ofrecen?', '¿Cuánto cuesta un chatbot?', '¿Pueden integrar con mi CRM?'];
 
     return (
         <section className="flex pt-20 sm:pt-20 md:pt-20 lg:pt-32 xl:pt-32 items-center relative pb-32 z-10 text-gray-600 dark:text-gray-300 leading-relaxed">
