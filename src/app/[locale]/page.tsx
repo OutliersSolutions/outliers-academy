@@ -3,8 +3,7 @@ import {getTranslations, unstable_setRequestLocale} from 'next-intl/server';
 import {CourseGrid} from '@/components/CourseGrid';
 import {ChatbotViewerSafe} from '@/components/ChatbotViewerSafe';
 import {ParticlesBackground} from '@/components/ui/ParticlesBackground';
-import {StarRating} from '@/components/ui/StarRating';
-import {UserAvatars} from '@/components/ui/UserAvatars';
+import {AcademyStats} from '@/components/AcademyStats';
 import {ArrowIcon} from '@/components/ui/ArrowIcon';
 import {AnimatedTextWrapper} from '@/components/ui/AnimatedTextWrapper';
 import {technologies} from '@/data/technologies';
@@ -27,7 +26,7 @@ export default async function HomePage({
   return (
     <div>
       <section className="hero-gradient relative overflow-hidden">
-        <ParticlesBackground particleColor="#ff5a1f" opacity={0.6} particleSize={1.5} drawLines={false} density={8000} className="absolute inset-0 w-full h-full z-0" />
+        <ParticlesBackground particleColor="#ff5a1f" opacity={0.7} particleSize={3.5} drawLines={false} density={6000} className="absolute inset-0 w-full h-full z-0" />
         <div className="container mx-auto px-6 py-20 md:py-32 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="max-w-2xl">
@@ -63,16 +62,7 @@ export default async function HomePage({
                 </Link>
               </div>
 
-              <div className="flex items-center gap-8 text-sm text-neutral-600">
-                <div className="flex items-center gap-2">
-                  <UserAvatars />
-                                     <span className="font-medium">{t('students')}</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <StarRating />
-                  <span className="font-medium">{t('rating')}</span>
-                </div>
-              </div>
+              <AcademyStats locale={params.locale} />
             </div>
 
             <div className="relative">

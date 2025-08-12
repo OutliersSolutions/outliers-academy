@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { Search, X, Clock, TrendingUp, BookOpen, Code, Database, Globe, Shield, Zap } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
@@ -40,7 +40,7 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
   }, [query]);
 
   // Mock search results - in real app, this would be an API call
-  const mockSearchResults: SearchResult[] = [
+  const mockSearchResults: SearchResult[] = useMemo(() => [
     {
       id: '1',
       title: 'Python Fundamentals',
@@ -86,7 +86,7 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
       level: 'Advanced',
       icon: <Zap className="w-5 h-5" />
     }
-  ];
+  ], []);
 
   // Popular searches
   const popularSearches = [
@@ -119,7 +119,7 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
     }, 200);
 
     return () => clearTimeout(timer);
-  }, [debouncedQuery]);
+  }, [debouncedQuery, mockSearchResults]);
 
   // Focus input when overlay opens
   useEffect(() => {
