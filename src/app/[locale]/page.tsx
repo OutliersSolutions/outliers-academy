@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import {useTranslations} from 'next-intl';
+import {getTranslations, unstable_setRequestLocale} from 'next-intl/server';
 import {CourseGrid} from '@/components/CourseGrid';
 import {ChatbotViewerSafe} from '@/components/ChatbotViewerSafe';
 import {ParticlesBackground} from '@/components/ui/ParticlesBackground';
@@ -7,8 +7,17 @@ import type {Route} from 'next';
 
 export const dynamic = 'force-dynamic';
 
-export default function HomePage() {
-  const t = useTranslations('home');
+export function generateStaticParams() {
+  return [{locale: 'es'}, {locale: 'en'}];
+}
+
+export default async function HomePage({
+  params
+}: {
+  params: { locale: string };
+}) {
+  unstable_setRequestLocale(params.locale);
+  const t = await getTranslations('home');
 
   return (
     <div>

@@ -23,7 +23,7 @@ export default function middleware(request: NextRequest) {
       "script-src 'self' 'unsafe-inline' https://unpkg.com https://js.stripe.com",
       "style-src 'self' 'unsafe-inline'",
       "img-src 'self' data: https:",
-      "connect-src 'self' https://api.stripe.com",
+      "connect-src 'self' http://localhost:* ws://localhost:* https://api.stripe.com",
       "frame-src https://js.stripe.com https://hooks.stripe.com",
       "media-src 'self'",
       "object-src 'none'",
@@ -43,9 +43,9 @@ export default function middleware(request: NextRequest) {
     
     // Simple rate limiting (in production, use Redis or similar)
     const rateLimit = {
-      '/api/auth/': 5,     // 5 requests per minute for auth
-      '/api/odoo/': 20,    // 20 requests per minute for Odoo API
-      '/api/stripe/': 10   // 10 requests per minute for Stripe
+      '/api/auth/': 5,
+      '/api/odoo/': 20,
+      '/api/stripe/': 10
     };
     
     // Add rate limiting headers
@@ -57,9 +57,5 @@ export default function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    '/',
-    '/(es|en)/:path*',
-    '/api/:path*'
-  ]
+  matcher: ['/((?!api|_next|_vercel|.*\\..*).*)']
 };

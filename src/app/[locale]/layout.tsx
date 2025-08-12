@@ -10,6 +10,10 @@ export const metadata: Metadata = {
   description: 'Aprende habilidades en demanda con cursos interactivos.'
 };
 
+export function generateStaticParams() {
+  return [{locale: 'es'}, {locale: 'en'}];
+}
+
 export default async function RootLayout({
   children,
   params
