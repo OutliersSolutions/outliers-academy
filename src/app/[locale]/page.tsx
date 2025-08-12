@@ -11,7 +11,7 @@ const ParticlesBackground = dynamic(() => import('@/components/ui/ParticlesBackg
 import {AcademyStats} from '@/components/AcademyStats';
 import {ArrowIcon} from '@/components/ui/ArrowIcon';
 import {AnimatedTextWrapper} from '@/components/ui/AnimatedTextWrapper';
-import {technologies} from '@/data/technologies';
+import {TechnologiesSection} from '@/components/TechnologiesSection';
 import type {Route} from 'next';
 
 
@@ -66,10 +66,10 @@ export default async function HomePage({
                   {t('cta.secondary')}
                 </Link>
               </div>
-
+              
               <AcademyStats locale={params.locale} />
             </div>
-
+            
             <div className="relative">
               <ChatbotViewerSafe className="w-full h-80" />
             </div>
@@ -144,32 +144,8 @@ export default async function HomePage({
         </div>
       </section>
 
-      <section className="py-16 md:py-20 bg-white">
-        <div className="container">
-          <div className="text-center mb-12">
-            <h2 className="text-2xl md:text-3xl font-bold text-neutral-900 mb-4">{t('technologies.title')}</h2>
-            <p className="text-neutral-600 max-w-2xl mx-auto">{t('technologies.subhead')}</p>
-          </div>
-          
-          <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-8 items-center justify-items-center opacity-70 hover:opacity-100 transition-opacity duration-500">
-            {technologies.map((tech, index) => (
-              <div key={tech.name} className="group flex flex-col items-center gap-2 p-3 rounded-lg hover:bg-neutral-50 transition-all duration-300">
-                <div className="w-12 h-12 flex items-center justify-center grayscale group-hover:grayscale-0 transition-all duration-300 transform group-hover:scale-110">
-                  <img 
-                    src={tech.icon} 
-                    alt={tech.name} 
-                    className="w-8 h-8 object-contain"
-                    style={{ animationDelay: `${index * 0.1}s` }}
-                  />
-                </div>
-                <span className="text-xs font-medium text-neutral-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  {tech.name}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* New Technologies Section */}
+      <TechnologiesSection locale={params.locale} />
 
       <section className="py-20 md:py-28">
         <div className="container">
