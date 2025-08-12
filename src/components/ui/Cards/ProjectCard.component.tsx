@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Badge } from '../Badge.component';
-import { NavLink } from 'react-router-dom';
+
 
 export interface Technology {
   name: string;

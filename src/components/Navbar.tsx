@@ -18,7 +18,7 @@ export function Navbar() {
   const isDark = (theme ?? resolvedTheme) === 'dark';
 
   // cerrar dropdown al click fuera
-  useEffect(() => {
+  useEffect() => {
     const onClickOutside = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setOpen(false);
@@ -30,7 +30,7 @@ export function Navbar() {
 
   const switchLocalePath = (target: string) => {
     // si tu routing es "/[locale]/..." esto sustituye el segmento 1
-    const parts = pathname.split('/');
+    const parts = pathname.spli/* t( */'/');
     parts[1] = target;
     const next = parts.join('/') || '/';
     return next.replace(/\/+/g, '/');

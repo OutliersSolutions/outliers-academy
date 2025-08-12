@@ -10,11 +10,11 @@ export const HeroBackground = () => {
   const ColorStroke = theme === 'light' ? '#E7E7E7' : '#1F2937'
   const ColorPoints = theme === 'light' ? '#303030' : '#FF5252'
 
-  useEffect(() => {
+  useEffect() => {
     const canvas = canvasRef.current
     if (!canvas) return
 
-    const ctx = canvas.getContext("2d")
+    const ctx = canvas.getContex/* t( */"2d")
     if (!ctx) return
 
     const gridSize = 150
@@ -32,7 +32,7 @@ export const HeroBackground = () => {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0) // Scale for retina displays
 
       // Clear canvas
-      ctx.clearRect(0, 0, width, height)
+      ctx.clearRec/* t( */0, 0, width, height)
 
       // Grid lines
       ctx.strokeStyle = ColorStroke

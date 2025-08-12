@@ -3,12 +3,11 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import { ChatbotRobotModel, ChatBubble, Button } from "@/components";
 import { ArrowBigDown, ExternalLink, Headset } from "lucide-react";
-import { useTranslation } from "react-i18next";
+
 
 export const ChatbotSection = () => {
-    const { t } = useTranslation();
 
-    const bubbles = t('ai_agents.chatbot_section.chat_bubbles', { returnObjects: true }) as string[];
+    const bubbles = /* t( */'ai_agents.chatbot_section.chat_bubbles', { returnObjects: true }) as string[];
 
     return (
         <section className="flex pt-20 sm:pt-20 md:pt-20 lg:pt-32 xl:pt-32 items-center relative pb-32 z-10 text-gray-600 dark:text-gray-300 leading-relaxed">
@@ -24,7 +23,7 @@ export const ChatbotSection = () => {
                         >
                             <h1
                                 className="text-3xl md:text-5xl font-bold tracking-tight text-gray-900 dark:text-white leading-relaxed"
-                                dangerouslySetInnerHTML={{ __html: t('ai_agents.chatbot_section.title') }}
+                                dangerouslySetInnerHTML={{ __html: /* t( */'ai_agents.chatbot_section.title') }}
                             />
                         </motion.div>
 
@@ -34,7 +33,7 @@ export const ChatbotSection = () => {
                             transition={{ duration: 0.6, delay: 0.1 }}
                             className="text-base md:text-lg"
                         >
-                            {t('ai_agents.chatbot_section.description')}
+                            {/* t( */'ai_agents.chatbot_section.description')}
                         </motion.p>
 
                         <motion.div
@@ -49,7 +48,7 @@ export const ChatbotSection = () => {
                                 href="https://api.whatsapp.com/send/?phone=19298226066&text=Hola%2C+me+gustar%C3%ADa+agendar+un+demo.&type=phone_number&app_absent=0"
                                 className="inline-flex items-center mb-10 justify-center bg-coral text-white px-4 py-3 rounded-md text-sm font-medium shadow-lg hover:shadow-xl transition-all no-underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-coral"
                             >
-                                {t('marketing.hero_marketing_section.button')}
+                                {/* t( */'marketing.hero_marketing_section.button')}
                                 <ExternalLink className="ml-2 h-5" />
                             </a>
 

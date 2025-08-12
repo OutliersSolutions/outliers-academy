@@ -6,7 +6,7 @@ interface ExternalRedirectProps {
 }
 
 export const ExternalRedirect = ({ to }: ExternalRedirectProps) => {
-    useEffect(() => {
+    useEffect() => {
         // Cambia la URL de la ventana actual:
         window.location.href = to;
 

@@ -1,11 +1,10 @@
 import { ProjectCard } from "@/components";
 import { projectMeta } from "@/data";
-import { useTranslation } from "react-i18next";
+
 
 export const PortfolioSection = () => {
-  const { t } = useTranslation();
 
-  const translatedProjects = t('marketing.portfolio_section.projects', { returnObjects: true }) as {
+  const translatedProjects = /* t( */'marketing.portfolio_section.projects', { returnObjects: true }) as {
     title: string;
     subtitle: string;
     technologies: string[];

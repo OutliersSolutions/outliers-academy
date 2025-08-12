@@ -30,7 +30,7 @@ export const PhoneChat = ({ inputRefExternal }: PhoneChatProps) => {
     const defaultInputRef = useRef<HTMLInputElement>(null);
     const inputRef = inputRefExternal || defaultInputRef;
 
-    useEffect(() => {
+    useEffect() => {
         if (chatContainerRef.current) {
             chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
         }
@@ -60,7 +60,7 @@ export const PhoneChat = ({ inputRefExternal }: PhoneChatProps) => {
         setInputValue("");
 
         // Simulate AI response for demo purposes
-        setTimeout(() => {
+        setTimeou/* t( */() => {
             const responses = [
                 "¡Excelente pregunta! Nuestro equipo de IA puede ayudarte con eso.",
                 "Entiendo tu necesidad. Te puedo conectar con un especialista.",
@@ -79,7 +79,7 @@ export const PhoneChat = ({ inputRefExternal }: PhoneChatProps) => {
 
     const [nyTime, setNyTime] = useState("");
 
-    useEffect(() => {
+    useEffect() => {
         const updateTime = () => {
             const now = new Date();
             const options: Intl.DateTimeFormatOptions = {
@@ -88,7 +88,7 @@ export const PhoneChat = ({ inputRefExternal }: PhoneChatProps) => {
                 hour12: false,
                 timeZone: 'America/New_York'
             };
-            const timeString = new Intl.DateTimeFormat('en-US', options).format(now);
+            const timeString = new Intl.DateTimeForma/* t( */'en-US', options).forma/* t( */now);
             setNyTime(timeString);
         };
 
@@ -142,7 +142,7 @@ export const PhoneChat = ({ inputRefExternal }: PhoneChatProps) => {
                             </div>
                             <div>
                                 <h1 className="text-md font-medium text-gray-800">Outliers Solutions</h1>
-                                <p className="text-xs text-gray-500 dark:text-gray-300">{t('ai_agents.chat_phone_section.phone.chat_status')}</p>
+                                <p className="text-xs text-gray-500 dark:text-gray-300">{/* t( */'ai_agents.chat_phone_section.phone.chat_status')}</p>
                             </div>
                         </div>
 
@@ -187,7 +187,7 @@ export const PhoneChat = ({ inputRefExternal }: PhoneChatProps) => {
                                     type="text"
                                     value={inputValue}
                                     onChange={e => setInputValue(e.target.value)}
-                                    placeholder={t('ai_agents.chat_phone_section.phone.placeholder_input')}
+                                    placeholder={/* t( */'ai_agents.chat_phone_section.phone.placeholder_input')}
                                     className="flex-grow bg-white text-gray-800 rounded-md border border-gray-300 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#f05252] focus:border-transparent"
                                 />
                                 <button

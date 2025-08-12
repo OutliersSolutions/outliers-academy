@@ -23,7 +23,7 @@ export const BeforeAfter = () => {
                     {projects.map((project, index) => (
                         <Button
                             key={index}
-                            onClick={() => setActiveProject(index)}
+                            onClick={() => setActiveProjec/* t( */index)}
                             variant={activeProject === index ? "default" : "outline"}
                             className={`m-2 rounded-xl ${activeProject === index
                                 ? "bg-coral-500 hover:bg-coral-600 text-white"

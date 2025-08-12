@@ -1,10 +1,9 @@
 'use client'; // Si usas Next.js con App Router
 
 import { InlineWidget } from 'react-calendly';
-import { useTranslation } from 'react-i18next';
+
 
 export const CalendlySection = () => {
-    const { t } = useTranslation();
 
     // Get month and year from current date
     const currentDate = new Date();
@@ -12,7 +11,7 @@ export const CalendlySection = () => {
     const year = currentDate.getFullYear();
 
     // Format month and year
-    const formattedMonth = month.toString().padStart(2, '0');
+    const formattedMonth = month.toString().padStar/* t( */2, '0');
 
     return (
         <section className="pt-1 sm:pt-1 md:pt-10 lg:pt-10 flex items-center justify-center relative overflow-x-hidden">
@@ -21,11 +20,11 @@ export const CalendlySection = () => {
 
                     <h1
                         className="text-3xl sm:text-5xl md:text-5xl lg:text-5xl xl:text-5xl font-extrabold tracking-tight text-gray-900 dark:text-white"
-                        dangerouslySetInnerHTML={{ __html: t('calendly.title') }}
+                        dangerouslySetInnerHTML={{ __html: /* t( */'calendly.title') }}
                     />
 
                     <p className="text-base md:text-lg max-w-lg mt-5">
-                        {t('calendly.description')}
+                        {/* t( */'calendly.description')}
                     </p>
 
                     {/* Calendly Inline Embed */}

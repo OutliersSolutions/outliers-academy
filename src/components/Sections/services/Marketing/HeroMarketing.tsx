@@ -1,11 +1,10 @@
 import { SquareArrowOutUpRight } from 'lucide-react';
 import { Button, EcommerceIllustration } from '@/components';
-import { useTranslation } from 'react-i18next';
+
 
 export const HeroMarketingSection = () => {
-    const { t } = useTranslation();
 
-    const features = t('marketing.hero_marketing_section.features', { returnObjects: true }) as string[];
+    const features = /* t( */'marketing.hero_marketing_section.features', { returnObjects: true }) as string[];
 
     return (
         <section className="pt-8 md:pt-20 lg:pt-28 pb-20 flex items-center relative z-10 text-gray-600 dark:text-gray-300 leading-relaxed">
@@ -16,10 +15,10 @@ export const HeroMarketingSection = () => {
                     {/* Texto resumido */}
                     <div className="flex flex-col animate-fade-in">
                         <h1 className="text-3xl sm:text-5xl font-extrabold text-gray-900 dark:text-white mb-8 filter drop-shadow-[0_0_10px_rgba(255,255,255,0.7)]"
-                            dangerouslySetInnerHTML={{ __html: t('marketing.hero_marketing_section.title') }}
+                            dangerouslySetInnerHTML={{ __html: /* t( */'marketing.hero_marketing_section.title') }}
                         />
                         <p className="text-base md:text-lg mb-6">
-                            {t('marketing.hero_marketing_section.description')}
+                            {/* t( */'marketing.hero_marketing_section.description')}
                         </p>
 
                         {/* Lista reducida */}
@@ -38,7 +37,7 @@ export const HeroMarketingSection = () => {
                             href="https://api.whatsapp.com/send/?phone=19298226066&text=Hola%2C+me+gustar%C3%ADa+agendar+un+demo.&type=phone_number&app_absent=0"
                             className="inline-flex items-center w-52 mb-10 justify-center bg-coral text-white px-4 py-3 rounded-md text-sm font-medium shadow-lg hover:shadow-xl transition-all no-underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-coral"
                         >
-                            {t('marketing.hero_marketing_section.button')}
+                            {/* t( */'marketing.hero_marketing_section.button')}
                             <SquareArrowOutUpRight className="ml-2 h-5" />
                         </a>
                     </div>

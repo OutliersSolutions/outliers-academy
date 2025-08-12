@@ -17,7 +17,7 @@ interface FloatingElement {
 export const FloatingElements = () => {
   const [elements, setElements] = useState<FloatingElement[]>([])
 
-  useEffect(() => {
+  useEffect() => {
     // Generate random elements
     const types = ["circle", "square", "triangle", "gear", "chat", "code"]
     const colors = ["#3B82F6", "#F87171", "#10B981", "#8B5CF6", "#F59E0B"]
@@ -153,7 +153,7 @@ export const FloatingElements = () => {
             ease: "linear",
           }}
         >
-          {renderElement(element)}
+          {renderElemen/* t( */element)}
         </motion.div>
       ))}
     </div>

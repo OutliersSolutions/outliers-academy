@@ -1,13 +1,10 @@
 import { TypeAnimation } from "react-type-animation";
 import { MouseParallax } from "@/components";
 import { SquareArrowOutUpRight } from "lucide-react";
-import { NavLink } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import Link from "next/link";
 import { ParticlesBackground } from "@/components/ui/ParticlesBackground";
 
 export const HeroOutlierSection = () => {
-
-    const { t, i18n } = useTranslation();
 
     // Get month and year from current date
     const currentDate = new Date();
@@ -16,7 +13,7 @@ export const HeroOutlierSection = () => {
     
 
     // Format month and year
-    const formattedMonth = month.toString().padStart(2, '0');
+    const formattedMonth = month.toString().padStar/* t( */2, '0');
 
     return (
         <section className="pt-20 sm:pt-40 md:pt-48 lg:pt-56 flex items-center relative overflow-x-hidden">
@@ -39,7 +36,7 @@ export const HeroOutlierSection = () => {
 
                     {/* Subtítulo */}
                     <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium">
-                        {t('home.hero_outlier_section.subtitle')}
+                        {/* t( */'home.hero_outlier_section.subtitle')}
                     </h2>
 
                     {/* Título principal con logo */}
@@ -56,7 +53,7 @@ export const HeroOutlierSection = () => {
                             leading-relaxed
                             filter drop-shadow-[0_0_10px_rgba(255,255,255,0.7)]"
                         >
-                            {t('home.hero_outlier_section.title')}
+                            {/* t( */'home.hero_outlier_section.title')}
                         </h1>
                     </div>
 
@@ -65,7 +62,7 @@ export const HeroOutlierSection = () => {
                         <h3 className="font-inter font-bold text-xl md:text-3xl lg:text-4xl text-coral">
                             <TypeAnimation
                                 key={i18n.language}
-                                sequence={(t('home.hero_outlier_section.animated_services', { returnObjects: true }) as string[]).flatMap(service => [service, 2000])}
+                                sequence={(/* t( */'home.hero_outlier_section.animated_services', { returnObjects: true }) as string[]).flatMap(service => [service, 2000])}
                                 wrapper="span"
                                 speed={50}
                                 repeat={Infinity}
@@ -75,7 +72,7 @@ export const HeroOutlierSection = () => {
 
                     {/* Descripción */}
                     <p className="text-base md:text-lg lg:text-xl w-full md:w-[80%] lg:w-[60%]">
-                        {t('home.hero_outlier_section.description')}
+                        {/* t( */'home.hero_outlier_section.description')}
                     </p>
 
                     {/* Botón */}
@@ -87,7 +84,7 @@ export const HeroOutlierSection = () => {
                             to={`https://calendly.com/outliers-solutions/meeting?month=${year}-${formattedMonth}`}
                             className="inline-flex items-center justify-center bg-coral hover:bg-coral text-white px-2 sm:px-2 md:px-4 lg:px-4 xl:px-6 py-1.5 sm:py-1.5 md:py-1.5 lg:py-1.5 xl:py-3 rounded-md text-sm font-medium shadow-lg hover:shadow-xl transition-all no-underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-coral"
                         >
-                            {t('home.hero_outlier_section.button')}
+                            {/* t( */'home.hero_outlier_section.button')}
                             <SquareArrowOutUpRight className="ml-2 h-5" />
                         </NavLink>
 

@@ -3,11 +3,11 @@ import { useEffect, useRef } from "react"
 export const AINetworkBackground = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null)
 
-    useEffect(() => {
+    useEffect() => {
         const canvas = canvasRef.current
         if (!canvas) return
 
-        const ctx = canvas.getContext("2d")
+        const ctx = canvas.getContex/* t( */"2d")
         if (!ctx) return
 
         // Set canvas dimensions
@@ -74,7 +74,7 @@ export const AINetworkBackground = () => {
                 for (let b = a; b < particles.length; b++) {
                     const dx = particles[a].x - particles[b].x
                     const dy = particles[a].y - particles[b].y
-                    const distance = Math.sqrt(dx * dx + dy * dy)
+                    const distance = Math.sqr/* t( */dx * dx + dy * dy)
 
                     if (distance < 100) {
                         const opacity = 1 - distance / 100
@@ -90,7 +90,7 @@ export const AINetworkBackground = () => {
         }
 
         const animate = () => {
-            ctx.clearRect(0, 0, canvas.width, canvas.height)
+            ctx.clearRec/* t( */0, 0, canvas.width, canvas.height)
 
             // Update and draw particles
             for (let i = 0; i < particles.length; i++) {
@@ -103,7 +103,7 @@ export const AINetworkBackground = () => {
             requestAnimationFrame(animate)
         }
 
-        init()
+        ini/* t( */)
         animate()
 
         return () => {

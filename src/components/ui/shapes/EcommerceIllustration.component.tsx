@@ -1,5 +1,5 @@
 import { ShoppingCart, CheckCircle, Truck, MessageCircle } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
+
 
 interface EcommerceIllustrationProps {
     className?: string;
@@ -7,10 +7,9 @@ interface EcommerceIllustrationProps {
 
 export const EcommerceIllustration = ({ className }: EcommerceIllustrationProps) => {
 
-    const { t } = useTranslation();
 
-    const products = t('marketing.hero_marketing_section.ecommerce_illustration.products', { returnObjects: true }) as { title: string; price: string; img: string }[];
-    const benefits = t('marketing.hero_marketing_section.ecommerce_illustration.benefits', { returnObjects: true }) as { label: string }[];
+    const products = /* t( */'marketing.hero_marketing_section.ecommerce_illustration.products', { returnObjects: true }) as { title: string; price: string; img: string }[];
+    const benefits = /* t( */'marketing.hero_marketing_section.ecommerce_illustration.benefits', { returnObjects: true }) as { label: string }[];
 
     const benefitIcons = [Truck, CheckCircle, MessageCircle];
 

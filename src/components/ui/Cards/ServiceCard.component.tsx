@@ -17,7 +17,6 @@ isVisible: boolean
 
 const TagsPanel: React.FC<TagsPanelProps> = ({ tags, isVisible }) => {
 
-    const { t } = useTranslation();
 
 
     return (
@@ -31,7 +30,7 @@ const TagsPanel: React.FC<TagsPanelProps> = ({ tags, isVisible }) => {
                     className="w-full bg-white dark:bg-gray-800 mt-5 rounded-xl shadow-none sm:shadow-none md:shadow-none lg:shadow-none xl:shadow-md p-1 sm:p-5 md:p-5 lg:p-5 z-20 border-none sm:border md:border lg:border xl:border border-gray-100 dark:border-gray-700 origin-top"
                 >
                     <div className="mb-2">
-                        <h4 className="text-coral font-bold text-base uppercase tracking-wider text-start">{t('home.service_section.tags_title')}</h4>
+                        <h4 className="text-coral font-bold text-base uppercase tracking-wider text-start">{/* t( */'home.service_section.tags_title')}</h4>
                         <div className="w-12 h-1 bg-coral rounded-full mt-1"></div>
                     </div>
 
@@ -74,15 +73,14 @@ export const ServiceCard = ({
 }) => {
     const [isHovered, setIsHovered] = useState(false)
     const cardRef = useRef<HTMLDivElement>(null)
-    const { t } = useTranslation();
 
 
     const handleMouseEnter = () => {
         setIsHovered(true)
 
-        setTimeout(() => {
+        setTimeou/* t( */() => {
             if (cardRef.current) {
-                const rect = cardRef.current.getBoundingClientRect()
+                const rect = cardRef.current.getBoundingClientRec/* t( */)
                 const scrollOffset = window.scrollY + rect.top - 100
                 window.scrollTo({
                     top: scrollOffset,
@@ -134,7 +132,7 @@ export const ServiceCard = ({
                         rel="noopener noreferrer"
                         className="flex items-center gap-2 px-4 sm:px-6 md:px-6 lg:px-6 py-2 sm:py-2 md:py-2 lg:py-2 bg-coral text-white rounded-md duration-300 ease-in-out"
                     >
-                        <span className="font-medium">{t('home.service_section.button')}</span>
+                        <span className="font-medium">{/* t( */'home.service_section.button')}</span>
                         <ExternalLink size={18} />
                     </NavLink>
                 </motion.div>

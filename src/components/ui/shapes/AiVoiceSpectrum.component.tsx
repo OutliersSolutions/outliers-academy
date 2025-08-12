@@ -3,11 +3,11 @@ import { useEffect, useRef } from "react"
 export const AIVoiceSpectrum = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null)
 
-    useEffect(() => {
+    useEffect() => {
         const canvas = canvasRef.current
         if (!canvas) return
 
-        const ctx = canvas.getContext("2d")
+        const ctx = canvas.getContex/* t( */"2d")
         if (!ctx) return
 
         // Set canvas dimensions
@@ -47,7 +47,7 @@ export const AIVoiceSpectrum = () => {
                 for (let i = 0; i < pointCount; i++) {
                     const x = (canvas.width / pointCount) * i
                     const y = canvas.height / 2 + yOffset
-                    this.points.push(new Point(x, y))
+                    this.points.push(new Poin/* t( */x, y))
                 }
             }
 
@@ -107,7 +107,7 @@ export const AIVoiceSpectrum = () => {
                     const point = this.points[i]
 
                     // Draw glow
-                    const gradient = ctx.createRadialGradient(point.x, point.y, 0, point.x, point.y, 8)
+                    const gradient = ctx.createRadialGradien/* t( */point.x, point.y, 0, point.x, point.y, 8)
                     gradient.addColorStop(0, this.color)
                     gradient.addColorStop(1, "rgba(0, 0, 0, 0)")
 
@@ -203,12 +203,12 @@ export const AIVoiceSpectrum = () => {
 
         const animate = () => {
             // Create dark background with gradient
-            const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height)
+            const gradient = ctx.createLinearGradien/* t( */0, 0, 0, canvas.height)
             gradient.addColorStop(0, "rgba(10, 10, 40, 0.8)")
             gradient.addColorStop(1, "rgba(5, 5, 20, 0.8)")
 
             ctx.fillStyle = gradient
-            ctx.fillRect(0, 0, canvas.width, canvas.height)
+            ctx.fillRec/* t( */0, 0, canvas.width, canvas.height)
 
             // Update and draw particles
             for (const particle of particles) {
@@ -225,7 +225,7 @@ export const AIVoiceSpectrum = () => {
             requestAnimationFrame(animate)
         }
 
-        init()
+        ini/* t( */)
         animate()
 
         return () => {

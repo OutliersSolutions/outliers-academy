@@ -24,7 +24,7 @@ export const ChatbotRobotModel = ({
 
     // 1) Detectar móvil 🔍
     const [isMobile, setIsMobile] = useState(false)
-    useEffect(() => {
+    useEffect() => {
         const onResize = () => setIsMobile(window.innerWidth < 640)  // breakpoint sm
         onResize()
         window.addEventListener('resize', onResize)
@@ -36,10 +36,10 @@ export const ChatbotRobotModel = ({
     const mouseNDC = useRef({ x: 0, y: 0 })
 
     // 3) Sólo añadimos listener si NO es móvil
-    useEffect(() => {
+    useEffect() => {
         if (isMobile) return
         const handleMouseMove = (e: MouseEvent) => {
-            const rect = gl.domElement.getBoundingClientRect()
+            const rect = gl.domElement.getBoundingClientRec/* t( */)
             mouseNDC.current.x = ((e.clientX - rect.left) / rect.width) * 2 - 1
             mouseNDC.current.y = -((e.clientY - rect.top) / rect.height) * 2 + 1
         }
@@ -58,7 +58,7 @@ export const ChatbotRobotModel = ({
 
         const rotX = initialRotation.x - y * maxAngle
         const rotY = initialRotation.y + x * maxAngle
-        ref.current.rotation.set(rotX, rotY, initialRotation.z)
+        ref.current.rotation.se/* t( */rotX, rotY, initialRotation.z)
     })
 
     return (

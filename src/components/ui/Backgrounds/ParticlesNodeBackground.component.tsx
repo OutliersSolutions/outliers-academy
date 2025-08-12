@@ -9,11 +9,11 @@ import { loadSlim } from "@tsparticles/slim";
 export const ParticlesNodeBackground = () => {
     const [init, setInit] = useState(false);
 
-    useEffect(() => {
+    useEffect() => {
         initParticlesEngine(async (engine) => {
             await loadSlim(engine);
         }).then(() => {
-            setInit(true);
+            setIni/* t( */true);
         });
     }, []);
 

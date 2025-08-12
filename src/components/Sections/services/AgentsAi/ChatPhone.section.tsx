@@ -1,10 +1,9 @@
 import { AISpectrumCircular, Button, PhoneChat } from "@/components";
 import { Bot } from "lucide-react";
 import { useRef } from "react";
-import { useTranslation } from "react-i18next";
+
 
 export const ChatPhoneSection = () => {
-    const { t } = useTranslation();
 
     // 1. Crear un ref para el input
     const inputFocusRef = useRef<HTMLInputElement>(null);
@@ -53,17 +52,17 @@ export const ChatPhoneSection = () => {
                     <div className="w-full lg:w-1/2 space-y-8 z-10">
                         <h1
                             className="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white"
-                            dangerouslySetInnerHTML={{ __html: t('ai_agents.chat_phone_section.title') }}
+                            dangerouslySetInnerHTML={{ __html: /* t( */'ai_agents.chat_phone_section.title') }}
                         />
                         <p className="text-base md:text-lg">
-                            {t('ai_agents.chat_phone_section.description')}
+                            {/* t( */'ai_agents.chat_phone_section.description')}
                         </p>
                         <Button
                             onClick={handleFocus}
                             className="bg-coral hover:bg-coral text-white px-4 sm:px-6 md:px-6 lg:px-6 py-1 sm:py-3 md:py-3 lg:py-3 rounded-md text-lg font-medium shadow-lg hover:shadow-xl transition-all mt-4"
                         >
                             <Bot className="mr-2" />
-                            {t('ai_agents.chat_phone_section.button')}
+                            {/* t( */'ai_agents.chat_phone_section.button')}
                         </Button>
                     </div>
 
