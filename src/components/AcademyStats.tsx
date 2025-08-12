@@ -55,7 +55,7 @@ export function AcademyStats({ locale }: AcademyStatsProps) {
 
   if (loading) {
     return (
-      <div className="flex items-center gap-8 text-sm text-neutral-600 animate-pulse">
+      <div className="flex items-center gap-8 text-sm text-neutral-600 dark:text-neutral-300 animate-pulse">
         <div className="flex items-center gap-2">
           <UserAvatars />
           <span className="bg-gray-200 h-4 w-24 rounded"></span>
@@ -95,7 +95,7 @@ export function AcademyStats({ locale }: AcademyStatsProps) {
     : `${stats.averageRating} (${formatReviewCount(stats.totalReviews)} reviews)`;
 
   return (
-    <div className="flex items-center gap-8 text-sm text-neutral-600">
+    <div className="flex items-center gap-8 text-sm text-neutral-600 dark:text-neutral-300">
       <div className="flex items-center gap-2">
         <UserAvatars />
         <span className="font-medium">{studentsText}</span>

@@ -2,14 +2,18 @@ import Link from 'next/link';
 import {getTranslations, unstable_setRequestLocale} from 'next-intl/server';
 import {CourseGrid} from '@/components/CourseGrid';
 import {ChatbotViewerSafe} from '@/components/ChatbotViewerSafe';
-import {ParticlesBackground} from '@/components/ui/ParticlesBackground';
+import dynamic from 'next/dynamic';
+
+const ParticlesBackground = dynamic(() => import('@/components/ui/ParticlesBackground').then(mod => ({ default: mod.ParticlesBackground })), {
+  ssr: false,
+  loading: () => <div className="absolute inset-0 w-full h-full z-0" />
+});
 import {AcademyStats} from '@/components/AcademyStats';
 import {ArrowIcon} from '@/components/ui/ArrowIcon';
 import {AnimatedTextWrapper} from '@/components/ui/AnimatedTextWrapper';
 import {technologies} from '@/data/technologies';
 import type {Route} from 'next';
 
-export const dynamic = 'force-dynamic';
 
 export function generateStaticParams() {
   return [{locale: 'es'}, {locale: 'en'}];
@@ -36,8 +40,9 @@ export default async function HomePage({
               </span>
               
               <h1 className="h1-hero mb-6">
+                <span className="inline-block mr-2">{t('headline.animated.baseText')}</span>
                 <AnimatedTextWrapper 
-                  baseText={t('headline.animated.baseText')}
+                  baseText=""
                   words={t.raw('headline.animated.words')}
                   effect="typing"
                   typingSpeed={150}
@@ -55,8 +60,8 @@ export default async function HomePage({
                   <ArrowIcon className="w-5 h-5 transition-transform group-hover:translate-x-1" />
                 </Link>
                 <Link href={`/${params.locale}/about` as Route} className="btn-secondary group">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h6" />
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14  .828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h6" />
                   </svg>
                   {t('cta.secondary')}
                 </Link>
