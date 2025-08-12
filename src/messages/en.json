@@ -81,5 +81,60 @@
         "contact": "Contact",
         "followUs": "Follow Us",
         "allRightsReserved": "All rights reserved"
+    },
+    "header": {
+        "home": "Home",
+        "services": "Services",
+        "catalog": "Catalog",
+        "about": "About",
+        "start": "Start",
+        "digitalMarketing": "Digital Marketing",
+        "systemDevelopment": "System Development",
+        "aiAgents": "AI Agents"
+    },
+    "about": {
+        "title": "About Outliers Academy",
+        "description": "We are a company specialized in design, software development and artificial intelligence. We design your brand, grow your online presence, increase your sales and optimize your processes with software and artificial intelligence.",
+        "services": {
+            "webMarketing": "Web development and digital marketing",
+            "webMarketingDesc": "Power your online presence and convert visits into sales with integrated web solutions and marketing strategies.",
+            "customSystems": "Custom systems",
+            "customSystemsDesc": "Transform your company by increasing the efficiency and control of your processes with customized systems.",
+            "aiAutomation": "Automation with artificial intelligence",
+            "aiAutomationDesc": "Increase productivity and improve customer experience with AI agents and intelligent automation."
+        },
+        "team": {
+            "title": "Our Services",
+            "ceo": "CEO & Founder",
+            "cto": "CTO",
+            "designer": "Lead Designer",
+            "developer": "Full Stack Developer",
+            "marketing": "Marketing Manager"
+        }
+    },
+    "contact": {
+        "title": "Contact Form",
+        "contactInfo": "Contact information and 3D",
+        "contactMethods": "Contact methods",
+        "directContact": "Direct and immediate contact",
+        "faq": "Find answers to the most common questions about our courses and services."
+    },
+    "services": {
+        "marketing": {
+            "title": "Digital Marketing",
+            "description": "Comprehensive digital marketing strategies to grow your online presence and increase sales.",
+            "services": "Our Marketing Services",
+            "subtitle": "We offer complete digital marketing solutions designed to grow your online business"
+        },
+        "systems": {
+            "title": "System Development",
+            "services": "Our System Services",
+            "apis": "APIs and microservices"
+        },
+        "ai": {
+            "title": "AI Agents",
+            "services": "Our AI Services",
+            "question": "What AI services do you offer?"
+        }
     }
 }

@@ -81,5 +81,60 @@
         "contact": "Contacto",
         "followUs": "Síguenos",
         "allRightsReserved": "Todos los derechos reservados"
+    },
+    "header": {
+        "home": "Inicio",
+        "services": "Servicios",
+        "catalog": "Catálogo",
+        "about": "Nosotros",
+        "start": "Comenzar",
+        "digitalMarketing": "Marketing Digital",
+        "systemDevelopment": "Desarrollo de Sistemas",
+        "aiAgents": "Agentes IA"
+    },
+    "about": {
+        "title": "Sobre Outliers Academy",
+        "description": "Somos una empresa especializada en diseño, desarrollo de software e inteligencia artificial. Diseñamos tu marca, hacemos crecer tu presencia online, aumentamos tus ventas y optimizamos tus procesos con software e inteligencia artificial.",
+        "services": {
+            "webMarketing": "Desarrollo web y marketing digital",
+            "webMarketingDesc": "Potencia tu presencia online y convierte visitas en ventas con soluciones web y estrategias de marketing integradas.",
+            "customSystems": "Sistemas a medida",
+            "customSystemsDesc": "Transforma tu empresa aumentando la eficiencia y control de tus procesos con sistemas personalizados.",
+            "aiAutomation": "Automatización con inteligencia artificial",
+            "aiAutomationDesc": "Aumenta la productividad y mejora la experiencia del cliente con agentes de IA y automatizaciones inteligentes."
+        },
+        "team": {
+            "title": "Nuestros Servicios",
+            "ceo": "CEO & Fundadora",
+            "cto": "CTO",
+            "designer": "Lead Designer",
+            "developer": "Full Stack Developer",
+            "marketing": "Marketing Manager"
+        }
+    },
+    "contact": {
+        "title": "Formulario de Contacto",
+        "contactInfo": "Información de contacto y 3D",
+        "contactMethods": "Métodos de contacto",
+        "directContact": "Contacto directo e inmediato",
+        "faq": "Encuentra respuestas a las preguntas más comunes sobre nuestros cursos y servicios."
+    },
+    "services": {
+        "marketing": {
+            "title": "Marketing Digital",
+            "description": "Estrategias integrales de marketing digital para hacer crecer tu presencia online y aumentar las ventas.",
+            "services": "Nuestros Servicios de Marketing",
+            "subtitle": "Ofrecemos soluciones completas de marketing digital diseñadas para hacer crecer tu negocio online"
+        },
+        "systems": {
+            "title": "Desarrollo de Sistemas",
+            "services": "Nuestros Servicios de Sistemas",
+            "apis": "APIs y microservicios"
+        },
+        "ai": {
+            "title": "Agentes de IA",
+            "services": "Nuestros Servicios de IA",
+            "question": "¿Qué servicios de IA ofrecen?"
+        }
     }
 }

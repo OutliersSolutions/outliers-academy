@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
 import { ParticlesBackground } from '@/components/ui/ParticlesBackground';
 
 const teamMembers = [
@@ -49,28 +50,37 @@ const teamMembers = [
   },
 ];
 
-const services = [
-  {
-    title: "Desarrollo web y marketing digital",
-    description: "Potencia tu presencia online y convierte visitas en ventas con soluciones web y estrategias de marketing integradas.",
-    tags: ["Identidad de marca", "Página corporativa", "Ecommerce", "SEO", "Publicidad", "Redes sociales"],
-    icon: "📢"
-  },
-  {
-    title: "Sistemas a medida",
-    description: "Transforma tu empresa aumentando la eficiencia y control de tus procesos con sistemas personalizados.",
-    tags: ["CRM personalizado", "ERP", "Automatización", "Dashboards", "APIs", "Integración"],
-    icon: "🖥️"
-  },
-  {
-    title: "Automatización con inteligencia artificial",
-    description: "Aumenta la productividad y mejora la experiencia del cliente con agentes de IA y automatizaciones inteligentes.",
-    tags: ["Chatbots de IA", "Agentes WhatsApp", "Automatización de procesos", "Análisis de datos", "ML", "NLP"],
-    icon: "🤖"
-  }
-];
 
-export default function AboutPage() {
+
+export default async function AboutPage({
+  params
+}: {
+  params: { locale: string };
+}) {
+  unstable_setRequestLocale(params.locale);
+  const t = await getTranslations('about');
+
+  const services = [
+    {
+      title: t('services.webMarketing'),
+      description: t('services.webMarketingDesc'),
+      tags: ["Identidad de marca", "Página corporativa", "Ecommerce", "SEO", "Publicidad", "Redes sociales"],
+      icon: "📢"
+    },
+    {
+      title: t('services.customSystems'),
+      description: t('services.customSystemsDesc'),
+      tags: ["CRM personalizado", "ERP", "Automatización", "Dashboards", "APIs", "Integración"],
+      icon: "🖥️"
+    },
+    {
+      title: t('services.aiAutomation'),
+      description: t('services.aiAutomationDesc'),
+      tags: ["Chatbots de IA", "Agentes WhatsApp", "Automatización de procesos", "Análisis de datos", "ML", "NLP"],
+      icon: "🤖"
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-bg to-surface/30 relative">
       <ParticlesBackground particleColor="#6366f1" opacity={0.05} />
@@ -79,11 +89,9 @@ export default function AboutPage() {
       <section className="py-20 md:py-28 relative z-10">
         <div className="container">
           <div className="text-center mb-16">
-            <h1 className="h1-hero mb-6">Sobre <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">Outliers Academy</span></h1>
+            <h1 className="h1-hero mb-6">{t('title')} <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">Outliers Academy</span></h1>
             <p className="p-lead max-w-3xl mx-auto">
-              Somos una empresa especializada en diseño, desarrollo de software e inteligencia artificial. 
-              Diseñamos tu marca, hacemos crecer tu presencia online, aumentamos tus ventas y optimizamos 
-              tus procesos con software e inteligencia artificial.
+              {t('description')}
             </p>
           </div>
         </div>
@@ -129,7 +137,7 @@ export default function AboutPage() {
       <section className="py-16 md:py-20 bg-white relative z-10">
         <div className="container">
           <div className="text-center mb-16">
-            <h2 className="h2-section mb-4">Nuestros <span className="text-primary">Servicios</span></h2>
+            <h2 className="h2-section mb-4">{t('team.title')} <span className="text-primary">Servicios</span></h2>
             <p className="p-lead max-w-2xl mx-auto">
               Diseñamos soluciones inteligentes que combinan diseño, automatización e inteligencia artificial 
               para ayudarte a transformar tu negocio.

@@ -4,21 +4,23 @@ import React, { useState, useEffect, useRef } from "react";
 import { Sun, Menu, X, Languages, ChevronDown, Moon } from "lucide-react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
+import { useTranslations } from "next-intl";
 
 export const Header: React.FC = () => {
     const { theme, setTheme } = useTheme();
+    const t = useTranslations('header');
 
     const SERVICES_SUBMENU = [
-        { name: "Marketing Digital", path: "/services/marketing" },
-        { name: "Desarrollo de Sistemas", path: "/services/systems" },
-        { name: "Agentes IA", path: "/services/ai-agents" },
+        { name: t('digitalMarketing'), path: "/services/marketing" },
+        { name: t('systemDevelopment'), path: "/services/systems" },
+        { name: t('aiAgents'), path: "/services/ai-agents" },
     ];
 
     const MENU_ITEMS = [
-        { name: "Inicio", path: "/" },
-        { name: "Servicios", path: "#", submenu: SERVICES_SUBMENU },
-        { name: "Catálogo", path: "/catalog" },
-        { name: "Nosotros", path: "/about" }
+        { name: t('home'), path: "/" },
+        { name: t('services'), path: "#", submenu: SERVICES_SUBMENU },
+        { name: t('catalog'), path: "/catalog" },
+        { name: t('about'), path: "/about" }
     ];
 
     const [scrolled, setScrolled] = useState(false);
@@ -165,7 +167,7 @@ export const Header: React.FC = () => {
                         href="/pricing"
                         className="btn-primary btn-lg"
                     >
-                        Comenzar
+                        {t('start')}
                     </Link>
                 </div>
 
@@ -226,7 +228,7 @@ export const Header: React.FC = () => {
                                         onClick={closeMobileMenu}
                                         className="block w-full btn-primary text-center"
                                     >
-                                        Comenzar
+                                        {t('start')}
                                     </Link>
                                 </li>
                             </ul>
