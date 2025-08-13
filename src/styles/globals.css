@@ -351,13 +351,12 @@ body {
 
 /* Aesthetic accents */
 .hero-gradient {
-  background: radial-gradient(1000px 600px at 80% -10%, var(--color-secondary), transparent 60%),
-              radial-gradient(800px 500px at 10% 0%, var(--color-muted), transparent 60%),
+  background: radial-gradient(800px 500px at 10% 0%, var(--color-muted), transparent 60%),
               linear-gradient(180deg, var(--color-bg), var(--color-bg));
 }
 
 .footer-gradient {
-  background: radial-gradient(1400px 800px at 80% 110%, var(--color-secondary), transparent 40%),
+  background: 
               radial-gradient(1200px 700px at 95% 100%, var(--color-muted), transparent 40%),
               linear-gradient(0deg, var(--color-bg), var(--color-bg));
 }
