@@ -80,6 +80,7 @@
         "schedule": "Agendar",
         "faq": "FAQ",
         "services": "Servicios",
+        "otherServices": "Otros Servicios",
         "digitalMarketing": "Marketing Digital",
         "systemDevelopment": "Desarrollo de Sistemas",
         "aiAgents": "Agentes IA",
@@ -101,6 +102,23 @@
     "about": {
         "title": "Sobre Outliers Academy",
         "description": "Somos una empresa especializada en diseño, desarrollo de software e inteligencia artificial. Diseñamos tu marca, hacemos crecer tu presencia online, aumentamos tus ventas y optimizamos tus procesos con software e inteligencia artificial.",
+        "mission": {
+            "title": "Nuestra Misión",
+            "description": "Transformar negocios a través de la innovación tecnológica, combinando diseño excepcional con desarrollo de software de vanguardia e inteligencia artificial para crear soluciones que generen impacto real y duradero."
+        },
+        "vision": {
+            "title": "Nuestra Visión",
+            "description": "Ser la empresa líder en soluciones tecnológicas integrales, reconocida por nuestra capacidad de innovar y por ayudar a las empresas a alcanzar su máximo potencial a través de la transformación digital y la inteligencia artificial."
+        },
+        "team": {
+            "title": "Nuestro Equipo",
+            "description": "Conoce a los profesionales que hacen posible la transformación digital de tu negocio.",
+            "ceo": "CEO & Fundador",
+            "cto": "CTO",
+            "designer": "Lead Designer",
+            "developer": "Full Stack Developer",
+            "marketing": "Marketing Manager"
+        },
         "services": {
             "webMarketing": "Desarrollo web y marketing digital",
             "webMarketingDesc": "Potencia tu presencia online y convierte visitas en ventas con soluciones web y estrategias de marketing integradas.",
@@ -108,14 +126,6 @@
             "customSystemsDesc": "Transforma tu empresa aumentando la eficiencia y control de tus procesos con sistemas personalizados.",
             "aiAutomation": "Automatización con inteligencia artificial",
             "aiAutomationDesc": "Aumenta la productividad y mejora la experiencia del cliente con agentes de IA y automatizaciones inteligentes."
-        },
-        "team": {
-            "title": "Nuestros Servicios",
-            "ceo": "CEO & Fundadora",
-            "cto": "CTO",
-            "designer": "Lead Designer",
-            "developer": "Full Stack Developer",
-            "marketing": "Marketing Manager"
         }
     },
     "contact": {
@@ -142,6 +152,46 @@
             "title": "Agentes de IA",
             "services": "Nuestros Servicios de IA",
             "question": "¿Qué servicios de IA ofrecen?"
+        }
+    },
+    "servicesPage": {
+        "title": "Nuestros Servicios",
+        "description": "Diseñamos soluciones inteligentes que combinan diseño, automatización e inteligencia artificial para ayudarte a transformar tu negocio.",
+        "webMarketing": {
+            "tags": [
+                "Identidad de marca",
+                "Página corporativa",
+                "Ecommerce",
+                "SEO",
+                "Publicidad",
+                "Redes sociales"
+            ]
+        },
+        "customSystems": {
+            "tags": [
+                "CRM personalizado",
+                "ERP",
+                "Automatización",
+                "Dashboards",
+                "APIs",
+                "Integración"
+            ]
+        },
+        "aiAutomation": {
+            "tags": [
+                "Chatbots de IA",
+                "Agentes WhatsApp",
+                "Automatización de procesos",
+                "Análisis de datos",
+                "ML",
+                "NLP"
+            ]
+        },
+        "cta": {
+            "title": "¿Listo para transformar tu negocio?",
+            "description": "Contáctanos y descubre cómo podemos ayudarte a alcanzar tus objetivos con nuestras soluciones de diseño, desarrollo y automatización con IA.",
+            "whatsapp": "Contactar por WhatsApp",
+            "email": "Enviar Email"
         }
     },
     "search": {

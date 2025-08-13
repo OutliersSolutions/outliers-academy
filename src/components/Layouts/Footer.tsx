@@ -62,6 +62,7 @@ export const Footer = async ({ locale }: FooterProps) => {
                     <div className="md:col-span-2">
                         <h3 className="text-base font-semibold mb-4 font-inter dark:text-white">{t('services')}</h3>
                         <ul className="space-y-3 font-inter text-sm font-normal text-gray-600 dark:text-gray-300">
+                            <li><Link href={`/${locale}/services`} className="hover:text-primary transition-colors">{t('otherServices')}</Link></li>
                             <li><Link href={`/${locale}/services/marketing`} className="hover:text-primary transition-colors">{t('digitalMarketing')}</Link></li>
                             <li><Link href={`/${locale}/services/systems`} className="hover:text-primary transition-colors">{t('systemDevelopment')}</Link></li>
                             <li><Link href={`/${locale}/services/ai-agents`} className="hover:text-primary transition-colors">{t('aiAgents')}</Link></li>

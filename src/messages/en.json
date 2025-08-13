@@ -80,6 +80,7 @@
         "schedule": "Schedule",
         "faq": "FAQ",
         "services": "Services",
+        "otherServices": "Other Services",
         "digitalMarketing": "Digital Marketing",
         "systemDevelopment": "System Development",
         "aiAgents": "AI Agents",
@@ -101,6 +102,23 @@
     "about": {
         "title": "About Outliers Academy",
         "description": "We are a company specialized in design, software development and artificial intelligence. We design your brand, grow your online presence, increase your sales and optimize your processes with software and artificial intelligence.",
+        "mission": {
+            "title": "Our Mission",
+            "description": "Transform businesses through technological innovation, combining exceptional design with cutting-edge software development and artificial intelligence to create solutions that generate real and lasting impact."
+        },
+        "vision": {
+            "title": "Our Vision",
+            "description": "To be the leading company in comprehensive technological solutions, recognized for our ability to innovate and for helping companies reach their maximum potential through digital transformation and artificial intelligence."
+        },
+        "team": {
+            "title": "Our Team",
+            "description": "Meet the professionals who make your business digital transformation possible.",
+            "ceo": "CEO & Founder",
+            "cto": "CTO",
+            "designer": "Lead Designer",
+            "developer": "Full Stack Developer",
+            "marketing": "Marketing Manager"
+        },
         "services": {
             "webMarketing": "Web development and digital marketing",
             "webMarketingDesc": "Power your online presence and convert visits into sales with integrated web solutions and marketing strategies.",
@@ -108,14 +126,6 @@
             "customSystemsDesc": "Transform your company by increasing the efficiency and control of your processes with customized systems.",
             "aiAutomation": "Automation with artificial intelligence",
             "aiAutomationDesc": "Increase productivity and improve customer experience with AI agents and intelligent automation."
-        },
-        "team": {
-            "title": "Our Services",
-            "ceo": "CEO & Founder",
-            "cto": "CTO",
-            "designer": "Lead Designer",
-            "developer": "Full Stack Developer",
-            "marketing": "Marketing Manager"
         }
     },
     "contact": {
@@ -142,6 +152,46 @@
             "title": "AI Agents",
             "services": "Our AI Services",
             "question": "What AI services do you offer?"
+        }
+    },
+    "servicesPage": {
+        "title": "Our Services",
+        "description": "We design intelligent solutions that combine design, automation and artificial intelligence to help you transform your business.",
+        "webMarketing": {
+            "tags": [
+                "Brand Identity",
+                "Corporate Page",
+                "Ecommerce",
+                "SEO",
+                "Advertising",
+                "Social Networks"
+            ]
+        },
+        "customSystems": {
+            "tags": [
+                "Custom CRM",
+                "ERP",
+                "Automation",
+                "Dashboards",
+                "APIs",
+                "Integration"
+            ]
+        },
+        "aiAutomation": {
+            "tags": [
+                "AI Chatbots",
+                "WhatsApp Agents",
+                "Process Automation",
+                "Data Analysis",
+                "ML",
+                "NLP"
+            ]
+        },
+        "cta": {
+            "title": "Ready to transform your business?",
+            "description": "Contact us and discover how we can help you achieve your goals with our design, development and AI automation solutions.",
+            "whatsapp": "Contact via WhatsApp",
+            "email": "Send Email"
         }
     },
     "search": {

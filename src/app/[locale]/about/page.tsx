@@ -1,56 +1,47 @@
 import Link from 'next/link';
 import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
 import { ParticlesBackground } from '@/components/ui/ParticlesBackground';
+import { GlitchText } from '@/components/ui/GlitchText';
+import { CanvasDots } from '@/components/ui/CanvasDots';
 
 const teamMembers = [
   {
     id: 1,
-    name: "Ana Rodríguez",
-    role: "CEO & Fundadora",
+    name: "Brik Meza",
+    role: "CEO & Founder",
     department: "Dirección",
-    description: "Especialista en estrategia digital con más de 10 años de experiencia en el sector tecnológico.",
-    imageUrl: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1000&auto=format&fit=crop",
+    description: "Líder visionario con amplia experiencia en estrategia empresarial y transformación digital. Especializado en impulsar el crecimiento de empresas tecnológicas.",
+    imageUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop",
     linkedIn: "https://linkedin.com/"
   },
   {
     id: 2,
-    name: "Carlos Martínez",
-    role: "CTO",
-    department: "Tecnología",
-    description: "Arquitecto de software especializado en soluciones cloud y aplicaciones distribuidas.",
-    imageUrl: "https://images.unsplash.com/photo-1600486913747-55e5470d6f40?q=80&w=1000&auto=format&fit=crop",
+    name: "Alvaro Mendoza",
+    role: "CEO & Founder",
+    department: "Dirección",
+    description: "Emprendedor serial con más de 15 años de experiencia en el sector tecnológico. Experto en desarrollo de estrategias de negocio y gestión de equipos.",
+    imageUrl: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=1000&auto=format&fit=crop",
     linkedIn: "https://linkedin.com/"
   },
   {
     id: 3,
-    name: "Elena López",
-    role: "Lead Designer",
-    department: "UX/UI",
-    description: "Creadora de experiencias digitales centradas en el usuario con enfoque en accesibilidad.",
-    imageUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1000&auto=format&fit=crop",
+    name: "Gonzalo Galvez",
+    role: "CTO",
+    department: "Tecnología",
+    description: "Arquitecto de software senior especializado en soluciones cloud y aplicaciones distribuidas. Experto en tecnologías emergentes y optimización de sistemas.",
+    imageUrl: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1000&auto=format&fit=crop",
     linkedIn: "https://linkedin.com/"
   },
   {
     id: 4,
-    name: "Javier Sánchez",
+    name: "Elvis Presley",
     role: "Full Stack Developer",
     department: "Desarrollo",
-    description: "Experto en React y Node.js con pasión por crear código limpio y eficiente.",
-    imageUrl: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?q=80&w=1000&auto=format&fit=crop",
+    description: "Desarrollador full stack con experiencia en múltiples tecnologías. Especializado en React, Node.js y arquitecturas escalables.",
+    imageUrl: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=1000&auto=format&fit=crop",
     linkedIn: "https://linkedin.com/"
-  },
-  {
-    id: 5,
-    name: "Lucía Fernández",
-    role: "Marketing Manager",
-    department: "Marketing",
-    description: "Estratega de marketing digital con enfoque en crecimiento y análisis de datos.",
-    imageUrl: "https://images.unsplash.com/photo-1598550874175-4d0ef436c909?q=80&w=1000&auto=format&fit=crop",
-    linkedIn: "https://linkedin.com/"
-  },
+  }
 ];
-
-
 
 export default async function AboutPage({
   params
@@ -60,125 +51,110 @@ export default async function AboutPage({
   unstable_setRequestLocale(params.locale);
   const t = await getTranslations('about');
 
-  const services = [
-    {
-      title: t('services.webMarketing'),
-      description: t('services.webMarketingDesc'),
-      tags: ["Identidad de marca", "Página corporativa", "Ecommerce", "SEO", "Publicidad", "Redes sociales"],
-      icon: "📢"
-    },
-    {
-      title: t('services.customSystems'),
-      description: t('services.customSystemsDesc'),
-      tags: ["CRM personalizado", "ERP", "Automatización", "Dashboards", "APIs", "Integración"],
-      icon: "🖥️"
-    },
-    {
-      title: t('services.aiAutomation'),
-      description: t('services.aiAutomationDesc'),
-      tags: ["Chatbots de IA", "Agentes WhatsApp", "Automatización de procesos", "Análisis de datos", "ML", "NLP"],
-      icon: "🤖"
-    }
-  ];
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-bg to-surface/30 relative">
       <ParticlesBackground particleColor="#6366f1" opacity={0.05} />
       
-      {/* Hero Section */}
-      <section className="py-20 md:py-28 relative z-10">
-        <div className="container">
-          <div className="text-center mb-16">
-            <h1 className="h1-hero mb-6">{t('title')} <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">Outliers Academy</span></h1>
-            <p className="p-lead max-w-3xl mx-auto">
-              {t('description')}
-            </p>
+      {/* Hero Section with Empire State Building */}
+      <section className="relative py-20 md:py-28 overflow-hidden">
+        {/* Empire State Building Background */}
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-gradient-to-r from-bg/95 via-bg/90 to-bg/80"></div>
+          <div className="absolute right-0 top-0 bottom-0 w-1/2 lg:w-1/3 opacity-20">
+            <div className="relative h-full w-full">
+              {/* Empire State Building Silhouette */}
+              <div className="absolute bottom-0 right-0 w-full h-full">
+                {/* Main Building */}
+                <div className="absolute bottom-0 right-0 w-32 h-96 bg-gradient-to-t from-gray-800 to-gray-600 rounded-t-lg"></div>
+                {/* Spire */}
+                <div className="absolute bottom-96 right-14 w-4 h-32 bg-gradient-to-t from-gray-800 to-gray-600"></div>
+                {/* Antenna */}
+                <div className="absolute bottom-96 right-15 w-2 h-16 bg-gradient-to-t from-gray-800 to-gray-600"></div>
+                {/* Windows */}
+                <div className="absolute bottom-8 right-2 w-28 h-80 bg-gradient-to-t from-yellow-400/20 to-transparent rounded-t-lg"></div>
+                {/* Base */}
+                <div className="absolute bottom-0 right-0 w-40 h-8 bg-gradient-to-t from-gray-700 to-gray-500 rounded-t-lg"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div className="container relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="text-left">
+              <h1 className="h1-hero mb-6">
+                {t('title')} <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">
+                  <GlitchText className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">
+                    Outliers Academy
+                  </GlitchText>
+                </span>
+              </h1>
+              <p className="p-lead max-w-xl">
+                {t('description')}
+              </p>
+            </div>
+            
+            <div className="hidden lg:block">
+              {/* Placeholder for future content */}
+            </div>
           </div>
         </div>
       </section>
 
       {/* Mission & Vision */}
-      <section className="py-16 md:py-20">
-        <div className="container">
+      <section className="relative py-16 md:py-20">
+        <CanvasDots id="missionVisionCanvas" margin={40} />
+        <div className="container relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
-            <div className="bg-white rounded-2xl shadow-lg p-8">
+            <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg p-8 border border-white/20">
               <div className="w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-2xl flex items-center justify-center mb-6">
                 <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold mb-4">Nuestra Misión</h3>
-              <p className="text-neutral-700 leading-relaxed">
-                Transformar negocios a través de la innovación tecnológica, combinando diseño excepcional 
-                con desarrollo de software de vanguardia e inteligencia artificial para crear soluciones 
-                que generen impacto real y duradero.
+              <h3 className="text-2xl font-bold mb-4 text-text dark:text-text">{t('mission.title')}</h3>
+              <p className="text-solarized-base01 dark:text-white/90 leading-relaxed">
+                {t('mission.description')}
               </p>
             </div>
             
-            <div className="bg-white rounded-2xl shadow-lg p-8">
+            <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg p-8 border border-white/20">
               <div className="w-16 h-16 bg-gradient-to-br from-accent to-primary rounded-2xl flex items-center justify-center mb-6">
                 <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold mb-4">Nuestra Visión</h3>
-              <p className="text-neutral-700 leading-relaxed">
-                Ser la empresa líder en soluciones tecnológicas integrales, reconocida por nuestra capacidad 
-                de innovar y por ayudar a las empresas a alcanzar su máximo potencial a través de la 
-                transformación digital y la inteligencia artificial.
+              <h3 className="text-2xl font-bold mb-4 text-text dark:text-text">{t('vision.title')}</h3>
+              <p className="text-solarized-base01 dark:text-white/90 leading-relaxed">
+                {t('vision.description')}
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Services Section */}
-      <section className="py-16 md:py-20 bg-white relative z-10">
-        <div className="container">
-          <div className="text-center mb-16">
-            <h2 className="h2-section mb-4">{t('team.title')} <span className="text-primary">Servicios</span></h2>
-            <p className="p-lead max-w-2xl mx-auto">
-              Diseñamos soluciones inteligentes que combinan diseño, automatización e inteligencia artificial 
-              para ayudarte a transformar tu negocio.
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {services.map((service, index) => (
-              <div key={index} className="group">
-                <div className="bg-white border border-neutral-200 rounded-2xl p-8 h-full hover:shadow-xl hover:border-primary/20 transition-all duration-300 group-hover:-translate-y-2">
-                  <div className="text-4xl mb-4">{service.icon}</div>
-                  <h3 className="text-xl font-bold mb-4 group-hover:text-primary transition-colors">{service.title}</h3>
-                  <p className="text-neutral-600 mb-6 leading-relaxed">{service.description}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {service.tags.map((tag, tagIndex) => (
-                      <span key={tagIndex} className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Team Section */}
-      <section className="py-16 md:py-20 relative z-10">
-        <div className="container">
+      <section className="relative py-16 md:py-20">
+        <CanvasDots id="teamCanvas" margin={40} />
+        <div className="container relative z-10">
           <div className="text-center mb-16">
-            <h2 className="h2-section mb-4">Nuestro <span className="text-primary">Equipo</span></h2>
+            <h2 className="h2-section mb-4">
+              <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                <GlitchText className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">
+                  {t('team.title')}
+                </GlitchText>
+              </span>
+            </h2>
             <p className="p-lead max-w-2xl mx-auto">
-              Conoce a los profesionales que hacen posible la transformación digital de tu negocio.
+              {t('team.description')}
             </p>
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {teamMembers.map((member) => (
               <div key={member.id} className="group">
-                <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 group-hover:-translate-y-2">
+                <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 group-hover:-translate-y-2 border border-white/20">
                   <div className="aspect-[4/3] overflow-hidden">
                     <img 
                       src={member.imageUrl} 
@@ -192,9 +168,9 @@ export default async function AboutPage({
                         {member.department}
                       </span>
                     </div>
-                    <h3 className="text-xl font-bold mb-1 group-hover:text-primary transition-colors">{member.name}</h3>
+                    <h3 className="text-xl font-bold mb-1 group-hover:text-primary transition-colors text-text dark:text-text">{member.name}</h3>
                     <p className="text-accent font-semibold mb-3">{member.role}</p>
-                    <p className="text-neutral-600 text-sm leading-relaxed mb-4">{member.description}</p>
+                    <p className="text-solarized-base01 dark:text-white/80 text-sm leading-relaxed mb-4">{member.description}</p>
                     <Link 
                       href={member.linkedIn} 
                       target="_blank"
@@ -209,45 +185,6 @@ export default async function AboutPage({
                 </div>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Contact CTA */}
-      <section className="py-16 md:py-20 relative z-10">
-        <div className="container">
-          <div className="bg-gradient-to-r from-primary to-accent rounded-3xl p-12 md:p-16 text-center text-white relative overflow-hidden">
-            <div className="relative z-10">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">¿Listo para transformar tu negocio?</h2>
-              <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
-                Contáctanos y descubre cómo podemos ayudarte a alcanzar tus objetivos con nuestras soluciones 
-                de diseño, desarrollo y automatización con IA.
-              </p>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <Link 
-                  href="https://wa.me/+51999999999" 
-                  target="_blank"
-                  className="bg-white text-primary px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-colors inline-flex items-center gap-2"
-                >
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.085"/>
-                  </svg>
-                  Contactar por WhatsApp
-                </Link>
-                <Link 
-                  href="mailto:info@outliers.academy" 
-                  className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-primary transition-colors inline-flex items-center gap-2"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
-                  Enviar Email
-                </Link>
-              </div>
-            </div>
-            
-            <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-32 translate-x-32"></div>
-            <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/10 rounded-full translate-y-24 -translate-x-24"></div>
           </div>
         </div>
       </section>
