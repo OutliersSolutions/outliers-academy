@@ -1,57 +1,76 @@
-import '@/styles/globals.css';
-import type {Metadata} from 'next';
-import {Inter, Manrope, Source_Code_Pro, JetBrains_Mono, Fira_Code} from 'next/font/google';
-import { ThemeProvider } from 'next-themes';
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import './globals.css';
 import { AuthProvider } from '@/components/AuthProvider';
+import { getTranslations } from 'next-intl/server';
 
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap'
-});
+const inter = Inter({ subsets: ['latin'] });
 
-const manrope = Manrope({
-  subsets: ['latin'],
-  variable: '--font-manrope',
-  display: 'swap'
-});
+export async function generateMetadata(): Promise<Metadata> {
+  const tCommon = await getTranslations('common');
+  
+  return {
+    title: 'Outliers Academy - Aprende habilidades en demanda',
+    description: tCommon('metaDescription'),
+    keywords: 'cursos, programación, desarrollo web, inteligencia artificial, tecnología, educación online',
+    authors: [{ name: 'Outliers Academy' }],
+    creator: 'Outliers Academy',
+    publisher: 'Outliers Academy',
+    formatDetection: {
+      email: false,
+      address: false,
+      telephone: false,
+    },
+    metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'),
+    alternates: {
+      canonical: '/',
+    },
+    openGraph: {
+      title: 'Outliers Academy - Aprende habilidades en demanda',
+      description: tCommon('metaDescription'),
+      url: '/',
+      siteName: 'Outliers Academy',
+      images: [
+        {
+          url: '/icons/logo.png',
+          width: 1200,
+          height: 630,
+          alt: 'Outliers Academy',
+        },
+      ],
+      locale: 'es_ES',
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: 'Outliers Academy - Aprende habilidades en demanda',
+      description: tCommon('metaDescription'),
+      images: ['/icons/logo.png'],
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
+  };
+}
 
-// Google Sans Code alternatives (Google doesn't have Google Sans Code, using best alternatives)
-const sourceCodePro = Source_Code_Pro({
-  subsets: ['latin'],
-  variable: '--font-code-primary',
-  display: 'swap'
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  variable: '--font-code-secondary',
-  display: 'swap'
-});
-
-const firaCode = Fira_Code({
-  subsets: ['latin'],
-  variable: '--font-code-tertiary',
-  display: 'swap'
-});
-
-export const metadata: Metadata = {
-  title: 'Outliers Academy',
-  description: 'Aprende habilidades en demanda con cursos interactivos.',
-  icons: {
-    icon: '/logo.ico',
-    shortcut: '/logo.ico',
-    apple: '/logo.ico'
-  }
-};
-export default function RootLayout({children}: {children: React.ReactNode}) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html suppressHydrationWarning className={`${inter.variable} ${manrope.variable} ${sourceCodePro.variable} ${jetbrainsMono.variable} ${firaCode.variable}`}>
-      <body>
+    <html lang="es" suppressHydrationWarning>
+      <body className={inter.className}>
         <AuthProvider>
-          <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
-            {children}
-          </ThemeProvider>
+          {children}
         </AuthProvider>
       </body>
     </html>

@@ -20,13 +20,13 @@ const LOADER_SIZES = {
     text: 'text-sm'
   },
   md: {
-    icon: 'h-12 w-12', 
+    icon: 'h-12 w-12',
     dot: 'h-3 w-3',
     text: 'text-lg'
   },
   lg: {
     icon: 'h-16 w-16',
-    dot: 'h-4 w-4', 
+    dot: 'h-4 w-4',
     text: 'text-xl'
   }
 } as const;
@@ -46,7 +46,7 @@ const CONTAINER_STYLES = {
   inline: "flex items-center justify-center p-8",
   spacing: {
     main: "space-y-6",
-    content: "space-y-4", 
+    content: "space-y-4",
     text: "space-y-2",
     dots: "space-x-1"
   }
@@ -75,28 +75,27 @@ const LoaderIcon = memo(({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' }) => {
       <motion.div
         className={`${sizeConfig.icon} rounded-full border-4 border-primary/20 border-t-primary`}
         animate={{ rotate: 360 }}
-        transition={{ 
-          duration: ANIMATION_CONFIG.rotation.duration, 
-          repeat: Infinity, 
-          ease: ANIMATION_CONFIG.rotation.ease 
+        transition={{
+          duration: ANIMATION_CONFIG.rotation.duration,
+          repeat: Infinity,
+          ease: ANIMATION_CONFIG.rotation.ease
         }}
       />
-      
       {/* Inner pulsing dot */}
       <motion.div
         className="absolute inset-0 flex items-center justify-center"
-        initial={{ 
-          scale: ANIMATION_CONFIG.pulse.scale[0], 
-          opacity: ANIMATION_CONFIG.pulse.opacity[0] 
+        initial={{
+          scale: ANIMATION_CONFIG.pulse.scale[0],
+          opacity: ANIMATION_CONFIG.pulse.opacity[0]
         }}
-        animate={{ 
-          scale: ANIMATION_CONFIG.pulse.scale[1], 
-          opacity: ANIMATION_CONFIG.pulse.opacity[1] 
+        animate={{
+          scale: ANIMATION_CONFIG.pulse.scale[1],
+          opacity: ANIMATION_CONFIG.pulse.opacity[1]
         }}
-        transition={{ 
-          duration: ANIMATION_CONFIG.pulse.duration, 
-          repeat: Infinity, 
-          repeatType: "reverse" 
+        transition={{
+          duration: ANIMATION_CONFIG.pulse.duration,
+          repeat: Infinity,
+          repeatType: "reverse"
         }}
       >
         <div className={`bg-primary rounded-full ${sizeConfig.dot}`} />
@@ -147,18 +146,16 @@ const MotivationalMessage = memo(() => {
   }, []);
 
   useEffect(() => {
-    if (!isMounted) return;
-    
     const interval = setInterval(() => {
       setCurrentMessageIndex((prev) => (prev + 1) % messages.length);
       setCurrentIcon((prev) => (prev + 1) % icons.length);
     }, ANIMATION_CONFIG.messageInterval);
 
     return () => clearInterval(interval);
-  }, [messages.length, icons.length, isMounted]);
+  }, [messages.length, icons.length]);
 
+  // Static version for SSR
   if (!isMounted) {
-    // Static version for SSR
     return (
       <div className="flex items-center gap-3 text-center">
         <div className="flex-shrink-0">
@@ -175,20 +172,15 @@ const MotivationalMessage = memo(() => {
     <AnimatePresence mode="wait">
       <motion.div
         key={currentMessageIndex}
-        initial={{ opacity: 0, y: ANIMATION_CONFIG.message.y[0] }}
-        animate={{ opacity: 1, y: ANIMATION_CONFIG.message.y[1] }}
-        exit={{ opacity: 0, y: ANIMATION_CONFIG.message.y[2] }}
-        transition={{ duration: ANIMATION_CONFIG.message.duration }}
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -10 }}
+        transition={{ duration: 0.3 }}
         className="flex items-center gap-3 text-center"
       >
-        <motion.div
-          initial={{ scale: 0.8 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: ANIMATION_CONFIG.message.duration * 0.6 }}
-          className="flex-shrink-0"
-        >
+        <div className="flex-shrink-0">
           <IconComponent className="h-5 w-5 text-primary" />
-        </motion.div>
+        </div>
         <span className="text-muted-foreground font-medium">
           {messages[currentMessageIndex]}
         </span>
@@ -208,29 +200,26 @@ const AnimatedDots = memo(() => {
 
   const staticDots = useMemo(() => (
     <div className={`flex items-center justify-center ${CONTAINER_STYLES.spacing.dots}`}>
-      {[0, 1, 2].map((i) => (
-        <div
-          key={i}
-          className="h-2 w-2 bg-primary rounded-full opacity-70"
-        />
-      ))}
+      <div className="h-2 w-2 bg-primary rounded-full opacity-70" />
+      <div className="h-2 w-2 bg-primary rounded-full opacity-70" />
+      <div className="h-2 w-2 bg-primary rounded-full opacity-70" />
     </div>
   ), []);
 
   const animatedDots = useMemo(() => (
     <div className={`flex items-center justify-center ${CONTAINER_STYLES.spacing.dots}`}>
-      {[0, 1, 2].map((i) => (
+      {[0, 1, 2].map((index) => (
         <motion.div
-          key={i}
+          key={index}
           className="h-2 w-2 bg-primary rounded-full"
           animate={{
             scale: ANIMATION_CONFIG.dots.scale,
-            opacity: ANIMATION_CONFIG.dots.opacity,
+            opacity: ANIMATION_CONFIG.dots.opacity
           }}
           transition={{
             duration: ANIMATION_CONFIG.dots.duration,
             repeat: Infinity,
-            delay: i * 0.2,
+            delay: index * 0.2
           }}
         />
       ))}
@@ -242,95 +231,37 @@ const AnimatedDots = memo(() => {
 
 AnimatedDots.displayName = 'AnimatedDots';
 
-export const Loader = memo(({ 
-  message, 
-  fullScreen = false, 
-  size = 'md', 
-  showMotivationalMessages = true 
+export const Loader = memo(({
+  message,
+  fullScreen = false,
+  size = 'md',
+  showMotivationalMessages = false
 }: LoaderProps) => {
   const t = useTranslations('loader');
-  const [isMounted, setIsMounted] = useState(false);
   const sizeConfig = useMemo(() => LOADER_SIZES[size], [size]);
 
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  const containerClass = fullScreen ? CONTAINER_STYLES.fullScreen : CONTAINER_STYLES.inline;
 
   const content = useMemo(() => (
     <div className={`flex flex-col items-center justify-center ${CONTAINER_STYLES.spacing.main}`}>
-      {/* Main loader */}
-      <div className={`flex flex-col items-center ${CONTAINER_STYLES.spacing.content}`}>
-        <LoaderIcon size={size} />
-        
-        {/* Loading text */}
+      <LoaderIcon size={size} />
+
+      {showMotivationalMessages ? (
+        <MotivationalMessage />
+      ) : (
         <div className={`text-center ${CONTAINER_STYLES.spacing.text}`}>
-          {message ? (
-            <p className={`${sizeConfig.text} font-medium text-foreground`}>{message}</p>
-          ) : (
-            <p className={`${sizeConfig.text} font-medium text-foreground`}>{t('defaultMessage')}</p>
-          )}
-          
-          {/* Animated dots */}
+          <p className={`font-medium text-gray-900 dark:text-white ${sizeConfig.text}`}>
+            {message || t('defaultMessage')}
+          </p>
           <AnimatedDots />
         </div>
-      </div>
-
-      {/* Motivational messages */}
-      {showMotivationalMessages && (
-        <div className="max-w-sm">
-          <MotivationalMessage />
-        </div>
       )}
-
-      {/* Academy branding */}
-      <div className="flex items-center gap-2 text-xs text-muted-foreground">
-        <img src="/icons/logo.png" alt="Outliers Academy" className="w-4 h-4" />
-        <span>Outliers Academy</span>
-      </div>
     </div>
-  ), [size, sizeConfig, message, t, showMotivationalMessages]);
-
-  if (fullScreen) {
-    if (!isMounted) {
-      // Static version for SSR
-      return (
-        <div className={CONTAINER_STYLES.fullScreen}>
-          <div>{content}</div>
-        </div>
-      );
-    }
-
-    return (
-      <div className={CONTAINER_STYLES.fullScreen}>
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: ANIMATION_CONFIG.message.duration * 0.6 }}
-        >
-          {content}
-        </motion.div>
-      </div>
-    );
-  }
-
-  if (!isMounted) {
-    // Static version for SSR
-    return (
-      <div className={CONTAINER_STYLES.inline}>
-        <div>{content}</div>
-      </div>
-    );
-  }
+  ), [message, size, showMotivationalMessages, sizeConfig.text, t]);
 
   return (
-    <div className={CONTAINER_STYLES.inline}>
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: ANIMATION_CONFIG.message.duration * 0.6 }}
-      >
-        {content}
-      </motion.div>
+    <div className={containerClass}>
+      {content}
     </div>
   );
 });
@@ -340,24 +271,21 @@ Loader.displayName = 'Loader';
 // Compact loader for inline use
 export const LoaderInline = memo(({ size = 'sm' }: { size?: 'sm' | 'md' }) => {
   return (
-    <div className="flex items-center gap-2">
-      <LoaderIcon size={size} />
-    </div>
+    <LoaderIcon size={size} />
   );
 });
 
 LoaderInline.displayName = 'LoaderInline';
 
 // Page loader wrapper with error boundary
-export const PageLoader = memo(({ children, isLoading, message }: { 
-  children: React.ReactNode; 
-  isLoading: boolean; 
-  message?: string; 
+export const PageLoader = memo(({ children, isLoading, message }: {
+  children: React.ReactNode;
+  isLoading: boolean;
+  message?: string;
 }) => {
   if (isLoading) {
     return <Loader message={message} fullScreen />;
   }
-
   return <>{children}</>;
 });
 

@@ -1,44 +1,57 @@
-import type {Metadata} from 'next';
-import {NextIntlClientProvider} from 'next-intl';
-import {getMessages, unstable_setRequestLocale} from 'next-intl/server';
-import {Navbar} from '@/components/Navbar';
-import {Footer} from '@/components/Layouts/Footer';
-import {WhatsAppButton} from '@/components/ui/WhatsAppButton';
-
-export const metadata: Metadata = {
-  title: 'Outliers Academy',
-  description: 'Aprende habilidades en demanda con cursos interactivos.'
-};
-
-export function generateStaticParams() {
-  return [{locale: 'es'}, {locale: 'en'}];
-}
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages } from 'next-intl/server';
+import { Navbar } from '@/components/Navbar';
+import { Footer } from '@/components/Layouts/Footer';
+import { WhatsAppButton } from '@/components/ui/WhatsAppButton';
+import { getTranslations } from 'next-intl/server';
 
 export default async function RootLayout({
   children,
-  params
+  params: { locale }
 }: {
   children: React.ReactNode;
-  params: {locale: string};
+  params: { locale: string };
 }) {
-  unstable_setRequestLocale(params.locale);
-
-  let messages: any;
+  const tCommon = await getTranslations('common');
+  
+  let messages;
   try {
     messages = await getMessages();
-  } catch {
-    const m = await import(`../../messages/${params.locale}.json`);
-    messages = m.default;
+  } catch (error) {
+    console.warn('Failed to load messages, using fallback');
+    messages = {};
   }
 
   return (
-    <NextIntlClientProvider messages={messages} locale={params.locale} timeZone={Intl.DateTimeFormat().resolvedOptions().timeZone}>
-      <div className="min-h-dvh flex flex-col">
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer locale={params.locale} />
-        <WhatsAppButton />
-      </div>
-    </NextIntlClientProvider>
+    <html lang={locale} suppressHydrationWarning>
+      <head>
+        <meta name="description" content={tCommon('metaDescription')} />
+        <meta name="keywords" content="cursos, programación, desarrollo web, inteligencia artificial, tecnología, educación online" />
+        <meta name="author" content="Outliers Academy" />
+        <meta property="og:title" content="Outliers Academy - Aprende habilidades en demanda" />
+        <meta property="og:description" content={tCommon('metaDescription')} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'} />
+        <meta property="og:image" content="/icons/logo.png" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Outliers Academy - Aprende habilidades en demanda" />
+        <meta name="twitter:description" content={tCommon('metaDescription')} />
+        <meta name="twitter:image" content="/icons/logo.png" />
+        <link rel="icon" href="/logo.ico" />
+        <link rel="apple-touch-icon" href="/logo.ico" />
+      </head>
+      <body>
+        <NextIntlClientProvider messages={messages}>
+          <div className="min-h-screen flex flex-col">
+            <Navbar />
+            <main className="flex-1">
+              {children}
+            </main>
+            <Footer locale={locale} />
+            <WhatsAppButton />
+          </div>
+        </NextIntlClientProvider>
+      </body>
+    </html>
   );
 } 

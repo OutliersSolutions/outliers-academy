@@ -344,5 +344,115 @@
         "enrollNow": "Inscribirse",
         "minutes": "minutos",
         "preview": "Vista previa"
+    },
+    "common": {
+        "search": "Buscar",
+        "toggleTheme": "Cambiar tema",
+        "outliersAcademy": "Outliers Academy",
+        "contactEmail": "contact@outlierssolutions.com",
+        "contactPhone": "+1 (929) 822-6066",
+        "whatsappMessage": "¡Hola! Me interesa conocer más sobre los cursos de Outliers Academy",
+        "learnNewSkills": "Aprende nuevas habilidades con este curso interactivo.",
+        "metaDescription": "Aprende habilidades en demanda con cursos interactivos.",
+        "updatedInRealTime": "Actualizado en tiempo real"
+    },
+    "chatbot": {
+        "placeholderTexts": {
+            "ai": "Inteligencia Artificial...",
+            "webDev": "Desarrollo Web...",
+            "dataScience": "Data Science...",
+            "machineLearning": "Machine Learning..."
+        },
+        "modelAlt": "Modelo 3D de Chatbot IA",
+        "bubbles": {
+            "automate": "¿Cómo puedo automatizar mi negocio?",
+            "services": "¿Qué servicios de IA ofrecen?",
+            "cost": "¿Cuánto cuesta un chatbot?",
+            "integration": "¿Pueden integrar con mi CRM?"
+        },
+        "greeting": "¡Hola! Soy tu asistente de IA. ¿En qué puedo ayudarte hoy?",
+        "responses": {
+            "excellent": "¡Excelente pregunta! Nuestro equipo de IA puede ayudarte con eso.",
+            "understand": "Entiendo tu necesidad. Te puedo conectar con un especialista.",
+            "opportunity": "Esa es una gran oportunidad para automatizar procesos."
+        }
+    },
+    "team": {
+        "description": "Un grupo de profesionales apasionados por crear soluciones tecnológicas que transforman negocios y mejoran experiencias."
+    },
+    "testimonials": {
+        "whatOurClientsSay": "Lo que dicen nuestros",
+        "clients": "clientes",
+        "say": "dicen",
+        "subtitle": "Testimonios reales de empresas que han transformado su negocio con nosotros"
+    },
+    "results": {
+        "heroDescription": "Creamos soluciones digitales a medida que mejoran procesos, optimizan la experiencia de usuario y generan un impacto medible en el crecimiento de tu negocio."
+    },
+    "services": {
+        "ai": {
+            "comparisonTitle": "Comparativas antes y después de nuestra intervención.",
+            "comparisonSubtitle": "Resultados tangibles que impactan directamente en el éxito de tu negocio."
+        },
+        "metrics": {
+            "description": "Cuantificamos nuestro impacto con mediciones precisas. Estos son algunos de los resultados que hemos logrado para nuestros clientes."
+        }
+    },
+    "courses": {
+        "lessons": {
+            "environment": "Configuración del entorno de desarrollo",
+            "firstSteps": "Primeros pasos con el framework",
+            "firstProject": "Creando tu primer proyecto",
+            "dataHandling": "Manejo de datos y estado",
+            "components": "Componentes y reutilización",
+            "styling": "Estilizado y diseño responsivo",
+            "testing": "Testing y debugging",
+            "deployment": "Despliegue y producción"
+        },
+        "content": {
+            "courseContent": "Contenido del curso",
+            "enrollToAccess": "Inscríbete para acceder a este contenido",
+            "aboutLesson": "Sobre esta lección",
+            "lessonDescription": "En esta lección exploraremos {title}. Aprenderás conceptos fundamentales y técnicas prácticas que podrás aplicar inmediatamente en tus proyectos.",
+            "takeNotes": "Toma notas mientras estudias",
+            "writeNotesHere": "Escribe tus notas aquí...",
+            "joinConversation": "Participa en la conversación con otros estudiantes",
+            "beFirstToComment": "Sé el primero en comentar",
+            "studyMaterial": "Material de estudio",
+            "selectLesson": "Selecciona una lección",
+            "chooseLessonFromSidebar": "Elige una lección del menú lateral para comenzar"
+        }
+    },
+    "myCourses": {
+        "manageLearning": "Gestiona y continúa tu aprendizaje",
+        "adjustFilters": "Intenta ajustar tus filtros o explora nuevos cursos"
+    },
+    "profile": {
+        "securitySettings": "Gestiona tu contraseña y configuraciones de seguridad",
+        "customizeExperience": "Personaliza tu experiencia de aprendizaje"
+    },
+    "search": {
+        "results": {
+            "python": {
+                "title": "Fundamentos de Python",
+                "description": "Aprende los fundamentos del lenguaje de programación Python"
+            },
+            "fullstack": {
+                "title": "Desarrollo Full Stack",
+                "description": "Ruta completa para convertirte en desarrollador web full stack"
+            },
+            "dataAnalysis": {
+                "title": "Análisis de Datos",
+                "description": "Domina el análisis de datos y la visualización"
+            },
+            "cybersecurity": {
+                "title": "Ciberseguridad",
+                "description": "Aprende sobre seguridad de redes y hacking ético"
+            },
+            "ai": {
+                "title": "Inteligencia Artificial",
+                "description": "Guía completa de inteligencia artificial"
+            }
+        }
     }
 }

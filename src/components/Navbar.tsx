@@ -16,6 +16,7 @@ export function Navbar() {
   const pathname = usePathname();
   const locale = useLocale();
   const t = useTranslations('nav');
+  const tCommon = useTranslations('common');
   const { data: session, status } = useSession();
   const { isAuthenticated, isLoading: authLoading, user } = useAuth();
   const [open, setOpen] = useState(false);
@@ -38,6 +39,7 @@ export function Navbar() {
         setUserMenuOpen(false);
       }
     };
+
     document.addEventListener('click', onClickOutside);
     return () => document.removeEventListener('click', onClickOutside);
   }, []);
@@ -96,7 +98,7 @@ export function Navbar() {
                 className="flex items-center gap-2 px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
               >
                 <Search className="w-4 h-4" />
-                <span className="text-sm font-medium">Search</span>
+                <span className="text-sm font-medium">{tCommon('search')}</span>
               </button>
             </div>
 
@@ -104,7 +106,7 @@ export function Navbar() {
             <div className="flex items-center gap-3">
               {/* Theme Toggle */}
               <button
-                aria-label="Toggle theme"
+                aria-label={tCommon('toggleTheme')}
                 onClick={toggleTheme}
                 className="p-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
               >
@@ -113,113 +115,114 @@ export function Navbar() {
 
               {/* Language Selector */}
               <div className="relative" ref={dropdownRef}>
-                <button 
-                  onClick={() => setOpen(v => !v)} 
+                <button
+                  onClick={() => setOpen(v => !v)}
                   className="flex items-center gap-2 px-3 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
                 >
-                  <img 
-                    src={locale === 'es' ? '/icons/flags/spain-flag-icon.svg' : '/icons/flags/united-states-flag-icon.svg'} 
-                    alt="flag" 
-                    className="w-4 h-4" 
+                  <img
+                    src={locale === 'es' ? '/icons/flags/spain-flag-icon.svg' : '/icons/flags/united-states-flag-icon.svg'}
+                    alt="flag"
+                    className="w-5 h-5 rounded-sm"
                   />
-                  <span className="text-sm font-medium uppercase">{locale}</span>
-                  <ChevronDown className="w-3 h-3" />
+                  <span className="text-sm font-medium">{locale.toUpperCase()}</span>
+                  <ChevronDown className="w-4 h-4" />
                 </button>
+
                 {open && (
-                  <div className="absolute right-0 mt-2 w-40 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-lg z-50">
-                    <ul className="py-1">
-                      <li>
-                        <Link 
-                          href={switchLocalePath('es')} 
-                          className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" 
-                          onClick={() => setOpen(false)}
-                        >
-                          <img src="/icons/flags/spain-flag-icon.svg" className="w-4 h-4" alt="ES" /> 
-                          <span>Español</span>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link 
-                          href={switchLocalePath('en')} 
-                          className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" 
-                          onClick={() => setOpen(false)}
-                        >
-                          <img src="/icons/flags/united-states-flag-icon.svg" className="w-4 h-4" alt="EN" /> 
-                          <span>English</span>
-                        </Link>
-                      </li>
-                    </ul>
+                  <div className="absolute top-full right-0 mt-2 w-40 bg-white dark:bg-gray-800 rounded-lg shadow-lg border dark:border-gray-700">
+                    <Link
+                      href={switchLocalePath('es')}
+                      className="w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-700"
+                    >
+                      <img src="/icons/flags/spain-flag-icon.svg" alt="ES" className="w-5 h-5 rounded-sm" />
+                      Español
+                    </Link>
+                    <Link
+                      href={switchLocalePath('en')}
+                      className="w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-700"
+                    >
+                      <img src="/icons/flags/united-states-flag-icon.svg" alt="EN" className="w-5 h-5 rounded-sm" />
+                      English
+                    </Link>
                   </div>
                 )}
               </div>
 
-              {/* Auth Section */}
-              <div className="hidden md:flex items-center gap-2">
-                {authLoading ? (
-                  <LoaderInline size="sm" />
-                ) : isAuthenticated && user ? (
-                  <>
-                    {/* Logout Button */}
-                    <button
-                      onClick={async () => {
-                        try {
-                          await fetch('/api/auth/logout', { method: 'POST' });
-                          signOut({ callbackUrl: `/${locale}` });
-                        } catch (error) {
-                          document.cookie = 'oa_session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-                          window.location.href = `/${locale}`;
-                        }
-                      }}
-                      className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
-                    >
-                      <LogOut className="w-4 h-4" />
-                      <span>{t('signOut')}</span>
-                    </button>
-                    
-                    {/* Profile Button */}
-                    <Link 
-                      href={`/${locale}/profile`} 
-                      className="flex items-center gap-2 px-4 py-2 text-sm font-medium bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
-                    >
-                      <User className="w-4 h-4" />
-                      <span>{t('profile')}</span>
-                    </Link>
-                  </>
-                ) : (
-                  <>
-                    <Link 
-                      href={`/${locale}/login`} 
-                      className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
-                    >
-                      {t('signIn')}
-                    </Link>
-                    <Link 
-                      href={`/${locale}/signup`} 
-                      className="px-4 py-2 text-sm font-medium bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
-                    >
-                      {t('signUp')}
-                    </Link>
-                  </>
-                )}
-              </div>
+              {/* User Menu */}
+              {isAuthenticated && user ? (
+                <div className="relative" ref={userMenuRef}>
+                  <button
+                    onClick={() => setUserMenuOpen(v => !v)}
+                    className="flex items-center gap-2 p-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                  >
+                    <Avatar className="h-8 w-8">
+                      <AvatarImage src={user.image || undefined} />
+                      <AvatarFallback>
+                        {user.name?.split(' ').map(n => n[0]).join('') || user.email?.[0]?.toUpperCase() || 'U'}
+                      </AvatarFallback>
+                    </Avatar>
+                  </button>
 
-              {/* Mobile Search Button */}
-              <button
-                onClick={() => setIsSearchOpen(true)}
-                className="md:hidden p-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
-              >
-                <Search className="w-4 h-4" />
-              </button>
+                  {userMenuOpen && (
+                    <div className="absolute top-full right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border dark:border-gray-700">
+                      <div className="px-4 py-3 border-b dark:border-gray-700">
+                        <p className="text-sm font-medium text-gray-900 dark:text-white">{user.name || user.email}</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">{user.email}</p>
+                      </div>
+                      <div className="py-1">
+                        <Link
+                          href={`/${locale}/dashboard`}
+                          className="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+                        >
+                          <BarChart3 className="w-4 h-4" />
+                          {t('myCourses')}
+                        </Link>
+                        <Link
+                          href={`/${locale}/profile`}
+                          className="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+                        >
+                          <User className="w-4 h-4" />
+                          {t('profile')}
+                        </Link>
+                        <button
+                          onClick={() => signOut({ callbackUrl: `/${locale}` })}
+                          className="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+                        >
+                          <LogOut className="w-4 h-4" />
+                          {t('signOut')}
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="flex items-center gap-2">
+                  {authLoading ? (
+                    <LoaderInline size="sm" />
+                  ) : (
+                    <>
+                      <Link
+                        href={`/${locale}/login`}
+                        className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary transition-colors"
+                      >
+                        {t('signIn')}
+                      </Link>
+                      <Link
+                        href={`/${locale}/signup`}
+                        className="btn-primary"
+                      >
+                        {t('signUp')}
+                      </Link>
+                    </>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>
       </header>
 
-      {/* Search Overlay */}
-      <SearchOverlay 
-        isOpen={isSearchOpen} 
-        onClose={() => setIsSearchOpen(false)} 
-      />
+      <SearchOverlay isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
     </>
   );
 }

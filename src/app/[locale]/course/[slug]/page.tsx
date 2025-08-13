@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 import { notFound } from 'next/navigation';
@@ -92,11 +92,7 @@ export default function CoursePage({
 
   const isSpanish = locale === 'es';
 
-  useEffect(() => {
-    fetchCourse();
-  }, [params.slug]);
-
-  const fetchCourse = async () => {
+  const fetchCourse = useCallback(async () => {
     try {
       setLoading(true);
       
@@ -153,7 +149,11 @@ export default function CoursePage({
     } finally {
       setLoading(false);
     }
-  };
+  }, [params.slug, isAuthenticated, user?.odooUserId]);
+
+  useEffect(() => {
+    fetchCourse();
+  }, [fetchCourse]);
 
   const generateMockLessons = (): CourseLesson[] => {
     const lessonTitles = [

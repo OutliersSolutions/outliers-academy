@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
@@ -64,9 +64,32 @@ export default function MyCoursesPage() {
     }
   }, [isAuthenticated, authLoading, user, router, locale]);
 
+  const filterCourses = useCallback(() => {
+    let filtered = courses;
+
+    // Filter by tab
+    if (selectedTab === 'in-progress') {
+      filtered = filtered.filter(course => course.completion > 0 && course.completion < 100);
+    } else if (selectedTab === 'completed') {
+      filtered = filtered.filter(course => course.completion >= 100);
+    } else if (selectedTab === 'not-started') {
+      filtered = filtered.filter(course => course.completion === 0);
+    }
+
+    // Filter by search query
+    if (searchQuery) {
+      filtered = filtered.filter(course =>
+        course.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        course.description?.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+
+    setFilteredCourses(filtered);
+  }, [courses, searchQuery, selectedTab]);
+
   useEffect(() => {
     filterCourses();
-  }, [courses, searchQuery, selectedTab]);
+  }, [filterCourses]);
 
   const fetchUserCourses = async () => {
     try {
@@ -91,28 +114,6 @@ export default function MyCoursesPage() {
     }
   };
 
-  const filterCourses = () => {
-    let filtered = courses;
-
-    // Filter by tab
-    if (selectedTab === 'in-progress') {
-      filtered = filtered.filter(course => course.completion > 0 && course.completion < 100);
-    } else if (selectedTab === 'completed') {
-      filtered = filtered.filter(course => course.completion >= 100);
-    } else if (selectedTab === 'not-started') {
-      filtered = filtered.filter(course => course.completion === 0);
-    }
-
-    // Filter by search query
-    if (searchQuery) {
-      filtered = filtered.filter(course =>
-        course.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        course.description?.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-    }
-
-    setFilteredCourses(filtered);
-  };
 
   const getDifficultyColor = (difficulty?: string) => {
     switch (difficulty) {

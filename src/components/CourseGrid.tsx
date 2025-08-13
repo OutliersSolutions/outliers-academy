@@ -1,117 +1,153 @@
-import Link from 'next/link';
-import {fetchCourses} from '@/lib/odooClient';
+import { getTranslations } from 'next-intl/server';
+import { CheckoutButton } from './CheckoutButton';
 
 interface Course {
   id: number;
-  slug: string;
-  title: string;
+  name: string;
   description: string;
-  price?: number;
-  product_id?: number;
-  published?: boolean;
+  price: number;
+  image: string;
+  slug: string;
+  duration?: number;
+  level?: string;
+  rating?: number;
+  students?: number;
 }
 
 export async function CourseGrid() {
-  let courses: Course[] = [];
-  let error: string | null = null;
+  const tCommon = await getTranslations('common');
   
-  try {
-    const data = await fetchCourses();
-    courses = data;
-  } catch (e) {
-    error = e instanceof Error ? e.message : 'Error loading courses';
-    console.error('CourseGrid error:', e);
-  }
+  let courses: Course[] = [];
 
-  if (error) {
-    return (
-      <div className="col-span-full text-center py-12">
-        <div className="w-24 h-24 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-          <svg className="w-12 h-12 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-        </div>
-        <h3 className="text-lg font-semibold text-neutral-700 mb-2">Error cargando cursos</h3>
-        <p className="text-neutral-500">{error}</p>
-      </div>
-    );
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/courses`, {
+      cache: 'no-store'
+    });
+    
+    if (res.ok) {
+      const data = await res.json();
+      courses = data.courses || [];
+    }
+  } catch (error) {
+    console.error('Error fetching courses:', error);
+    // Fallback data for development
+    courses = [
+      {
+        id: 1,
+        name: "Python para Principiantes",
+        description: "Aprende los fundamentos de Python desde cero",
+        price: 49.99,
+        image: "/images/python-course.jpg",
+        slug: "python-basics",
+        duration: 8,
+        level: "Principiante",
+        rating: 4.8,
+        students: 1250
+      },
+      {
+        id: 2,
+        name: "React.js Completo",
+        description: "Desarrollo de aplicaciones web modernas con React",
+        price: 79.99,
+        image: "/images/react-course.jpg",
+        slug: "react-complete",
+        duration: 12,
+        level: "Intermedio",
+        rating: 4.9,
+        students: 890
+      },
+      {
+        id: 3,
+        name: "Machine Learning Básico",
+        description: "Introducción a la inteligencia artificial y ML",
+        price: 99.99,
+        image: "/images/ml-course.jpg",
+        slug: "machine-learning-basics",
+        duration: 10,
+        level: "Intermedio",
+        rating: 4.7,
+        students: 650
+      }
+    ];
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {courses.map((c) => (
-        <Link key={c.id} href={`course/${c.slug}`} className="group">
-          <div className="card overflow-hidden hover:shadow-xl transition-all duration-300 group-hover:-translate-y-1 h-[400px] flex flex-col">
-            {/* Header Image - Fixed Height */}
-            <div className="h-48 bg-gradient-to-br from-primary/10 via-accent/5 to-primary/20 relative overflow-hidden">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-14 h-14 bg-gradient-to-br from-primary to-accent rounded-2xl flex items-center justify-center shadow-lg">
-                  <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                  </svg>
-                </div>
-              </div>
-              {/* Subtle pattern overlay */}
-              <div className="absolute inset-0 opacity-30">
-                <div className="absolute top-4 right-4 w-2 h-2 bg-white/30 rounded-full"></div>
-                <div className="absolute top-8 right-8 w-1 h-1 bg-white/40 rounded-full"></div>
-                <div className="absolute bottom-6 left-4 w-1.5 h-1.5 bg-white/20 rounded-full"></div>
+        <div key={c.id} className="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200 dark:border-gray-700">
+          {/* Course Image */}
+          <div className="relative h-48 overflow-hidden">
+            <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+              <div className="text-4xl font-bold text-primary/50">
+                {c.name.charAt(0)}
               </div>
             </div>
+            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors duration-300" />
             
-            {/* Content - Flexible Height */}
-            <div className="p-5 flex flex-col flex-1">
-              {/* Title - Fixed 2 lines max */}
-              <h3 className="font-bold text-lg leading-tight mb-3 group-hover:text-primary transition-colors duration-200 line-clamp-2 min-h-[3.5rem]">
-                {c.title}
-              </h3>
-              
-              {/* Description - Fixed 2 lines */}
-              <p className="text-neutral-600 dark:text-neutral-300 text-sm leading-relaxed mb-4 line-clamp-2 min-h-[2.5rem]">
-                {c.description || 'Aprende nuevas habilidades con este curso interactivo.'}
-              </p>
-              
-              {/* Spacer to push footer to bottom */}
-              <div className="flex-1"></div>
-              
-              {/* Footer - Fixed Height */}
-              <div className="flex items-center justify-between pt-3 border-t border-gray-100 dark:border-gray-700">
-                <div className="flex items-center text-primary font-semibold text-sm group-hover:text-accent transition-colors duration-200">
-                  <span>Ver curso</span>
-                  <svg className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
-                </div>
-                
-                {/* Price Badge */}
-                <div className="flex items-center">
-                  {c.price && c.price > 0 ? (
-                    <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-bold">
-                      ${c.price}
-                    </span>
-                  ) : (
-                    <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-bold">
-                      Gratis
-                    </span>
-                  )}
-                </div>
-              </div>
+            {/* Price Badge */}
+            <div className="absolute top-4 right-4 bg-white dark:bg-gray-800 px-3 py-1 rounded-full shadow-lg">
+              <span className="font-bold text-primary">${c.price}</span>
             </div>
           </div>
-        </Link>
+
+          {/* Course Content */}
+          <div className="p-6">
+            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-primary transition-colors">
+              {c.name}
+            </h3>
+            
+            <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-2">
+              {c.description || tCommon('learnNewSkills')}
+            </p>
+
+            {/* Course Meta */}
+            <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4">
+              <div className="flex items-center gap-4">
+                {c.duration && (
+                  <span className="flex items-center gap-1">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    {c.duration}h
+                  </span>
+                )}
+                {c.level && (
+                  <span className="bg-primary/10 text-primary px-2 py-1 rounded-full text-xs font-medium">
+                    {c.level}
+                  </span>
+                )}
+              </div>
+              
+              {c.rating && (
+                <div className="flex items-center gap-1">
+                  <svg className="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <span>{c.rating}</span>
+                </div>
+              )}
+            </div>
+
+            {/* Students Count */}
+            {c.students && (
+              <div className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+                {c.students.toLocaleString()} estudiantes inscritos
+              </div>
+            )}
+
+            {/* CTA Button */}
+            <CheckoutButton 
+              courseId={c.id} 
+              className="w-full"
+            >
+              Inscribirse
+            </CheckoutButton>
+          </div>
+        </div>
       ))}
       
-      {courses.length === 0 && (
-        <div className="col-span-full text-center py-12">
-          <div className="w-24 h-24 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg className="w-12 h-12 text-primary/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-            </svg>
-          </div>
-          <h3 className="text-lg font-semibold text-neutral-700 mb-2">No hay cursos disponibles</h3>
-          <p className="text-neutral-500">Los cursos aparecerán aquí cuando estén publicados en Odoo</p>
-        </div>
-      )}
+      {/* Spacer to push footer to bottom */}
+      <div className="h-8" />
     </div>
   );
 } 

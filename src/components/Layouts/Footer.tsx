@@ -9,6 +9,7 @@ interface FooterProps {
 
 export const Footer = async ({ locale }: FooterProps) => {
     const t = await getTranslations('footer');
+    const tCommon = await getTranslations('common');
 
     return (
         <footer className="w-full z-50 relative overflow-hidden footer-gradient">
@@ -34,7 +35,7 @@ export const Footer = async ({ locale }: FooterProps) => {
                             <Link href={`/${locale}`} className="flex items-center">
                                 <img src="/icons/logo.png" alt="Logo" className="h-8 w-auto mr-2" />
                                 <span className="text-xl font-extrabold font-inter dark:text-white">
-                                    Outliers Academy
+                                    {tCommon('outliersAcademy')}
                                 </span>
                             </Link>
                         </div>
@@ -73,7 +74,7 @@ export const Footer = async ({ locale }: FooterProps) => {
                         <ul className="space-y-3 text-sm font-inter font-normal text-gray-600 dark:text-gray-300">
                             <li>
                                 <a href="mailto:contact@outlierssolutions.com" className="hover:text-coral-500 transition-colors">
-                                    contact@outlierssolutions.com
+                                    {tCommon('contactEmail')}
                                 </a>
                             </li>
                             <li>
@@ -83,7 +84,7 @@ export const Footer = async ({ locale }: FooterProps) => {
                                     rel="noopener noreferrer"
                                     className="hover:text-coral-500 transition-colors"
                                 >
-                                    +1 (929) 822-6066
+                                    {tCommon('contactPhone')}
                                 </a>
                             </li>
                         </ul>
@@ -102,7 +103,7 @@ export const Footer = async ({ locale }: FooterProps) => {
 
                 {/* Línea final */}
                 <div className="border-t border-gray-200 dark:border-gray-700 mt-12 pt-4 md:pt-8 text-xs text-center font-inter text-gray-600 dark:text-gray-300">
-                    © {new Date().getFullYear()} Outliers Academy. {t('allRightsReserved')}.
+                    © {new Date().getFullYear()} {tCommon('outliersAcademy')}. {t('allRightsReserved')}.
                 </div>
             </div>
         </footer>
