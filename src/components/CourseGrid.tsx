@@ -94,8 +94,8 @@ export async function CourseGrid() {
           <div className="p-6">
             <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-primary transition-colors">
               {c.name}
-            </h3>
-            
+              </h3>
+              
             <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-2">
               {c.description || tCommon('learnNewSkills')}
             </p>
@@ -125,8 +125,8 @@ export async function CourseGrid() {
                   </svg>
                   <span>{c.rating}</span>
                 </div>
-              )}
-            </div>
+                  )}
+                </div>
 
             {/* Students Count */}
             {c.students && (
