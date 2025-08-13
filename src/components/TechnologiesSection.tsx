@@ -254,7 +254,7 @@ export function TechnologiesSection({ locale }: TechnologiesSectionProps) {
         
         {/* Call to Action */}
         <div className="text-center">
-          <p className="text-muted dark:text-muted mb-6 text-lg font-mono">
+          <p className="text-white/90 dark:text-white/90 mb-6 text-lg font-mono font-medium">
             {locale === 'es' ? '¿Buscas algo más específico?' : 'Looking for something specific?'}
           </p>
           <Link 
