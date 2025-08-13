@@ -195,7 +195,7 @@ export function TechnologiesSection({ locale }: TechnologiesSectionProps) {
           </h2>
           
           {/* Subtitle */}
-          <p className="text-lg text-white/90 dark:text-white/90 max-w-3xl mx-auto leading-relaxed font-medium mb-12">
+          <p className="text-lg text-solarized-base01 dark:text-white/90 max-w-3xl mx-auto leading-relaxed font-medium mb-12">
             Domina las tecnologías más demandadas del mercado con nuestro enfoque práctico y proyectos reales
           </p>
         </div>
@@ -254,7 +254,7 @@ export function TechnologiesSection({ locale }: TechnologiesSectionProps) {
         
         {/* Call to Action */}
         <div className="text-center">
-          <p className="text-white/90 dark:text-white/90 mb-6 text-lg font-mono font-medium">
+          <p className="text-solarized-base01 dark:text-white/90 mb-6 text-lg font-mono font-medium">
             {locale === 'es' ? '¿Buscas algo más específico?' : 'Looking for something specific?'}
           </p>
           <Link 

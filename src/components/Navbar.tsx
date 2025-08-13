@@ -58,20 +58,20 @@ export function Navbar() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-700 bg-white/90 dark:bg-gray-900/90 shadow-sm backdrop-blur-md">
+      <header className="sticky top-0 z-50 w-full border-b border-solarized-base1 dark:border-gray-700 bg-solarized-base3/90 dark:bg-gray-900/90 shadow-sm backdrop-blur-md">
         <div className="container mx-auto px-4">
           <div className="flex h-16 items-center justify-between">
             {/* Logo */}
             <Link href={`/${locale}`} className="flex items-center gap-3 flex-shrink-0">
               <img src="/icons/logo.png" alt="Outliers Academy" className="w-8 h-8 object-contain" />
               <span className="font-extrabold text-xl">
-                <span className="text-gray-900 dark:text-white">Outliers</span>{' '}
+                <span className="text-solarized-base01 dark:text-white">Outliers</span>{' '}
                 <span style={{color: 'var(--color-primary)'}}>Academy</span>
               </span>
             </Link>
 
             {/* Navigation Links */}
-            <nav className="hidden lg:flex items-center gap-8 text-sm font-medium text-gray-700 dark:text-gray-300">
+            <nav className="hidden lg:flex items-center gap-8 text-sm font-medium text-solarized-base01 dark:text-gray-300">
               <Link href={`/${locale}/catalog`} className="hover:text-primary transition-colors">
                 {t('catalog')}
               </Link>
@@ -95,7 +95,7 @@ export function Navbar() {
             <div className="hidden md:flex items-center gap-4">
               <button
                 onClick={() => setIsSearchOpen(true)}
-                className="flex items-center gap-2 px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+                className="flex items-center gap-2 px-4 py-2 text-solarized-base00 dark:text-gray-400 hover:text-solarized-base01 dark:hover:text-white transition-colors"
               >
                 <Search className="w-4 h-4" />
                 <span className="text-sm font-medium">{tCommon('search')}</span>
@@ -108,7 +108,7 @@ export function Navbar() {
               <button
                 aria-label={tCommon('toggleTheme')}
                 onClick={toggleTheme}
-                className="p-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                className="p-2 text-solarized-base00 dark:text-gray-400 hover:text-solarized-base01 dark:hover:text-white hover:bg-solarized-base2 dark:hover:bg-gray-800 rounded-lg transition-colors"
               >
                 {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
               </button>
@@ -117,7 +117,7 @@ export function Navbar() {
               <div className="relative" ref={dropdownRef}>
                 <button
                   onClick={() => setOpen(v => !v)}
-                  className="flex items-center gap-2 px-3 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                  className="flex items-center gap-2 px-3 py-2 text-solarized-base00 dark:text-gray-400 hover:text-solarized-base01 dark:hover:text-white hover:bg-solarized-base2 dark:hover:bg-gray-800 rounded-lg transition-colors"
                 >
                   <img
                     src={locale === 'es' ? '/icons/flags/spain-flag-icon.svg' : '/icons/flags/united-states-flag-icon.svg'}
@@ -129,17 +129,17 @@ export function Navbar() {
                 </button>
 
                 {open && (
-                  <div className="absolute top-full right-0 mt-2 w-40 bg-white dark:bg-gray-800 rounded-lg shadow-lg border dark:border-gray-700">
+                  <div className="absolute top-full right-0 mt-2 w-40 bg-solarized-base2 dark:bg-gray-800 rounded-lg shadow-lg border border-solarized-base1 dark:border-gray-700">
                     <Link
                       href={switchLocalePath('es')}
-                      className="w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-700"
+                      className="w-full flex items-center gap-2 px-3 py-2 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3 dark:hover:bg-gray-700"
                     >
                       <img src="/icons/flags/spain-flag-icon.svg" alt="ES" className="w-5 h-5 rounded-sm" />
                       Español
                     </Link>
                     <Link
                       href={switchLocalePath('en')}
-                      className="w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-700"
+                      className="w-full flex items-center gap-2 px-3 py-2 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3 dark:hover:bg-gray-700"
                     >
                       <img src="/icons/flags/united-states-flag-icon.svg" alt="EN" className="w-5 h-5 rounded-sm" />
                       English
@@ -153,7 +153,7 @@ export function Navbar() {
                 <div className="relative" ref={userMenuRef}>
                   <button
                     onClick={() => setUserMenuOpen(v => !v)}
-                    className="flex items-center gap-2 p-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    className="flex items-center gap-2 p-2 text-solarized-base00 dark:text-gray-400 hover:text-solarized-base01 dark:hover:text-white hover:bg-solarized-base2 dark:hover:bg-gray-800 rounded-lg transition-colors"
                   >
                     <Avatar className="h-8 w-8">
                       <AvatarImage src={user.image || undefined} />
@@ -164,29 +164,29 @@ export function Navbar() {
                   </button>
 
                   {userMenuOpen && (
-                    <div className="absolute top-full right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border dark:border-gray-700">
-                      <div className="px-4 py-3 border-b dark:border-gray-700">
-                        <p className="text-sm font-medium text-gray-900 dark:text-white">{user.name || user.email}</p>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">{user.email}</p>
+                    <div className="absolute top-full right-0 mt-2 w-48 bg-solarized-base2 dark:bg-gray-800 rounded-lg shadow-lg border border-solarized-base1 dark:border-gray-700">
+                      <div className="px-4 py-3 border-b border-solarized-base1 dark:border-gray-700">
+                        <p className="text-sm font-medium text-solarized-base01 dark:text-white">{user.name || user.email}</p>
+                        <p className="text-xs text-solarized-base00 dark:text-gray-400">{user.email}</p>
                       </div>
                       <div className="py-1">
                         <Link
                           href={`/${locale}/dashboard`}
-                          className="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+                          className="w-full flex items-center gap-2 px-4 py-2 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3 dark:hover:bg-gray-700"
                         >
                           <BarChart3 className="w-4 h-4" />
                           {t('myCourses')}
                         </Link>
                         <Link
                           href={`/${locale}/profile`}
-                          className="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+                          className="w-full flex items-center gap-2 px-4 py-2 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3 dark:hover:bg-gray-700"
                         >
                           <User className="w-4 h-4" />
                           {t('profile')}
                         </Link>
                         <button
                           onClick={() => signOut({ callbackUrl: `/${locale}` })}
-                          className="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+                          className="w-full flex items-center gap-2 px-4 py-2 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3 dark:hover:bg-gray-700"
                         >
                           <LogOut className="w-4 h-4" />
                           {t('signOut')}
@@ -203,7 +203,7 @@ export function Navbar() {
                     <>
                       <Link
                         href={`/${locale}/login`}
-                        className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary transition-colors"
+                        className="text-sm font-medium text-solarized-base01 dark:text-gray-300 hover:text-primary transition-colors"
                       >
                         {t('signIn')}
                       </Link>

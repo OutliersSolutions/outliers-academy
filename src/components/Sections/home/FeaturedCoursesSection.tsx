@@ -118,7 +118,7 @@ export function FeaturedCoursesSection({
             </span>
           </h2>
           
-          <p className="text-lg text-white/90 dark:text-white/90 max-w-3xl mx-auto leading-relaxed font-medium">{description}</p>
+          <p className="text-lg text-solarized-base01 dark:text-white/90 max-w-3xl mx-auto leading-relaxed font-medium">{description}</p>
         </div>
         
         <CourseGridClient />

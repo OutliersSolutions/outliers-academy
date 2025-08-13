@@ -116,7 +116,7 @@ export function LearningSection({
             </span>
           </h2>
           
-          <p className="text-lg text-white/90 dark:text-white/90 max-w-3xl mx-auto leading-relaxed font-medium">{description}</p>
+          <p className="text-lg text-solarized-base01 dark:text-white/90 max-w-3xl mx-auto leading-relaxed font-medium">{description}</p>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -131,7 +131,7 @@ export function LearningSection({
                     {feature.icon}
                   </div>
                   <h3 className={`text-xl font-bold mb-4 text-text dark:text-text group-hover:text-${feature.hoverColor} dark:group-hover:text-${feature.hoverColor} transition-colors duration-300`}>{feature.title}</h3>
-                  <p className="text-white/80 dark:text-white/80 font-medium">{feature.description}</p>
+                  <p className="text-solarized-base01 dark:text-white/80 font-medium">{feature.description}</p>
                 </div>
               </div>
             </div>
