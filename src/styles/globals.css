@@ -356,6 +356,12 @@ body {
               linear-gradient(180deg, var(--color-bg), var(--color-bg));
 }
 
+.footer-gradient {
+  background: radial-gradient(1400px 800px at 80% 110%, var(--color-secondary), transparent 40%),
+              radial-gradient(1200px 700px at 95% 100%, var(--color-muted), transparent 40%),
+              linear-gradient(0deg, var(--color-bg), var(--color-bg));
+}
+
 /* Animations */
 @keyframes sunburst-spin {
   from { transform: rotate(0deg); }
