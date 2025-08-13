@@ -1,194 +1,615 @@
-import {notFound} from 'next/navigation';
+"use client";
+
+import { useEffect, useState } from 'react';
+import { useRouter, usePathname } from 'next/navigation';
+import { useAuth } from '@/hooks/useAuth';
+import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import {CheckoutButton} from '@/components/CheckoutButton';
-import {fetchCourses} from '@/lib/odooClient';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Loader } from '@/components/ui/loader';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { 
+  BookOpen, 
+  PlayCircle, 
+  Clock, 
+  Users, 
+  Award,
+  CheckCircle,
+  Lock,
+  Download,
+  Share2,
+  Star,
+  ChevronLeft,
+  ChevronRight,
+  Menu,
+  X,
+  Volume2,
+  VolumeX,
+  Maximize,
+  Settings,
+  MessageCircle
+} from 'lucide-react';
+import { useTranslations } from 'next-intl';
+
+interface CourseLesson {
+  id: number;
+  title: string;
+  description?: string;
+  duration?: number; // in minutes
+  video_url?: string;
+  content?: string;
+  is_preview?: boolean;
+  completed?: boolean;
+  order?: number;
+}
 
 interface Course {
   id: number;
   slug: string;
-  title: string;
+  name: string;
   description: string;
+  image?: string;
+  instructor?: string;
+  instructor_image?: string;
+  duration?: number; // total duration in hours
+  students_count?: number;
+  rating?: number;
+  reviews_count?: number;
   price?: number;
   product_id?: number;
   published?: boolean;
+  lessons?: CourseLesson[];
+  completion_percentage?: number;
+  is_enrolled?: boolean;
+  difficulty?: 'beginner' | 'intermediate' | 'advanced';
+  category?: string;
+  tags?: string[];
+  last_updated?: string;
 }
 
-async function getCourse(slug: string): Promise<Course | null> {
-  try {
-    const courses = await fetchCourses();
-    return courses.find((c: Course) => c.slug === slug) || null;
-  } catch (e) {
-    console.error('Error fetching course:', e);
-    return null;
-  }
-}
-
-export default async function CoursePage({
+export default function CoursePage({
   params
 }: {
-  params: {slug: string; locale: string}
+  params: { slug: string; locale: string }
 }) {
-  const course = await getCourse(params.slug);
+  const { isAuthenticated, isLoading: authLoading, user } = useAuth();
+  const [course, setCourse] = useState<Course | null>(null);
+  const [currentLesson, setCurrentLesson] = useState<CourseLesson | null>(null);
+  const [lessonIndex, setLessonIndex] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
   const locale = params.locale || 'es';
-  
-  if (!course) {
-    notFound();
+  const t = useTranslations('course');
+  const tLoader = useTranslations('loader');
+
+  const isSpanish = locale === 'es';
+
+  useEffect(() => {
+    fetchCourse();
+  }, [params.slug]);
+
+  const fetchCourse = async () => {
+    try {
+      setLoading(true);
+      
+      // Fetch course details
+      const courseRes = await fetch(`/api/courses/${params.slug}`);
+      if (!courseRes.ok) {
+        if (courseRes.status === 404) {
+          notFound();
+        }
+        throw new Error('Failed to fetch course');
+      }
+      
+      const courseData = await courseRes.json();
+      
+      // If user is authenticated, get their progress
+      if (isAuthenticated && user?.odooUserId) {
+        try {
+          const progressRes = await fetch(`/api/odoo/courses/${courseData.id}/content`);
+          if (progressRes.ok) {
+            const progressData = await progressRes.json();
+            courseData.lessons = progressData.lessons;
+            courseData.completion_percentage = progressData.completion_percentage;
+            courseData.is_enrolled = progressData.is_enrolled;
+          }
+        } catch (error) {
+          console.error('Error fetching progress:', error);
+        }
+      }
+      
+      // Add mock data for better demonstration
+      courseData.lessons = courseData.lessons || generateMockLessons();
+      courseData.instructor = courseData.instructor || 'Dr. María González';
+      courseData.instructor_image = courseData.instructor_image || `https://i.pravatar.cc/150?img=${courseData.id}`;
+      courseData.duration = courseData.duration || Math.floor(Math.random() * 20) + 5;
+      courseData.students_count = courseData.students_count || Math.floor(Math.random() * 1000) + 100;
+      courseData.rating = courseData.rating || (4 + Math.random());
+      courseData.reviews_count = courseData.reviews_count || Math.floor(Math.random() * 200) + 50;
+      courseData.difficulty = courseData.difficulty || ['beginner', 'intermediate', 'advanced'][Math.floor(Math.random() * 3)];
+      courseData.category = courseData.category || ['Inteligencia Artificial', 'Desarrollo Web', 'Data Science', 'Machine Learning'][Math.floor(Math.random() * 4)];
+      courseData.tags = courseData.tags || ['Python', 'JavaScript', 'React', 'Node.js', 'AI'].slice(0, Math.floor(Math.random() * 3) + 2);
+      courseData.last_updated = courseData.last_updated || new Date().toISOString();
+      
+      setCourse(courseData);
+      
+      // Set first lesson as current
+      if (courseData.lessons && courseData.lessons.length > 0) {
+        setCurrentLesson(courseData.lessons[0]);
+        setLessonIndex(0);
+      }
+      
+    } catch (error) {
+      console.error('Error fetching course:', error);
+      notFound();
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const generateMockLessons = (): CourseLesson[] => {
+    const lessonTitles = [
+      'Introducción y conceptos básicos',
+      'Configuración del entorno de desarrollo',
+      'Primeros pasos con el framework',
+      'Creando tu primer proyecto',
+      'Manejo de datos y estado',
+      'Componentes y reutilización',
+      'Estilizado y diseño responsivo',
+      'Integración con APIs',
+      'Testing y debugging',
+      'Despliegue y producción'
+    ];
+
+    return lessonTitles.map((title, index) => ({
+      id: index + 1,
+      title,
+      description: `En esta lección aprenderás sobre ${title.toLowerCase()}`,
+      duration: Math.floor(Math.random() * 30) + 10,
+      video_url: `https://example.com/video/${index + 1}`,
+      is_preview: index < 2,
+      completed: Math.random() > 0.7,
+      order: index + 1
+    }));
+  };
+
+  const nextLesson = () => {
+    if (course?.lessons && lessonIndex < course.lessons.length - 1) {
+      const newIndex = lessonIndex + 1;
+      setLessonIndex(newIndex);
+      setCurrentLesson(course.lessons[newIndex]);
+    }
+  };
+
+  const previousLesson = () => {
+    if (lessonIndex > 0) {
+      const newIndex = lessonIndex - 1;
+      setLessonIndex(newIndex);
+      setCurrentLesson(course.lessons![newIndex]);
+    }
+  };
+
+  const selectLesson = (lesson: CourseLesson, index: number) => {
+    if (lesson.is_preview || course?.is_enrolled) {
+      setCurrentLesson(lesson);
+      setLessonIndex(index);
+    }
+  };
+
+  const markLessonComplete = async () => {
+    if (!currentLesson || !course?.is_enrolled) return;
+    
+    try {
+      await fetch(`/api/odoo/courses/${course.id}/lessons/${currentLesson.id}/complete`, {
+        method: 'POST'
+      });
+      
+      // Update local state
+      if (course.lessons) {
+        const updatedLessons = course.lessons.map(lesson => 
+          lesson.id === currentLesson.id ? { ...lesson, completed: true } : lesson
+        );
+        setCourse({ ...course, lessons: updatedLessons });
+      }
+    } catch (error) {
+      console.error('Error marking lesson complete:', error);
+    }
+  };
+
+  const getDifficultyColor = (difficulty?: string) => {
+    switch (difficulty) {
+      case 'beginner': return 'bg-green-100 text-green-800';
+      case 'intermediate': return 'bg-yellow-100 text-yellow-800';
+      case 'advanced': return 'bg-red-100 text-red-800';
+      default: return 'bg-gray-100 text-gray-800';
+    }
+  };
+
+  const getDifficultyText = (difficulty?: string) => {
+    switch (difficulty) {
+      case 'beginner': return isSpanish ? 'Principiante' : 'Beginner';
+      case 'intermediate': return isSpanish ? 'Intermedio' : 'Intermediate';
+      case 'advanced': return isSpanish ? 'Avanzado' : 'Advanced';
+      default: return isSpanish ? 'Sin definir' : 'Undefined';
+    }
+  };
+
+  if (authLoading || loading) {
+    return (
+      <Loader 
+        message={tLoader('pages.course')} 
+        fullScreen 
+        size="lg"
+        showMotivationalMessages 
+      />
+    );
   }
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-bg to-surface/30">
-      <div className="container py-8">
-        <nav className="flex items-center gap-2 text-sm text-neutral-600 mb-8">
-          <Link href={`/${locale}`} className="hover:text-primary">Inicio</Link>
-          <span>›</span>
-          <Link href={`/${locale}/catalog`} className="hover:text-primary">Catálogo</Link>
-          <span>›</span>
-          <span className="text-neutral-900">{course.title}</span>
-        </nav>
+  if (!course) {
+    return notFound();
+  }
 
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
-          <div className="xl:col-span-2">
-            <div className="mb-8">
-              <h1 className="h1-hero mb-4">{course.title}</h1>
-              <p className="p-lead text-xl mb-6">{course.description}</p>
+  const completedLessons = course.lessons?.filter(lesson => lesson.completed).length || 0;
+  const totalLessons = course.lessons?.length || 0;
+  const completionPercentage = totalLessons > 0 ? (completedLessons / totalLessons) * 100 : 0;
+
+  return (
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      {/* Header */}
+      <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-40">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center space-x-4">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setSidebarOpen(!sidebarOpen)}
+                className="lg:hidden"
+              >
+                {sidebarOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+              </Button>
+              
+              <nav className="hidden lg:flex items-center space-x-2 text-sm text-gray-500">
+                <Link href={`/${locale}`} className="hover:text-gray-700">
+                  {isSpanish ? 'Inicio' : 'Home'}
+                </Link>
+                <ChevronRight className="h-4 w-4" />
+                <Link href={`/${locale}/catalog`} className="hover:text-gray-700">
+                  {isSpanish ? 'Catálogo' : 'Catalog'}
+                </Link>
+                <ChevronRight className="h-4 w-4" />
+                <span className="text-gray-900 dark:text-gray-100 font-medium">{course.name}</span>
+              </nav>
             </div>
 
-            <div className="bg-white rounded-2xl shadow-lg overflow-hidden mb-8">
-              <div className="aspect-video bg-gradient-to-br from-primary/10 to-accent/10 relative">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-24 h-24 bg-gradient-to-br from-primary to-accent rounded-2xl flex items-center justify-center">
-                    <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                    </svg>
+            <div className="flex items-center space-x-2">
+              {course.is_enrolled && (
+                <div className="hidden sm:flex items-center space-x-2 text-sm">
+                  <span className="text-gray-600 dark:text-gray-400">
+                    {isSpanish ? 'Progreso:' : 'Progress:'}
+                  </span>
+                  <div className="w-24">
+                    <Progress value={completionPercentage} className="h-2" />
                   </div>
-                </div>
-                
-                <div className="absolute top-6 left-6">
-                  <span className="px-4 py-2 rounded-full text-sm font-semibold bg-green-100 text-green-700">
-                    Disponible
+                  <span className="text-gray-900 dark:text-gray-100 font-medium">
+                    {Math.round(completionPercentage)}%
                   </span>
                 </div>
-
-                <div className="absolute bottom-6 right-6">
-                  <button className="w-16 h-16 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-105">
-                    <svg className="w-6 h-6 text-primary ml-1" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M8 5v14l11-7z"/>
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white rounded-2xl shadow-lg p-8">
-              <div className="space-y-8">
-                <div>
-                  <h3 className="text-xl font-bold mb-4">Acerca de este curso</h3>
-                  <p className="text-neutral-700 leading-relaxed">{course.description}</p>
-                </div>
-
-                <div>
-                  <h3 className="text-xl font-bold mb-4">¿Qué incluye este curso?</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <div className="flex items-center gap-3">
-                      <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                        <svg className="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                      </div>
-                      <span className="text-neutral-700">Acceso completo al contenido</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                        <svg className="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                      </div>
-                      <span className="text-neutral-700">Certificado de finalización</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                        <svg className="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                      </div>
-                      <span className="text-neutral-700">Soporte del instructor</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                        <svg className="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                      </div>
-                      <span className="text-neutral-700">Acceso de por vida</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="xl:col-span-1">
-            <div className="sticky top-8">
-              <div className="bg-white rounded-2xl shadow-lg p-6 mb-6">
-                <div className="text-center mb-6">
-                  {course.price && course.price > 0 ? (
-                    <div className="flex items-baseline justify-center gap-2 mb-2">
-                      <span className="text-3xl font-bold text-primary">${course.price}</span>
-                    </div>
-                  ) : (
-                    <div className="text-3xl font-bold text-green-600 mb-2">Gratis</div>
-                  )}
-                  <p className="text-sm text-neutral-600">Acceso completo al curso</p>
-                </div>
-
-                <div className="space-y-4 mb-6">
-                  <div className="flex items-center gap-3">
-                    <svg className="w-5 h-5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <span className="text-neutral-700">Contenido estructurado</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <svg className="w-5 h-5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
-                    <span className="text-neutral-700">Material descargable</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <svg className="w-5 h-5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                    </svg>
-                    <span className="text-neutral-700">Acceso de por vida</span>
-                  </div>
-                </div>
-
-                <div className="space-y-3">
-                  {course.product_id ? (
-                    <CheckoutButton 
-                      priceId={course.product_id.toString()}
-                      courseId={course.id}
-                      successUrl={`${process.env.NEXT_PUBLIC_APP_URL || ''}/${locale}/course/${params.slug}/success`}
-                      cancelUrl={`${process.env.NEXT_PUBLIC_APP_URL || ''}/${locale}/course/${params.slug}`}
-                      className="w-full btn-primary btn-lg justify-center"
-                    >
-                      {course.price && course.price > 0 ? 'Comprar curso' : 'Inscribirse gratis'}
-                    </CheckoutButton>
-                  ) : (
-                    <div className="w-full btn-secondary btn-lg justify-center opacity-50 cursor-not-allowed">
-                      No disponible
-                    </div>
-                  )}
-                </div>
-
-                <div className="mt-6 pt-6 border-t border-neutral-200 text-center">
-                  <p className="text-sm text-neutral-600 mb-2">💰 Garantía de devolución de 30 días</p>
-                  <p className="text-sm text-neutral-600">🎓 Únete a nuestra comunidad de aprendizaje</p>
-                </div>
-              </div>
+              )}
+              
+              <Button variant="ghost" size="sm">
+                <Share2 className="h-4 w-4" />
+              </Button>
             </div>
           </div>
         </div>
       </div>
+
+      <div className="flex h-[calc(100vh-4rem)]">
+        {/* Sidebar */}
+        <div className={`${sidebarOpen ? 'w-80' : 'w-0'} transition-all duration-300 overflow-hidden bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700`}>
+          <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+            <h2 className="font-semibold text-gray-900 dark:text-gray-100">
+              {isSpanish ? 'Contenido del curso' : 'Course content'}
+            </h2>
+            <p className="text-sm text-gray-500 mt-1">
+              {totalLessons} {isSpanish ? 'lecciones' : 'lessons'} • {course.duration}h {isSpanish ? 'total' : 'total'}
+            </p>
+          </div>
+          
+          <div className="overflow-y-auto h-full pb-20">
+            {course.lessons?.map((lesson, index) => (
+              <div
+                key={lesson.id}
+                onClick={() => selectLesson(lesson, index)}
+                className={`p-4 border-b border-gray-100 dark:border-gray-700 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors ${
+                  currentLesson?.id === lesson.id ? 'bg-blue-50 dark:bg-blue-900/20 border-l-4 border-l-blue-500' : ''
+                } ${!lesson.is_preview && !course.is_enrolled ? 'opacity-50 cursor-not-allowed' : ''}`}
+              >
+                <div className="flex items-start space-x-3">
+                  <div className="flex-shrink-0 mt-1">
+                    {lesson.completed ? (
+                      <CheckCircle className="h-5 w-5 text-green-500" />
+                    ) : lesson.is_preview || course.is_enrolled ? (
+                      <PlayCircle className="h-5 w-5 text-gray-400" />
+                    ) : (
+                      <Lock className="h-5 w-5 text-gray-400" />
+                    )}
+                  </div>
+                  
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100 line-clamp-2">
+                      {lesson.title}
+                    </h3>
+                    <div className="flex items-center space-x-2 mt-1">
+                      <Clock className="h-3 w-3 text-gray-400" />
+                      <span className="text-xs text-gray-500">{lesson.duration} min</span>
+                      {lesson.is_preview && (
+                        <Badge variant="secondary" className="text-xs">
+                          {isSpanish ? 'Vista previa' : 'Preview'}
+                        </Badge>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Main content */}
+        <div className="flex-1 flex flex-col overflow-hidden">
+          {currentLesson ? (
+            <>
+              {/* Video player */}
+              <div className="bg-black relative group">
+                <div className="aspect-video flex items-center justify-center">
+                  {currentLesson.is_preview || course.is_enrolled ? (
+                    <div className="w-full h-full bg-gradient-to-br from-gray-900 to-gray-800 flex items-center justify-center">
+                      <div className="text-center text-white">
+                        <PlayCircle className="h-16 w-16 mx-auto mb-4 opacity-80" />
+                        <h3 className="text-xl font-semibold mb-2">{currentLesson.title}</h3>
+                        <p className="text-gray-300">{currentLesson.duration} {isSpanish ? 'minutos' : 'minutes'}</p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
+                      <div className="text-center text-white">
+                        <Lock className="h-16 w-16 mx-auto mb-4 opacity-50" />
+                        <h3 className="text-xl font-semibold mb-2">
+                          {isSpanish ? 'Contenido bloqueado' : 'Content locked'}
+                        </h3>
+                        <p className="text-gray-300 mb-4">
+                          {isSpanish ? 'Inscríbete para acceder a este contenido' : 'Enroll to access this content'}
+                        </p>
+                        <Button onClick={() => router.push(`/${locale}/course/${params.slug}#pricing`)}>
+                          {isSpanish ? 'Inscribirse' : 'Enroll now'}
+                        </Button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Video controls */}
+                {(currentLesson.is_preview || course.is_enrolled) && (
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="flex items-center justify-between text-white">
+                      <div className="flex items-center space-x-2">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => setIsPlaying(!isPlaying)}
+                          className="text-white hover:bg-white/20"
+                        >
+                          <PlayCircle className="h-5 w-5" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => setIsMuted(!isMuted)}
+                          className="text-white hover:bg-white/20"
+                        >
+                          {isMuted ? <VolumeX className="h-5 w-5" /> : <Volume2 className="h-5 w-5" />}
+                        </Button>
+                      </div>
+
+                      <div className="flex items-center space-x-2">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="text-white hover:bg-white/20"
+                        >
+                          <Settings className="h-5 w-5" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="text-white hover:bg-white/20"
+                        >
+                          <Maximize className="h-5 w-5" />
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Lesson navigation */}
+              <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 p-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-4">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={previousLesson}
+                      disabled={lessonIndex === 0}
+                    >
+                      <ChevronLeft className="h-4 w-4 mr-1" />
+                      {isSpanish ? 'Anterior' : 'Previous'}
+                    </Button>
+                    
+                    <div className="text-center">
+                      <h1 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                        {currentLesson.title}
+                      </h1>
+                      <p className="text-sm text-gray-500">
+                        {isSpanish ? 'Lección' : 'Lesson'} {lessonIndex + 1} {isSpanish ? 'de' : 'of'} {totalLessons}
+                      </p>
+                    </div>
+                    
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={nextLesson}
+                      disabled={lessonIndex === totalLessons - 1}
+                    >
+                      {isSpanish ? 'Siguiente' : 'Next'}
+                      <ChevronRight className="h-4 w-4 ml-1" />
+                    </Button>
+                  </div>
+
+                  {course.is_enrolled && !currentLesson.completed && (
+                    <Button onClick={markLessonComplete}>
+                      <CheckCircle className="h-4 w-4 mr-2" />
+                      {isSpanish ? 'Marcar completada' : 'Mark complete'}
+                    </Button>
+                  )}
+                </div>
+              </div>
+
+              {/* Lesson content tabs */}
+              <div className="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-900">
+                <div className="container mx-auto p-6">
+                  <Tabs defaultValue="overview" className="w-full">
+                    <TabsList className="grid w-full grid-cols-4">
+                      <TabsTrigger value="overview">
+                        {isSpanish ? 'Resumen' : 'Overview'}
+                      </TabsTrigger>
+                      <TabsTrigger value="notes">
+                        {isSpanish ? 'Notas' : 'Notes'}
+                      </TabsTrigger>
+                      <TabsTrigger value="discussion">
+                        {isSpanish ? 'Discusión' : 'Discussion'}
+                      </TabsTrigger>
+                      <TabsTrigger value="resources">
+                        {isSpanish ? 'Recursos' : 'Resources'}
+                      </TabsTrigger>
+                    </TabsList>
+
+                    <TabsContent value="overview" className="mt-6">
+                      <Card>
+                        <CardHeader>
+                          <CardTitle>{isSpanish ? 'Sobre esta lección' : 'About this lesson'}</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                            {currentLesson.description || 
+                              `${isSpanish ? 'En esta lección exploraremos' : 'In this lesson we will explore'} ${currentLesson.title.toLowerCase()}. ${isSpanish ? 'Aprenderás conceptos fundamentales y técnicas prácticas que podrás aplicar inmediatamente en tus proyectos.' : 'You will learn fundamental concepts and practical techniques that you can apply immediately in your projects.'}`
+                            }
+                          </p>
+                        </CardContent>
+                      </Card>
+                    </TabsContent>
+
+                    <TabsContent value="notes" className="mt-6">
+                      <Card>
+                        <CardHeader>
+                          <CardTitle>{isSpanish ? 'Mis notas' : 'My notes'}</CardTitle>
+                          <CardDescription>
+                            {isSpanish ? 'Toma notas mientras estudias' : 'Take notes while you study'}
+                          </CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                          <div className="space-y-4">
+                            <textarea
+                              className="w-full h-32 p-3 border border-gray-300 dark:border-gray-600 rounded-lg resize-none bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                              placeholder={isSpanish ? 'Escribe tus notas aquí...' : 'Write your notes here...'}
+                            />
+                            <Button>
+                              {isSpanish ? 'Guardar notas' : 'Save notes'}
+                            </Button>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </TabsContent>
+
+                    <TabsContent value="discussion" className="mt-6">
+                      <Card>
+                        <CardHeader>
+                          <CardTitle>
+                            <MessageCircle className="h-5 w-5 inline mr-2" />
+                            {isSpanish ? 'Discusión' : 'Discussion'}
+                          </CardTitle>
+                          <CardDescription>
+                            {isSpanish ? 'Participa en la conversación con otros estudiantes' : 'Join the conversation with other students'}
+                          </CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                          <div className="text-center py-8 text-gray-500">
+                            <MessageCircle className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                            <p>{isSpanish ? 'Sé el primero en comentar' : 'Be the first to comment'}</p>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </TabsContent>
+
+                    <TabsContent value="resources" className="mt-6">
+                      <Card>
+                        <CardHeader>
+                          <CardTitle>
+                            <Download className="h-5 w-5 inline mr-2" />
+                            {isSpanish ? 'Recursos descargables' : 'Downloadable resources'}
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <div className="space-y-3">
+                            <div className="flex items-center justify-between p-3 border border-gray-200 dark:border-gray-700 rounded-lg">
+                              <div className="flex items-center space-x-3">
+                                <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded flex items-center justify-center">
+                                  <BookOpen className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                                </div>
+                                <div>
+                                  <p className="font-medium text-gray-900 dark:text-gray-100">
+                                    {isSpanish ? 'Material de estudio' : 'Study material'}
+                                  </p>
+                                  <p className="text-sm text-gray-500">PDF • 2.3 MB</p>
+                                </div>
+                              </div>
+                              <Button variant="ghost" size="sm">
+                                <Download className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </TabsContent>
+                  </Tabs>
+                </div>
+              </div>
+            </>
+          ) : (
+            <div className="flex-1 flex items-center justify-center">
+              <div className="text-center">
+                <BookOpen className="h-16 w-16 mx-auto mb-4 text-gray-400" />
+                <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                  {isSpanish ? 'Selecciona una lección' : 'Select a lesson'}
+                </h2>
+                <p className="text-gray-500">
+                  {isSpanish ? 'Elige una lección del menú lateral para comenzar' : 'Choose a lesson from the sidebar to get started'}
+                </p>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
-} 
+}

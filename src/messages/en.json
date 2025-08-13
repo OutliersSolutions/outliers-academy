@@ -308,7 +308,41 @@
             "courses": "Loading your courses",
             "profile": "Setting up your profile",
             "catalog": "Exploring the catalog",
-            "auth": "Verifying credentials"
+            "auth": "Verifying credentials",
+            "course": "Loading course..."
         }
+    },
+    "course": {
+        "overview": "Overview",
+        "notes": "Notes",
+        "discussion": "Discussion",
+        "resources": "Resources",
+        "content": "Course content",
+        "lessons": "lessons",
+        "total": "total",
+        "progress": "Progress:",
+        "home": "Home",
+        "catalog": "Catalog",
+        "previous": "Previous",
+        "next": "Next",
+        "lesson": "Lesson",
+        "of": "of",
+        "markComplete": "Mark complete",
+        "selectLesson": "Select a lesson",
+        "selectLessonDesc": "Choose a lesson from the sidebar to get started",
+        "aboutLesson": "About this lesson",
+        "myNotes": "My notes",
+        "takeNotes": "Take notes while you study",
+        "writeNotes": "Write your notes here...",
+        "saveNotes": "Save notes",
+        "joinDiscussion": "Join the conversation with other students",
+        "firstComment": "Be the first to comment",
+        "downloadableResources": "Downloadable resources",
+        "studyMaterial": "Study material",
+        "contentLocked": "Content locked",
+        "enrollToAccess": "Enroll to access this content",
+        "enrollNow": "Enroll now",
+        "minutes": "minutes",
+        "preview": "Preview"
     }
 }
