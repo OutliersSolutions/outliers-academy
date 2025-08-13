@@ -69,10 +69,10 @@ export function AnimatedText({
   const renderText = () => {
     const cursorElement = (
       <span 
-        className={`inline-block w-0.5 sm:w-1 h-[0.9em] ml-0.5 sm:ml-1 bg-accent transition-opacity duration-100 ${
+        className={`inline-block w-0.5 sm:w-1 h-[1em] ml-0.5 sm:ml-1 bg-accent transition-opacity duration-100 ${
           showCursor ? 'opacity-100' : 'opacity-0'
         }`}
-        style={{ verticalAlign: 'text-top' }}
+        style={{ verticalAlign: 'middle' }}
       />
     );
 

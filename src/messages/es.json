@@ -368,10 +368,10 @@
     },
     "chatbot": {
         "placeholderTexts": {
-            "ai": "Inteligencia Artificial...",
-            "webDev": "Desarrollo Web...",
-            "dataScience": "Data Science...",
-            "machineLearning": "Machine Learning..."
+            "ai": "Inteligencia Artificial",
+            "webDev": "Desarrollo Web",
+            "dataScience": "Data Science",
+            "machineLearning": "Machine Learning"
         },
         "modelAlt": "Modelo 3D de Chatbot IA",
         "bubbles": {
