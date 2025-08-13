@@ -86,26 +86,10 @@ export function GlobalLoader({ children, minimumLoadTime = 2500 }: GlobalLoaderP
       try {
         // Simular progreso inicial
         setLoadingProgress(10);
-        setLoadingText(loadingMessages[0]);
 
-        // Progreso gradual con mensajes
+        // Progreso gradual
         const progressInterval = setInterval(() => {
-          setLoadingProgress(prev => {
-            const newProgress = Math.min(prev + Math.random() * 15, 85);
-            
-            // Cambiar mensaje según progreso
-            if (newProgress > 20 && newProgress <= 40) {
-              setLoadingText(loadingMessages[1]);
-            } else if (newProgress > 40 && newProgress <= 60) {
-              setLoadingText(loadingMessages[2]);
-            } else if (newProgress > 60 && newProgress <= 80) {
-              setLoadingText(loadingMessages[3]);
-            } else if (newProgress > 80) {
-              setLoadingText(loadingMessages[4]);
-            }
-            
-            return newProgress;
-          });
+          setLoadingProgress(prev => Math.min(prev + Math.random() * 15, 85));
         }, 200);
 
         // Esperar a que los assets se carguen
@@ -123,7 +107,6 @@ export function GlobalLoader({ children, minimumLoadTime = 2500 }: GlobalLoaderP
         // Completar carga
         if (mounted) {
           setLoadingProgress(100);
-          setLoadingText(t('ready'));
           
           // Pequeña pausa antes de ocultar
           setTimeout(() => {
@@ -161,154 +144,73 @@ export function GlobalLoader({ children, minimumLoadTime = 2500 }: GlobalLoaderP
               background: 'linear-gradient(135deg, var(--color-bg) 0%, var(--color-surface) 50%, var(--color-muted) 100%)'
             }}
           >
-            {/* Particles Background */}
+            {/* Subtle Background */}
             <div className="absolute inset-0">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
-              
-              {/* Animated particles */}
-              {[...Array(20)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  className="absolute w-1 h-1 bg-primary/30 rounded-full"
-                  style={{
-                    left: `${Math.random() * 100}%`,
-                    top: `${Math.random() * 100}%`,
-                  }}
-                  animate={{
-                    y: [0, -20, 0],
-                    opacity: [0.3, 0.8, 0.3],
-                    scale: [1, 1.5, 1],
-                  }}
-                  transition={{
-                    duration: 2 + Math.random() * 2,
-                    repeat: Infinity,
-                    delay: Math.random() * 2,
-                  }}
-                />
-              ))}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/3 via-transparent to-accent/3" />
             </div>
 
             {/* Main Content */}
-            <div className="relative z-10 text-center max-w-md mx-auto px-6">
-              {/* Logo Animation */}
+            <div className="relative z-10 text-center mx-auto px-6">
+              {/* Brand Name with Icon */}
               <motion.div
-                initial={{ scale: 0.5, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-                className="mb-8"
-              >
-                <div className="relative">
-                  <motion.div
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                    className="absolute inset-0 w-24 h-24 mx-auto"
-                  >
-                    <div className="w-full h-full border-4 border-dashed border-primary/20 rounded-full" />
-                  </motion.div>
-                  
-                  <motion.div
-                    animate={{ 
-                      boxShadow: [
-                        '0 0 20px rgba(47, 39, 206, 0.3)',
-                        '0 0 40px rgba(47, 39, 206, 0.6)',
-                        '0 0 20px rgba(47, 39, 206, 0.3)'
-                      ]
-                    }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                    className="relative w-24 h-24 mx-auto bg-white dark:bg-gray-800 rounded-full flex items-center justify-center shadow-xl"
-                  >
-                    <img 
-                      src="/icons/logo.png" 
-                      alt="Outliers Academy" 
-                      className="w-12 h-12 object-contain"
-                    />
-                  </motion.div>
-                </div>
-              </motion.div>
-
-              {/* Brand Name */}
-              <motion.h1
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="text-2xl font-bold text-gray-900 dark:text-white mb-2"
+                className="flex items-center justify-center gap-3 mb-8"
               >
-                <span className="text-primary">Outliers</span> Academy
-              </motion.h1>
+                <img 
+                  src="/icons/logo.png" 
+                  alt="Outliers Academy" 
+                  className="w-8 h-8 object-contain"
+                />
+                <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+                  <span className="text-primary">Outliers</span> Academy
+                </h1>
+              </motion.div>
 
-              {/* Tagline */}
-              <motion.p
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.6, delay: 0.5 }}
-                className="text-gray-600 dark:text-gray-400 mb-8 text-sm"
-              >
-                {t('tagline')}
-              </motion.p>
-
-              {/* Progress Bar */}
+              {/* Circular Progress */}
               <motion.div
-                initial={{ scaleX: 0, opacity: 0 }}
-                animate={{ scaleX: 1, opacity: 1 }}
-                transition={{ duration: 0.6, delay: 0.7 }}
-                className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 mb-4 overflow-hidden"
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                className="relative w-32 h-32 mx-auto"
               >
-                <motion.div
-                  className="h-full bg-gradient-to-r from-primary to-accent rounded-full relative"
-                  style={{ width: `${loadingProgress}%` }}
-                  transition={{ duration: 0.3, ease: "easeOut" }}
-                >
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-                    animate={{ x: ['-100%', '100%'] }}
-                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                {/* Background Circle */}
+                <svg className="w-32 h-32 transform -rotate-90" viewBox="0 0 128 128">
+                  <circle
+                    cx="64"
+                    cy="64"
+                    r="56"
+                    stroke="currentColor"
+                    strokeWidth="8"
+                    fill="transparent"
+                    className="text-gray-200 dark:text-gray-700"
                   />
-                </motion.div>
-              </motion.div>
-
-              {/* Progress Text */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.6, delay: 0.9 }}
-                className="flex justify-between items-center text-sm"
-              >
-                <motion.span
-                  key={loadingText}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="text-gray-600 dark:text-gray-400 font-medium"
-                >
-                  {loadingText}
-                </motion.span>
-                <span className="text-primary font-mono font-bold">
-                  {Math.round(loadingProgress)}%
-                </span>
-              </motion.div>
-
-              {/* Loading Dots */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.6, delay: 1.1 }}
-                className="flex justify-center space-x-2 mt-6"
-              >
-                {[0, 1, 2].map((index) => (
-                  <motion.div
-                    key={index}
-                    className="w-2 h-2 bg-primary rounded-full"
-                    animate={{
-                      scale: [1, 1.5, 1],
-                      opacity: [0.5, 1, 0.5],
+                  {/* Progress Circle */}
+                  <motion.circle
+                    cx="64"
+                    cy="64"
+                    r="56"
+                    stroke="url(#progressGradient)"
+                    strokeWidth="8"
+                    fill="transparent"
+                    strokeLinecap="round"
+                    strokeDasharray={2 * Math.PI * 56}
+                    initial={{ strokeDashoffset: 2 * Math.PI * 56 }}
+                    animate={{ 
+                      strokeDashoffset: 2 * Math.PI * 56 * (1 - loadingProgress / 100)
                     }}
-                    transition={{
-                      duration: 1,
-                      repeat: Infinity,
-                      delay: index * 0.2,
-                    }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
                   />
-                ))}
+                  <defs>
+                    <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="var(--color-primary)" />
+                      <stop offset="100%" stopColor="var(--color-accent)" />
+                    </linearGradient>
+                  </defs>
+                </svg>
               </motion.div>
+
             </div>
           </motion.div>
         )}
