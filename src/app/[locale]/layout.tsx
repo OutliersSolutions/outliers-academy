@@ -6,7 +6,6 @@ import { WhatsAppButton } from '@/components/ui/WhatsAppButton';
 import { getTranslations } from 'next-intl/server';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { GlobalLoader } from '@/components/GlobalLoader';
-import { AuthProvider } from '@/components/AuthProvider';
 import { Inter } from 'next/font/google';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -47,27 +46,25 @@ export default async function RootLayout({
         <link rel="apple-touch-icon" href="/logo.ico" />
       </head>
       <body className={inter.className}>
-        <AuthProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <NextIntlClientProvider messages={messages}>
-              <GlobalLoader>
-                <div className="min-h-screen flex flex-col">
-                  <Navbar />
-                  <main className="flex-1">
-                    {children}
-                  </main>
-                  <Footer locale={locale} />
-                  <WhatsAppButton />
-                </div>
-              </GlobalLoader>
-            </NextIntlClientProvider>
-          </ThemeProvider>
-        </AuthProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <NextIntlClientProvider messages={messages}>
+            <GlobalLoader>
+              <div className="min-h-screen flex flex-col">
+                <Navbar />
+                <main className="flex-1">
+                  {children}
+                </main>
+                <Footer locale={locale} />
+                <WhatsAppButton />
+              </div>
+            </GlobalLoader>
+          </NextIntlClientProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
