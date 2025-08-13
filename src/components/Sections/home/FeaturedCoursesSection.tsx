@@ -28,7 +28,7 @@ export function FeaturedCoursesSection({
   return (
     <section className="relative py-20 md:py-28 bg-gradient-to-br from-surface via-bg to-surface dark:from-surface dark:via-bg dark:to-surface overflow-hidden">
       {/* Canvas Background with Dots */}
-      <CanvasDots id="featuredCoursesCanvas" />
+      <CanvasDots id="featuredCoursesCanvas" margin={40} />
       
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
@@ -37,7 +37,7 @@ export function FeaturedCoursesSection({
         <div className="absolute top-1/2 left-1/4 w-24 h-24 bg-gold rounded-full blur-2xl animate-pulse" style={{animationDelay: '4s'}}></div>
       </div>
       
-      <div className="container relative z-10">
+      <div className="container relative z-10 px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           {/* Badge */}
           <div className="inline-flex items-center gap-2 bg-gradient-to-r from-primary/20 to-accent/20 backdrop-blur-sm border border-primary/30 text-primary dark:text-primary px-6 py-3 rounded-full text-sm font-medium mb-8">
@@ -64,7 +64,9 @@ export function FeaturedCoursesSection({
           <p className="text-lg text-solarized-base01 dark:text-white/90 max-w-3xl mx-auto leading-relaxed font-medium">{description}</p>
         </div>
         
-        <CourseGridClient />
+        <div className="px-4 sm:px-6 lg:px-8">
+          <CourseGridClient />
+        </div>
         
         <div className="text-center mt-12">
           <Link href={viewAllLink as Route} className="inline-flex items-center gap-2 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white dark:text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-primary/25 dark:hover:shadow-primary/25">

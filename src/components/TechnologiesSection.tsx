@@ -75,7 +75,7 @@ export function TechnologiesSection({ locale }: TechnologiesSectionProps) {
   return (
     <section className="relative py-20 md:py-28 bg-gradient-to-br from-surface via-bg to-surface dark:from-surface dark:via-bg dark:to-surface overflow-hidden">
       {/* Canvas Background with Dots */}
-      <CanvasDots id="technologiesCanvas" />
+      <CanvasDots id="technologiesCanvas" margin={40} />
       
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
@@ -84,9 +84,7 @@ export function TechnologiesSection({ locale }: TechnologiesSectionProps) {
         <div className="absolute top-1/2 right-1/4 w-24 h-24 bg-gold rounded-full blur-2xl animate-pulse" style={{animationDelay: '4s'}}></div>
       </div>
       
-      {/* Content Container */}
-      <div className="container relative z-10">
-        {/* Header */}
+      <div className="container relative z-10 px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           {/* Badge */}
           <div className="inline-flex items-center gap-2 bg-gradient-to-r from-primary/20 to-accent/20 backdrop-blur-sm border border-primary/30 text-primary dark:text-primary px-6 py-3 rounded-full text-sm font-medium mb-8">
@@ -117,7 +115,7 @@ export function TechnologiesSection({ locale }: TechnologiesSectionProps) {
         </div>
         
         {/* Technologies Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6 max-w-7xl mx-auto mb-16">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6 max-w-7xl mx-auto mb-16 px-4 sm:px-6 lg:px-8">
           {technologies.map((tech, index) => (
             <div 
               key={tech.name} 
@@ -184,6 +182,11 @@ export function TechnologiesSection({ locale }: TechnologiesSectionProps) {
           </Link>
         </div>
       </div>
+      
+      {/* Floating Elements */}
+      <div className="absolute top-20 left-10 w-32 h-32 bg-primary/10 dark:bg-primary/10 rounded-full blur-3xl animate-pulse"></div>
+      <div className="absolute bottom-20 right-10 w-40 h-40 bg-accent/10 dark:bg-accent/10 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
+      <div className="absolute top-1/2 right-1/4 w-24 h-24 bg-gold/10 dark:bg-gold/10 rounded-full blur-2xl animate-pulse" style={{animationDelay: '4s'}}></div>
     </section>
   );
 }

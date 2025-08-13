@@ -28,7 +28,7 @@ export function CTASection({
   return (
     <section className="relative py-20 md:py-28 bg-gradient-to-br from-surface via-bg to-surface dark:from-surface dark:via-bg dark:to-surface overflow-hidden">
       {/* Canvas Background with Dots */}
-      <CanvasDots id="ctaCanvas" />
+      <CanvasDots id="ctaCanvas" margin={40} />
       
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
@@ -37,7 +37,7 @@ export function CTASection({
         <div className="absolute top-1/2 right-1/4 w-24 h-24 bg-accent rounded-full blur-2xl animate-pulse" style={{animationDelay: '4s'}}></div>
       </div>
       
-      <div className="container relative z-10">
+      <div className="container relative z-10 px-4 sm:px-6 lg:px-8">
         <div className="bg-gradient-to-r from-primary via-accent to-gold rounded-3xl p-12 md:p-16 text-center text-white relative overflow-hidden">
           {/* Empire State Building Background */}
           <div className="absolute inset-0">

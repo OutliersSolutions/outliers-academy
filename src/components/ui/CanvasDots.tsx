@@ -8,6 +8,7 @@ interface CanvasDotsProps {
   size?: number;
   opacity?: number;
   spacing?: number;
+  margin?: number;
 }
 
 export function CanvasDots({ 
@@ -15,7 +16,8 @@ export function CanvasDots({
   color = '#cb4b16', // Solarized orange default
   size = 3,
   opacity = 0.25,
-  spacing = 32
+  spacing = 32,
+  margin = 20
 }: CanvasDotsProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -26,7 +28,7 @@ export function CanvasDots({
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Set canvas size
+    // Set canvas size with safety margins
     const resizeCanvas = () => {
       const rect = canvas.getBoundingClientRect();
       canvas.width = rect.width;
@@ -36,15 +38,21 @@ export function CanvasDots({
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    // Draw dot grid
+    // Draw dot grid with fixed positioning
     const drawDotGrid = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
       ctx.fillStyle = color;
       ctx.globalAlpha = opacity;
       
-      for (let x = spacing; x < canvas.width; x += spacing) {
-        for (let y = spacing; y < canvas.height; y += spacing) {
+      // Start from margin and end before margin
+      const startX = margin;
+      const startY = margin;
+      const endX = canvas.width - margin;
+      const endY = canvas.height - margin;
+      
+      for (let x = startX; x < endX; x += spacing) {
+        for (let y = startY; y < endY; y += spacing) {
           ctx.beginPath();
           ctx.arc(x, y, size, 0, 2 * Math.PI);
           ctx.fill();
@@ -57,7 +65,7 @@ export function CanvasDots({
     return () => {
       window.removeEventListener('resize', resizeCanvas);
     };
-  }, [color, size, opacity, spacing]);
+  }, [color, size, opacity, spacing, margin]);
 
   return (
     <canvas
