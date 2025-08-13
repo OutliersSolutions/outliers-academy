@@ -32,8 +32,9 @@ export async function POST(request: Request) {
       return NextResponse.json({error: 'Invalid JSON body'}, {status: 400});
     }
 
-    const {login, password} = body || {};
-    if (!login || !password) return NextResponse.json({error: 'Missing credentials'}, {status: 400});
+    const {login, email, password} = body || {};
+    const userLogin = login || email;
+    if (!userLogin || !password) return NextResponse.json({error: 'Missing credentials'}, {status: 400});
 
     if (!process.env.ODOO_DB || !process.env.ODOO_URL) {
       return NextResponse.json({error: 'Server missing Odoo configuration'}, {status: 503});
@@ -41,7 +42,7 @@ export async function POST(request: Request) {
 
     const uid = await jsonRpc<number>('/jsonrpc', {
       method: 'call',
-      params: {service: 'common', method: 'authenticate', args: [process.env.ODOO_DB, login, password, {}]}
+      params: {service: 'common', method: 'authenticate', args: [process.env.ODOO_DB, userLogin, password, {}]}
     });
 
     if (!uid) return NextResponse.json({error: 'Invalid credentials'}, {status: 401});
@@ -49,7 +50,7 @@ export async function POST(request: Request) {
     const users = await odooExecuteKw('res.users', 'read', [[uid], ['name', 'login']]);
     const user = users?.[0] || {name: login, login};
 
-    const payload = {uid, login, name: user.name, issuedAt: Date.now()};
+    const payload = {uid, login: userLogin, name: user.name, issuedAt: Date.now()};
     const token = signPayload(payload);
 
     const resJson = NextResponse.json({ok: true, user: payload});
