@@ -42,6 +42,49 @@ const technologies: Technology[] = [
   { name: 'Vercel', icon: '/icons/technologies/systems/vercel.svg', category: 'tools', level: 'intermediate' },
 ];
 
+// Glitch Text Component
+const GlitchText = ({ children, className = "" }: { children: string; className?: string }) => {
+  return (
+    <div className={`relative inline-block ${className}`}>
+      {/* Main text */}
+      <span className="relative z-10 text-primary dark:text-primary">
+        {children}
+      </span>
+      
+      {/* Glitch layers */}
+      <span 
+        className="absolute inset-0 text-accent dark:text-accent animate-glitch-1"
+        style={{ 
+          clipPath: 'polygon(0 0, 100% 0, 100% 45%, 0 45%)',
+          transform: 'translate(-2px, -2px)'
+        }}
+      >
+        {children}
+      </span>
+      
+      <span 
+        className="absolute inset-0 text-gold dark:text-gold animate-glitch-2"
+        style={{ 
+          clipPath: 'polygon(0 55%, 100% 55%, 100% 100%, 0 100%)',
+          transform: 'translate(2px, 2px)'
+        }}
+      >
+        {children}
+      </span>
+      
+      <span 
+        className="absolute inset-0 text-secondary dark:text-secondary animate-glitch-3"
+        style={{ 
+          clipPath: 'polygon(0 30%, 100% 30%, 100% 70%, 0 70%)',
+          transform: 'translate(-1px, 1px)'
+        }}
+      >
+        {children}
+      </span>
+    </div>
+  );
+};
+
 export function TechnologiesSection({ locale }: TechnologiesSectionProps) {
   const t = useTranslations('home');
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -63,13 +106,13 @@ export function TechnologiesSection({ locale }: TechnologiesSectionProps) {
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    // Draw dot grid
+    // Draw dot grid with brand colors
     const drawDotGrid = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
       const dotSize = 2;
       const spacing = 32;
-      const dotColor = '#ff5a1f'; // Orange color
+      const dotColor = '#2F27CE'; // Primary brand color
       
       ctx.fillStyle = dotColor;
       ctx.globalAlpha = 0.15; // Subtle opacity
@@ -93,13 +136,13 @@ export function TechnologiesSection({ locale }: TechnologiesSectionProps) {
   const getLevelColor = (level: Technology['level']) => {
     switch (level) {
       case 'beginner':
-        return 'bg-green-500/20 text-green-400 border-green-500/30';
+        return 'bg-primary/20 text-primary border-primary/30 dark:bg-primary/20 dark:text-primary dark:border-primary/30';
       case 'intermediate':
-        return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
+        return 'bg-accent/20 text-accent border-accent/30 dark:bg-accent/20 dark:text-accent dark:border-accent/30';
       case 'advanced':
-        return 'bg-red-500/20 text-red-400 border-red-500/30';
+        return 'bg-gold/20 text-gold border-gold/30 dark:bg-gold/20 dark:text-gold dark:border-gold/30';
       default:
-        return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
+        return 'bg-muted/20 text-muted border-muted/30 dark:bg-muted/20 dark:text-muted dark:border-muted/30';
     }
   };
 
@@ -117,7 +160,7 @@ export function TechnologiesSection({ locale }: TechnologiesSectionProps) {
   };
 
   return (
-    <section className="relative py-20 md:py-32 bg-gradient-to-br from-gray-900 via-gray-800 to-slate-900 overflow-hidden">
+    <section className="relative py-20 md:py-32 bg-gradient-to-br from-surface via-bg to-surface dark:from-surface dark:via-bg dark:to-surface overflow-hidden">
       {/* Canvas Background */}
       <canvas
         ref={canvasRef}
@@ -130,20 +173,29 @@ export function TechnologiesSection({ locale }: TechnologiesSectionProps) {
         {/* Header */}
         <div className="text-center mb-16">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-500/20 to-red-500/20 backdrop-blur-sm border border-orange-500/30 text-orange-400 px-6 py-3 rounded-full text-sm font-medium mb-8">
-            <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></div>
+          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-primary/20 to-accent/20 backdrop-blur-sm border border-primary/30 text-primary dark:text-primary px-6 py-3 rounded-full text-sm font-medium mb-8">
+            <div className="w-2 h-2 bg-primary dark:bg-primary rounded-full animate-pulse"></div>
             <span className="font-mono">TECH STACK</span>
           </div>
           
-          {/* Title */}
-          <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
-            <span className="bg-gradient-to-r from-white via-orange-400 to-red-500 bg-clip-text text-transparent">
-              {t('technologies.title')}
+          {/* Title with Glitch Effect */}
+          <h2 className="text-4xl md:text-6xl font-bold text-text dark:text-text mb-6 leading-tight">
+            <span className="bg-gradient-to-r from-text via-primary to-accent bg-clip-text text-transparent">
+              {t('technologies.title').split('aprenderás').map((part, index, array) => (
+                <span key={index}>
+                  {part}
+                  {index < array.length - 1 && (
+                    <GlitchText className="text-primary dark:text-primary">
+                      aprenderás
+                    </GlitchText>
+                  )}
+                </span>
+              ))}
             </span>
           </h2>
           
           {/* Subtitle */}
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-muted dark:text-muted max-w-3xl mx-auto leading-relaxed">
             {t('technologies.subhead')}
           </p>
         </div>
@@ -159,14 +211,14 @@ export function TechnologiesSection({ locale }: TechnologiesSectionProps) {
                 animationFillMode: 'both'
               }}
             >
-              <div className="relative bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm border border-gray-700/50 rounded-2xl p-6 hover:border-orange-500/50 transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 group-hover:shadow-2xl group-hover:shadow-orange-500/20">
+              <div className="relative bg-gradient-to-br from-surface/80 to-bg/80 backdrop-blur-sm border border-muted/50 rounded-2xl p-6 hover:border-primary/50 dark:hover:border-primary/50 transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 group-hover:shadow-2xl group-hover:shadow-primary/20 dark:group-hover:shadow-primary/20">
                 {/* Glow Effect */}
-                <div className="absolute inset-0 bg-gradient-to-br from-orange-500/0 via-orange-500/5 to-red-500/0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/0 via-primary/5 to-accent/0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 
                 {/* Content */}
                 <div className="relative z-10 flex flex-col items-center gap-4">
                   {/* Icon Container */}
-                  <div className="w-16 h-16 bg-gradient-to-br from-gray-700 to-gray-800 rounded-xl flex items-center justify-center group-hover:from-orange-500/20 group-hover:to-red-500/20 transition-all duration-500 transform group-hover:scale-110 group-hover:rotate-3">
+                  <div className="w-16 h-16 bg-gradient-to-br from-muted to-surface rounded-xl flex items-center justify-center group-hover:from-primary/20 group-hover:to-accent/20 dark:group-hover:from-primary/20 dark:group-hover:to-accent/20 transition-all duration-500 transform group-hover:scale-110 group-hover:rotate-3">
                     <img 
                       src={tech.icon} 
                       alt={tech.name} 
@@ -176,7 +228,7 @@ export function TechnologiesSection({ locale }: TechnologiesSectionProps) {
                   
                   {/* Technology Info */}
                   <div className="text-center space-y-2">
-                    <h3 className="text-sm font-semibold text-gray-300 group-hover:text-white transition-colors duration-300">
+                    <h3 className="text-sm font-semibold text-text dark:text-text group-hover:text-primary dark:group-hover:text-primary transition-colors duration-300">
                       {tech.name}
                     </h3>
                     
@@ -186,14 +238,14 @@ export function TechnologiesSection({ locale }: TechnologiesSectionProps) {
                     </div>
                     
                     {/* Animated Underline */}
-                    <div className="w-0 h-0.5 bg-gradient-to-r from-orange-500 to-red-500 mx-auto mt-2 group-hover:w-full transition-all duration-500"></div>
+                    <div className="w-0 h-0.5 bg-gradient-to-r from-primary to-accent mx-auto mt-2 group-hover:w-full transition-all duration-500"></div>
                   </div>
                 </div>
                 
                 {/* Hover Particles */}
                 <div className="absolute inset-0 rounded-2xl overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  <div className="absolute top-2 left-2 w-1 h-1 bg-orange-500 rounded-full animate-ping"></div>
-                  <div className="absolute bottom-2 right-2 w-1 h-1 bg-red-500 rounded-full animate-ping" style={{animationDelay: '0.5s'}}></div>
+                  <div className="absolute top-2 left-2 w-1 h-1 bg-primary dark:bg-primary rounded-full animate-ping"></div>
+                  <div className="absolute bottom-2 right-2 w-1 h-1 bg-accent dark:bg-accent rounded-full animate-ping" style={{animationDelay: '0.5s'}}></div>
                 </div>
               </div>
             </div>
@@ -202,12 +254,12 @@ export function TechnologiesSection({ locale }: TechnologiesSectionProps) {
         
         {/* Call to Action */}
         <div className="text-center">
-          <p className="text-gray-400 mb-6 text-lg font-mono">
+          <p className="text-muted dark:text-muted mb-6 text-lg font-mono">
             {locale === 'es' ? '¿Buscas algo más específico?' : 'Looking for something specific?'}
           </p>
           <Link 
             href={`/${locale}/catalog` as Route} 
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-orange-500/25"
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white dark:text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-primary/25 dark:hover:shadow-primary/25"
           >
             {locale === 'es' ? 'Explorar catálogo completo' : 'Explore full catalog'}
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -218,9 +270,9 @@ export function TechnologiesSection({ locale }: TechnologiesSectionProps) {
       </div>
       
       {/* Floating Elements */}
-      <div className="absolute top-20 left-10 w-32 h-32 bg-orange-500/10 rounded-full blur-3xl animate-pulse"></div>
-      <div className="absolute bottom-20 right-10 w-40 h-40 bg-red-500/10 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
-      <div className="absolute top-1/2 left-1/4 w-24 h-24 bg-orange-500/10 rounded-full blur-2xl animate-pulse" style={{animationDelay: '4s'}}></div>
+      <div className="absolute top-20 left-10 w-32 h-32 bg-primary/10 dark:bg-primary/10 rounded-full blur-3xl animate-pulse"></div>
+      <div className="absolute bottom-20 right-10 w-40 h-40 bg-accent/10 dark:bg-accent/10 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
+      <div className="absolute top-1/2 left-1/4 w-24 h-24 bg-gold/10 dark:bg-gold/10 rounded-full blur-2xl animate-pulse" style={{animationDelay: '4s'}}></div>
     </section>
   );
 }

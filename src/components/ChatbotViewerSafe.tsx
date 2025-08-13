@@ -67,6 +67,9 @@ export function ChatbotViewerSafe({ className = "w-full h-[400px]" }: ChatbotVie
     try {
       if (!containerRef.current) return;
 
+      // Limpiar contenedor antes de agregar nuevo modelo (evitar duplicación)
+      containerRef.current.innerHTML = '';
+
       const modelViewer = document.createElement('model-viewer');
       modelViewer.setAttribute('src', '/3d/chatbot.glb');
       modelViewer.setAttribute('alt', tChatbot('modelAlt'));
