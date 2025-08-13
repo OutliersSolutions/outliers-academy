@@ -50,11 +50,11 @@ export const Footer = async ({ locale }: FooterProps) => {
                     <div className="md:col-span-2">
                         <h3 className="text-base font-semibold mb-4 font-inter dark:text-white">{t('navigation')}</h3>
                         <ul className="space-y-3 font-inter text-sm font-normal text-gray-600 dark:text-gray-300">
-                            <li><Link href={`/${locale}`} className="hover:text-coral-500 transition-colors">{t('home')}</Link></li>
-                            <li><Link href={`/${locale}/about`} className="hover:text-coral-500 transition-colors">{t('about')}</Link></li>
-                            <li><Link href={`/${locale}/catalog`} className="hover:text-coral-500 transition-colors">{t('catalog')}</Link></li>
-                            <li><a href="https://calendly.com/outlierssolutions108/discovery-meeting" target="_blank" rel="noopener noreferrer" className="hover:text-coral-500 transition-colors">{t('schedule')}</a></li>
-                            <li><Link href={`/${locale}/faq`} className="hover:text-coral-500 transition-colors">{t('faq')}</Link></li>
+                            <li><Link href={`/${locale}`} className="hover:text-primary transition-colors">{t('home')}</Link></li>
+                            <li><Link href={`/${locale}/about`} className="hover:text-primary transition-colors">{t('about')}</Link></li>
+                            <li><Link href={`/${locale}/catalog`} className="hover:text-primary transition-colors">{t('catalog')}</Link></li>
+                            <li><a href="https://calendly.com/outlierssolutions108/discovery-meeting" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">{t('schedule')}</a></li>
+                            <li><Link href={`/${locale}/faq`} className="hover:text-primary transition-colors">{t('faq')}</Link></li>
                         </ul>
                     </div>
 
@@ -62,9 +62,9 @@ export const Footer = async ({ locale }: FooterProps) => {
                     <div className="md:col-span-2">
                         <h3 className="text-base font-semibold mb-4 font-inter dark:text-white">{t('services')}</h3>
                         <ul className="space-y-3 font-inter text-sm font-normal text-gray-600 dark:text-gray-300">
-                            <li><Link href={`/${locale}/services/marketing`} className="hover:text-coral-500 transition-colors">{t('digitalMarketing')}</Link></li>
-                            <li><Link href={`/${locale}/services/systems`} className="hover:text-coral-500 transition-colors">{t('systemDevelopment')}</Link></li>
-                            <li><Link href={`/${locale}/services/ai-agents`} className="hover:text-coral-500 transition-colors">{t('aiAgents')}</Link></li>
+                            <li><Link href={`/${locale}/services/marketing`} className="hover:text-primary transition-colors">{t('digitalMarketing')}</Link></li>
+                            <li><Link href={`/${locale}/services/systems`} className="hover:text-primary transition-colors">{t('systemDevelopment')}</Link></li>
+                            <li><Link href={`/${locale}/services/ai-agents`} className="hover:text-primary transition-colors">{t('aiAgents')}</Link></li>
                         </ul>
                     </div>
 
@@ -73,7 +73,7 @@ export const Footer = async ({ locale }: FooterProps) => {
                         <h3 className="text-base font-semibold mb-4 font-inter dark:text-white">{t('contact')}</h3>
                         <ul className="space-y-3 text-sm font-inter font-normal text-gray-600 dark:text-gray-300">
                             <li>
-                                <a href="mailto:contact@outlierssolutions.com" className="hover:text-coral-500 transition-colors">
+                                <a href="mailto:contact@outlierssolutions.com" className="hover:text-primary transition-colors">
                                     {tCommon('contactEmail')}
                                 </a>
                             </li>
@@ -82,7 +82,7 @@ export const Footer = async ({ locale }: FooterProps) => {
                                     href="https://wa.me/19298226066?text=Hi!%20I'm%20interested%20on%20your%20services"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="hover:text-coral-500 transition-colors"
+                                    className="hover:text-primary transition-colors"
                                 >
                                     {tCommon('contactPhone')}
                                 </a>
@@ -94,16 +94,20 @@ export const Footer = async ({ locale }: FooterProps) => {
                     <div className="md:col-span-2">
                         <h3 className="text-base font-semibold mb-4 font-inter dark:text-white">{t('followUs')}</h3>
                         <div className="flex sm:flex md:flex lg:flex space-x-4 sm:space-x-4 md:space-x-4 lg:space-x-2 xl:space-x-4">
-                            <a target="_blank" href="https://www.linkedin.com/company/outliers-digital-solutions-inc/?viewAsMember=true" className="hover:text-coral-500 transition-colors text-gray-600 dark:text-gray-300"><Linkedin size={18} /></a>
-                            <a target="_blank" href="https://www.instagram.com/outliers.solutions/" className="hover:text-coral-500 transition-colors text-gray-600 dark:text-gray-300"><Instagram size={18} /></a>
-                            <a target="_blank" href="https://www.facebook.com/people/Outliers-Digital-Solutions/61575568054767/" className="hover:text-coral-500 transition-colors text-gray-600 dark:text-gray-300"><Facebook size={18} /></a>
+                            <a target="_blank" href="https://www.linkedin.com/company/outliers-digital-solutions-inc/?viewAsMember=true" className="hover:text-primary transition-colors text-gray-600 dark:text-gray-300"><Linkedin size={18} /></a>
+                            <a target="_blank" href="https://www.instagram.com/outliers.solutions/" className="hover:text-primary transition-colors text-gray-600 dark:text-gray-300"><Instagram size={18} /></a>
+                            <a target="_blank" href="https://www.facebook.com/people/Outliers-Digital-Solutions/61575568054767/" className="hover:text-primary transition-colors text-gray-600 dark:text-gray-300"><Facebook size={18} /></a>
                         </div>
                     </div>
                 </div>
 
                 {/* Línea final */}
                 <div className="border-t border-gray-200 dark:border-gray-700 mt-12 pt-4 md:pt-8 text-xs text-center font-inter text-gray-600 dark:text-gray-300">
-                    © {new Date().getFullYear()} {tCommon('outliersAcademy')}. {t('allRightsReserved')}.
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
+                        <span>© {new Date().getFullYear()} {tCommon('outliersAcademy')}. {t('allRightsReserved')}.</span>
+                        <span className="hidden sm:inline">•</span>
+                        <span className="text-primary font-medium">{t('madeWithLove')}</span>
+                    </div>
                 </div>
             </div>
         </footer>
