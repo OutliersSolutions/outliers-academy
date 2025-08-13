@@ -156,7 +156,7 @@ export function GlobalLoader({ children, minimumLoadTime = 2500 }: GlobalLoaderP
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="flex items-center justify-center gap-3 mb-8"
+                className="flex items-center justify-center gap-3 mb-4"
               >
                 <img 
                   src="/icons/logo.png" 
@@ -168,47 +168,29 @@ export function GlobalLoader({ children, minimumLoadTime = 2500 }: GlobalLoaderP
                 </h1>
               </motion.div>
 
-              {/* Circular Progress */}
+              {/* Animated Dots */}
               <motion.div
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-                className="relative w-32 h-32 mx-auto"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.5 }}
+                className="flex items-center justify-center gap-2"
               >
-                {/* Background Circle */}
-                <svg className="w-32 h-32 transform -rotate-90" viewBox="0 0 128 128">
-                  <circle
-                    cx="64"
-                    cy="64"
-                    r="56"
-                    stroke="currentColor"
-                    strokeWidth="8"
-                    fill="transparent"
-                    className="text-gray-200 dark:text-gray-700"
-                  />
-                  {/* Progress Circle */}
-                  <motion.circle
-                    cx="64"
-                    cy="64"
-                    r="56"
-                    stroke="url(#progressGradient)"
-                    strokeWidth="8"
-                    fill="transparent"
-                    strokeLinecap="round"
-                    strokeDasharray={2 * Math.PI * 56}
-                    initial={{ strokeDashoffset: 2 * Math.PI * 56 }}
-                    animate={{ 
-                      strokeDashoffset: 2 * Math.PI * 56 * (1 - loadingProgress / 100)
+                {[0, 1, 2].map((index) => (
+                  <motion.div
+                    key={index}
+                    className="w-3 h-3 rounded-full bg-primary"
+                    animate={{
+                      scale: [1, 1.2, 1],
+                      opacity: [0.7, 1, 0.7],
                     }}
-                    transition={{ duration: 0.5, ease: "easeOut" }}
+                    transition={{
+                      duration: 0.8,
+                      repeat: Infinity,
+                      delay: index * 0.2,
+                      ease: "easeInOut",
+                    }}
                   />
-                  <defs>
-                    <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stopColor="var(--color-primary)" />
-                      <stop offset="100%" stopColor="var(--color-accent)" />
-                    </linearGradient>
-                  </defs>
-                </svg>
+                ))}
               </motion.div>
 
             </div>
