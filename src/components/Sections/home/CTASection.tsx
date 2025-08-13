@@ -122,11 +122,12 @@ export function CTASection({
                 <GlitchText className="text-white">
                   transformar
                 </GlitchText>
-                {' '}tu carrera?
+                {' '}
+                <span className="text-white drop-shadow-lg">tu carrera?</span>
               </span>
             </h2>
             
-            <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">{description}</p>
+            <p className="text-xl mb-8 text-white font-medium max-w-2xl mx-auto">{description}</p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link 

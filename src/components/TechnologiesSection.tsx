@@ -195,8 +195,8 @@ export function TechnologiesSection({ locale }: TechnologiesSectionProps) {
           </h2>
           
           {/* Subtitle */}
-          <p className="text-xl text-muted dark:text-muted max-w-3xl mx-auto leading-relaxed">
-            {t('technologies.subhead')}
+          <p className="text-lg text-white/90 dark:text-white/90 max-w-3xl mx-auto leading-relaxed font-medium mb-12">
+            Domina las tecnologías más demandadas del mercado con nuestro enfoque práctico y proyectos reales
           </p>
         </div>
         
