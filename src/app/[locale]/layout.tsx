@@ -5,6 +5,7 @@ import { Footer } from '@/components/Layouts/Footer';
 import { WhatsAppButton } from '@/components/ui/WhatsAppButton';
 import { getTranslations } from 'next-intl/server';
 import { ThemeProvider } from '@/components/ThemeProvider';
+import { GlobalLoader } from '@/components/GlobalLoader';
 import { Inter } from 'next/font/google';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -52,14 +53,16 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <NextIntlClientProvider messages={messages}>
-            <div className="min-h-screen flex flex-col">
-              <Navbar />
-              <main className="flex-1">
-                {children}
-              </main>
-              <Footer locale={locale} />
-              <WhatsAppButton />
-            </div>
+            <GlobalLoader>
+              <div className="min-h-screen flex flex-col">
+                <Navbar />
+                <main className="flex-1">
+                  {children}
+                </main>
+                <Footer locale={locale} />
+                <WhatsAppButton />
+              </div>
+            </GlobalLoader>
           </NextIntlClientProvider>
         </ThemeProvider>
       </body>

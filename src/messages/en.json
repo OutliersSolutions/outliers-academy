@@ -311,6 +311,15 @@
             "catalog": "Exploring the catalog",
             "auth": "Verifying credentials",
             "course": "Loading course..."
+        },
+        "global": {
+            "starting": "Starting...",
+            "loadingAssets": "Loading assets...",
+            "preparingExperience": "Preparing experience...",
+            "optimizing": "Optimizing performance...",
+            "almostReady": "Almost ready!",
+            "ready": "Ready!",
+            "tagline": "Transforming lives through technology"
         }
     },
     "course": {

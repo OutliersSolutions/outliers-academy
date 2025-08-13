@@ -311,6 +311,15 @@
             "catalog": "Explorando el catálogo",
             "auth": "Verificando credenciales",
             "course": "Cargando curso..."
+        },
+        "global": {
+            "starting": "Iniciando...",
+            "loadingAssets": "Cargando recursos...",
+            "preparingExperience": "Preparando experiencia...",
+            "optimizing": "Optimizando rendimiento...",
+            "almostReady": "¡Casi listo!",
+            "ready": "¡Listo!",
+            "tagline": "Transformando vidas através de la tecnología"
         }
     },
     "course": {
