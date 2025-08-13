@@ -9,6 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Loader } from "@/components/ui/loader";
 import { 
   BookOpen, 
   PlayCircle, 
@@ -21,6 +22,7 @@ import {
   ChevronRight
 } from "lucide-react";
 import Link from "next/link";
+import { useTranslations } from 'next-intl';
 
 interface Course {
   id: number;
@@ -47,6 +49,7 @@ export default function MyCoursesPage() {
   const router = useRouter();
   const pathname = usePathname();
   const locale = pathname.split('/')[1] || 'es';
+  const tLoader = useTranslations('loader');
 
   const isSpanish = locale === 'es';
 
@@ -131,14 +134,12 @@ export default function MyCoursesPage() {
 
   if (authLoading || loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center space-y-4">
-          <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent mx-auto" />
-          <p className="text-muted-foreground">
-            {isSpanish ? 'Cargando tus cursos...' : 'Loading your courses...'}
-          </p>
-        </div>
-      </div>
+      <Loader 
+        message={tLoader('pages.courses')} 
+        fullScreen 
+        size="lg"
+        showMotivationalMessages 
+      />
     );
   }
 

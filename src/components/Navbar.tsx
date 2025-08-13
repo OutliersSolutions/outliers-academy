@@ -9,6 +9,7 @@ import {useTheme} from 'next-themes';
 import {useSession, signOut} from 'next-auth/react';
 import {SearchOverlay} from '@/components/ui/SearchOverlay';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { LoaderInline } from '@/components/ui/loader';
 import { useAuth } from '@/hooks/useAuth';
 
 export function Navbar() {
@@ -155,7 +156,7 @@ export function Navbar() {
               {/* Auth Section */}
               <div className="hidden md:flex items-center gap-2">
                 {authLoading ? (
-                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                  <LoaderInline size="sm" />
                 ) : isAuthenticated && user ? (
                   <>
                     {/* Logout Button */}

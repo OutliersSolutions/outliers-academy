@@ -292,5 +292,23 @@
             "continue": "Continuar"
         },
         "loading": "Cargando tu panel..."
+    },
+    "loader": {
+        "defaultMessage": "Cargando...",
+        "messages": {
+            "learning": "Construyendo tu futuro académico",
+            "building": "Preparando contenido de calidad",
+            "growing": "Expandiendo tus horizontes",
+            "creating": "Creando nuevas oportunidades",
+            "innovating": "Innovando en educación",
+            "transforming": "Transformando tu carrera"
+        },
+        "pages": {
+            "dashboard": "Preparando tu panel personal",
+            "courses": "Cargando tus cursos",
+            "profile": "Configurando tu perfil",
+            "catalog": "Explorando el catálogo",
+            "auth": "Verificando credenciales"
+        }
     }
 }

@@ -10,8 +10,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
+import { Loader } from "@/components/ui/loader";
 import { User, Mail, Calendar, Shield, Edit2, Save, X, Camera } from "lucide-react";
 import Link from "next/link";
+import { useTranslations } from 'next-intl';
 
 interface UserProfile {
   id: number;
@@ -30,6 +32,7 @@ export default function ProfilePage() {
   const router = useRouter();
   const pathname = usePathname();
   const locale = pathname.split('/')[1] || 'es';
+  const tLoader = useTranslations('loader');
 
   const isSpanish = locale === 'es';
 
@@ -90,14 +93,12 @@ export default function ProfilePage() {
 
   if (authLoading || loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center space-y-4">
-          <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent mx-auto" />
-          <p className="text-muted-foreground">
-            {isSpanish ? 'Cargando perfil...' : 'Loading profile...'}
-          </p>
-        </div>
-      </div>
+      <Loader 
+        message={tLoader('pages.profile')} 
+        fullScreen 
+        size="lg"
+        showMotivationalMessages 
+      />
     );
   }
 

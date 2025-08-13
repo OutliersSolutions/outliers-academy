@@ -9,6 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Github, Chrome, Mail, Lock, Eye, EyeOff } from 'lucide-react';
+import { LoaderInline } from '@/components/ui/loader';
 import Link from 'next/link';
 
 export default function LoginPage() {
@@ -94,7 +95,7 @@ export default function LoginPage() {
               className="w-full h-11 font-medium"
             >
               {oauthLoading === 'google' ? (
-                <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                <LoaderInline size="sm" />
               ) : (
                 <Chrome className="h-4 w-4 mr-2" />
               )}
@@ -108,7 +109,7 @@ export default function LoginPage() {
               className="w-full h-11 font-medium"
             >
               {oauthLoading === 'github' ? (
-                <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                <LoaderInline size="sm" />
               ) : (
                 <Github className="h-4 w-4 mr-2" />
               )}
@@ -181,7 +182,7 @@ export default function LoginPage() {
               className="w-full h-11 font-medium"
             >
               {loading ? (
-                <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent mr-2" />
+                <LoaderInline size="sm" />
               ) : null}
               {locale === 'es' ? 'Iniciar Sesión' : 'Sign In'}
             </Button>

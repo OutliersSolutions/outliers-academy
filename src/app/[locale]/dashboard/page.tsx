@@ -10,6 +10,7 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Loader } from "@/components/ui/loader";
 import { BookOpen, Award, Clock, PlayCircle, LogOut, Settings, User } from "lucide-react";
 import Link from "next/link";
 import { useTranslations } from 'next-intl';
@@ -30,6 +31,7 @@ export default function DashboardPage() {
   const pathname = usePathname();
   const locale = pathname.split('/')[1] || 'es';
   const t = useTranslations('dashboard');
+  const tLoader = useTranslations('loader');
 
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
@@ -70,14 +72,12 @@ export default function DashboardPage() {
 
   if (authLoading || loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center space-y-4">
-          <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent mx-auto" />
-          <p className="text-muted-foreground">
-            {t('loading')}
-          </p>
-        </div>
-      </div>
+      <Loader 
+        message={tLoader('pages.dashboard')} 
+        fullScreen 
+        size="lg"
+        showMotivationalMessages 
+      />
     );
   }
 

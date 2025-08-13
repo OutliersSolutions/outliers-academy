@@ -292,5 +292,23 @@
             "continue": "Continue"
         },
         "loading": "Loading your dashboard..."
+    },
+    "loader": {
+        "defaultMessage": "Loading...",
+        "messages": {
+            "learning": "Building your academic future",
+            "building": "Preparing quality content",
+            "growing": "Expanding your horizons",
+            "creating": "Creating new opportunities",
+            "innovating": "Innovating in education",
+            "transforming": "Transforming your career"
+        },
+        "pages": {
+            "dashboard": "Preparing your personal dashboard",
+            "courses": "Loading your courses",
+            "profile": "Setting up your profile",
+            "catalog": "Exploring the catalog",
+            "auth": "Verifying credentials"
+        }
     }
 }
