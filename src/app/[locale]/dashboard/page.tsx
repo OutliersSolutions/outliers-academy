@@ -12,6 +12,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BookOpen, Award, Clock, PlayCircle, LogOut, Settings, User } from "lucide-react";
 import Link from "next/link";
+import { useTranslations } from 'next-intl';
 
 interface Course {
   id: number;
@@ -28,8 +29,7 @@ export default function DashboardPage() {
   const router = useRouter();
   const pathname = usePathname();
   const locale = pathname.split('/')[1] || 'es';
-
-  const isSpanish = locale === 'es';
+  const t = useTranslations('dashboard');
 
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
@@ -74,7 +74,7 @@ export default function DashboardPage() {
         <div className="text-center space-y-4">
           <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent mx-auto" />
           <p className="text-muted-foreground">
-            {isSpanish ? 'Cargando tu panel...' : 'Loading your dashboard...'}
+            {t('loading')}
           </p>
         </div>
       </div>
@@ -102,31 +102,12 @@ export default function DashboardPage() {
             </Avatar>
             <div>
               <h1 className="text-2xl font-bold">
-                {isSpanish ? '¡Hola, ' : 'Hello, '}{user.name || user.email}!
+                {t('welcome', { name: user.name || user.email })}
               </h1>
               <p className="text-muted-foreground">
-                {isSpanish ? 'Bienvenido a tu panel de estudiante' : 'Welcome to your student dashboard'}
+                {t('welcomeSubtitle')}
               </p>
             </div>
-          </div>
-          
-          <div className="flex items-center space-x-2">
-            <Button variant="outline" size="sm" asChild>
-              <Link href={`/${locale}/my-courses`}>
-                <BookOpen className="h-4 w-4 mr-2" />
-                {isSpanish ? 'Mis Cursos' : 'My Courses'}
-              </Link>
-            </Button>
-            <Button variant="outline" size="sm" asChild>
-              <Link href={`/${locale}/profile`}>
-                <User className="h-4 w-4 mr-2" />
-                {isSpanish ? 'Perfil' : 'Profile'}
-              </Link>
-            </Button>
-            <Button variant="outline" size="sm" onClick={handleSignOut}>
-              <LogOut className="h-4 w-4 mr-2" />
-              {isSpanish ? 'Cerrar sesión' : 'Sign out'}
-            </Button>
           </div>
         </div>
 
@@ -135,7 +116,7 @@ export default function DashboardPage() {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
-                {isSpanish ? 'Cursos Inscritos' : 'Enrolled Courses'}
+                {t('stats.enrolledCourses')}
               </CardTitle>
               <BookOpen className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
@@ -147,7 +128,7 @@ export default function DashboardPage() {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
-                {isSpanish ? 'Cursos Completados' : 'Completed Courses'}
+                {t('stats.completedCourses')}
               </CardTitle>
               <Award className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
@@ -159,7 +140,7 @@ export default function DashboardPage() {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
-                {isSpanish ? 'En Progreso' : 'In Progress'}
+                {t('stats.inProgress')}
               </CardTitle>
               <Clock className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
@@ -173,10 +154,10 @@ export default function DashboardPage() {
         <Tabs defaultValue="courses" className="space-y-6">
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="courses">
-              {isSpanish ? 'Mis Cursos' : 'My Courses'}
+              {t('tabs.myCourses')}
             </TabsTrigger>
             <TabsTrigger value="certificates">
-              {isSpanish ? 'Certificaciones' : 'Certificates'}
+              {t('tabs.certificates')}
             </TabsTrigger>
           </TabsList>
           
@@ -186,16 +167,14 @@ export default function DashboardPage() {
                 <CardContent className="flex flex-col items-center justify-center py-12">
                   <BookOpen className="h-12 w-12 text-muted-foreground mb-4" />
                   <h3 className="text-lg font-semibold mb-2">
-                    {isSpanish ? 'No tienes cursos inscritos' : 'No enrolled courses'}
+                    {t('emptyState.noCourses')}
                   </h3>
                   <p className="text-muted-foreground text-center mb-4">
-                    {isSpanish 
-                      ? 'Explora nuestro catálogo y comienza tu viaje de aprendizaje'
-                      : 'Explore our catalog and start your learning journey'}
+                    {t('emptyState.exploreMessage')}
                   </p>
                   <Button asChild>
                     <Link href={`/${locale}/catalog`}>
-                      {isSpanish ? 'Explorar Cursos' : 'Browse Courses'}
+                      {t('emptyState.browseButton')}
                     </Link>
                   </Button>
                 </CardContent>
@@ -207,13 +186,13 @@ export default function DashboardPage() {
                     <CardHeader>
                       <CardTitle className="text-lg">{course.name}</CardTitle>
                       <CardDescription>
-                        {course.slides_count} {isSpanish ? 'lecciones' : 'lessons'}
+                        {course.slides_count} {t('course.lessons')}
                       </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
                       <div className="space-y-2">
                         <div className="flex justify-between text-sm">
-                          <span>{isSpanish ? 'Progreso:' : 'Progress:'}</span>
+                          <span>{t('course.progress')}</span>
                           <span>{Math.round(course.completion)}%</span>
                         </div>
                         <Progress value={course.completion} className="w-full" />
@@ -224,10 +203,10 @@ export default function DashboardPage() {
                           variant={course.completion >= 100 ? "default" : course.completion > 0 ? "secondary" : "outline"}
                         >
                           {course.completion >= 100 
-                            ? (isSpanish ? 'Completado' : 'Completed')
+                            ? t('course.completed')
                             : course.completion > 0 
-                            ? (isSpanish ? 'En progreso' : 'In progress')
-                            : (isSpanish ? 'No iniciado' : 'Not started')
+                            ? t('course.inProgress')
+                            : t('course.notStarted')
                           }
                         </Badge>
                         
@@ -235,8 +214,8 @@ export default function DashboardPage() {
                           <Link href={`/${locale}/course/${course.slug || course.id}`}>
                             <PlayCircle className="h-4 w-4 mr-2" />
                             {course.completion > 0 
-                              ? (isSpanish ? 'Continuar' : 'Continue')
-                              : (isSpanish ? 'Comenzar' : 'Start')
+                              ? t('course.continue')
+                              : t('course.start')
                             }
                           </Link>
                         </Button>
@@ -254,12 +233,10 @@ export default function DashboardPage() {
                 <CardContent className="flex flex-col items-center justify-center py-12">
                   <Award className="h-12 w-12 text-muted-foreground mb-4" />
                   <h3 className="text-lg font-semibold mb-2">
-                    {isSpanish ? 'Sin certificaciones aún' : 'No certificates yet'}
+                    {t('certificates.noCertificates')}
                   </h3>
                   <p className="text-muted-foreground text-center">
-                    {isSpanish 
-                      ? 'Completa un curso para obtener tu primer certificado'
-                      : 'Complete a course to earn your first certificate'}
+                    {t('certificates.completeMessage')}
                   </p>
                 </CardContent>
               </Card>
@@ -273,16 +250,16 @@ export default function DashboardPage() {
                         {course.name}
                       </CardTitle>
                       <CardDescription>
-                        {isSpanish ? 'Certificado de finalización' : 'Certificate of completion'}
+                        {t('certificates.certificateOfCompletion')}
                       </CardDescription>
                     </CardHeader>
                     <CardContent>
                       <div className="flex justify-between items-center">
                         <Badge className="bg-green-100 text-green-800">
-                          {isSpanish ? 'Completado' : 'Completed'}
+                          {t('certificates.completed')}
                         </Badge>
                         <Button size="sm" variant="outline">
-                          {isSpanish ? 'Descargar' : 'Download'}
+                          {t('certificates.download')}
                         </Button>
                       </div>
                     </CardContent>

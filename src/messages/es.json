@@ -60,11 +60,14 @@
     },
     "nav": {
         "catalog": "Catálogo",
+        "myCourses": "Mis Cursos",
         "about": "Acerca de",
         "pricing": "Precios",
         "contact": "Contacto",
         "signIn": "Iniciar sesión",
         "signUp": "Registrarse",
+        "signOut": "Cerrar sesión",
+        "profile": "Perfil",
         "faq": "FAQ"
     },
     "footer": {
@@ -254,5 +257,40 @@
             "contactButton": "Contactar Soporte",
             "responseTime": "Respuesta en 24 horas"
         }
+    },
+    "dashboard": {
+        "welcome": "¡Hola, {name}!",
+        "welcomeSubtitle": "Bienvenido a tu panel de estudiante",
+        "stats": {
+            "enrolledCourses": "Cursos Inscritos",
+            "completedCourses": "Cursos Completados",
+            "inProgress": "En Progreso"
+        },
+        "tabs": {
+            "myCourses": "Mis Cursos",
+            "certificates": "Certificaciones"
+        },
+        "emptyState": {
+            "noCourses": "No tienes cursos inscritos",
+            "exploreMessage": "Explora nuestro catálogo y comienza tu viaje de aprendizaje",
+            "browseButton": "Explorar Cursos"
+        },
+        "certificates": {
+            "noCertificates": "Sin certificaciones aún",
+            "completeMessage": "Completa un curso para obtener tu primer certificado",
+            "certificateOfCompletion": "Certificado de finalización",
+            "completed": "Completado",
+            "download": "Descargar"
+        },
+        "course": {
+            "lessons": "lecciones",
+            "progress": "Progreso:",
+            "notStarted": "No iniciado",
+            "inProgress": "En progreso",
+            "completed": "Completado",
+            "start": "Comenzar",
+            "continue": "Continuar"
+        },
+        "loading": "Cargando tu panel..."
     }
 }

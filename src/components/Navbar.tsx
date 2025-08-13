@@ -9,12 +9,14 @@ import {useTheme} from 'next-themes';
 import {useSession, signOut} from 'next-auth/react';
 import {SearchOverlay} from '@/components/ui/SearchOverlay';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useAuth } from '@/hooks/useAuth';
 
 export function Navbar() {
   const pathname = usePathname();
   const locale = useLocale();
   const t = useTranslations('nav');
   const { data: session, status } = useSession();
+  const { isAuthenticated, isLoading: authLoading, user } = useAuth();
   const [open, setOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -70,11 +72,16 @@ export function Navbar() {
               <Link href={`/${locale}/catalog`} className="hover:text-primary transition-colors">
                 {t('catalog')}
               </Link>
-              <Link href={`/${locale}/about`} className="hover:text-primary transition-colors">
-                {t('about')}
-              </Link>
+              {isAuthenticated && (
+                <Link href={`/${locale}/my-courses`} className="hover:text-primary transition-colors">
+                  {t('myCourses')}
+                </Link>
+              )}
               <Link href={`/${locale}/pricing`} className="hover:text-primary transition-colors">
                 {t('pricing')}
+              </Link>
+              <Link href={`/${locale}/about`} className="hover:text-primary transition-colors">
+                {t('about')}
               </Link>
               <Link href={`/${locale}/contact`} className="hover:text-primary transition-colors">
                 {t('contact')}
@@ -147,80 +154,36 @@ export function Navbar() {
 
               {/* Auth Section */}
               <div className="hidden md:flex items-center gap-2">
-                {status === "loading" ? (
+                {authLoading ? (
                   <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
-                ) : session ? (
-                  <div className="relative" ref={userMenuRef}>
+                ) : isAuthenticated && user ? (
+                  <>
+                    {/* Logout Button */}
                     <button
-                      onClick={() => setUserMenuOpen(!userMenuOpen)}
-                      className="flex items-center gap-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                      onClick={async () => {
+                        try {
+                          await fetch('/api/auth/logout', { method: 'POST' });
+                          signOut({ callbackUrl: `/${locale}` });
+                        } catch (error) {
+                          document.cookie = 'oa_session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+                          window.location.href = `/${locale}`;
+                        }
+                      }}
+                      className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
                     >
-                      <Avatar className="h-8 w-8">
-                        <AvatarImage src={session.user.image || undefined} />
-                        <AvatarFallback>
-                          {session.user.name?.split(' ').map(n => n[0]).join('') || session.user.email?.[0].toUpperCase()}
-                        </AvatarFallback>
-                      </Avatar>
-                      <ChevronDown className="w-3 h-3" />
+                      <LogOut className="w-4 h-4" />
+                      <span>{t('signOut')}</span>
                     </button>
                     
-                    {userMenuOpen && (
-                      <div className="absolute right-0 mt-2 w-48 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-lg z-50">
-                        <div className="p-3 border-b border-gray-200 dark:border-gray-700">
-                          <p className="text-sm font-medium text-gray-900 dark:text-white">
-                            {session.user.name || session.user.email}
-                          </p>
-                          <p className="text-xs text-gray-500 dark:text-gray-400">
-                            {session.user.email}
-                          </p>
-                        </div>
-                        <ul className="py-1">
-                          <li>
-                            <Link
-                              href={`/${locale}/dashboard`}
-                              className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-                              onClick={() => setUserMenuOpen(false)}
-                            >
-                              <BarChart3 className="w-4 h-4" />
-                              <span>Dashboard</span>
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              href={`/${locale}/my-courses`}
-                              className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-                              onClick={() => setUserMenuOpen(false)}
-                            >
-                              <BookOpen className="w-4 h-4" />
-                              <span>My Courses</span>
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              href={`/${locale}/profile`}
-                              className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-                              onClick={() => setUserMenuOpen(false)}
-                            >
-                              <User className="w-4 h-4" />
-                              <span>Profile</span>
-                            </Link>
-                          </li>
-                          <li>
-                            <button
-                              onClick={() => {
-                                setUserMenuOpen(false);
-                                signOut({ callbackUrl: `/${locale}` });
-                              }}
-                              className="flex items-center gap-2 w-full px-3 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-left"
-                            >
-                              <LogOut className="w-4 h-4" />
-                              <span>Sign out</span>
-                            </button>
-                          </li>
-                        </ul>
-                      </div>
-                    )}
-                  </div>
+                    {/* Profile Button */}
+                    <Link 
+                      href={`/${locale}/profile`} 
+                      className="flex items-center gap-2 px-4 py-2 text-sm font-medium bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
+                    >
+                      <User className="w-4 h-4" />
+                      <span>{t('profile')}</span>
+                    </Link>
+                  </>
                 ) : (
                   <>
                     <Link 

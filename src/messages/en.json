@@ -60,11 +60,14 @@
     },
     "nav": {
         "catalog": "Catalog",
+        "myCourses": "My Courses",
         "about": "About",
         "pricing": "Pricing",
         "contact": "Contact",
         "signIn": "Sign in",
         "signUp": "Sign up",
+        "signOut": "Sign out",
+        "profile": "Profile",
         "faq": "FAQ"
     },
     "footer": {
@@ -254,5 +257,40 @@
             "contactButton": "Contact Support",
             "responseTime": "Response within 24 hours"
         }
+    },
+    "dashboard": {
+        "welcome": "Hello, {name}!",
+        "welcomeSubtitle": "Welcome to your student dashboard",
+        "stats": {
+            "enrolledCourses": "Enrolled Courses",
+            "completedCourses": "Completed Courses",
+            "inProgress": "In Progress"
+        },
+        "tabs": {
+            "myCourses": "My Courses",
+            "certificates": "Certificates"
+        },
+        "emptyState": {
+            "noCourses": "No enrolled courses",
+            "exploreMessage": "Explore our catalog and start your learning journey",
+            "browseButton": "Browse Courses"
+        },
+        "certificates": {
+            "noCertificates": "No certificates yet",
+            "completeMessage": "Complete a course to earn your first certificate",
+            "certificateOfCompletion": "Certificate of completion",
+            "completed": "Completed",
+            "download": "Download"
+        },
+        "course": {
+            "lessons": "lessons",
+            "progress": "Progress:",
+            "notStarted": "Not started",
+            "inProgress": "In progress",
+            "completed": "Completed",
+            "start": "Start",
+            "continue": "Continue"
+        },
+        "loading": "Loading your dashboard..."
     }
 }
