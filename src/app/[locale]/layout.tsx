@@ -4,6 +4,10 @@ import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Layouts/Footer';
 import { WhatsAppButton } from '@/components/ui/WhatsAppButton';
 import { getTranslations } from 'next-intl/server';
+import { ThemeProvider } from '@/components/ThemeProvider';
+import { Inter } from 'next/font/google';
+
+const inter = Inter({ subsets: ['latin'] });
 
 export default async function RootLayout({
   children,
@@ -40,17 +44,24 @@ export default async function RootLayout({
         <link rel="icon" href="/logo.ico" />
         <link rel="apple-touch-icon" href="/logo.ico" />
       </head>
-      <body>
-        <NextIntlClientProvider messages={messages}>
-          <div className="min-h-screen flex flex-col">
-            <Navbar />
-            <main className="flex-1">
-              {children}
-            </main>
-            <Footer locale={locale} />
-            <WhatsAppButton />
-          </div>
-        </NextIntlClientProvider>
+      <body className={inter.className}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <NextIntlClientProvider messages={messages}>
+            <div className="min-h-screen flex flex-col">
+              <Navbar />
+              <main className="flex-1">
+                {children}
+              </main>
+              <Footer locale={locale} />
+              <WhatsAppButton />
+            </div>
+          </NextIntlClientProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

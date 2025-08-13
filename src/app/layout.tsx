@@ -1,10 +1,7 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import './globals.css';
 import { AuthProvider } from '@/components/AuthProvider';
 import { getTranslations } from 'next-intl/server';
-
-const inter = Inter({ subsets: ['latin'] });
+import '@/styles/globals.css';
 
 export async function generateMetadata(): Promise<Metadata> {
   const tCommon = await getTranslations('common');
@@ -67,8 +64,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es" suppressHydrationWarning>
-      <body className={inter.className}>
+    <html suppressHydrationWarning>
+      <body>
         <AuthProvider>
           {children}
         </AuthProvider>

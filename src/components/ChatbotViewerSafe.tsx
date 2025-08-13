@@ -63,6 +63,44 @@ export function ChatbotViewerSafe({ className = "w-full h-[400px]" }: ChatbotVie
 
   const mountedRef = useRef(true);
 
+  const createModelViewer = useCallback(() => {
+    try {
+      if (!containerRef.current) return;
+
+      const modelViewer = document.createElement('model-viewer');
+      modelViewer.setAttribute('src', '/3d/chatbot.glb');
+      modelViewer.setAttribute('alt', tChatbot('modelAlt'));
+      modelViewer.setAttribute('auto-rotate', '');
+      modelViewer.setAttribute('camera-controls', '');
+      modelViewer.setAttribute('shadow-intensity', '1');
+      modelViewer.setAttribute('environment-image', 'neutral');
+      modelViewer.setAttribute('exposure', '1');
+      modelViewer.setAttribute('animation-name', 'Idle');
+      modelViewer.setAttribute('style', 'width: 100%; height: 100%; border-radius: 12px;');
+
+      // Agregar evento para cuando el modelo esté listo
+      modelViewer.addEventListener('load', () => {
+        if (mountedRef.current) {
+          setIsLoaded(true);
+        }
+      });
+
+      // Agregar timeout para mostrar fallback si el modelo no carga
+      setTimeout(() => {
+        if (mountedRef.current && !isLoaded) {
+          setIsLoaded(true);
+        }
+      }, 5000);
+
+      containerRef.current.appendChild(modelViewer);
+    } catch (error) {
+      console.warn('Failed to create model viewer:', error);
+      if (mountedRef.current) {
+        setIsLoaded(true);
+      }
+    }
+  }, [tChatbot, isLoaded]);
+
   const loadModelViewer = useCallback(async () => {
     try {
       // Intentar cargar model-viewer si está disponible
@@ -92,43 +130,21 @@ export function ChatbotViewerSafe({ className = "w-full h-[400px]" }: ChatbotVie
     }
   }, [createModelViewer]);
 
-  const createModelViewer = useCallback(() => {
-    try {
-      if (!containerRef.current) return;
-
-      const modelViewer = document.createElement('model-viewer');
-      modelViewer.setAttribute('src', '/3d/chatbot.glb');
-      modelViewer.setAttribute('alt', tChatbot('modelAlt'));
-      modelViewer.setAttribute('auto-rotate', '');
-      modelViewer.setAttribute('camera-controls', '');
-      modelViewer.setAttribute('shadow-intensity', '1');
-      modelViewer.setAttribute('environment-image', 'neutral');
-      modelViewer.setAttribute('exposure', '1');
-      modelViewer.setAttribute('animation-name', 'Idle');
-      modelViewer.setAttribute('style', 'width: 100%; height: 100%; border-radius: 12px;');
-
-      // Agregar evento para cuando el modelo esté listo
-      modelViewer.addEventListener('load', () => {
-        if (mountedRef.current) {
-          setIsLoaded(true);
-        }
-      });
-
-      containerRef.current.appendChild(modelViewer);
-    } catch (error) {
-      console.warn('Failed to create model viewer:', error);
-      if (mountedRef.current) {
-        setIsLoaded(true);
-      }
-    }
-  }, [tChatbot]);
-
   useEffect(() => {
     loadModelViewer();
+    
+    // Timeout de fallback para mostrar la UI si el modelo no carga
+    const fallbackTimeout = setTimeout(() => {
+      if (mountedRef.current && !isLoaded) {
+        setIsLoaded(true);
+      }
+    }, 3000);
+    
     return () => {
       mountedRef.current = false;
+      clearTimeout(fallbackTimeout);
     };
-  }, [loadModelViewer]);
+  }, [loadModelViewer, isLoaded]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
