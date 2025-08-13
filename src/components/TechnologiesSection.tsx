@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
 import { useTranslations } from 'next-intl';
+import { GlitchText } from '@/components/ui/GlitchText';
+import { CanvasDots } from '@/components/ui/CanvasDots';
 import Link from 'next/link';
 import type { Route } from 'next';
 
@@ -42,131 +43,46 @@ const technologies: Technology[] = [
   { name: 'Vercel', icon: '/icons/technologies/systems/vercel.svg', category: 'tools', level: 'intermediate' },
 ];
 
-// Glitch Text Component
-const GlitchText = ({ children, className = "" }: { children: string; className?: string }) => {
-  return (
-    <div className={`relative inline-block ${className}`}>
-      {/* Main text */}
-      <span className="relative z-10 text-primary dark:text-primary">
-        {children}
-      </span>
-      
-      {/* Glitch layers */}
-      <span 
-        className="absolute inset-0 text-accent dark:text-accent animate-glitch-1"
-        style={{ 
-          clipPath: 'polygon(0 0, 100% 0, 100% 45%, 0 45%)',
-          transform: 'translate(-2px, -2px)'
-        }}
-      >
-        {children}
-      </span>
-      
-      <span 
-        className="absolute inset-0 text-gold dark:text-gold animate-glitch-2"
-        style={{ 
-          clipPath: 'polygon(0 55%, 100% 55%, 100% 100%, 0 100%)',
-          transform: 'translate(2px, 2px)'
-        }}
-      >
-        {children}
-      </span>
-      
-      <span 
-        className="absolute inset-0 text-secondary dark:text-secondary animate-glitch-3"
-        style={{ 
-          clipPath: 'polygon(0 30%, 100% 30%, 100% 70%, 0 70%)',
-          transform: 'translate(-1px, 1px)'
-        }}
-      >
-        {children}
-      </span>
-    </div>
-  );
-};
-
 export function TechnologiesSection({ locale }: TechnologiesSectionProps) {
   const t = useTranslations('home');
-  const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    // Set canvas size
-    const resizeCanvas = () => {
-      const rect = canvas.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
-    };
-
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    // Draw dot grid with brand colors
-    const drawDotGrid = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      const dotSize = 2;
-      const spacing = 32;
-      const dotColor = '#2F27CE'; // Primary brand color
-      
-      ctx.fillStyle = dotColor;
-      ctx.globalAlpha = 0.15; // Subtle opacity
-      
-      for (let x = spacing; x < canvas.width; x += spacing) {
-        for (let y = spacing; y < canvas.height; y += spacing) {
-          ctx.beginPath();
-          ctx.arc(x, y, dotSize, 0, 2 * Math.PI);
-          ctx.fill();
-        }
-      }
-    };
-
-    drawDotGrid();
-
-    return () => {
-      window.removeEventListener('resize', resizeCanvas);
-    };
-  }, []);
-
-  const getLevelColor = (level: Technology['level']) => {
+  const getLevelColor = (level: string) => {
     switch (level) {
       case 'beginner':
-        return 'bg-primary/20 text-primary border-primary/30 dark:bg-primary/20 dark:text-primary dark:border-primary/30';
+        return 'bg-primary/20 text-primary border-primary/30';
       case 'intermediate':
-        return 'bg-accent/20 text-accent border-accent/30 dark:bg-accent/20 dark:text-accent dark:border-accent/30';
+        return 'bg-accent/20 text-accent border-accent/30';
       case 'advanced':
-        return 'bg-gold/20 text-gold border-gold/30 dark:bg-gold/20 dark:text-gold dark:border-gold/30';
+        return 'bg-gold/20 text-gold border-gold/30';
       default:
-        return 'bg-muted/20 text-muted border-muted/30 dark:bg-muted/20 dark:text-muted dark:border-muted/30';
+        return 'bg-muted/20 text-muted border-muted/30';
     }
   };
 
-  const getLevelText = (level: Technology['level']) => {
+  const getLevelText = (level: string) => {
     switch (level) {
       case 'beginner':
-        return locale === 'es' ? 'Básico' : 'Beginner';
+        return 'BÁSICO';
       case 'intermediate':
-        return locale === 'es' ? 'Intermedio' : 'Intermediate';
+        return 'INTERMEDIO';
       case 'advanced':
-        return locale === 'es' ? 'Avanzado' : 'Advanced';
+        return 'AVANZADO';
       default:
-        return level;
+        return level.toUpperCase();
     }
   };
 
   return (
-    <section className="relative py-20 md:py-32 bg-gradient-to-br from-surface via-bg to-surface dark:from-surface dark:via-bg dark:to-surface overflow-hidden">
-      {/* Canvas Background */}
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 w-full h-full pointer-events-none"
-        style={{ zIndex: 1 }}
-      />
+    <section className="relative py-20 md:py-28 bg-gradient-to-br from-surface via-bg to-surface dark:from-surface dark:via-bg dark:to-surface overflow-hidden">
+      {/* Canvas Background with Dots */}
+      <CanvasDots id="technologiesCanvas" />
+      
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute top-20 left-10 w-32 h-32 bg-primary rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-20 right-10 w-40 h-40 bg-accent rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
+        <div className="absolute top-1/2 right-1/4 w-24 h-24 bg-gold rounded-full blur-2xl animate-pulse" style={{animationDelay: '4s'}}></div>
+      </div>
       
       {/* Content Container */}
       <div className="container relative z-10">
@@ -268,11 +184,6 @@ export function TechnologiesSection({ locale }: TechnologiesSectionProps) {
           </Link>
         </div>
       </div>
-      
-      {/* Floating Elements */}
-      <div className="absolute top-20 left-10 w-32 h-32 bg-primary/10 dark:bg-primary/10 rounded-full blur-3xl animate-pulse"></div>
-      <div className="absolute bottom-20 right-10 w-40 h-40 bg-accent/10 dark:bg-accent/10 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
-      <div className="absolute top-1/2 left-1/4 w-24 h-24 bg-gold/10 dark:bg-gold/10 rounded-full blur-2xl animate-pulse" style={{animationDelay: '4s'}}></div>
     </section>
   );
 }

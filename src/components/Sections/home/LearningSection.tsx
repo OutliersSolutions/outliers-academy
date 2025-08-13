@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
 import { GlitchText } from '@/components/ui/GlitchText';
+import { CanvasDots } from '@/components/ui/CanvasDots';
 
 interface LearningSectionProps {
   badge: string;
@@ -15,64 +15,6 @@ interface LearningSectionProps {
     hoverColor: string;
   }>;
 }
-
-// Canvas Dots Component
-const CanvasDots = ({ id }: { id: string }) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    // Set canvas size
-    const resizeCanvas = () => {
-      const rect = canvas.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
-    };
-
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    // Draw dot grid with brand colors
-    const drawDotGrid = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      const dotSize = 2;
-      const spacing = 32;
-      const dotColor = '#CE965E'; // Gold brand color
-      
-      ctx.fillStyle = dotColor;
-      ctx.globalAlpha = 0.15; // Subtle opacity
-      
-      for (let x = spacing; x < canvas.width; x += spacing) {
-        for (let y = spacing; y < canvas.height; y += spacing) {
-          ctx.beginPath();
-          ctx.arc(x, y, dotSize, 0, 2 * Math.PI);
-          ctx.fill();
-        }
-      }
-    };
-
-    drawDotGrid();
-
-    return () => {
-      window.removeEventListener('resize', resizeCanvas);
-    };
-  }, []);
-
-  return (
-    <canvas
-      ref={canvasRef}
-      id={id}
-      className="absolute inset-0 w-full h-full pointer-events-none"
-      style={{ zIndex: 1 }}
-    />
-  );
-};
 
 export function LearningSection({ 
   badge, 

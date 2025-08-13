@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { GlitchText } from '@/components/ui/GlitchText';
+import { CanvasDots } from '@/components/ui/CanvasDots';
 import type { Route } from 'next';
 
 interface CTASectionProps {
@@ -14,64 +15,6 @@ interface CTASectionProps {
   primaryLink: string;
   secondaryLink: string;
 }
-
-// Canvas Dots Component
-const CanvasDots = ({ id }: { id: string }) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    // Set canvas size
-    const resizeCanvas = () => {
-      const rect = canvas.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
-    };
-
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    // Draw dot grid with brand colors
-    const drawDotGrid = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      const dotSize = 2;
-      const spacing = 32;
-      const dotColor = '#CE965E'; // Gold brand color
-      
-      ctx.fillStyle = dotColor;
-      ctx.globalAlpha = 0.15; // Subtle opacity
-      
-      for (let x = spacing; x < canvas.width; x += spacing) {
-        for (let y = spacing; y < canvas.height; y += spacing) {
-          ctx.beginPath();
-          ctx.arc(x, y, dotSize, 0, 2 * Math.PI);
-          ctx.fill();
-        }
-      }
-    };
-
-    drawDotGrid();
-
-    return () => {
-      window.removeEventListener('resize', resizeCanvas);
-    };
-  }, []);
-
-  return (
-    <canvas
-      ref={canvasRef}
-      id={id}
-      className="absolute inset-0 w-full h-full pointer-events-none"
-      style={{ zIndex: 1 }}
-    />
-  );
-};
 
 export function CTASection({ 
   locale, 
@@ -96,7 +39,44 @@ export function CTASection({
       
       <div className="container relative z-10">
         <div className="bg-gradient-to-r from-primary via-accent to-gold rounded-3xl p-12 md:p-16 text-center text-white relative overflow-hidden">
-          {/* Clean Background Pattern */}
+          {/* Empire State Building Background */}
+          <div className="absolute inset-0">
+            {/* Simulated building silhouette */}
+            <div className="absolute right-0 bottom-0 w-1/2 h-full">
+              <div className="absolute right-0 bottom-0 w-full h-full bg-gradient-to-t from-white/30 via-white/15 to-transparent"></div>
+              
+              {/* Building structure - multiple towers */}
+              <div className="absolute right-8 bottom-0 w-12 h-full bg-gradient-to-t from-white/25 via-white/10 to-transparent"></div>
+              <div className="absolute right-24 bottom-0 w-8 h-4/5 bg-gradient-to-t from-white/20 via-white/8 to-transparent"></div>
+              <div className="absolute right-36 bottom-0 w-6 h-3/4 bg-gradient-to-t from-white/15 via-white/6 to-transparent"></div>
+              <div className="absolute right-48 bottom-0 w-4 h-2/3 bg-gradient-to-t from-white/10 via-white/4 to-transparent"></div>
+              
+              {/* Windows - vertical lines */}
+              <div className="absolute right-10 bottom-20 w-1 h-32 bg-gradient-to-t from-white/40 to-transparent"></div>
+              <div className="absolute right-14 bottom-20 w-1 h-32 bg-gradient-to-t from-white/35 to-transparent"></div>
+              <div className="absolute right-18 bottom-20 w-1 h-32 bg-gradient-to-t from-white/30 to-transparent"></div>
+              
+              <div className="absolute right-26 bottom-32 w-1 h-24 bg-gradient-to-t from-white/35 to-transparent"></div>
+              <div className="absolute right-30 bottom-32 w-1 h-24 bg-gradient-to-t from-white/30 to-transparent"></div>
+              <div className="absolute right-34 bottom-32 w-1 h-24 bg-gradient-to-t from-white/25 to-transparent"></div>
+              
+              <div className="absolute right-38 bottom-40 w-1 h-16 bg-gradient-to-t from-white/30 to-transparent"></div>
+              <div className="absolute right-42 bottom-40 w-1 h-16 bg-gradient-to-t from-white/25 to-transparent"></div>
+            </div>
+            
+            {/* City lights at base */}
+            <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-white/20 via-white/10 to-transparent"></div>
+            
+            {/* Skyline effect */}
+            <div className="absolute bottom-0 left-0 w-full h-8">
+              <div className="absolute bottom-0 left-0 w-20 h-6 bg-gradient-to-t from-white/15 to-transparent"></div>
+              <div className="absolute bottom-0 left-32 w-16 h-4 bg-gradient-to-t from-white/12 to-transparent"></div>
+              <div className="absolute bottom-0 left-56 w-24 h-5 bg-gradient-to-t from-white/10 to-transparent"></div>
+              <div className="absolute bottom-0 left-88 w-12 h-3 bg-gradient-to-t from-white/8 to-transparent"></div>
+            </div>
+          </div>
+          
+          {/* Fallback Background Pattern */}
           <div className="absolute inset-0 opacity-20">
             <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-white/10 to-transparent rounded-full"></div>
             <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-white/10 to-transparent rounded-full"></div>
