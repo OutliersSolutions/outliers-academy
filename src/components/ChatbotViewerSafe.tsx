@@ -26,22 +26,18 @@ export function ChatbotViewerSafe({ className = "w-full h-[400px]" }: ChatbotVie
 
   // Animate placeholder text
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentPlaceholderIndex((prev) => (prev + 1) % placeholderTexts.length);
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, [placeholderTexts.length]);
-
-  useEffect(() => {
-    const currentText = placeholderTexts[currentPlaceholderIndex];
+    let isTyping = true;
     let currentChar = 0;
-
+    const currentText = placeholderTexts[currentPlaceholderIndex];
+    
     const typeInterval = setInterval(() => {
+      if (!isTyping) return;
+      
       if (currentChar <= currentText.length) {
         setDisplayedPlaceholder(currentText.slice(0, currentChar));
         currentChar++;
       } else {
+        isTyping = false;
         clearInterval(typeInterval);
         
         // Wait before starting to delete
@@ -52,13 +48,18 @@ export function ChatbotViewerSafe({ className = "w-full h-[400px]" }: ChatbotVie
               currentChar--;
             } else {
               clearInterval(deleteInterval);
+              // Move to next placeholder after deletion
+              setCurrentPlaceholderIndex((prev) => (prev + 1) % placeholderTexts.length);
             }
           }, 50);
         }, 1000);
       }
     }, 100);
 
-    return () => clearInterval(typeInterval);
+    return () => {
+      clearInterval(typeInterval);
+      isTyping = false;
+    };
   }, [currentPlaceholderIndex, placeholderTexts]);
 
   const mountedRef = useRef(true);
