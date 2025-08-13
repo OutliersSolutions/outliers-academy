@@ -37,9 +37,9 @@ export default async function HomePage({
         <div className="container mx-auto px-6 py-20 md:py-32 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="max-w-2xl">
-              <span className="inline-flex items-center gap-2 rounded-full bg-secondary px-4 py-2 text-sm font-semibold text-text mb-6">
-                <span className="h-2 w-2 rounded-full animate-pulse" style={{background: 'var(--color-yellow)'}} /> 
-                {t('badge')}
+              <span className="inline-flex items-center gap-2 bg-gradient-to-r from-primary/20 to-accent/20 backdrop-blur-sm border border-primary/30 text-primary dark:text-primary px-6 py-3 rounded-full text-sm font-medium mb-6">
+                <span className="h-2 w-2 bg-primary dark:bg-primary rounded-full animate-pulse"></span> 
+                <span className="font-mono">{t('badge')}</span>
               </span>
               
               <h1 className="h1-hero mb-6">
