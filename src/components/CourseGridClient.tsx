@@ -185,86 +185,99 @@ export function CourseGridClient() {
         const courseName = c.name || c.title || 'Curso sin título';
         
         return (
-          <div key={c.id} className="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200 dark:border-gray-700">
+          <div key={c.id} className="group relative bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-500 overflow-hidden border border-gray-200/50 dark:border-white/20 hover:border-gray-300/70 dark:hover:border-white/30 transform hover:scale-105">
             {/* Course Image */}
             <Link href={`/${locale}/course/${c.slug}/overview`}>
-              <div className="relative h-48 overflow-hidden cursor-pointer">
-                <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                  <div className="text-4xl font-bold text-primary/50">
-                    {courseName.charAt(0)}
+              <div className="relative h-56 overflow-hidden cursor-pointer">
+                <div className="w-full h-full bg-gradient-to-br from-blue-500/80 via-purple-500/70 to-pink-500/60 flex items-center justify-center relative">
+                  {/* Patrón decorativo de fondo */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-black/10"></div>
+                  <div className="absolute top-4 left-4 w-8 h-8 bg-white/20 rounded-full animate-pulse"></div>
+                  <div className="absolute bottom-4 right-4 w-6 h-6 bg-white/15 rounded-full animate-pulse" style={{animationDelay: '1s'}}></div>
+                  <div className="absolute top-1/2 right-8 w-4 h-4 bg-white/10 rounded-full animate-pulse" style={{animationDelay: '2s'}}></div>
+                  
+                  {/* Letra del curso con efecto glassmorphism */}
+                  <div className="relative z-10 w-20 h-20 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center border border-white/30 shadow-lg">
+                    <span className="text-3xl font-bold text-white drop-shadow-lg">
+                      {courseName.charAt(0)}
+                    </span>
                   </div>
                 </div>
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors duration-300" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent group-hover:from-black/30 transition-all duration-500" />
                 
-                {/* Price Badge */}
-                <div className="absolute top-4 right-4 bg-white dark:bg-gray-800 px-3 py-1 rounded-full shadow-lg">
-                  <span className="font-bold text-primary">${c.price}</span>
+                {/* Price Badge mejorado */}
+                <div className="absolute top-6 right-6 bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm px-4 py-2 rounded-2xl shadow-xl border border-gray-200/50 dark:border-white/30">
+                  <span className="font-bold text-gray-800 dark:text-gray-200 text-lg">${c.price}</span>
                 </div>
+
+                {/* Nivel badge */}
+                {c.level && (
+                  <div className="absolute bottom-6 left-6 bg-gradient-to-r from-blue-500/90 to-purple-500/90 backdrop-blur-sm px-3 py-1 rounded-full border border-white/30">
+                    <span className="text-white text-sm font-semibold">{c.level}</span>
+                  </div>
+                )}
               </div>
             </Link>
 
             {/* Course Content */}
-            <div className="p-6">
+            <div className="p-8">
               <Link href={`/${locale}/course/${c.slug}/overview`}>
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-primary transition-colors cursor-pointer">
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors cursor-pointer leading-tight">
                   {courseName}
                 </h3>
               </Link>
               
-              <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-2">
+              <p className="text-gray-700 dark:text-gray-300 mb-6 line-clamp-2 leading-relaxed">
                 {c.description || tCommon('learnNewSkills')}
               </p>
 
-              {/* Course Meta */}
-              <div className="flex items-center justify-between mb-4 text-sm text-gray-500 dark:text-gray-400">
-                <div className="flex items-center gap-4">
+              {/* Course Meta mejorado */}
+              <div className="flex items-center justify-between mb-6 text-sm text-gray-600 dark:text-gray-400">
+                <div className="flex items-center gap-6">
                   {c.duration && (
-                    <span className="flex items-center gap-1">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <span className="flex items-center gap-2 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">
+                      <svg className="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
-                      {c.duration}h
-                    </span>
-                  )}
-                  {c.level && (
-                    <span className="flex items-center gap-1">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                      {c.level}
+                      <span className="font-semibold text-gray-800 dark:text-gray-200">{c.duration}h</span>
                     </span>
                   )}
                 </div>
                 {c.rating && (
-                  <span className="flex items-center gap-1">
-                    <svg className="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                  <span className="flex items-center gap-1 bg-yellow-50 dark:bg-yellow-900/30 px-3 py-1 rounded-full">
+                    <svg className="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                     </svg>
-                    {c.rating.toFixed(1)}
+                    <span className="font-bold text-gray-800 dark:text-gray-200">{c.rating.toFixed(1)}</span>
                   </span>
                 )}
               </div>
 
-              {/* Students Count */}
+              {/* Students Count mejorado */}
               {c.students && (
-                <div className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-                  {c.students.toLocaleString()} {tCourse('students')} inscritos
+                <div className="text-sm text-gray-600 dark:text-gray-400 mb-6 bg-blue-50 dark:bg-blue-900/30 px-3 py-2 rounded-xl">
+                  <span className="font-semibold text-blue-700 dark:text-blue-300">
+                    {c.students.toLocaleString()} {tCourse('students')} inscritos
+                  </span>
                 </div>
               )}
 
-              {/* Action Buttons */}
-              <div className="space-y-2">
+              {/* Action Buttons mejorados */}
+              <div className="space-y-3">
                 <Link
                   href={`/${locale}/course/${c.slug}/overview`}
-                  className="w-full inline-flex items-center justify-center px-4 py-2 border border-primary text-primary bg-transparent hover:bg-primary hover:text-white rounded-lg font-medium transition-colors duration-200"
+                  className="w-full inline-flex items-center justify-center px-6 py-3 border-2 border-blue-500 text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 hover:bg-blue-500 hover:text-white dark:hover:bg-blue-500 dark:hover:text-white rounded-2xl font-bold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
                 >
                   {tCourse('viewDetails')}
                 </Link>
-                <CheckoutButton courseId={c.id} className="w-full">
+                <CheckoutButton courseId={c.id} className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
                   {tCourse('enroll')}
                 </CheckoutButton>
               </div>
             </div>
+
+            {/* Efecto de brillo en hover */}
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-400/0 via-purple-400/0 to-pink-400/0 group-hover:from-blue-400/10 group-hover:via-purple-400/5 group-hover:to-pink-400/10 transition-all duration-500 rounded-3xl pointer-events-none"></div>
           </div>
         );
       })}
