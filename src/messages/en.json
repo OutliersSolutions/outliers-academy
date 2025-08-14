@@ -428,6 +428,56 @@
         "viewDetails": "View details",
         "enroll": "Enroll"
     },
+    "catalog": {
+        "title": "Course Catalog",
+        "description": "Discover the perfect course to take your skills to the next level",
+        "search": {
+            "label": "Search courses",
+            "placeholder": "Search by title, technology or instructor..."
+        },
+        "filters": {
+            "category": "Category",
+            "level": "Level"
+        },
+        "categories": {
+            "all": "All courses",
+            "web": "Web Development",
+            "data": "Data Science",
+            "mobile": "Mobile Development",
+            "ai": "Artificial Intelligence",
+            "devops": "DevOps",
+            "design": "UX/UI Design"
+        },
+        "levels": {
+            "all": "All levels",
+            "beginner": "Beginner",
+            "intermediate": "Intermediate",
+            "advanced": "Advanced"
+        },
+        "sort": {
+            "label": "Sort by:",
+            "popular": "Most popular",
+            "newest": "Newest",
+            "rating": "Best rated",
+            "priceLow": "Price: low to high",
+            "priceHigh": "Price: high to low"
+        },
+        "view": {
+            "label": "View as:"
+        },
+        "activeFilters": "Active filters:",
+        "searchFilter": "Search",
+        "clearFilters": "Clear filters",
+        "results": {
+            "showing": "Showing",
+            "of": "courses of",
+            "available": "available"
+        },
+        "pagination": {
+            "previous": "Previous",
+            "next": "Next"
+        }
+    },
     "common": {
         "search": "Search",
         "toggleTheme": "Toggle theme",

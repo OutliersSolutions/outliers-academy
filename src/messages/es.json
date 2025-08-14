@@ -428,6 +428,56 @@
         "viewDetails": "Ver detalles",
         "enroll": "Inscribirse"
     },
+    "catalog": {
+        "title": "Catálogo de Cursos",
+        "description": "Descubre el curso perfecto para llevar tus habilidades al siguiente nivel",
+        "search": {
+            "label": "Buscar cursos",
+            "placeholder": "Buscar por título, tecnología o instructor..."
+        },
+        "filters": {
+            "category": "Categoría",
+            "level": "Nivel"
+        },
+        "categories": {
+            "all": "Todos los cursos",
+            "web": "Desarrollo Web",
+            "data": "Data Science",
+            "mobile": "Desarrollo Móvil",
+            "ai": "Inteligencia Artificial",
+            "devops": "DevOps",
+            "design": "Diseño UX/UI"
+        },
+        "levels": {
+            "all": "Todos los niveles",
+            "beginner": "Principiante",
+            "intermediate": "Intermedio",
+            "advanced": "Avanzado"
+        },
+        "sort": {
+            "label": "Ordenar por:",
+            "popular": "Más populares",
+            "newest": "Más recientes",
+            "rating": "Mejor valorados",
+            "priceLow": "Precio: menor a mayor",
+            "priceHigh": "Precio: mayor a menor"
+        },
+        "view": {
+            "label": "Ver como:"
+        },
+        "activeFilters": "Filtros activos:",
+        "searchFilter": "Búsqueda",
+        "clearFilters": "Limpiar filtros",
+        "results": {
+            "showing": "Mostrando",
+            "of": "cursos de",
+            "available": "disponibles"
+        },
+        "pagination": {
+            "previous": "Anterior",
+            "next": "Siguiente"
+        }
+    },
     "common": {
         "search": "Buscar",
         "toggleTheme": "Cambiar tema",
