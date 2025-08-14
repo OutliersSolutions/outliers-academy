@@ -1,14 +1,12 @@
 "use client";
 
 import { useState } from 'react';
-import { signIn, getSession } from 'next-auth/react';
 import { useRouter, usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
-import { Github, Chrome, Mail, Lock, Eye, EyeOff } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { LoaderInline } from '@/components/ui/loader';
 import Link from 'next/link';
 
@@ -17,30 +15,9 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [oauthLoading, setOauthLoading] = useState<string | null>(null);
   const router = useRouter();
   const pathname = usePathname();
   const locale = pathname.split('/')[1] || 'es';
-
-  const handleOAuthSignIn = async (provider: 'google' | 'github') => {
-    setOauthLoading(provider);
-    try {
-      const result = await signIn(provider, {
-        callbackUrl: `/${locale}/dashboard`,
-        redirect: false,
-      });
-      
-      if (result?.ok) {
-        router.push(`/${locale}/dashboard`);
-      } else if (result?.error) {
-        console.error('OAuth error:', result.error);
-      }
-    } catch (error) {
-      console.error('OAuth signin error:', error);
-    } finally {
-      setOauthLoading(null);
-    }
-  };
 
   const handleEmailSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -86,48 +63,6 @@ export default function LoginPage() {
         </CardHeader>
         
         <CardContent className="space-y-4">
-          {/* OAuth Buttons */}
-          <div className="space-y-3">
-            <Button
-              onClick={() => handleOAuthSignIn('google')}
-              disabled={oauthLoading !== null}
-              variant="outline"
-              className="w-full h-11 font-medium"
-            >
-              {oauthLoading === 'google' ? (
-                <LoaderInline size="sm" />
-              ) : (
-                <Chrome className="h-4 w-4 mr-2" />
-              )}
-              {locale === 'es' ? 'Continuar con Google' : 'Continue with Google'}
-            </Button>
-            
-            <Button
-              onClick={() => handleOAuthSignIn('github')}
-              disabled={oauthLoading !== null}
-              variant="outline"
-              className="w-full h-11 font-medium"
-            >
-              {oauthLoading === 'github' ? (
-                <LoaderInline size="sm" />
-              ) : (
-                <Github className="h-4 w-4 mr-2" />
-              )}
-              {locale === 'es' ? 'Continuar con GitHub' : 'Continue with GitHub'}
-            </Button>
-          </div>
-
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <Separator className="w-full" />
-            </div>
-            <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-background px-2 text-muted-foreground">
-                {locale === 'es' ? 'O continúa con' : 'Or continue with'}
-              </span>
-            </div>
-          </div>
-
           {/* Email/Password Form */}
           <form onSubmit={handleEmailSignIn} className="space-y-4">
             <div className="space-y-2">
@@ -178,7 +113,7 @@ export default function LoginPage() {
 
             <Button 
               type="submit" 
-              disabled={loading || oauthLoading !== null}
+              disabled={loading}
               className="w-full h-11 font-medium"
             >
               {loading ? (

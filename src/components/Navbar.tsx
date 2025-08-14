@@ -6,7 +6,6 @@ import {useLocale, useTranslations} from 'next-intl';
 import {useEffect, useRef, useState} from 'react';
 import {Sun, Moon, ChevronDown, Search, User, LogOut, BarChart3, BookOpen} from 'lucide-react';
 import {useTheme} from 'next-themes';
-import {useSession, signOut} from 'next-auth/react';
 import {SearchOverlay} from '@/components/ui/SearchOverlay';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { LoaderInline } from '@/components/ui/loader';
@@ -17,7 +16,6 @@ export function Navbar() {
   const locale = useLocale();
   const t = useTranslations('nav');
   const tCommon = useTranslations('common');
-  const { data: session, status } = useSession();
   const { isAuthenticated, isLoading: authLoading, user } = useAuth();
   const [open, setOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
@@ -54,6 +52,16 @@ export function Navbar() {
 
   const toggleTheme = () => {
     setTheme(isDark ? 'light' : 'dark');
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+      window.location.href = `/${locale}`;
+    } catch (error) {
+      console.error('Logout error:', error);
+      window.location.href = `/${locale}`;
+    }
   };
 
   return (
@@ -185,7 +193,7 @@ export function Navbar() {
                           {t('profile')}
                         </Link>
                         <button
-                          onClick={() => signOut({ callbackUrl: `/${locale}` })}
+                          onClick={handleSignOut}
                           className="w-full flex items-center gap-2 px-4 py-2 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3 dark:hover:bg-gray-700"
                         >
                           <LogOut className="w-4 h-4" />

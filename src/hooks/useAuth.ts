@@ -1,4 +1,3 @@
-import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
 interface LegacySession {
@@ -21,7 +20,6 @@ interface AuthState {
 }
 
 export function useAuth(): AuthState {
-  const { data: session, status } = useSession();
   const [legacySession, setLegacySession] = useState<LegacySession | null>(null);
   const [isCheckingLegacy, setIsCheckingLegacy] = useState(true);
 
@@ -46,25 +44,8 @@ export function useAuth(): AuthState {
       }
     };
 
-    if (status !== "loading") {
-      checkLegacyAuth();
-    }
-  }, [status]);
-
-  // If NextAuth session exists, use it
-  if (status === "authenticated" && session) {
-    return {
-      isAuthenticated: true,
-      isLoading: false,
-      user: {
-        id: session.user.id,
-        name: session.user.name,
-        email: session.user.email,
-        image: session.user.image,
-        odooUserId: session.user.odooUserId,
-      }
-    };
-  }
+    checkLegacyAuth();
+  }, []);
 
   // If legacy session exists, use it
   if (legacySession) {
@@ -82,7 +63,7 @@ export function useAuth(): AuthState {
   }
 
   // Loading state
-  if (status === "loading" || isCheckingLegacy) {
+  if (isCheckingLegacy) {
     return {
       isAuthenticated: false,
       isLoading: true,

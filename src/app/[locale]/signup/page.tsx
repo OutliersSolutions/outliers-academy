@@ -1,14 +1,12 @@
 "use client";
 
 import { useState } from 'react';
-import { signIn } from 'next-auth/react';
 import { useRouter, usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
-import { Github, Chrome, Mail, Lock, User, Eye, EyeOff } from 'lucide-react';
+import { Mail, Lock, User, Eye, EyeOff } from 'lucide-react';
 import Link from 'next/link';
 
 export default function SignupPage() {
@@ -19,64 +17,48 @@ export default function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [oauthLoading, setOauthLoading] = useState<string | null>(null);
   const router = useRouter();
   const pathname = usePathname();
   const locale = pathname.split('/')[1] || 'es';
 
-  const handleOAuthSignUp = async (provider: 'google' | 'github') => {
-    setOauthLoading(provider);
-    try {
-      const result = await signIn(provider, {
-        callbackUrl: `/${locale}/dashboard`,
-        redirect: false,
-      });
-      
-      if (result?.ok) {
-        router.push(`/${locale}/dashboard`);
-      } else if (result?.error) {
-        console.error('OAuth error:', result.error);
-      }
-    } catch (error) {
-      console.error('OAuth signup error:', error);
-    } finally {
-      setOauthLoading(null);
-    }
-  };
-
   const handleEmailSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
     
-    // Validar que las contraseñas coincidan
     if (password !== confirmPassword) {
       alert(locale === 'es' ? 'Las contraseñas no coinciden' : 'Passwords do not match');
-      setLoading(false);
       return;
     }
 
-    // Validar longitud mínima
-    if (password.length < 8) {
-      alert(locale === 'es' ? 'La contraseña debe tener al menos 8 caracteres' : 'Password must be at least 8 characters');
-      setLoading(false);
+    if (password.length < 6) {
+      alert(locale === 'es' ? 'La contraseña debe tener al menos 6 caracteres' : 'Password must be at least 6 characters');
       return;
     }
+
+    setLoading(true);
     
     try {
       const res = await fetch('/api/auth/signup', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({name, email, password})
+        body: JSON.stringify({
+          name,
+          email,
+          password
+        })
       });
       
       if (res.ok) {
-        router.push(`/${locale}/dashboard`);
+        const data = await res.json();
+        console.log('Signup successful:', data);
+        
+        // Redirect to login page
+        router.push(`/${locale}/login`);
       } else {
         const data = await res.json();
-        throw new Error(data.error || 'Error al crear cuenta');
+        throw new Error(data.error || (locale === 'es' ? 'Error en el registro' : 'Signup error'));
       }
     } catch (error) {
-      console.error('Email signup error:', error);
+      console.error('Signup error:', error);
       alert((error as Error).message);
     } finally {
       setLoading(false);
@@ -92,54 +74,12 @@ export default function SignupPage() {
           </CardTitle>
           <CardDescription className="text-muted-foreground">
             {locale === 'es' 
-              ? 'Únete a Outliers Academy y comienza tu viaje' 
-              : 'Join Outliers Academy and start your journey'}
+              ? 'Únete a Outliers Academy y comienza tu aprendizaje' 
+              : 'Join Outliers Academy and start your learning journey'}
           </CardDescription>
         </CardHeader>
         
         <CardContent className="space-y-4">
-          {/* OAuth Buttons */}
-          <div className="space-y-3">
-            <Button
-              onClick={() => handleOAuthSignUp('google')}
-              disabled={oauthLoading !== null}
-              variant="outline"
-              className="w-full h-11 font-medium"
-            >
-              {oauthLoading === 'google' ? (
-                <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
-              ) : (
-                <Chrome className="h-4 w-4 mr-2" />
-              )}
-              {locale === 'es' ? 'Registrarse con Google' : 'Sign up with Google'}
-            </Button>
-            
-            <Button
-              onClick={() => handleOAuthSignUp('github')}
-              disabled={oauthLoading !== null}
-              variant="outline"
-              className="w-full h-11 font-medium"
-            >
-              {oauthLoading === 'github' ? (
-                <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
-              ) : (
-                <Github className="h-4 w-4 mr-2" />
-              )}
-              {locale === 'es' ? 'Registrarse con GitHub' : 'Sign up with GitHub'}
-            </Button>
-          </div>
-
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <Separator className="w-full" />
-            </div>
-            <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-background px-2 text-muted-foreground">
-                {locale === 'es' ? 'O regístrate con' : 'Or sign up with'}
-              </span>
-            </div>
-          </div>
-
           {/* Email/Password Form */}
           <form onSubmit={handleEmailSignUp} className="space-y-4">
             <div className="space-y-2">
@@ -154,7 +94,7 @@ export default function SignupPage() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   className="pl-10 h-11"
-                  placeholder={locale === 'es' ? 'Tu nombre' : 'Your name'}
+                  placeholder={locale === 'es' ? 'Tu nombre completo' : 'Your full name'}
                   required
                 />
               </div>
@@ -190,16 +130,12 @@ export default function SignupPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="pl-10 pr-10 h-11"
-                  placeholder={locale === 'es' ? 'Mínimo 8 caracteres' : 'Minimum 8 characters'}
+                  placeholder={locale === 'es' ? 'Mínimo 6 caracteres' : 'Minimum 6 characters'}
                   required
-                  minLength={8}
                 />
                 <button
                   type="button"
-                  onClick={(e: React.MouseEvent) => {
-                    e.preventDefault();
-                    setShowPassword(!showPassword);
-                  }}
+                  onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                 >
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -209,7 +145,7 @@ export default function SignupPage() {
 
             <div className="space-y-2">
               <Label htmlFor="confirmPassword" className="text-sm font-medium">
-                {locale === 'es' ? 'Confirmar Contraseña' : 'Confirm Password'}
+                {locale === 'es' ? 'Confirmar contraseña' : 'Confirm password'}
               </Label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -219,34 +155,26 @@ export default function SignupPage() {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   className="pl-10 pr-10 h-11"
-                  placeholder={locale === 'es' ? 'Repite tu contraseña' : 'Repeat your password'}
+                  placeholder={locale === 'es' ? 'Confirma tu contraseña' : 'Confirm your password'}
                   required
                 />
                 <button
                   type="button"
-                  onClick={(e: React.MouseEvent) => {
-                    e.preventDefault();
-                    setShowConfirmPassword(!showConfirmPassword);
-                  }}
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                 >
                   {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
               </div>
-              {confirmPassword && password !== confirmPassword && (
-                <p className="text-sm text-red-500">
-                  {locale === 'es' ? 'Las contraseñas no coinciden' : 'Passwords do not match'}
-                </p>
-              )}
             </div>
 
             <Button 
               type="submit" 
-              disabled={loading || oauthLoading !== null}
+              disabled={loading}
               className="w-full h-11 font-medium"
             >
               {loading ? (
-                <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent mr-2" />
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
               ) : null}
               {locale === 'es' ? 'Crear Cuenta' : 'Create Account'}
             </Button>
@@ -258,7 +186,7 @@ export default function SignupPage() {
               href={`/${locale}/login`}
               className="font-medium text-primary hover:underline"
             >
-              {locale === 'es' ? 'Inicia sesión' : 'Sign in'}
+              {locale === 'es' ? 'Iniciar sesión' : 'Sign in'}
             </Link>
           </div>
         </CardContent>

@@ -1,6 +1,5 @@
 "use client";
 
-import { useSession, signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
@@ -59,11 +58,11 @@ export default function DashboardPage() {
   };
 
   const handleSignOut = async () => {
-    // Handle both NextAuth and legacy logout
     try {
       await fetch('/api/auth/logout', { method: 'POST' });
-      signOut({ callbackUrl: `/${locale}` });
+      window.location.href = `/${locale}`;
     } catch (error) {
+      console.error('Logout error:', error);
       // Fallback to just clearing cookies and redirecting
       document.cookie = 'oa_session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
       window.location.href = `/${locale}`;
