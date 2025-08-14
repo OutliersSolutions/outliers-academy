@@ -1,5 +1,8 @@
 "use client";
 
+import {useState} from 'react';
+import {Loader2} from 'lucide-react';
+
 interface CheckoutButtonProps {
   courseId?: number;
   productId?: number; 
@@ -22,7 +25,13 @@ export function CheckoutButton({
   odooCheckout = true
 }: CheckoutButtonProps) {
   
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  
   async function onClick() {
+    setIsLoading(true);
+    setError(null);
+    
     try {
       if (odooCheckout && productId) {
         // Odoo-centric checkout flow
@@ -32,30 +41,60 @@ export function CheckoutButton({
           body: JSON.stringify({courseId, productId})
         });
         const data = await res.json();
-        if (!res.ok) throw new Error(data.error || 'Checkout error');
+        if (!res.ok) throw new Error(data.error || 'Error en el checkout con Odoo');
         
         // Redirect to Odoo shop product page or sale order
         if (data.redirectUrl) {
           window.location.href = data.redirectUrl;
         }
       } else if (priceId) {
-        // Fallback to Stripe direct checkout
+        // Stripe checkout flow
         const res = await fetch('/api/stripe/checkout', {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({priceId, successUrl, cancelUrl})
         });
         const data = await res.json();
-        if (!res.ok) throw new Error(data.error || 'Checkout error');
-        if (data.url) window.location.href = data.url as string;
+        if (!res.ok) throw new Error(data.error || 'Error en el checkout con Stripe');
+        
+        if (data.url) {
+          window.location.href = data.url as string;
+        } else {
+          throw new Error('No se recibió URL de checkout');
+        }
+      } else {
+        throw new Error('No se especificó método de pago válido');
       }
     } catch (e) {
       console.error('Checkout error:', e);
-      alert((e as Error).message);
+      setError((e as Error).message);
+    } finally {
+      setIsLoading(false);
     }
   }
 
   return (
-    <button className={className} onClick={onClick}>{children}</button>
+    <div className="w-full">
+      <button 
+        className={`${className} ${isLoading ? 'opacity-75 cursor-not-allowed' : ''}`} 
+        onClick={onClick}
+        disabled={isLoading}
+      >
+        {isLoading ? (
+          <div className="flex items-center justify-center gap-2">
+            <Loader2 className="h-4 w-4 animate-spin" />
+            Procesando...
+          </div>
+        ) : (
+          children
+        )}
+      </button>
+      
+      {error && (
+        <div className="mt-2 text-sm text-red-600 bg-red-50 border border-red-200 rounded-md p-2">
+          {error}
+        </div>
+      )}
+    </div>
   );
 } 
