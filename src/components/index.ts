@@ -7,7 +7,6 @@ export * from './Layouts/Footer';
 
 // --------Sections--------
 //HOME
-export * from './Sections/home/HeroOutliers.section';
 export * from './Sections/home/Headline.section';
 export * from './Sections/home/Services.section';
 
@@ -70,10 +69,8 @@ export * from './ui/Filters/TeamFilters.component';
 
 export * from './ui/shapes/AiSpectrumCircular.component';
 export * from './ui/shapes/AiVoiceSpectrum.component';
-export * from './ui/shapes/BeforeAfter.component';
 export * from './ui/shapes/DecorativeShapes.component';
 export * from './ui/shapes/EcommerceIllustration.component';
-export * from './ui/shapes/Metrics.component';
 export * from './ui/shapes/Separator.component';
 
 export * from './ui/Badge.component';

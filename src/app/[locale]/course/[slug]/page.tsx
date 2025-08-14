@@ -190,10 +190,10 @@ export default function CoursePage({
   };
 
   const previousLesson = () => {
-    if (lessonIndex > 0) {
+    if (lessonIndex > 0 && course?.lessons) {
       const newIndex = lessonIndex - 1;
       setLessonIndex(newIndex);
-      setCurrentLesson(course.lessons![newIndex]);
+      setCurrentLesson(course.lessons[newIndex]);
     }
   };
 
