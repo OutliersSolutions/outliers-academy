@@ -40,7 +40,6 @@ export function CourseGridClient() {
         
         if (res.ok) {
           const data = await res.json();
-          console.log('Courses data:', data); // Debug log
           
           // Handle both array and object responses
           const coursesArray = Array.isArray(data) ? data : (data.courses || []);
@@ -48,7 +47,7 @@ export function CourseGridClient() {
           // Map the courses to add missing fields and normalize data
           const mappedCourses = coursesArray.map((course: any) => ({
             ...course,
-            name: course.title || course.name || 'Curso sin título', // Map title to name
+            name: course.title || course.name || 'Curso sin título',
             description: course.description || 'Descripción del curso',
             image: course.image || `/images/course-${course.id}.jpg`,
             duration: course.duration || Math.floor(Math.random() * 20) + 5,
@@ -58,19 +57,17 @@ export function CourseGridClient() {
           }));
           
           setCourses(mappedCourses);
-          console.log('Mapped courses:', mappedCourses); // Debug log
         } else {
-          console.log('API response not ok, using fallback data');
           // Fallback data for development
-          setCourses([
+          const fallbackCourses = [
             {
               id: 1,
-              name: "Python para Principiantes",
-              title: "Python para Principiantes",
-              description: "Aprende los fundamentos de Python desde cero",
-              price: 49.99,
-              image: "/images/python-course.jpg",
-              slug: "python-basics",
+              name: "Docker para D",
+              title: "Docker para D",
+              description: "Aprende los fundamentos de Docker desde cero",
+              price: 99.99,
+              image: "/images/docker-course.jpg",
+              slug: "docker-para-d-1",
               duration: 8,
               level: "Principiante",
               rating: 4.8,
@@ -78,12 +75,12 @@ export function CourseGridClient() {
             },
             {
               id: 2,
-              name: "React.js Completo",
-              title: "React.js Completo",
-              description: "Desarrollo de aplicaciones web modernas con React",
-              price: 79.99,
-              image: "/images/react-course.jpg",
-              slug: "react-complete",
+              name: "Crea tu primera Waifu: Hipoteticamente",
+              title: "Crea tu primera Waifu: Hipoteticamente",
+              description: "Desarrollo de aplicaciones con IA generativa",
+              price: 99.99,
+              image: "/images/waifu-course.jpg",
+              slug: "crea-tu-primera-waifu-hipoteticamente-2",
               duration: 12,
               level: "Intermedio",
               rating: 4.9,
@@ -102,20 +99,20 @@ export function CourseGridClient() {
               rating: 4.7,
               students: 650
             }
-          ]);
+          ];
+          setCourses(fallbackCourses);
         }
       } catch (error) {
-        console.error('Error fetching courses:', error);
         // Fallback data for development
-        setCourses([
+        const errorFallbackCourses = [
           {
             id: 1,
-            name: "Python para Principiantes",
-            title: "Python para Principiantes",
-            description: "Aprende los fundamentos de Python desde cero",
-            price: 49.99,
-            image: "/images/python-course.jpg",
-            slug: "python-basics",
+            name: "Docker para D",
+            title: "Docker para D",
+            description: "Aprende los fundamentos de Docker desde cero",
+            price: 99.99,
+            image: "/images/docker-course.jpg",
+            slug: "docker-para-d-1",
             duration: 8,
             level: "Principiante",
             rating: 4.8,
@@ -123,12 +120,12 @@ export function CourseGridClient() {
           },
           {
             id: 2,
-            name: "React.js Completo",
-            title: "React.js Completo",
-            description: "Desarrollo de aplicaciones web modernas con React",
-            price: 79.99,
-            image: "/images/react-course.jpg",
-            slug: "react-complete",
+            name: "Crea tu primera Waifu: Hipoteticamente",
+            title: "Crea tu primera Waifu: Hipoteticamente",
+            description: "Desarrollo de aplicaciones con IA generativa",
+            price: 99.99,
+            image: "/images/waifu-course.jpg",
+            slug: "crea-tu-primera-waifu-hipoteticamente-2",
             duration: 12,
             level: "Intermedio",
             rating: 4.9,
@@ -147,7 +144,8 @@ export function CourseGridClient() {
             rating: 4.7,
             students: 650
           }
-        ]);
+        ];
+        setCourses(errorFallbackCourses);
       } finally {
         setLoading(false);
       }
