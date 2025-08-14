@@ -403,7 +403,30 @@
         "enrollToAccess": "Enroll to access this content",
         "enrollNow": "Enroll now",
         "minutes": "minutes",
-        "preview": "Preview"
+        "preview": "Preview",
+        "whatYouLearn": "What you'll learn",
+        "prerequisites": "Prerequisites",
+        "yourInstructor": "Your instructor",
+        "studentReviews": "Student reviews",
+        "enrollNowButton": "Enroll now",
+        "viewFreeLessons": "View free lessons",
+        "lifetimeAccess": "Lifetime access",
+        "mobileDesktopAccess": "Mobile and desktop access",
+        "certificateCompletion": "Certificate of completion",
+        "downloadableResources": "Downloadable resources",
+        "communitySupport": "Community support",
+        "oneTimePayment": "One-time payment • Lifetime access",
+        "difficulty": {
+            "beginner": "Beginner",
+            "intermediate": "Intermediate",
+            "advanced": "Advanced"
+        },
+        "loading": "Loading course...",
+        "students": "students",
+        "reviews": "reviews",
+        "freePreviews": "free previews",
+        "viewDetails": "View details",
+        "enroll": "Enroll"
     },
     "common": {
         "search": "Search",

@@ -3,6 +3,8 @@
 import { useTranslations } from 'next-intl';
 import { CheckoutButton } from './CheckoutButton';
 import { useEffect, useState } from 'react';
+import { useRouter, usePathname } from 'next/navigation';
+import Link from 'next/link';
 
 interface Course {
   id: number;
@@ -19,8 +21,12 @@ interface Course {
 
 export function CourseGridClient() {
   const tCommon = useTranslations('common');
+  const tCourse = useTranslations('course');
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
+  const pathname = usePathname();
+  const locale = pathname.split('/')[1] || 'es';
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -144,25 +150,29 @@ export function CourseGridClient() {
       {courses.map((c) => (
         <div key={c.id} className="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200 dark:border-gray-700">
           {/* Course Image */}
-          <div className="relative h-48 overflow-hidden">
-            <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-              <div className="text-4xl font-bold text-primary/50">
-                {c.name.charAt(0)}
+          <Link href={`/${locale}/course/${c.slug}/overview`}>
+            <div className="relative h-48 overflow-hidden cursor-pointer">
+              <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+                <div className="text-4xl font-bold text-primary/50">
+                  {c.name.charAt(0)}
+                </div>
+              </div>
+              <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors duration-300" />
+              
+              {/* Price Badge */}
+              <div className="absolute top-4 right-4 bg-white dark:bg-gray-800 px-3 py-1 rounded-full shadow-lg">
+                <span className="font-bold text-primary">${c.price}</span>
               </div>
             </div>
-            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors duration-300" />
-            
-            {/* Price Badge */}
-            <div className="absolute top-4 right-4 bg-white dark:bg-gray-800 px-3 py-1 rounded-full shadow-lg">
-              <span className="font-bold text-primary">${c.price}</span>
-            </div>
-          </div>
+          </Link>
 
           {/* Course Content */}
           <div className="p-6">
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-primary transition-colors">
-              {c.name}
-            </h3>
+            <Link href={`/${locale}/course/${c.slug}/overview`}>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-primary transition-colors cursor-pointer">
+                {c.name}
+              </h3>
+            </Link>
             
             <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-2">
               {c.description || tCommon('learnNewSkills')}
@@ -201,14 +211,22 @@ export function CourseGridClient() {
             {/* Students Count */}
             {c.students && (
               <div className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-                {c.students.toLocaleString()} estudiantes inscritos
+                {c.students.toLocaleString()} {tCourse('students')} inscritos
               </div>
             )}
 
-            {/* Enroll Button */}
-            <CheckoutButton courseId={c.id} className="w-full">
-              Inscribirse
-            </CheckoutButton>
+            {/* Action Buttons */}
+            <div className="space-y-2">
+              <Link
+                href={`/${locale}/course/${c.slug}/overview`}
+                className="w-full inline-flex items-center justify-center px-4 py-2 border border-primary text-primary bg-transparent hover:bg-primary hover:text-white rounded-lg font-medium transition-colors duration-200"
+              >
+                {tCourse('viewDetails')}
+              </Link>
+              <CheckoutButton courseId={c.id} className="w-full">
+                {tCourse('enroll')}
+              </CheckoutButton>
+            </div>
           </div>
         </div>
       ))}

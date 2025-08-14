@@ -403,7 +403,30 @@
         "enrollToAccess": "Inscríbete para acceder a este contenido",
         "enrollNow": "Inscribirse",
         "minutes": "minutos",
-        "preview": "Vista previa"
+        "preview": "Vista previa",
+        "whatYouLearn": "Lo que aprenderás",
+        "prerequisites": "Requisitos",
+        "yourInstructor": "Tu instructor",
+        "studentReviews": "Reseñas de estudiantes",
+        "enrollNowButton": "Inscribirse ahora",
+        "viewFreeLessons": "Ver lecciones gratuitas",
+        "lifetimeAccess": "Acceso de por vida",
+        "mobileDesktopAccess": "Acceso en móvil y desktop",
+        "certificateCompletion": "Certificado de finalización",
+        "downloadableResources": "Recursos descargables",
+        "communitySupport": "Soporte de la comunidad",
+        "oneTimePayment": "Pago único • Acceso de por vida",
+        "difficulty": {
+            "beginner": "Principiante",
+            "intermediate": "Intermedio",
+            "advanced": "Avanzado"
+        },
+        "loading": "Cargando curso...",
+        "students": "estudiantes",
+        "reviews": "reseñas",
+        "freePreviews": "vistas previas gratuitas",
+        "viewDetails": "Ver detalles",
+        "enroll": "Inscribirse"
     },
     "common": {
         "search": "Buscar",
