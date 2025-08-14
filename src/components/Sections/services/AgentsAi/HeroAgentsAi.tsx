@@ -98,7 +98,7 @@ export const HeroAgentsAiSection = () => {
                 </p>
               </div>
               <h1
-                className="text-3xl sm:text-5xl md:text-5xl lg:text-5xl xl:text-5xl font-extrabold tracking-tight text-gray-900 dark:text-white filter drop-shadow-[0_0_10px_rgba(255,255,255,0.7)]"
+                className="text-3xl sm:text-5xl md:text-5xl lg:text-5xl xl:text-5xl font-heading font-extrabold tracking-tight text-gray-900 dark:text-white filter drop-shadow-[0_0_10px_rgba(255,255,255,0.7)]"
                 dangerouslySetInnerHTML={{
                   __html: t("ai_agents.hero_section.title"),
                 }}

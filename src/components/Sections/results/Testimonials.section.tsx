@@ -72,7 +72,7 @@ export const TestimonialSection = () => {
       <div className="container mx-auto px-4">
         {/* Encabezado */}
         <div className="mb-8 text-center animate-fade-in">
-          <h1 className="text-3xl sm:text-5xl md:text-5xl lg:text-5xl xl:text-5xl font-extrabold tracking-tight text-gray-900 dark:text-white">
+          <h1 className="text-3xl sm:text-5xl md:text-5xl lg:text-5xl xl:text-5xl font-heading font-extrabold tracking-tight text-gray-900 dark:text-white">
             Lo que dicen nuestros <span className="text-coral-500">clientes</span>
           </h1>
           <p className={`text-lg ${brandColors.softGray} mb-4 mt-2`}>

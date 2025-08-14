@@ -79,7 +79,7 @@ export default function CatalogPage({ params }: CatalogPageProps) {
               </span>
             </h1>
             
-            <p className="text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed font-medium">
+            <p className="text-xl font-sans text-gray-700 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed font-medium">
               {t('description') || 'Descubre el curso perfecto para llevar tus habilidades al siguiente nivel'}
             </p>
           </div>

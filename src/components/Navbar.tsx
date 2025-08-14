@@ -94,7 +94,7 @@ export function Navbar() {
                 alt="Outliers Academy"
                 className="w-8 h-8 object-contain"
               />
-              <span className="font-extrabold text-xl">
+              <span className="font-heading font-extrabold text-xl">
                 <span className="text-solarized-base01 dark:text-white">
                   Outliers
                 </span>{" "}
@@ -277,14 +277,17 @@ export function Navbar() {
                     <>
                       <Link
                         href={`/${locale}/login`}
-                        className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 font-medium text-primary border border-primary bg-transparent transition-colors"
+                        className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 font-medium text-primary border border-primary bg-transparent transition-all duration-200 hover:bg-primary hover:text-white hover:shadow-md"
                       >
                         {t("signIn")}
                       </Link>
-                      <Link 
-                        href={`/${locale}/signup`} 
-                        className="inline-flex items-center gap-2 rounded-full px-4 py-2 font-medium text-white transition-all duration-200"
-                        style={{ background: 'linear-gradient(135deg, var(--color-primary), var(--color-accent))' }}
+                      <Link
+                        href={`/${locale}/signup`}
+                        className="inline-flex items-center gap-2 rounded-full px-4 py-2 font-heading font-semibold text-white transition-all duration-200 hover:brightness-110 hover:scale-105 hover:shadow-lg"
+                        style={{
+                          background:
+                            "linear-gradient(135deg, var(--color-primary), var(--color-accent))",
+                        }}
                       >
                         {t("signUp")}
                       </Link>

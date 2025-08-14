@@ -14,9 +14,9 @@ export default function PricingPage() {
 
       <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="card p-6">
-          <h3 className="text-xl font-extrabold">Starter</h3>
+          <h3 className="text-xl font-heading font-extrabold">Starter</h3>
           <p className="mt-2 text-neutral-700">Acceso a cursos introductorios y comunidad.</p>
-          <div className="mt-4 text-2xl font-extrabold">US$9</div>
+          <div className="mt-4 text-2xl font-heading font-extrabold">US$9</div>
           {starter ? (
             <div className="mt-6">
               <CheckoutButton priceId={starter} successUrl={successUrl} cancelUrl={cancelUrl}>Comprar</CheckoutButton>
@@ -27,9 +27,9 @@ export default function PricingPage() {
         </div>
 
         <div className="card p-6">
-          <h3 className="text-xl font-extrabold">Pro</h3>
+          <h3 className="text-xl font-heading font-extrabold">Pro</h3>
           <p className="mt-2 text-neutral-700">Todo Starter + proyectos avanzados y mentoría.</p>
-          <div className="mt-4 text-2xl font-extrabold">US$29</div>
+          <div className="mt-4 text-2xl font-heading font-extrabold">US$29</div>
           {pro ? (
             <div className="mt-6">
               <CheckoutButton priceId={pro} successUrl={successUrl} cancelUrl={cancelUrl}>Comprar</CheckoutButton>

@@ -86,7 +86,7 @@ export const Header: React.FC = () => {
                             <li key={item.name} className="relative group">
                                 {item.submenu ? (
                                     <>
-                                        <div className="flex items-center gap-1 font-inter font-semibold text-sm text-gray-600 hover:text-primary dark:text-gray-300 dark:hover:text-primary cursor-pointer">
+                                        <div className="flex items-center gap-1 font-sans font-semibold text-sm text-gray-600 hover:text-primary dark:text-gray-300 dark:hover:text-primary cursor-pointer">
                                             {item.name}
                                             <ChevronDown className="w-4 h-4" />
                                         </div>

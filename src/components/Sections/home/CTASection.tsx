@@ -58,7 +58,7 @@ export function CTASection({
             </div>
             
             {/* Title with Glitch Effect */}
-            <h2 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+            <h2 className="text-4xl md:text-6xl font-heading font-bold mb-6 leading-tight">
               <span className="bg-gradient-to-r from-white via-yellow-200 to-yellow-400 bg-clip-text text-transparent">
                 {title.includes('transformar') ? (
                   title.split('transformar').map((part, index, array) => (

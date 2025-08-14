@@ -37,7 +37,7 @@ export const TeamMemberCard = ({
             }}
         >
             <CardContent className="p-6">
-                <div className="flex flex-col items-center font-inter">
+                <div className="flex flex-col items-center font-sans">
                     {/* Foto */}
                     <div className="mb-4 mt-5 rounded-full overflow-hidden border-4 border-transparent group-hover:border-coral-100 dark:group-hover:border-coral-300 transition-all duration-300">
                         <img
@@ -48,7 +48,7 @@ export const TeamMemberCard = ({
                     </div>
 
                     {/* Nombre */}
-                    <h3 className="text-xl font-extrabold mb-1 text-center text-gray-900 dark:text-white">
+                    <h3 className="text-xl font-heading font-extrabold mb-1 text-center text-gray-900 dark:text-white">
                         {name}
                     </h3>
 

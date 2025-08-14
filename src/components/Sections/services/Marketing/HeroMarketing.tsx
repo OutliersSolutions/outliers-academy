@@ -15,12 +15,12 @@ export const HeroMarketingSection = () => {
           {/* Texto resumido */}
           <div className="flex flex-col animate-fade-in">
             <h1
-              className="text-3xl sm:text-5xl font-extrabold text-gray-900 dark:text-white mb-8 filter drop-shadow-[0_0_10px_rgba(255,255,255,0.7)]"
+              className="text-3xl sm:text-5xl font-heading font-extrabold text-gray-900 dark:text-white mb-8 filter drop-shadow-[0_0_10px_rgba(255,255,255,0.7)]"
               dangerouslySetInnerHTML={{
                 __html: t("marketing.hero_marketing_section.title"),
               }}
             />
-            <p className="text-base md:text-lg mb-6">
+            <p className="text-base md:text-lg font-sans mb-6">
               {t("marketing.hero_marketing_section.description")}
             </p>
 

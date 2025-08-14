@@ -99,7 +99,7 @@ export default async function AboutPage({
                   </GlitchText>
                 </span>
               </h1>
-              <p className="text-xl text-gray-700 dark:text-gray-300 max-w-xl leading-relaxed font-medium">
+              <p className="text-xl font-sans text-gray-700 dark:text-gray-300 max-w-xl leading-relaxed font-medium">
                 {t('description')}
               </p>
             </div>

@@ -34,12 +34,12 @@ export const Footer = async ({ locale }: FooterProps) => {
                         <div className="flex items-center mb-4">
                             <Link href={`/${locale}`} className="flex items-center">
                                 <img src="/icons/logo.png" alt="Logo" className="h-8 w-auto mr-2" />
-                                <span className="text-xl font-extrabold font-inter dark:text-white">
+                                <span className="text-xl font-extrabold font-heading dark:text-white">
                                     {tCommon('outliersAcademy')}
                                 </span>
                             </Link>
                         </div>
-                        <p className="text-base font-normal font-inter text-gray-600 dark:text-gray-300">
+                        <p className="text-base font-normal font-sans text-gray-600 dark:text-gray-300">
                             {t('description')}
                             <br />
                             <span className="font-semibold">{t('tagline')}</span>

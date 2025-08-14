@@ -31,12 +31,12 @@ export const HeroSystemSection = () => {
                     {/* Lado izquierdo - Texto */}
                     <div className="w-full space-y-6">
                         <h1
-                            className="text-3xl sm:text-5xl md:text-5xl lg:text-5xl xl:text-5xl font-extrabold tracking-tight text-gray-900 dark:text-white filter drop-shadow-[0_0_10px_rgba(255,255,255,0.7)]"
+                            className="text-3xl sm:text-5xl md:text-5xl lg:text-5xl xl:text-5xl font-heading font-extrabold tracking-tight text-gray-900 dark:text-white filter drop-shadow-[0_0_10px_rgba(255,255,255,0.7)]"
                         >
                             {t('systems.hero_system_section.title')}
                         </h1>
 
-                        <p className="text-base md:text-lg max-w-lg">
+                        <p className="text-base md:text-lg font-sans max-w-lg">
                             {t('systems.hero_system_section.description')}
                         </p>
 

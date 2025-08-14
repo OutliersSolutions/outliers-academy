@@ -50,7 +50,7 @@ export default function MarketingPage({
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Content */}
             <div className="animate-fade-in">
-              <h1 className="text-4xl md:text-5xl font-extrabold text-text mb-6 leading-tight">
+              <h1 className="text-4xl md:text-5xl font-heading font-extrabold text-text mb-6 leading-tight">
                 Desarrollo Web y <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">Marketing Digital</span>
               </h1>
               
@@ -139,7 +139,7 @@ export default function MarketingPage({
             {marketingServices.map((service, index) => (
               <div key={index} className="group">
                 <div className="bg-white dark:bg-surface border border-neutral-200 dark:border-neutral-700 rounded-2xl p-8 h-full hover:shadow-xl hover:border-primary/20 transition-all duration-300 group-hover:-translate-y-2">
-                  <h3 className="text-xl font-bold mb-4 group-hover:text-primary transition-colors">{service.title}</h3>
+                  <h3 className="text-xl font-heading font-bold mb-4 group-hover:text-primary transition-colors">{service.title}</h3>
                   <p className="text-neutral-600 dark:text-neutral-300 mb-6 leading-relaxed">{service.description}</p>
                   
                   <ul className="space-y-2">

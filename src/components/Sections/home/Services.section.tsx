@@ -20,12 +20,12 @@ export const ServiceSection = () => {
           className="text-left md:text-center mb-16 text-gray-600 dark:text-gray-300 leading-relaxed"
         >
           <h2
-            className="font-inter font-extrabold text-3xl md:text-5xl tracking-tight mb-4 dark:text-white"
+            className="font-heading font-extrabold text-3xl md:text-5xl tracking-tight mb-4 dark:text-white"
             dangerouslySetInnerHTML={{
               __html: t("home.service_section.title"),
             }}
           />
-          <p className="w-full md:w-3/4 lg:w-2/3 mx-auto text-base md:text-lg lg:text-xl font-normal">
+          <p className="w-full md:w-3/4 lg:w-2/3 mx-auto text-base md:text-lg lg:text-xl font-sans font-normal">
             {t("home.service_section.description")}
           </p>
         </motion.div>

@@ -29,7 +29,7 @@ export default async function ContactPage({
               {t('title')}
             </h1>
             
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-xl font-sans text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed">
               {t('description')}
             </p>
           </div>
@@ -147,7 +147,7 @@ export default async function ContactPage({
                     <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center">
                       <HelpCircle className="w-5 h-5 text-white" />
                     </div>
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                    <h3 className="text-xl font-heading font-bold text-gray-900 dark:text-white">
                       {robotT('virtualAssistant')}
                     </h3>
                   </div>
@@ -170,7 +170,7 @@ export default async function ContactPage({
                   <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center">
                     <MessageCircle className="w-5 h-5 text-white" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                  <h3 className="text-xl font-heading font-bold text-gray-900 dark:text-white">
                     {robotT('otherWays')}
                   </h3>
                 </div>

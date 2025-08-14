@@ -6,9 +6,26 @@ import { WhatsAppButton } from '@/components/ui/WhatsAppButton';
 import { getTranslations } from 'next-intl/server';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { GlobalLoader } from '@/components/GlobalLoader';
-import { Inter } from 'next/font/google';
+import { Inter, Manrope, JetBrains_Mono } from 'next/font/google';
 
-const inter = Inter({ subsets: ['latin'] });
+// Font configurations
+const inter = Inter({ 
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+});
+
+const manrope = Manrope({ 
+  subsets: ['latin'],
+  variable: '--font-manrope',
+  display: 'swap',
+});
+
+const jetbrainsMono = JetBrains_Mono({ 
+  subsets: ['latin'],
+  variable: '--font-code-primary',
+  display: 'swap',
+});
 
 export default async function RootLayout({
   children,
@@ -45,7 +62,7 @@ export default async function RootLayout({
         <link rel="icon" href="/logo.ico" />
         <link rel="apple-touch-icon" href="/logo.ico" />
       </head>
-      <body className={inter.className}>
+      <body className={`${inter.variable} ${manrope.variable} ${jetbrainsMono.variable} font-sans`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
