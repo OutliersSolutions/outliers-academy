@@ -44,7 +44,7 @@ export function useAuth(): AuthState {
       }
     };
 
-    checkLegacyAuth();
+      checkLegacyAuth();
   }, []);
 
   // If legacy session exists, use it

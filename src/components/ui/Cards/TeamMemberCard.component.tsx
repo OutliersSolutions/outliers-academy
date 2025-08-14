@@ -1,8 +1,8 @@
 import { Card, CardContent } from "@/components/ui/Cards/Card.component";
-import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
+import { Facebook, Instagram, Linkedin, Twitter, Github } from "lucide-react";
 
 interface SocialLink {
-    platform: "facebook" | "instagram" | "linkedin" | "twitter";
+    platform: "facebook" | "instagram" | "linkedin" | "twitter" | "github";
     url: string;
 }
 
@@ -82,6 +82,7 @@ export const TeamMemberCard = ({
                                     {link.platform === "instagram" && <Instagram size={18} />}
                                     {link.platform === "linkedin" && <Linkedin size={18} />}
                                     {link.platform === "twitter" && <Twitter size={18} />}
+                                    {link.platform === "github" && <Github size={18} />}
                                 </a>
                             ))}
                         </div>

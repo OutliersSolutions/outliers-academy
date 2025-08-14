@@ -92,6 +92,70 @@ export default function CourseOverviewPage({
   const isSpanish = locale === 'es';
 
   useEffect(() => {
+    const generateMockLessons = (): CourseLesson[] => {
+      const lessonTitles = isSpanish ? [
+        'Introducción y conceptos básicos',
+        'Configuración del entorno de desarrollo',
+        'Primeros pasos con el framework',
+        'Creando tu primer proyecto',
+        'Manejo de datos y estado',
+        'Componentes y reutilización',
+        'Estilizado y diseño responsivo',
+        'Integración con APIs',
+        'Testing y debugging',
+        'Despliegue y producción'
+      ] : [
+        'Introduction and basic concepts',
+        'Development environment setup',
+        'First steps with the framework',
+        'Creating your first project',
+        'Data and state management',
+        'Components and reusability',
+        'Styling and responsive design',
+        'API integration',
+        'Testing and debugging',
+        'Deployment and production'
+      ];
+
+      return lessonTitles.map((title, index) => ({
+        id: index + 1,
+        title,
+        description: isSpanish ? 
+          `En esta lección aprenderás sobre ${title.toLowerCase()}` :
+          `In this lesson you will learn about ${title.toLowerCase()}`,
+        duration: Math.floor(Math.random() * 30) + 10,
+        is_preview: index < 2,
+        completed: false,
+        order: index + 1
+      }));
+    };
+
+    const generateMockReviews = (): Review[] => {
+      const names = ['Ana García', 'Carlos Rodríguez', 'Sofia Martín', 'Diego López', 'Elena Ruiz'];
+      const comments = isSpanish ? [
+        'Excelente curso, muy bien explicado y con ejemplos prácticos.',
+        'Me encantó la metodología, aprendí muchísimo.',
+        'Perfecto para principiantes, todo muy claro.',
+        'El instructor explica de manera muy didáctica.',
+        'Recomiendo este curso 100%, vale la pena cada minuto.'
+      ] : [
+        'Excellent course, very well explained with practical examples.',
+        'I loved the methodology, I learned a lot.',
+        'Perfect for beginners, everything very clear.',
+        'The instructor explains in a very didactic way.',
+        'I recommend this course 100%, worth every minute.'
+      ];
+
+      return names.map((name, index) => ({
+        id: index + 1,
+        user_name: name,
+        user_avatar: `https://i.pravatar.cc/40?img=${index + 10}`,
+        rating: Math.floor(Math.random() * 2) + 4, // 4 or 5 stars
+        comment: comments[index],
+        date: new Date(Date.now() - Math.random() * 10000000000).toISOString()
+      }));
+    };
+
     const fetchCourse = async () => {
       try {
         setLoading(true);
@@ -181,69 +245,6 @@ export default function CourseOverviewPage({
     fetchCourse();
   }, [params.slug, isSpanish]);
 
-  const generateMockLessons = (): CourseLesson[] => {
-    const lessonTitles = isSpanish ? [
-      'Introducción y conceptos básicos',
-      'Configuración del entorno de desarrollo',
-      'Primeros pasos con el framework',
-      'Creando tu primer proyecto',
-      'Manejo de datos y estado',
-      'Componentes y reutilización',
-      'Estilizado y diseño responsivo',
-      'Integración con APIs',
-      'Testing y debugging',
-      'Despliegue y producción'
-    ] : [
-      'Introduction and basic concepts',
-      'Development environment setup',
-      'First steps with the framework',
-      'Creating your first project',
-      'Data and state management',
-      'Components and reusability',
-      'Styling and responsive design',
-      'API integration',
-      'Testing and debugging',
-      'Deployment and production'
-    ];
-
-    return lessonTitles.map((title, index) => ({
-      id: index + 1,
-      title,
-      description: isSpanish ? 
-        `En esta lección aprenderás sobre ${title.toLowerCase()}` :
-        `In this lesson you will learn about ${title.toLowerCase()}`,
-      duration: Math.floor(Math.random() * 30) + 10,
-      is_preview: index < 2,
-      completed: false,
-      order: index + 1
-    }));
-  };
-
-  const generateMockReviews = (): Review[] => {
-    const names = ['Ana García', 'Carlos Rodríguez', 'Sofia Martín', 'Diego López', 'Elena Ruiz'];
-    const comments = isSpanish ? [
-      'Excelente curso, muy bien explicado y con ejemplos prácticos.',
-      'Me ayudó mucho a entender conceptos que antes me parecían complicados.',
-      'La instructora explica de manera muy clara, totalmente recomendado.',
-      'Buen contenido, aunque esperaba un poco más de profundidad en algunos temas.',
-      'Perfecto para principiantes, el ritmo es ideal para aprender paso a paso.'
-    ] : [
-      'Excellent course, very well explained with practical examples.',
-      'It helped me understand concepts that seemed complicated before.',
-      'The instructor explains very clearly, totally recommended.',
-      'Good content, although I expected a bit more depth in some topics.',
-      'Perfect for beginners, the pace is ideal for step-by-step learning.'
-    ];
-
-    return names.map((name, index) => ({
-      id: index + 1,
-      user_name: name,
-      user_avatar: `https://i.pravatar.cc/40?img=${index + 10}`,
-      rating: Math.floor(Math.random() * 2) + 4, // 4 or 5 stars
-      comment: comments[index],
-      date: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).toLocaleDateString()
-    }));
-  };
 
   const getDifficultyColor = (difficulty?: string) => {
     switch (difficulty) {

@@ -186,7 +186,7 @@ export function CourseGridClient() {
         
         return (
           <div key={c.id} className="group relative bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-500 overflow-hidden border border-gray-200/50 dark:border-white/20 hover:border-gray-300/70 dark:hover:border-white/30 transform hover:scale-105">
-            {/* Course Image */}
+          {/* Course Image */}
             <Link href={`/${locale}/course/${c.slug}/overview`}>
               <div className="relative h-56 overflow-hidden cursor-pointer">
                 <div className="w-full h-full bg-gradient-to-br from-blue-500/80 via-purple-500/70 to-pink-500/60 flex items-center justify-center relative">
@@ -201,14 +201,14 @@ export function CourseGridClient() {
                     <span className="text-3xl font-bold text-white drop-shadow-lg">
                       {courseName.charAt(0)}
                     </span>
-                  </div>
-                </div>
+              </div>
+            </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent group-hover:from-black/30 transition-all duration-500" />
-                
+            
                 {/* Price Badge mejorado */}
                 <div className="absolute top-6 right-6 bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm px-4 py-2 rounded-2xl shadow-xl border border-gray-200/50 dark:border-white/30">
                   <span className="font-bold text-gray-800 dark:text-gray-200 text-lg">${c.price}</span>
-                </div>
+          </div>
 
                 {/* Nivel badge */}
                 {c.level && (
@@ -219,29 +219,29 @@ export function CourseGridClient() {
               </div>
             </Link>
 
-            {/* Course Content */}
+          {/* Course Content */}
             <div className="p-8">
               <Link href={`/${locale}/course/${c.slug}/overview`}>
                 <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors cursor-pointer leading-tight">
                   {courseName}
-                </h3>
+            </h3>
               </Link>
-              
+            
               <p className="text-gray-700 dark:text-gray-300 mb-6 line-clamp-2 leading-relaxed">
-                {c.description || tCommon('learnNewSkills')}
-              </p>
+              {c.description || tCommon('learnNewSkills')}
+            </p>
 
               {/* Course Meta mejorado */}
               <div className="flex items-center justify-between mb-6 text-sm text-gray-600 dark:text-gray-400">
                 <div className="flex items-center gap-6">
-                  {c.duration && (
+                {c.duration && (
                     <span className="flex items-center gap-2 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">
                       <svg className="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
                       <span className="font-semibold text-gray-800 dark:text-gray-200">{c.duration}h</span>
-                    </span>
-                  )}
+                  </span>
+                )}
                 </div>
                 {c.rating && (
                   <span className="flex items-center gap-1 bg-yellow-50 dark:bg-yellow-900/30 px-3 py-1 rounded-full">
@@ -258,7 +258,7 @@ export function CourseGridClient() {
                 <div className="text-sm text-gray-600 dark:text-gray-400 mb-6 bg-blue-50 dark:bg-blue-900/30 px-3 py-2 rounded-xl">
                   <span className="font-semibold text-blue-700 dark:text-blue-300">
                     {c.students.toLocaleString()} {tCourse('students')} inscritos
-                  </span>
+                </span>
                 </div>
               )}
 
