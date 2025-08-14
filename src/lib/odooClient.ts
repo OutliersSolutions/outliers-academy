@@ -34,7 +34,7 @@ async function jsonRpc<T>(endpoint: string, payload: any): Promise<T> {
   return data.result as T;
 }
 
-async function authenticate(): Promise<number> {
+export async function authenticate(): Promise<number> {
   if (!isOdooConfigured) throw new Error('Odoo is not configured');
   if (uidCache) return uidCache;
   const uid = await jsonRpc<number>('/jsonrpc', {
