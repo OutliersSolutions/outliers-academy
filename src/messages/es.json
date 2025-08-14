@@ -100,7 +100,7 @@
         "aiAgents": "Agentes IA"
     },
     "about": {
-        "title": "Sobre Outliers Academy",
+        "title": "Sobre",
         "description": "Somos una empresa especializada en diseño, desarrollo de software e inteligencia artificial. Diseñamos tu marca, hacemos crecer tu presencia online, aumentamos tus ventas y optimizamos tus procesos con software e inteligencia artificial.",
         "mission": {
             "title": "Nuestra Misión",
@@ -195,16 +195,46 @@
         }
     },
     "search": {
-        "placeholder": "¿Qué quieres aprender hoy?",
-        "popularSearches": "Búsquedas populares",
+        "placeholder": "Buscar por título, tecnología o instructor...",
         "recentSearches": "Búsquedas recientes",
+        "popularSearches": "Búsquedas populares",
+        "popularTerms": [
+            "Python",
+            "React",
+            "JavaScript",
+            "Machine Learning",
+            "Desarrollo Web"
+        ],
+        "loading": "Buscando...",
         "noResults": "No se encontraron resultados",
-        "noResultsDescription": "Intenta con términos diferentes o explora nuestro catálogo completo",
+        "noResultsDescription": "Intenta con otros términos de búsqueda o explora nuestros cursos populares",
         "types": {
             "course": "Curso",
-            "path": "Ruta",
+            "path": "Ruta de aprendizaje",
             "article": "Artículo",
             "project": "Proyecto"
+        },
+        "results": {
+            "python": {
+                "title": "Fundamentos de Python",
+                "description": "Aprende los fundamentos del lenguaje de programación Python"
+            },
+            "fullstack": {
+                "title": "Desarrollo Full Stack",
+                "description": "Ruta completa para convertirte en desarrollador web full stack"
+            },
+            "dataAnalysis": {
+                "title": "Análisis de Datos",
+                "description": "Domina el análisis de datos y la visualización"
+            },
+            "cybersecurity": {
+                "title": "Ciberseguridad",
+                "description": "Aprende sobre seguridad de redes y hacking ético"
+            },
+            "ai": {
+                "title": "Inteligencia Artificial",
+                "description": "Guía completa de inteligencia artificial"
+            }
         }
     },
     "robot": {

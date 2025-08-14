@@ -72,6 +72,7 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
     }
   ];
 
+  // Popular searches from translations t.raw('popularTerms') || 
   const popularSearches = ['Python', 'React', 'JavaScript', 'Machine Learning', 'Web Development'];
 
   useEffect(() => {
@@ -210,7 +211,7 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                     {t('popularSearches')}
                   </h3>
                   <div className="flex flex-wrap gap-2">
-                    {popularSearches.map((search, index) => (
+                    {popularSearches.map((search: string, index: number) => (
                       <button
                         key={index}
                         onClick={() => handlePopularSearch(search)}
@@ -230,7 +231,7 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                 {isLoading ? (
                   <div className="text-center py-8">
                     <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-                    <p className="text-gray-500 dark:text-gray-400">Buscando...</p>
+                    <p className="text-gray-500 dark:text-gray-400">{t('loading')}</p>
                   </div>
                 ) : results.length > 0 ? (
                   <div className="space-y-4">

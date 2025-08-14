@@ -195,16 +195,46 @@
         }
     },
     "search": {
-        "placeholder": "What are you learning today?",
-        "popularSearches": "Popular searches",
+        "placeholder": "Search by title, technology or instructor...",
         "recentSearches": "Recent searches",
+        "popularSearches": "Popular searches",
+        "popularTerms": [
+            "Python",
+            "React",
+            "JavaScript",
+            "Machine Learning",
+            "Web Development"
+        ],
+        "loading": "Searching...",
         "noResults": "No results found",
-        "noResultsDescription": "Try different terms or explore our complete catalog",
+        "noResultsDescription": "Try different search terms or explore our popular courses",
         "types": {
             "course": "Course",
-            "path": "Path",
+            "path": "Learning path",
             "article": "Article",
             "project": "Project"
+        },
+        "results": {
+            "python": {
+                "title": "Python Basics",
+                "description": "Learn the basics of Python programming language"
+            },
+            "fullstack": {
+                "title": "Full Stack Development",
+                "description": "Complete path to become a full-stack web developer"
+            },
+            "dataAnalysis": {
+                "title": "Data Analysis",
+                "description": "Master data analysis and visualization"
+            },
+            "cybersecurity": {
+                "title": "Cybersecurity",
+                "description": "Learn about network security and ethical hacking"
+            },
+            "ai": {
+                "title": "Artificial Intelligence",
+                "description": "Complete guide to artificial intelligence"
+            }
         }
     },
     "robot": {
