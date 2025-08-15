@@ -55,7 +55,7 @@ export default async function HomePage({
               </span>
               
               <h1 className="h1-hero mb-6">
-                <span className="inline-block mr-2">{t('headline.animated.baseText')}</span>
+                <span className="block">{t('headline.animated.baseText')}</span>
                 <AnimatedTextWrapper 
                   baseText=""
                   words={t.raw('headline.animated.words')}
