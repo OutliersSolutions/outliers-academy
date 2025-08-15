@@ -153,8 +153,75 @@ export function Navbar() {
               </Link>
             </nav>
 
-            {/* Right Side - Always Visible Auth Buttons + Mobile Menu */}
+            {/* Right Side - Desktop Utils + Auth Buttons + Mobile Menu */}
             <div className="flex items-center gap-3">
+              {/* Desktop-only: Theme Toggle and Language Selector */}
+              <div className="hidden lg:flex items-center gap-2">
+                {/* Theme Toggle */}
+                <button
+                  aria-label={tCommon("toggleTheme")}
+                  onClick={toggleTheme}
+                  className="p-2 text-solarized-base00 dark:text-gray-400 hover:text-solarized-base01 dark:hover:text-white hover:bg-solarized-base2 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                >
+                  {isDark ? (
+                    <Sun className="w-4 h-4" />
+                  ) : (
+                    <Moon className="w-4 h-4" />
+                  )}
+                </button>
+
+                {/* Language Selector */}
+                <div className="relative" ref={dropdownRef}>
+                  <button
+                    onClick={() => setOpen((v) => !v)}
+                    className="flex items-center gap-2 px-3 py-2 text-solarized-base00 dark:text-gray-400 hover:text-solarized-base01 dark:hover:text-white hover:bg-solarized-base2 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                  >
+                    <img
+                      src={
+                        locale === "es"
+                          ? "/icons/flags/spain-flag-icon.svg"
+                          : "/icons/flags/united-states-flag-icon.svg"
+                      }
+                      alt="flag"
+                      className="w-5 h-5 rounded-sm"
+                    />
+                    <span className="text-sm font-medium">
+                      {locale.toUpperCase()}
+                    </span>
+                    <ChevronDown className="w-4 h-4" />
+                  </button>
+
+                  {open && (
+                    <div className="absolute top-full right-0 mt-2 w-40 bg-solarized-base2 dark:bg-gray-800 rounded-lg shadow-lg border border-solarized-base1 dark:border-gray-700 z-50">
+                      <Link
+                        href={switchLocalePath("es")}
+                        className="w-full flex items-center gap-2 px-3 py-2 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3 dark:hover:bg-gray-700"
+                        onClick={() => setOpen(false)}
+                      >
+                        <img
+                          src="/icons/flags/spain-flag-icon.svg"
+                          alt="ES"
+                          className="w-5 h-5 rounded-sm"
+                        />
+                        Español
+                      </Link>
+                      <Link
+                        href={switchLocalePath("en")}
+                        className="w-full flex items-center gap-2 px-3 py-2 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3 dark:hover:bg-gray-700"
+                        onClick={() => setOpen(false)}
+                      >
+                        <img
+                          src="/icons/flags/united-states-flag-icon.svg"
+                          alt="EN"
+                          className="w-5 h-5 rounded-sm"
+                        />
+                        English
+                      </Link>
+                    </div>
+                  )}
+                </div>
+              </div>
+
               {/* Auth Buttons - Always Visible */}
               {isAuthenticated && user ? (
                 <div className="relative" ref={userMenuRef}>
