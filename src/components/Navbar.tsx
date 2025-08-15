@@ -13,6 +13,8 @@ import {
   LogOut,
   BarChart3,
   BookOpen,
+  Menu,
+  X,
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import { SearchOverlay } from "@/components/ui/SearchOverlay";
@@ -29,8 +31,10 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const userMenuRef = useRef<HTMLDivElement>(null);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   // next-themes
   const { theme, resolvedTheme, setTheme } = useTheme();
@@ -51,11 +55,22 @@ export function Navbar() {
       ) {
         setUserMenuOpen(false);
       }
+      if (
+        mobileMenuRef.current &&
+        !mobileMenuRef.current.contains(e.target as Node)
+      ) {
+        setMobileMenuOpen(false);
+      }
     };
 
     document.addEventListener("click", onClickOutside);
     return () => document.removeEventListener("click", onClickOutside);
   }, []);
+
+  // Cerrar menú móvil al cambiar de ruta
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [pathname]);
 
   const switchLocalePath = (target: string) => {
     // si tu routing es "/[locale]/..." esto sustituye el segmento 1
@@ -94,7 +109,7 @@ export function Navbar() {
                 alt="Outliers Academy"
                 className="w-8 h-8 object-contain"
               />
-              <span className="font-heading font-extrabold text-xl">
+              <span className="font-heading font-extrabold text-lg sm:text-xl">
                 <span className="text-solarized-base01 dark:text-white">
                   Outliers
                 </span>{" "}
@@ -102,7 +117,7 @@ export function Navbar() {
               </span>
             </Link>
 
-            {/* Navigation Links */}
+            {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-8 text-sm font-medium text-solarized-base01 dark:text-gray-300">
               <Link
                 href={`/${locale}/catalog`}
@@ -138,82 +153,9 @@ export function Navbar() {
               </Link>
             </nav>
 
-            {/* Search Button */}
-            <div className="hidden md:flex items-center gap-4">
-              <button
-                onClick={() => setIsSearchOpen(true)}
-                className="flex items-center gap-2 px-4 py-2 text-solarized-base00 dark:text-gray-400 hover:text-solarized-base01 dark:hover:text-white transition-colors"
-              >
-                <Search className="w-4 h-4" />
-                <span className="text-sm font-medium">{tCommon("search")}</span>
-              </button>
-            </div>
-
-            {/* Right Side Actions */}
+            {/* Right Side - Always Visible Auth Buttons + Mobile Menu */}
             <div className="flex items-center gap-3">
-              {/* Theme Toggle */}
-              <button
-                aria-label={tCommon("toggleTheme")}
-                onClick={toggleTheme}
-                className="p-2 text-solarized-base00 dark:text-gray-400 hover:text-solarized-base01 dark:hover:text-white hover:bg-solarized-base2 dark:hover:bg-gray-800 rounded-lg transition-colors"
-              >
-                {isDark ? (
-                  <Sun className="w-4 h-4" />
-                ) : (
-                  <Moon className="w-4 h-4" />
-                )}
-              </button>
-
-              {/* Language Selector */}
-              <div className="relative" ref={dropdownRef}>
-                <button
-                  onClick={() => setOpen((v) => !v)}
-                  className="flex items-center gap-2 px-3 py-2 text-solarized-base00 dark:text-gray-400 hover:text-solarized-base01 dark:hover:text-white hover:bg-solarized-base2 dark:hover:bg-gray-800 rounded-lg transition-colors"
-                >
-                  <img
-                    src={
-                      locale === "es"
-                        ? "/icons/flags/spain-flag-icon.svg"
-                        : "/icons/flags/united-states-flag-icon.svg"
-                    }
-                    alt="flag"
-                    className="w-5 h-5 rounded-sm"
-                  />
-                  <span className="text-sm font-medium">
-                    {locale.toUpperCase()}
-                  </span>
-                  <ChevronDown className="w-4 h-4" />
-                </button>
-
-                {open && (
-                  <div className="absolute top-full right-0 mt-2 w-40 bg-solarized-base2 dark:bg-gray-800 rounded-lg shadow-lg border border-solarized-base1 dark:border-gray-700">
-                    <Link
-                      href={switchLocalePath("es")}
-                      className="w-full flex items-center gap-2 px-3 py-2 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3 dark:hover:bg-gray-700"
-                    >
-                      <img
-                        src="/icons/flags/spain-flag-icon.svg"
-                        alt="ES"
-                        className="w-5 h-5 rounded-sm"
-                      />
-                      Español
-                    </Link>
-                    <Link
-                      href={switchLocalePath("en")}
-                      className="w-full flex items-center gap-2 px-3 py-2 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3 dark:hover:bg-gray-700"
-                    >
-                      <img
-                        src="/icons/flags/united-states-flag-icon.svg"
-                        alt="EN"
-                        className="w-5 h-5 rounded-sm"
-                      />
-                      English
-                    </Link>
-                  </div>
-                )}
-              </div>
-
-              {/* User Menu */}
+              {/* Auth Buttons - Always Visible */}
               {isAuthenticated && user ? (
                 <div className="relative" ref={userMenuRef}>
                   <button
@@ -234,12 +176,12 @@ export function Navbar() {
                   </button>
 
                   {userMenuOpen && (
-                    <div className="absolute top-full right-0 mt-2 w-48 bg-solarized-base2 dark:bg-gray-800 rounded-lg shadow-lg border border-solarized-base1 dark:border-gray-700">
+                    <div className="absolute top-full right-0 mt-2 w-48 bg-solarized-base2 dark:bg-gray-800 rounded-lg shadow-lg border border-solarized-base1 dark:border-gray-700 z-50">
                       <div className="px-4 py-3 border-b border-solarized-base1 dark:border-gray-700">
-                        <p className="text-sm font-medium text-solarized-base01 dark:text-white">
+                        <p className="text-sm font-medium text-solarized-base01 dark:text-white truncate">
                           {user.name || user.email}
                         </p>
-                        <p className="text-xs text-solarized-base00 dark:text-gray-400">
+                        <p className="text-xs text-solarized-base00 dark:text-gray-400 truncate">
                           {user.email}
                         </p>
                       </div>
@@ -270,20 +212,20 @@ export function Navbar() {
                   )}
                 </div>
               ) : (
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2">
                   {authLoading ? (
                     <LoaderInline size="sm" />
                   ) : (
                     <>
                       <Link
                         href={`/${locale}/login`}
-                        className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 font-medium text-primary border border-primary bg-transparent transition-all duration-200 hover:bg-primary hover:text-white hover:shadow-md"
+                        className="hidden sm:inline-flex items-center gap-2 rounded-full px-3 sm:px-4 py-1.5 text-sm font-medium text-primary border border-primary bg-transparent transition-all duration-200 hover:bg-primary hover:text-white hover:shadow-md"
                       >
                         {t("signIn")}
                       </Link>
                       <Link
                         href={`/${locale}/signup`}
-                        className="inline-flex items-center gap-2 rounded-full px-4 py-2 font-heading font-semibold text-white transition-all duration-200 hover:brightness-110 hover:scale-105 hover:shadow-lg"
+                        className="inline-flex items-center gap-2 rounded-full px-3 sm:px-4 py-1.5 sm:py-2 text-sm font-heading font-semibold text-white transition-all duration-200 hover:brightness-110 hover:scale-105 hover:shadow-lg"
                         style={{
                           background:
                             "linear-gradient(135deg, var(--color-primary), var(--color-accent))",
@@ -295,6 +237,158 @@ export function Navbar() {
                   )}
                 </div>
               )}
+
+              {/* Mobile Menu Button */}
+              <div className="block lg:hidden ml-2" ref={mobileMenuRef}>
+                <button
+                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                  className="flex items-center justify-center p-2 w-10 h-10 text-solarized-base01 dark:text-gray-300 hover:text-primary dark:hover:text-white hover:bg-solarized-base2 dark:hover:bg-gray-800 rounded-lg transition-colors border border-solarized-base1 dark:border-gray-600"
+                  aria-label="Toggle mobile menu"
+                >
+                  {mobileMenuOpen ? (
+                    <X className="w-5 h-5" />
+                  ) : (
+                    <Menu className="w-5 h-5" />
+                  )}
+                </button>
+
+                {/* Mobile Menu Dropdown */}
+                {mobileMenuOpen && (
+                  <div className="absolute top-full right-0 mt-2 w-64 bg-solarized-base2 dark:bg-gray-800 rounded-lg shadow-lg border border-solarized-base1 dark:border-gray-700 z-50">
+                    {/* Auth buttons for small screens */}
+                    {!isAuthenticated && (
+                      <div className="sm:hidden p-4 border-b border-solarized-base1 dark:border-gray-700">
+                        <div className="space-y-2">
+                          <Link
+                            href={`/${locale}/login`}
+                            className="w-full inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-primary border border-primary bg-transparent transition-all duration-200 hover:bg-primary hover:text-white"
+                            onClick={() => setMobileMenuOpen(false)}
+                          >
+                            {t("signIn")}
+                          </Link>
+                          <Link
+                            href={`/${locale}/signup`}
+                            className="w-full inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-heading font-semibold text-white transition-all duration-200 hover:brightness-110"
+                            style={{
+                              background:
+                                "linear-gradient(135deg, var(--color-primary), var(--color-accent))",
+                            }}
+                            onClick={() => setMobileMenuOpen(false)}
+                          >
+                            {t("signUp")}
+                          </Link>
+                        </div>
+                      </div>
+                    )}
+                    {/* Navigation Links */}
+                    <div className="py-2">
+                      <Link
+                        href={`/${locale}/catalog`}
+                        className="flex items-center gap-2 px-4 py-3 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3 dark:hover:bg-gray-700 transition-colors"
+                      >
+                        <BookOpen className="w-4 h-4" />
+                        {t("catalog")}
+                      </Link>
+                      {isAuthenticated && (
+                        <Link
+                          href={`/${locale}/my-courses`}
+                          className="flex items-center gap-2 px-4 py-3 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3 dark:hover:bg-gray-700 transition-colors"
+                        >
+                          <BarChart3 className="w-4 h-4" />
+                          {t("myCourses")}
+                        </Link>
+                      )}
+                      <Link
+                        href={`/${locale}/pricing`}
+                        className="flex items-center gap-2 px-4 py-3 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3 dark:hover:bg-gray-700 transition-colors"
+                      >
+                        {t("pricing")}
+                      </Link>
+                      <Link
+                        href={`/${locale}/about`}
+                        className="flex items-center gap-2 px-4 py-3 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3 dark:hover:bg-gray-700 transition-colors"
+                      >
+                        {t("about")}
+                      </Link>
+                      <Link
+                        href={`/${locale}/contact`}
+                        className="flex items-center gap-2 px-4 py-3 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3 dark:hover:bg-gray-700 transition-colors"
+                      >
+                        {t("contact")}
+                      </Link>
+                    </div>
+
+                    <hr className="border-solarized-base1 dark:border-gray-700" />
+
+                    {/* Search */}
+                    <button
+                      onClick={() => {
+                        setIsSearchOpen(true);
+                        setMobileMenuOpen(false);
+                      }}
+                      className="flex items-center gap-2 w-full px-4 py-3 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3 dark:hover:bg-gray-700 transition-colors"
+                    >
+                      <Search className="w-4 h-4" />
+                      {tCommon("search")}
+                    </button>
+
+                    {/* Theme Toggle */}
+                    <button
+                      onClick={() => {
+                        toggleTheme();
+                        setMobileMenuOpen(false);
+                      }}
+                      className="flex items-center gap-2 w-full px-4 py-3 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3 dark:hover:bg-gray-700 transition-colors"
+                    >
+                      {isDark ? (
+                        <Sun className="w-4 h-4" />
+                      ) : (
+                        <Moon className="w-4 h-4" />
+                      )}
+                      {tCommon("toggleTheme")}
+                    </button>
+
+                    <hr className="border-solarized-base1 dark:border-gray-700" />
+
+                    {/* Language Selector */}
+                    <div className="py-2">
+                      <div className="px-4 py-2 text-xs font-semibold text-solarized-base00 dark:text-gray-500 uppercase tracking-wide">
+                        {locale === "es" ? "Idioma" : "Language"}
+                      </div>
+                      <Link
+                        href={switchLocalePath("es")}
+                        className="flex items-center gap-3 px-4 py-3 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3 dark:hover:bg-gray-700 transition-colors"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        <img
+                          src="/icons/flags/spain-flag-icon.svg"
+                          alt="ES"
+                          className="w-5 h-5 rounded-sm"
+                        />
+                        Español
+                        {locale === "es" && (
+                          <span className="ml-auto text-primary">✓</span>
+                        )}
+                      </Link>
+                      <Link
+                        href={switchLocalePath("en")}
+                        className="flex items-center gap-3 px-4 py-3 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3 dark:hover:bg-gray-700 transition-colors"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        <img
+                          src="/icons/flags/united-states-flag-icon.svg"
+                          alt="EN"
+                          className="w-5 h-5 rounded-sm"
+                        />
+                        English
+                        {locale === "en" && (
+                          <span className="ml-auto text-primary">✓</span>
+                        )}
+                      </Link>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
