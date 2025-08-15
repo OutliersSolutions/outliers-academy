@@ -254,7 +254,7 @@ export function Navbar() {
 
                 {/* Mobile Menu Dropdown */}
                 {mobileMenuOpen && (
-                  <div className="absolute top-full right-0 mt-2 w-64 bg-solarized-base2 dark:bg-gray-800 rounded-lg shadow-lg border border-solarized-base1 dark:border-gray-700 z-50">
+                  <div className="absolute top-full right-4 mt-2 w-64 bg-solarized-base2 dark:bg-gray-800 rounded-lg shadow-lg border border-solarized-base1 dark:border-gray-700 z-50">
                     {/* Auth buttons for small screens */}
                     {!isAuthenticated && (
                       <div className="sm:hidden p-4 border-b border-solarized-base1 dark:border-gray-700">
