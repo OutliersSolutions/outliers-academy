@@ -45,7 +45,7 @@ export default async function HomePage({
   return (
     <div>
       <section className="hero-gradient relative overflow-hidden">
-        <ParticlesBackground particleColor="#ff5a1f" opacity={0.3} particleSize={2} drawLines={false} density={3000} className="absolute inset-0 w-full h-full z-0" />
+        <ParticlesBackground particleColor="#ff5a1f" opacity={0.6} particleSize={3} drawLines={false} density={4500} className="absolute inset-0 w-full h-full z-0" />
         <div className="container mx-auto px-6 py-20 md:py-32 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="max-w-2xl">
