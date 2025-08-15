@@ -552,15 +552,6 @@
     "results": {
         "heroDescription": "Creamos soluciones digitales a medida que mejoran procesos, optimizan la experiencia de usuario y generan un impacto medible en el crecimiento de tu negocio."
     },
-    "services": {
-        "ai": {
-            "comparisonTitle": "Comparativas antes y después de nuestra intervención.",
-            "comparisonSubtitle": "Resultados tangibles que impactan directamente en el éxito de tu negocio."
-        },
-        "metrics": {
-            "description": "Cuantificamos nuestro impacto con mediciones precisas. Estos son algunos de los resultados que hemos logrado para nuestros clientes."
-        }
-    },
     "courses": {
         "lessons": {
             "environment": "Configuración del entorno de desarrollo",

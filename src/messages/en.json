@@ -552,15 +552,6 @@
     "results": {
         "heroDescription": "We create custom digital solutions that improve processes, optimize user experience and generate measurable impact on your business growth."
     },
-    "services": {
-        "ai": {
-            "comparisonTitle": "Before and after comparisons of our intervention.",
-            "comparisonSubtitle": "Tangible results that directly impact your business success."
-        },
-        "metrics": {
-            "description": "We quantify our impact with precise measurements. These are some of the results we have achieved for our clients."
-        }
-    },
     "courses": {
         "lessons": {
             "environment": "Development environment setup",
