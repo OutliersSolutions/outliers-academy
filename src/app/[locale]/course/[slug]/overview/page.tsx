@@ -561,7 +561,7 @@ export default function CourseOverviewPage({
                     </div>
                     <div className="flex items-center gap-3">
                       <Download className="h-4 w-4 text-green-500" />
-                      <span>{t('downloadableResources')}</span>
+                      <span>{t('courseFeaturesResources')}</span>
                     </div>
                     <div className="flex items-center gap-3">
                       <Globe className="h-4 w-4 text-green-500" />

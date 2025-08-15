@@ -443,9 +443,9 @@
         "lifetimeAccess": "Acceso de por vida",
         "mobileDesktopAccess": "Acceso en móvil y desktop",
         "certificateCompletion": "Certificado de finalización",
-        "downloadableResources": "Recursos descargables",
         "communitySupport": "Soporte de la comunidad",
         "oneTimePayment": "Pago único • Acceso de por vida",
+        "courseFeaturesResources": "Recursos descargables",
         "difficulty": {
             "beginner": "Principiante",
             "intermediate": "Intermedio",
@@ -593,29 +593,5 @@
     "profile": {
         "securitySettings": "Gestiona tu contraseña y configuraciones de seguridad",
         "customizeExperience": "Personaliza tu experiencia de aprendizaje"
-    },
-    "search": {
-        "results": {
-            "python": {
-                "title": "Fundamentos de Python",
-                "description": "Aprende los fundamentos del lenguaje de programación Python"
-            },
-            "fullstack": {
-                "title": "Desarrollo Full Stack",
-                "description": "Ruta completa para convertirte en desarrollador web full stack"
-            },
-            "dataAnalysis": {
-                "title": "Análisis de Datos",
-                "description": "Domina el análisis de datos y la visualización"
-            },
-            "cybersecurity": {
-                "title": "Ciberseguridad",
-                "description": "Aprende sobre seguridad de redes y hacking ético"
-            },
-            "ai": {
-                "title": "Inteligencia Artificial",
-                "description": "Guía completa de inteligencia artificial"
-            }
-        }
     }
 }
