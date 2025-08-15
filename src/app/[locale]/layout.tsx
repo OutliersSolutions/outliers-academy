@@ -51,7 +51,7 @@ export default async function RootLayout({
   }
 
   return (
-    <html lang={locale} suppressHydrationWarning>
+    <>
       <head>
         <meta name="description" content={tCommon('metaDescription')} />
         <meta name="keywords" content="cursos, programación, desarrollo web, inteligencia artificial, tecnología, educación online" />
@@ -69,7 +69,7 @@ export default async function RootLayout({
         <link rel="apple-touch-icon" href="/logo.ico" />
         
         {/* Preload critical resources */}
-        <link rel="preload" href="/models/chatbot.glb" as="fetch" crossOrigin="anonymous" />
+        <link rel="preload" href="/models/chatbot.glb" as="object" type="model/gltf-binary" />
         <link rel="preload" href="/icons/logo.png" as="image" />
         
         {/* DNS prefetch for external resources */}
@@ -101,6 +101,6 @@ export default async function RootLayout({
           </NextIntlClientProvider>
         </ThemeProvider>
       </body>
-    </html>
+    </>
   );
 } 
