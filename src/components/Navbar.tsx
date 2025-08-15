@@ -43,28 +43,33 @@ export function Navbar() {
   // cerrar dropdown al click fuera
   useEffect(() => {
     const onClickOutside = (e: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(e.target as Node)
-      ) {
+      const target = e.target as Node;
+      
+      // Language dropdown
+      if (dropdownRef.current && !dropdownRef.current.contains(target)) {
         setOpen(false);
       }
-      if (
-        userMenuRef.current &&
-        !userMenuRef.current.contains(e.target as Node)
-      ) {
+      
+      // User menu
+      if (userMenuRef.current && !userMenuRef.current.contains(target)) {
         setUserMenuOpen(false);
       }
-      if (
-        mobileMenuRef.current &&
-        !mobileMenuRef.current.contains(e.target as Node)
-      ) {
+      
+      // Mobile menu - more specific check
+      if (mobileMenuRef.current && !mobileMenuRef.current.contains(target)) {
         setMobileMenuOpen(false);
       }
     };
 
-    document.addEventListener("click", onClickOutside);
-    return () => document.removeEventListener("click", onClickOutside);
+    const handleDocumentClick = (e: MouseEvent) => {
+      // Small delay to ensure proper event handling
+      setTimeout(() => onClickOutside(e), 0);
+    };
+
+    if (typeof document !== 'undefined') {
+      document.addEventListener("mousedown", handleDocumentClick, true);
+      return () => document.removeEventListener("mousedown", handleDocumentClick, true);
+    }
   }, []);
 
   // Cerrar menú móvil al cambiar de ruta
@@ -308,14 +313,23 @@ export function Navbar() {
               {/* Mobile Menu Button */}
               <div className="block lg:hidden ml-2" ref={mobileMenuRef}>
                 <button
-                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                  className="flex items-center justify-center p-2 w-10 h-10 text-solarized-base01 dark:text-gray-300 hover:text-primary dark:hover:text-white hover:bg-solarized-base2 dark:hover:bg-gray-800 rounded-lg transition-colors border border-solarized-base1 dark:border-gray-600"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setMobileMenuOpen(prev => !prev);
+                  }}
+                  className="flex items-center justify-center p-3 w-11 h-11 text-solarized-base01 dark:text-gray-300 hover:text-primary dark:hover:text-white hover:bg-solarized-base2 dark:hover:bg-gray-800 rounded-lg transition-colors border border-solarized-base1 dark:border-gray-600 relative z-10"
                   aria-label="Toggle mobile menu"
+                  aria-expanded={mobileMenuOpen}
+                  type="button"
                 >
+                  <span className="sr-only">
+                    {mobileMenuOpen ? 'Close menu' : 'Open menu'}
+                  </span>
                   {mobileMenuOpen ? (
-                    <X className="w-5 h-5" />
+                    <X className="w-5 h-5 pointer-events-none" />
                   ) : (
-                    <Menu className="w-5 h-5" />
+                    <Menu className="w-5 h-5 pointer-events-none" />
                   )}
                 </button>
 
