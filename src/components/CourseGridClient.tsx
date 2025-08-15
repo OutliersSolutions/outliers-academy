@@ -34,15 +34,18 @@ export function CourseGridClient() {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
+        console.log('Fetching courses...');
         const res = await fetch(`/api/courses`, {
           cache: 'no-store'
         });
         
         if (res.ok) {
           const data = await res.json();
+          console.log('Raw API data:', data);
           
           // Handle both array and object responses
           const coursesArray = Array.isArray(data) ? data : (data.courses || []);
+          console.log('Courses array:', coursesArray);
           
           // Map the courses to add missing fields and normalize data
           const mappedCourses = coursesArray.map((course: any) => ({
@@ -56,6 +59,7 @@ export function CourseGridClient() {
             students: course.students || Math.floor(Math.random() * 1000) + 100
           }));
           
+          console.log('Mapped courses:', mappedCourses);
           setCourses(mappedCourses);
         } else {
           // Fallback data for development
@@ -158,23 +162,23 @@ export function CourseGridClient() {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {[1, 2, 3].map((i) => (
-          <div key={i} className="group relative bg-surface/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl shadow-xl overflow-hidden border border-border hover:border-primary/30 transition-all duration-300 animate-pulse">
-            <div className="h-48 bg-gradient-to-br from-primary/20 via-accent/20 to-gold/20 relative">
+          <div key={i} className="group relative bg-white dark:bg-gray-800 backdrop-blur-sm rounded-3xl shadow-xl overflow-hidden border border-gray-200 dark:border-gray-700 transition-all duration-300 animate-pulse">
+            <div className="h-48 bg-gradient-to-br from-blue-200 via-purple-200 to-amber-200 dark:from-blue-800 dark:via-purple-800 dark:to-amber-800 relative">
               <div className="absolute inset-0 bg-gradient-to-br from-black/10 via-transparent to-white/10"></div>
               <div className="absolute top-4 left-4 w-8 h-8 bg-white/20 rounded-full"></div>
               <div className="absolute bottom-4 right-4 w-6 h-6 bg-white/15 rounded-full"></div>
               <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-white/30 rounded-2xl"></div>
             </div>
             <div className="p-6">
-              <div className="h-6 bg-muted rounded-lg mb-3"></div>
-              <div className="h-4 bg-muted/60 rounded mb-2"></div>
-              <div className="h-4 bg-muted/60 rounded w-2/3 mb-4"></div>
+              <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded-lg mb-3"></div>
+              <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded mb-2"></div>
+              <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3 mb-4"></div>
               <div className="flex justify-between items-center mb-4">
-                <div className="h-6 bg-muted/40 rounded-full w-16"></div>
-                <div className="h-6 bg-muted/40 rounded-full w-12"></div>
+                <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded-full w-16"></div>
+                <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded-full w-12"></div>
               </div>
-              <div className="h-10 bg-primary/20 rounded-2xl mb-2"></div>
-              <div className="h-10 bg-accent/20 rounded-2xl"></div>
+              <div className="h-10 bg-blue-200 dark:bg-blue-700 rounded-2xl mb-2"></div>
+              <div className="h-10 bg-purple-200 dark:bg-purple-700 rounded-2xl"></div>
             </div>
           </div>
         ))}
@@ -196,11 +200,11 @@ export function CourseGridClient() {
         const courseName = c.name || c.title || 'Curso sin título';
         
         return (
-          <div key={c.id} className="group relative bg-surface/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden border border-border hover:border-primary/30 transform hover:scale-[1.02] hover:-translate-y-1">
+          <div key={c.id} className="group relative bg-white dark:bg-gray-800 backdrop-blur-sm rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-500 transform hover:scale-[1.02] hover:-translate-y-1">
           {/* Course Image */}
             <Link href={`/${locale}/course/${c.slug}/overview`}>
               <div className="relative h-48 overflow-hidden cursor-pointer">
-                <div className="w-full h-full bg-gradient-to-br from-primary/30 via-accent/25 to-gold/20 flex items-center justify-center relative">
+                <div className="w-full h-full bg-gradient-to-br from-blue-400/30 via-purple-400/25 to-amber-400/20 flex items-center justify-center relative">
                   {/* Tech pattern background */}
                   <div className="absolute inset-0 bg-gradient-to-br from-black/10 via-transparent to-white/10"></div>
                   <div className="absolute top-4 left-4 w-8 h-8 bg-white/20 rounded-full animate-pulse"></div>
@@ -220,13 +224,13 @@ export function CourseGridClient() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent group-hover:from-black/30 transition-all duration-500" />
             
                 {/* Price Badge tech style */}
-                <div className="absolute top-4 right-4 bg-surface/95 dark:bg-gray-800/95 backdrop-blur-sm px-3 py-1 rounded-xl shadow-lg border border-primary/20">
-                  <span className="font-bold text-primary dark:text-accent text-sm font-mono">${c.price}</span>
+                <div className="absolute top-4 right-4 bg-white dark:bg-gray-800 backdrop-blur-sm px-3 py-1 rounded-xl shadow-lg border border-blue-200 dark:border-blue-500">
+                  <span className="font-bold text-blue-600 dark:text-blue-400 text-sm font-mono">${c.price}</span>
                 </div>
 
                 {/* Level badge tech style */}
                 {c.level && (
-                  <div className="absolute bottom-4 left-4 bg-gradient-to-r from-primary/90 to-accent/90 backdrop-blur-sm px-3 py-1 rounded-full border border-white/30">
+                  <div className="absolute bottom-4 left-4 bg-gradient-to-r from-blue-500 to-purple-500 backdrop-blur-sm px-3 py-1 rounded-full border border-white/30">
                     <span className="text-white text-xs font-semibold font-mono">{c.level}</span>
                   </div>
                 )}
@@ -236,39 +240,39 @@ export function CourseGridClient() {
           {/* Course Content */}
             <div className="p-6">
               <Link href={`/${locale}/course/${c.slug}/overview`}>
-                <h3 className="text-xl font-bold text-text dark:text-white mb-3 group-hover:text-primary dark:group-hover:text-accent transition-colors cursor-pointer leading-tight font-heading">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors cursor-pointer leading-tight">
                   {courseName}
                 </h3>
               </Link>
             
-              <p className="text-muted-foreground dark:text-gray-300 mb-4 line-clamp-2 leading-relaxed text-sm">
+              <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-2 leading-relaxed text-sm">
                 {c.description || tCommon('learnNewSkills')}
               </p>
 
               {/* Course Meta tech style */}
               <div className="flex items-center justify-between mb-4 text-xs">
                 {c.duration && (
-                  <span className="flex items-center gap-1 bg-primary/10 dark:bg-primary/20 px-2 py-1 rounded-lg border border-primary/20">
-                    <svg className="w-3 h-3 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <span className="flex items-center gap-1 bg-blue-50 dark:bg-blue-900/30 px-2 py-1 rounded-lg border border-blue-200 dark:border-blue-700">
+                    <svg className="w-3 h-3 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <span className="font-semibold text-primary font-mono">{c.duration}h</span>
+                    <span className="font-semibold text-blue-600 dark:text-blue-400 font-mono">{c.duration}h</span>
                   </span>
                 )}
                 {c.rating && (
-                  <span className="flex items-center gap-1 bg-gold/10 dark:bg-gold/20 px-2 py-1 rounded-lg border border-gold/20">
-                    <svg className="w-3 h-3 text-gold" fill="currentColor" viewBox="0 0 20 20">
+                  <span className="flex items-center gap-1 bg-amber-50 dark:bg-amber-900/30 px-2 py-1 rounded-lg border border-amber-200 dark:border-amber-700">
+                    <svg className="w-3 h-3 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                     </svg>
-                    <span className="font-bold text-gold font-mono">{c.rating.toFixed(1)}</span>
+                    <span className="font-bold text-amber-600 dark:text-amber-400 font-mono">{c.rating.toFixed(1)}</span>
                   </span>
                 )}
               </div>
 
               {/* Students Count tech style */}
               {c.students && (
-                <div className="text-xs mb-4 bg-accent/10 dark:bg-accent/20 px-3 py-2 rounded-xl border border-accent/20">
-                  <span className="font-semibold text-accent dark:text-accent font-mono">
+                <div className="text-xs mb-4 bg-purple-50 dark:bg-purple-900/30 px-3 py-2 rounded-xl border border-purple-200 dark:border-purple-700">
+                  <span className="font-semibold text-purple-600 dark:text-purple-400 font-mono">
                     {c.students.toLocaleString()} {tCourse('students')} inscritos
                   </span>
                 </div>
@@ -278,18 +282,18 @@ export function CourseGridClient() {
               <div className="space-y-2">
                 <Link
                   href={`/${locale}/course/${c.slug}/overview`}
-                  className="w-full inline-flex items-center justify-center px-4 py-2 border border-primary text-primary bg-primary/5 hover:bg-primary hover:text-white dark:hover:bg-primary dark:hover:text-white rounded-xl font-semibold transition-all duration-300 text-sm"
+                  className="w-full inline-flex items-center justify-center px-4 py-2 border border-blue-500 text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-500 hover:text-white dark:hover:bg-blue-500 dark:hover:text-white rounded-xl font-semibold transition-all duration-300 text-sm"
                 >
                   {tCourse('viewDetails')}
                 </Link>
-                <CheckoutButton courseId={c.id} className="w-full bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white font-semibold py-2 px-4 rounded-xl transition-all duration-300 text-sm">
+                <CheckoutButton courseId={c.id} className="w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-2 px-4 rounded-xl transition-all duration-300 text-sm">
                   {tCourse('enroll')}
                 </CheckoutButton>
               </div>
             </div>
 
             {/* Tech hover effect */}
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/0 via-accent/0 to-gold/0 group-hover:from-primary/5 group-hover:via-accent/5 group-hover:to-gold/5 transition-all duration-500 rounded-3xl pointer-events-none"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 via-purple-500/0 to-amber-500/0 group-hover:from-blue-500/5 group-hover:via-purple-500/5 group-hover:to-amber-500/5 transition-all duration-500 rounded-3xl pointer-events-none"></div>
           </div>
         );
       })}
