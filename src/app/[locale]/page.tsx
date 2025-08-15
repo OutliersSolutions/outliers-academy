@@ -6,7 +6,19 @@ import dynamic from 'next/dynamic';
 
 const ParticlesBackground = dynamic(() => import('@/components/ui/ParticlesBackground').then(mod => ({ default: mod.ParticlesBackground })), {
   ssr: false,
-  loading: () => <div className="absolute inset-0 w-full h-full z-0" />
+  loading: () => <div className="absolute inset-0 w-full h-full z-0 bg-transparent" />
+});
+
+const ChatbotViewerOptimized = dynamic(() => import('@/components/ChatbotViewerSafe').then(mod => ({ default: mod.ChatbotViewerSafe })), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-80 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-xl flex items-center justify-center">
+      <div className="text-center">
+        <div className="w-16 h-16 mx-auto mb-4 bg-indigo-200 dark:bg-indigo-800 rounded-full animate-pulse"></div>
+        <p className="text-sm text-gray-600 dark:text-gray-400">Cargando modelo 3D...</p>
+      </div>
+    </div>
+  )
 });
 import {AcademyStats} from '@/components/AcademyStats';
 import {ArrowIcon} from '@/components/ui/ArrowIcon';
@@ -33,7 +45,7 @@ export default async function HomePage({
   return (
     <div>
       <section className="hero-gradient relative overflow-hidden">
-        <ParticlesBackground particleColor="#ff5a1f" opacity={0.7} particleSize={3.5} drawLines={false} density={6000} className="absolute inset-0 w-full h-full z-0" />
+        <ParticlesBackground particleColor="#ff5a1f" opacity={0.3} particleSize={2} drawLines={false} density={3000} className="absolute inset-0 w-full h-full z-0" />
         <div className="container mx-auto px-6 py-20 md:py-32 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="max-w-2xl">
@@ -73,8 +85,8 @@ export default async function HomePage({
               <AcademyStats locale={params.locale} />
             </div>
             
-            <div className="relative">
-              <ChatbotViewerSafe className="w-full h-80" />
+            <div className="relative min-h-[320px] flex items-center justify-center">
+              <ChatbotViewerOptimized className="w-full h-80" />
             </div>
           </div>
         </div>

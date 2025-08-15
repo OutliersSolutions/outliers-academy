@@ -8,23 +8,29 @@ import { ThemeProvider } from '@/components/ThemeProvider';
 import { GlobalLoader } from '@/components/GlobalLoader';
 import { Inter, Manrope, JetBrains_Mono } from 'next/font/google';
 
-// Font configurations
+// Font configurations with preload and fallback
 const inter = Inter({ 
   subsets: ['latin'],
   variable: '--font-inter',
   display: 'swap',
+  preload: true,
+  fallback: ['system-ui', 'arial', 'sans-serif'],
 });
 
 const manrope = Manrope({ 
   subsets: ['latin'],
   variable: '--font-manrope',
   display: 'swap',
+  preload: true,
+  fallback: ['system-ui', 'arial', 'sans-serif'],
 });
 
 const jetbrainsMono = JetBrains_Mono({ 
   subsets: ['latin'],
   variable: '--font-code-primary',
   display: 'swap',
+  preload: true,
+  fallback: ['Consolas', 'Monaco', 'monospace'],
 });
 
 export default async function RootLayout({
@@ -61,6 +67,18 @@ export default async function RootLayout({
         <meta name="twitter:image" content="/icons/logo.png" />
         <link rel="icon" href="/logo.ico" />
         <link rel="apple-touch-icon" href="/logo.ico" />
+        
+        {/* Preload critical resources */}
+        <link rel="preload" href="/models/chatbot.glb" as="fetch" crossOrigin="anonymous" />
+        <link rel="preload" href="/icons/logo.png" as="image" />
+        
+        {/* DNS prefetch for external resources */}
+        <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="//fonts.gstatic.com" />
+        
+        {/* Resource hints */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body className={`${inter.variable} ${manrope.variable} ${jetbrainsMono.variable} font-sans`}>
         <ThemeProvider
