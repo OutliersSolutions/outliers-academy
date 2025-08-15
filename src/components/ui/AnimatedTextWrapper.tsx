@@ -23,7 +23,7 @@ const AnimatedText = dynamic(() => import('./AnimatedText').then(mod => ({ defau
 
 export function AnimatedTextWrapper(props: AnimatedTextWrapperProps) {
   return (
-    <span className="inline-block min-w-[200px] min-h-[2.5em] align-baseline">
+    <span className="inline-block min-w-[200px] min-h-[1.5em] align-baseline">
       <AnimatedText {...props} />
     </span>
   );
