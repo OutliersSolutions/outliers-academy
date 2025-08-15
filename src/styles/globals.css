@@ -124,36 +124,36 @@
 /* Root Variables */
 @layer base {
   :root {
-    /* Outliers Academy color palette - Solarized Light Theme */
-    --color-text: #586e75; /* Solarized base01 - dark gray */
+    /* Outliers Academy color palette - Warm Neutral Theme */
+    --color-text: #374151; /* Softer dark gray */
     --color-primary: #2F27CE; /* Keep brand primary */
     --color-accent: #433BFF; /* Keep brand accent */
     --color-gold: #CE965E; /* Keep brand gold */
-    --color-secondary: #eee8d5; /* Solarized base2 - light cream */
-    --color-muted: #fdf6e3; /* Solarized base3 - very light cream */
-    --color-surface: #fdf6e3; /* Solarized base3 - very light cream */
-    --color-bg: #fdf6e3; /* Solarized base3 - very light cream */
-    --color-yellow: #b58900; /* Solarized yellow */
+    --color-secondary: #f9fafb; /* Very light warm gray */
+    --color-muted: #f3f4f6; /* Light warm gray */
+    --color-surface: #fefefe; /* Off-white for cards */
+    --color-bg: #fafafa; /* Subtle warm background */
+    --color-yellow: #f59e0b; /* Modern amber */
 
-    /* Shadcn/ui variables - Solarized Light */
-    --background: 44 34% 95%; /* Solarized base3 */
-    --foreground: 44 34% 25%; /* Solarized base01 */
-    --card: 44 34% 97%; /* Solarized base2 */
-    --card-foreground: 44 34% 25%; /* Solarized base01 */
-    --popover: 44 34% 97%; /* Solarized base2 */
-    --popover-foreground: 44 34% 25%; /* Solarized base01 */
+    /* Shadcn/ui variables - Warm Neutral */
+    --background: 0 0% 98%; /* Soft off-white */
+    --foreground: 213 27% 24%; /* Warm dark gray */
+    --card: 0 0% 99%; /* Nearly white cards */
+    --card-foreground: 213 27% 24%; /* Warm dark text */
+    --popover: 0 0% 99%; /* Nearly white popover */
+    --popover-foreground: 213 27% 24%; /* Warm dark text */
     --primary: 222.2 47.4% 11.2%;
     --primary-foreground: 210 40% 98%;
-    --secondary: 44 34% 90%; /* Solarized base1 */
-    --secondary-foreground: 44 34% 25%; /* Solarized base01 */
-    --muted: 44 34% 90%; /* Solarized base1 */
-    --muted-foreground: 44 34% 45%; /* Solarized base0 */
-    --accent: 44 34% 90%; /* Solarized base1 */
-    --accent-foreground: 44 34% 25%; /* Solarized base01 */
+    --secondary: 210 20% 98%; /* Warm light secondary */
+    --secondary-foreground: 213 27% 24%; /* Warm dark text */
+    --muted: 210 20% 96%; /* Warm muted background */
+    --muted-foreground: 215 16% 47%; /* Medium warm gray text */
+    --accent: 210 20% 96%; /* Warm accent */
+    --accent-foreground: 213 27% 24%; /* Warm dark text */
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-    --border: 44 34% 85%; /* Solarized base1 */
-    --input: 44 34% 85%; /* Solarized base1 */
+    --border: 214 20% 93%; /* Warm light border */
+    --input: 214 20% 93%; /* Warm light input border */
     --ring: 222.2 84% 4.9%;
     --radius: 0.5rem;
     --chart-1: 12 76% 61%;
@@ -288,7 +288,7 @@ body {
   font-size: 1rem;
   line-height: 1.75;
   font-family: var(--font-inter), system-ui, sans-serif;
-  color: #586e75;
+  color: #4b5563;
   margin-bottom: 2rem;
   max-width: 36rem;
 }
@@ -601,7 +601,7 @@ body {
   }
   
   .text-white\/90 {
-    color: rgba(88, 110, 117, 0.95); /* Solarized base01 with higher opacity */
+    color: rgba(55, 65, 81, 0.95); /* Warm dark gray with high opacity */
   }
   
   .dark .text-white\/80 {
@@ -609,12 +609,12 @@ body {
   }
   
   .text-white\/80 {
-    color: rgba(88, 110, 117, 0.9); /* Solarized base01 with higher opacity */
+    color: rgba(55, 65, 81, 0.9); /* Warm dark gray with high opacity */
   }
   
-  /* Additional contrast improvements for Solarized theme */
+  /* Additional contrast improvements for warm neutral theme */
   .text-muted {
-    color: #586e75 !important; /* Solarized base01 - much darker than before */
+    color: #4b5563 !important; /* Warm medium gray */
   }
   
   .dark .text-muted {
@@ -622,7 +622,7 @@ body {
   }
   
   .text-muted-foreground {
-    color: #586e75 !important; /* Solarized base01 */
+    color: #4b5563 !important; /* Warm medium gray */
   }
   
   .dark .text-muted-foreground {
