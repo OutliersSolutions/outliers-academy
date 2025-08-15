@@ -6,6 +6,7 @@ import { WhatsAppButton } from '@/components/ui/WhatsAppButton';
 import { getTranslations } from 'next-intl/server';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { GlobalLoader } from '@/components/GlobalLoader';
+import { CookieProvider } from '@/components/CookieProvider';
 import { Inter, Manrope, JetBrains_Mono } from 'next/font/google';
 
 // Font configurations with preload and fallback
@@ -88,16 +89,18 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <NextIntlClientProvider messages={messages}>
-            <GlobalLoader>
-              <div className="min-h-screen flex flex-col">
-                <Navbar />
-                <main className="flex-1">
-                  {children}
-                </main>
-                <Footer locale={locale} />
-                <WhatsAppButton />
-              </div>
-            </GlobalLoader>
+            <CookieProvider>
+              <GlobalLoader>
+                <div className="min-h-screen flex flex-col">
+                  <Navbar />
+                  <main className="flex-1">
+                    {children}
+                  </main>
+                  <Footer locale={locale} />
+                  <WhatsAppButton />
+                </div>
+              </GlobalLoader>
+            </CookieProvider>
           </NextIntlClientProvider>
         </ThemeProvider>
       </body>

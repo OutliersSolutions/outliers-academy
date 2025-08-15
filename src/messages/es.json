@@ -584,5 +584,36 @@
     "profile": {
         "securitySettings": "Gestiona tu contraseña y configuraciones de seguridad",
         "customizeExperience": "Personaliza tu experiencia de aprendizaje"
+    },
+    "cookies": {
+        "title": "Usamos cookies para mejorar tu experiencia",
+        "description": "Utilizamos cookies y tecnologías similares para proporcionar, proteger y mejorar nuestros servicios y personalizar contenido. Al hacer clic en \"Aceptar todas\", consientes nuestro uso de cookies.",
+        "learnMore": "Saber más",
+        "acceptAll": "Aceptar todas",
+        "decline": "Rechazar",
+        "customize": "Personalizar",
+        "preferences": {
+            "title": "Preferencias de cookies",
+            "description": "Personaliza tus preferencias de cookies. Puedes cambiar estas configuraciones en cualquier momento.",
+            "necessary": {
+                "title": "Cookies necesarias",
+                "description": "Estas cookies son esenciales para que el sitio web funcione correctamente. No se pueden desactivar."
+            },
+            "analytics": {
+                "title": "Cookies de análisis",
+                "description": "Nos ayudan a entender cómo los visitantes interactúan con nuestro sitio web recopilando y reportando información de forma anónima."
+            },
+            "marketing": {
+                "title": "Cookies de marketing",
+                "description": "Se utilizan para rastrear visitantes en sitios web para mostrar anuncios relevantes y atractivos."
+            },
+            "preferences": {
+                "title": "Cookies de preferencias",
+                "description": "Permiten que el sitio web recuerde información que cambia la forma en que se comporta o se ve, como tu idioma preferido o región."
+            },
+            "acceptAll": "Aceptar todas",
+            "declineAll": "Rechazar todas",
+            "savePreferences": "Guardar preferencias"
+        }
     }
 }
