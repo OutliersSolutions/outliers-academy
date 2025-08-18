@@ -71,7 +71,7 @@ export function CookieProvider({ children }: CookieProviderProps) {
           (window.gtag as any).q = (window.gtag as any).q || [];
           (window.gtag as any).q.push(arguments);
         };
-        
+        // @ts-expect-error: 'js' is a valid GA4 command but not in the type definition
         window.gtag('js', new Date());
         window.gtag('config', process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID!, {
           cookie_flags: 'SameSite=None;Secure',
