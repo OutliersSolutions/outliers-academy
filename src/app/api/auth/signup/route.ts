@@ -1,11 +1,45 @@
 import {NextResponse} from 'next/server';
-import {odooExecuteKw} from '@/lib/odooClient';
+import {odooExecuteKw, sendVerificationEmail} from '@/lib/odooClient';
 import {AUTH_COOKIE, signPayload} from '@/lib/auth';
+
+// Rate limiting storage (in production, use Redis)
+const signupAttempts = new Map<string, { count: number; lastAttempt: number }>();
 
 export async function POST(request: Request) {
   try {
     const {name, email, password} = await request.json();
     if (!name || !email || !password) return NextResponse.json({error: 'Missing fields'}, {status: 400});
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return NextResponse.json({error: 'Invalid email format'}, {status: 400});
+    }
+
+    // Validate password strength
+    if (password.length < 6) {
+      return NextResponse.json({error: 'Password must be at least 6 characters'}, {status: 400});
+    }
+
+    // Rate limiting - max 5 signup attempts per IP per hour
+    const clientIP = request.headers.get('x-forwarded-for') || 
+                     request.headers.get('x-real-ip') || 
+                     'unknown';
+    const now = Date.now();
+    const hourAgo = now - (60 * 60 * 1000); // 1 hour ago
+    const currentAttempts = signupAttempts.get(clientIP);
+    
+    if (currentAttempts) {
+      // Clean old attempts
+      if (currentAttempts.lastAttempt < hourAgo) {
+        signupAttempts.delete(clientIP);
+      } else if (currentAttempts.count >= 5) {
+        return NextResponse.json(
+          { error: 'Too many signup attempts. Please wait before trying again.' },
+          { status: 429 }
+        );
+      }
+    }
 
     // Create partner first
     const partnerResult = await odooExecuteKw('res.partner', 'create', [[{
@@ -91,6 +125,40 @@ export async function POST(request: Request) {
       }
     }
 
+    // Check if email verification is enabled
+    const emailVerificationEnabled = process.env.ODOO_EMAIL_VERIFICATION === 'true';
+    
+    if (emailVerificationEnabled) {
+      // Send verification email using our custom function
+      try {
+        const emailSent = await sendVerificationEmail(userId as number, email);
+        if (emailSent) {
+          console.log(`✅ Verification email sent to ${email}`);
+        } else {
+          console.log(`⚠️ Email sending failed but user was created successfully`);
+        }
+      } catch (emailError: any) {
+        console.error('❌ Error sending verification email:', emailError.message);
+        // Continue anyway - user was created successfully
+      }
+
+      // Update rate limiting on successful signup
+      const attempts = signupAttempts.get(clientIP) || { count: 0, lastAttempt: 0 };
+      signupAttempts.set(clientIP, {
+        count: attempts.count + 1,
+        lastAttempt: now
+      });
+
+      // Don't create session yet - user needs to verify email first
+      return NextResponse.json({
+        ok: true,
+        requiresVerification: true,
+        message: 'Account created successfully. Please check your email to verify your account before logging in.',
+        email
+      });
+    }
+
+    // Original flow - create session immediately (no verification)
     const payload = {uid: userId as number, login: email as string, name, issuedAt: Date.now()};
     const token = signPayload(payload);
     const resJson = NextResponse.json({ok: true, user: payload});

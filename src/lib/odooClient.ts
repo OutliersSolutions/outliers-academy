@@ -61,6 +61,87 @@ export async function odooExecuteKw(model: string, method: string, args: any[], 
   });
 }
 
+export async function sendVerificationEmail(userId: number, userEmail: string): Promise<boolean> {
+  try {
+    console.log(`📧 Sending verification email to ${userEmail} for user ${userId}`);
+    
+    // Generate a simple verification token (in production, use JWT or similar)
+    const verificationToken = Buffer.from(`${userId}:${userEmail}:${Date.now()}`).toString('base64');
+    const verificationUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/es/verify-account?token=${verificationToken}`;
+    
+    // Create email manually (we know this works)
+    const emailData = {
+      email_to: userEmail,
+      subject: '🚀 Verifica tu cuenta de Outliers Academy',
+      body_html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+          <div style="text-align: center; margin-bottom: 30px;">
+            <h1 style="color: #4F46E5; margin: 0;">🚀 Outliers Academy</h1>
+            <h2 style="color: #374151; margin: 10px 0;">¡Bienvenido/a!</h2>
+          </div>
+          
+          <div style="background: #F9FAFB; padding: 25px; border-radius: 8px; margin: 20px 0;">
+            <p style="font-size: 16px; color: #374151; margin: 0 0 20px 0;">
+              Hola,<br><br>
+              ¡Gracias por registrarte en Outliers Academy! Para completar tu registro y activar tu cuenta, necesitamos verificar tu dirección de correo electrónico.
+            </p>
+            
+            <div style="text-align: center; margin: 30px 0;">
+              <a href="${verificationUrl}" 
+                 style="background: #4F46E5; color: white; padding: 15px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; display: inline-block;">
+                ✅ Verificar mi cuenta
+              </a>
+            </div>
+            
+            <p style="font-size: 14px; color: #6B7280; margin: 20px 0 0 0;">
+              Si no puedes hacer clic en el botón, copia y pega este enlace en tu navegador:<br>
+              <span style="word-break: break-all; color: #4F46E5;">${verificationUrl}</span>
+            </p>
+          </div>
+          
+          <div style="margin: 30px 0;">
+            <h3 style="color: #374151; font-size: 18px;">¿Qué sigue?</h3>
+            <ul style="color: #6B7280; line-height: 1.6;">
+              <li>✨ Accede a cursos de tecnología de alta calidad</li>
+              <li>🎯 Aprende con proyectos prácticos</li>
+              <li>🤖 Interactúa con nuestro asistente de IA</li>
+              <li>🏆 Obtén certificaciones reconocidas</li>
+            </ul>
+          </div>
+          
+          <hr style="border: none; border-top: 1px solid #E5E7EB; margin: 30px 0;">
+          
+          <div style="text-align: center;">
+            <p style="color: #6B7280; font-size: 14px; margin: 0;">
+              Si no creaste esta cuenta, puedes ignorar este email.<br>
+              <strong>Equipo de Outliers Academy</strong>
+            </p>
+            <p style="color: #9CA3AF; font-size: 12px; margin: 10px 0 0 0;">
+              Este enlace expira en 24 horas por seguridad.
+            </p>
+          </div>
+        </div>
+      `,
+      email_from: process.env.EMAIL_FROM || 'noreply@outliers.academy',
+      auto_delete: false,
+      state: 'outgoing'
+    };
+
+    // Create and send the email
+    const mailId = await odooExecuteKw('mail.mail', 'create', [emailData]);
+    console.log(`📧 Verification email created with ID: ${mailId}`);
+
+    // Force send immediately
+    await odooExecuteKw('mail.mail', 'send', [[mailId]]);
+    console.log(`✅ Verification email sent to ${userEmail}`);
+
+    return true;
+  } catch (error: any) {
+    console.error('❌ Error sending verification email:', error.message);
+    return false;
+  }
+}
+
 const devSampleCourses = [
   {
     id: 1,

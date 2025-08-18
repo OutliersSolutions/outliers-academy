@@ -26,22 +26,57 @@ export default function DashboardPage() {
   const { isAuthenticated, isLoading: authLoading, user } = useAuth();
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
+  const [mounted, setMounted] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
   const locale = pathname.split('/')[1] || 'es';
   const t = useTranslations('dashboard');
   const tLoader = useTranslations('loader');
 
+  // Ensure component is mounted on client before checking auth
   useEffect(() => {
-    if (!authLoading && !isAuthenticated) {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    // Only redirect after component is mounted and auth check is complete
+    if (mounted && !authLoading && !isAuthenticated) {
       router.push(`/${locale}/login`);
       return;
     }
 
-    if (isAuthenticated && user?.odooUserId) {
+    if (mounted && isAuthenticated && user?.odooUserId) {
       fetchUserCourses();
     }
-  }, [isAuthenticated, authLoading, user, router, locale]);
+  }, [isAuthenticated, authLoading, user, router, locale, mounted]);
+
+  // Show loading until mounted and auth is checked
+  if (!mounted || authLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <Loader className="mx-auto mb-4" />
+          <p className="text-muted-foreground">
+            {tLoader('loading')}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // Redirect is happening, show loading
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <Loader className="mx-auto mb-4" />
+          <p className="text-muted-foreground">
+            Redirecting to login...
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   const fetchUserCourses = async () => {
     try {

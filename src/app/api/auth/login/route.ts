@@ -47,8 +47,30 @@ export async function POST(request: Request) {
 
     if (!uid) return NextResponse.json({error: 'Invalid credentials'}, {status: 401});
 
-    const users = await odooExecuteKw('res.users', 'read', [[uid], ['name', 'login']]);
-    const user = users?.[0] || {name: login, login};
+    // Get user details 
+    const users = await odooExecuteKw('res.users', 'read', [
+      [uid], 
+      ['name', 'login', 'partner_id', 'active']
+    ]);
+    const user = users?.[0];
+    
+    if (!user) {
+      return NextResponse.json({error: 'User not found'}, {status: 404});
+    }
+
+    // Check if email verification is enabled and if user is verified
+    const emailVerificationEnabled = process.env.ODOO_EMAIL_VERIFICATION === 'true';
+    
+    if (emailVerificationEnabled) {
+      // Additional check: verify user is properly activated
+      if (!user.active) {
+        return NextResponse.json({
+          error: 'Account not verified',
+          requiresVerification: true,
+          email: user.login
+        }, {status: 403});
+      }
+    }
 
     const payload = {uid, login: userLogin, name: user.name, issuedAt: Date.now()};
     const token = signPayload(payload);
@@ -59,9 +81,9 @@ export async function POST(request: Request) {
     const isProduction = process.env.NODE_ENV === 'production';
     const cookieOptions = [
       `${AUTH_COOKIE}=${token}`,
-      'HttpOnly',
+      'HttpOnly', // Re-enabled for security
       'Path=/',
-      'SameSite=Strict',
+      'SameSite=Lax', // Changed from Strict to Lax for better compatibility
       `Max-Age=${24 * 60 * 60}`, // 24 hours
       isProduction ? 'Secure' : ''
     ].filter(Boolean).join('; ');

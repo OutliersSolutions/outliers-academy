@@ -28,6 +28,28 @@
         "rating": "4.8 (2,340 reviews)",
         "aiAssistant": "AI Assistant",
         "interactiveAI": "Interactive AI",
+        "verification": {
+            "title": "Check your email",
+            "subtitle": "We sent a verification link to:",
+            "instructions": "Open the link in your email to activate your account and sign in.",
+            "resend": "Resend email",
+            "resending": "Resending...",
+            "resendIn": "Resend in",
+            "openEmail": "Open email client",
+            "tips": {
+                "title": "Can't find the email?",
+                "spam": "Check your SPAM or junk folder",
+                "correct": "Make sure the email address is correct",
+                "time": "The email may take a few minutes to arrive"
+            },
+            "wrongEmail": "Wrong email?",
+            "createNew": "Create new account",
+            "alreadyVerified": "Already verified your account?",
+            "signIn": "Sign in",
+            "success": "Email resent successfully",
+            "accountCreated": "Account created successfully!",
+            "checkEmailMessage": "Check your email and click the verification link to activate your account."
+        },
         "viewAllCourses": "View all courses",
         "topCourses": "Top courses",
         "topCoursesDesc": "Content designed for progress with practical projects.",

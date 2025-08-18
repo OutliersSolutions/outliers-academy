@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, AlertCircle } from 'lucide-react';
 import { LoaderInline } from '@/components/ui/loader';
 import Link from 'next/link';
 
@@ -15,6 +15,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const router = useRouter();
   const pathname = usePathname();
   const locale = pathname.split('/')[1] || 'es';
@@ -22,6 +23,7 @@ export default function LoginPage() {
   const handleEmailSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setError(''); // Clear previous errors
     
     try {
       const res = await fetch('/api/auth/login', {
@@ -34,15 +36,23 @@ export default function LoginPage() {
         const data = await res.json();
         console.log('Login successful:', data);
         
-        // Forzar recarga completa para asegurar que las cookies se establezcan
+        // Redirect to dashboard
         window.location.href = `/${locale}/dashboard`;
       } else {
         const data = await res.json();
+        
+        // Check if user needs email verification
+        if (res.status === 403 && data.requiresVerification) {
+          // Redirect to verify-email page
+          router.push(`/${locale}/verify-email?email=${encodeURIComponent(data.email || email)}`);
+          return;
+        }
+        
         throw new Error(data.error || (locale === 'es' ? 'Error de inicio de sesión' : 'Sign in error'));
       }
     } catch (error) {
       console.error('Email signin error:', error);
-      alert((error as Error).message);
+      setError((error as Error).message);
     } finally {
       setLoading(false);
     }
@@ -63,6 +73,16 @@ export default function LoginPage() {
         </CardHeader>
         
         <CardContent className="space-y-4">
+          {/* Error Message */}
+          {error && (
+            <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+              <div className="flex items-center space-x-2">
+                <AlertCircle className="h-4 w-4 text-red-600 dark:text-red-400" />
+                <p className="text-sm text-red-700 dark:text-red-300">{error}</p>
+              </div>
+            </div>
+          )}
+
           {/* Email/Password Form */}
           <form onSubmit={handleEmailSignIn} className="space-y-4">
             <div className="space-y-2">

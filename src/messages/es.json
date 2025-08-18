@@ -28,6 +28,28 @@
         "rating": "4,8 (2.340 reseñas)",
         "aiAssistant": "Asistente de IA",
         "interactiveAI": "IA Interactiva",
+        "verification": {
+            "title": "Revisa tu correo",
+            "subtitle": "Te enviamos un enlace de verificación a:",
+            "instructions": "Abre el enlace en tu correo para activar tu cuenta y poder iniciar sesión.",
+            "resend": "Reenviar correo",
+            "resending": "Reenviando...",
+            "resendIn": "Reenviar en",
+            "openEmail": "Abrir cliente de correo",
+            "tips": {
+                "title": "¿No encuentras el correo?",
+                "spam": "Revisa tu carpeta de SPAM o correo no deseado",
+                "correct": "Asegúrate de que el email sea correcto",
+                "time": "El correo puede tardar unos minutos en llegar"
+            },
+            "wrongEmail": "¿Email incorrecto?",
+            "createNew": "Crear nueva cuenta",
+            "alreadyVerified": "¿Ya verificaste tu cuenta?",
+            "signIn": "Iniciar sesión",
+            "success": "Correo reenviado exitosamente",
+            "accountCreated": "¡Cuenta creada exitosamente!",
+            "checkEmailMessage": "Revisa tu correo electrónico y haz clic en el enlace de verificación para activar tu cuenta."
+        },
         "viewAllCourses": "Ver todos los cursos",
         "topCourses": "Cursos destacados",
         "topCoursesDesc": "Contenidos diseñados para el progreso con proyectos prácticos.",

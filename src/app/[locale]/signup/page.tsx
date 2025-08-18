@@ -17,6 +17,8 @@ export default function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [verificationMessage, setVerificationMessage] = useState('');
+  const [showVerificationMessage, setShowVerificationMessage] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
   const locale = pathname.split('/')[1] || 'es';
@@ -51,8 +53,14 @@ export default function SignupPage() {
         const data = await res.json();
         console.log('Signup successful:', data);
         
-        // Redirect to login page
-        router.push(`/${locale}/login`);
+        // Check if email verification is required
+        if (data.requiresVerification) {
+          // Redirect to verify-email page with email parameter
+          router.push(`/${locale}/verify-email?email=${encodeURIComponent(email)}`);
+        } else {
+          // Original flow - redirect to login or dashboard
+          router.push(`/${locale}/login`);
+        }
       } else {
         const data = await res.json();
         throw new Error(data.error || (locale === 'es' ? 'Error en el registro' : 'Signup error'));
@@ -80,8 +88,38 @@ export default function SignupPage() {
         </CardHeader>
         
         <CardContent className="space-y-4">
+          {/* Verification Success Message */}
+          {showVerificationMessage && (
+            <div className="p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
+              <div className="flex items-center space-x-2">
+                <Mail className="h-5 w-5 text-green-600 dark:text-green-400" />
+                <div>
+                  <h4 className="font-medium text-green-800 dark:text-green-200">
+                    {locale === 'es' ? '¡Cuenta creada exitosamente!' : 'Account created successfully!'}
+                  </h4>
+                  <p className="text-sm text-green-700 dark:text-green-300 mt-1">
+                    {locale === 'es' 
+                      ? 'Revisa tu correo electrónico y haz clic en el enlace de verificación para activar tu cuenta.'
+                      : 'Check your email and click the verification link to activate your account.'}
+                  </p>
+                </div>
+              </div>
+              <div className="mt-3">
+                <Button
+                  onClick={() => setShowVerificationMessage(false)}
+                  variant="outline"
+                  size="sm"
+                  className="text-green-700 dark:text-green-300 border-green-300 dark:border-green-700"
+                >
+                  {locale === 'es' ? 'Crear otra cuenta' : 'Create another account'}
+                </Button>
+              </div>
+            </div>
+          )}
+
           {/* Email/Password Form */}
-          <form onSubmit={handleEmailSignUp} className="space-y-4">
+          {!showVerificationMessage && (
+            <form onSubmit={handleEmailSignUp} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="name" className="text-sm font-medium">
                 {locale === 'es' ? 'Nombre completo' : 'Full name'}
@@ -179,16 +217,19 @@ export default function SignupPage() {
               {locale === 'es' ? 'Crear Cuenta' : 'Create Account'}
             </Button>
           </form>
+          )}
 
-          <div className="text-center text-sm text-muted-foreground">
-            {locale === 'es' ? '¿Ya tienes cuenta?' : 'Already have an account?'}{' '}
-            <Link 
-              href={`/${locale}/login`}
-              className="font-medium text-primary hover:underline"
-            >
-              {locale === 'es' ? 'Iniciar sesión' : 'Sign in'}
-            </Link>
-          </div>
+          {!showVerificationMessage && (
+            <div className="text-center text-sm text-muted-foreground">
+              {locale === 'es' ? '¿Ya tienes cuenta?' : 'Already have an account?'}{' '}
+              <Link 
+                href={`/${locale}/login`}
+                className="font-medium text-primary hover:underline"
+              >
+                {locale === 'es' ? 'Iniciar sesión' : 'Sign in'}
+              </Link>
+            </div>
+          )}
         </CardContent>
       </Card>
     </div>
