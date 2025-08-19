@@ -44,7 +44,7 @@ export default function LoginPage() {
         
         // Wait a moment for cookie to be set before redirecting  
         setTimeout(() => {
-          window.location.href = `/${locale}/dashboard`;
+          window.location.href = `${window.location.origin}/${locale}/dashboard`;
         }, 1000);
         
         // Show success message temporarily

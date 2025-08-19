@@ -7,6 +7,8 @@ import { getTranslations } from 'next-intl/server';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { GlobalLoader } from '@/components/GlobalLoader';
 import { CookieProvider } from '@/components/CookieProvider';
+import { AuthProvider } from '@/components/providers/AuthProvider';
+import { ToastProvider } from '@/components/providers/ToastProvider';
 import { Inter, Manrope, JetBrains_Mono } from 'next/font/google';
 
 // Font configurations with preload and fallback
@@ -88,20 +90,23 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <NextIntlClientProvider messages={messages}>
-            <CookieProvider>
-              <GlobalLoader>
-                <div className="min-h-screen flex flex-col">
-                  <Navbar />
-                  <main className="flex-1">
-                    {children}
-                  </main>
-                  <Footer locale={locale} />
-                  <WhatsAppButton />
-                </div>
-              </GlobalLoader>
-            </CookieProvider>
-          </NextIntlClientProvider>
+          <AuthProvider>
+            <NextIntlClientProvider messages={messages}>
+              <ToastProvider />
+              <CookieProvider>
+                <GlobalLoader>
+                  <div className="min-h-screen flex flex-col">
+                    <Navbar />
+                    <main className="flex-1">
+                      {children}
+                    </main>
+                    <Footer locale={locale} />
+                    <WhatsAppButton />
+                  </div>
+                </GlobalLoader>
+              </CookieProvider>
+            </NextIntlClientProvider>
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </>
