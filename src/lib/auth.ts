@@ -40,7 +40,9 @@ export async function verifySigned(signed: string): Promise<SessionPayload | nul
 export async function verifyAuth(request: NextRequest): Promise<SessionPayload | null> {
   try {
     const cookieValue = request.cookies.get(AUTH_COOKIE)?.value;
-    console.log('verifyAuth - cookieValue:', cookieValue ? 'exists' : 'missing');
+    console.log('🔍 verifyAuth - cookieValue:', cookieValue ? 'exists' : 'missing');
+    console.log('🔍 verifyAuth - all cookies:', Array.from(request.cookies.getAll().map(c => c.name)));
+    console.log('🔍 verifyAuth - request URL:', request.url);
     if (!cookieValue) return null;
     
     const session = await verifySigned(cookieValue);

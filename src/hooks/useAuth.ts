@@ -24,38 +24,36 @@ export function useAuth(): AuthState {
   const [isCheckingLegacy, setIsCheckingLegacy] = useState(true);
 
   useEffect(() => {
-    // Check for legacy session
+    console.log('🔍 useAuth hook initializing...');
+    // Check for legacy session using API verification
     const checkLegacyAuth = async () => {
       try {
-        // First check if oa_session cookie exists in the browser
-        const hasSessionCookie = document.cookie.includes('oa_session=');
-        console.log('useAuth - has session cookie:', hasSessionCookie);
+        console.log('🔍 Making fetch to /api/auth/verify...');
+        // Always use API to verify authentication - this validates the JWT properly
+        const response = await fetch('/api/auth/verify', {
+          credentials: 'include'
+        });
         
-        if (hasSessionCookie) {
-          // If cookie exists, assume authenticated with mock data
-          setLegacySession({
-            uid: 2,
-            login: "galvezcortezgonzalo@gmail.com",
-            name: "Administrator",
-            issuedAt: Date.now()
-          });
-        } else {
-          // Try the API as fallback
-          const response = await fetch('/api/auth/verify', {
-            credentials: 'include'
-          });
-          
-          if (response.ok) {
-            const data = await response.json();
-            console.log('useAuth - API response:', data);
-            if (data.authenticated && data.user) {
-              setLegacySession(data.user);
-            }
+        console.log('🔍 Fetch response status:', response.status);
+        if (response.ok) {
+          const data = await response.json();
+          console.log('🔍 useAuth - API response:', data);
+          if (data.authenticated && data.user) {
+            console.log('✅ Setting legacySession to:', data.user);
+            setLegacySession(data.user);
+          } else {
+            console.log('❌ useAuth - API returned not authenticated');
+            setLegacySession(null);
           }
+        } else {
+          console.log('❌ useAuth - API request failed with status:', response.status);
+          setLegacySession(null);
         }
       } catch (error) {
-        console.log('No legacy session found:', error);
+        console.log('❌ No legacy session found:', error);
+        setLegacySession(null);
       } finally {
+        console.log('🔍 Setting isCheckingLegacy to false');
         setIsCheckingLegacy(false);
       }
     };

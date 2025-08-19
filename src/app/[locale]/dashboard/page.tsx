@@ -31,12 +31,13 @@ export default function DashboardPage() {
 
   // Redirect to login if not authenticated
   useEffect(() => {
+    console.log('Dashboard useEffect - isLoading:', isLoading, 'isAuthenticated:', isAuthenticated, 'user:', user);
     if (!isLoading && !isAuthenticated) {
       console.log('Dashboard: User not authenticated, redirecting to login');
       router.push(`/${locale}/login`);
       return;
     }
-  }, [isAuthenticated, isLoading, router, locale]);
+  }, [isAuthenticated, isLoading, router, locale, user]);
 
   // Show loading spinner while checking authentication
   if (isLoading) {
@@ -115,6 +116,10 @@ export default function DashboardPage() {
               </p>
             </div>
           </div>
+          
+          <Button variant="outline" onClick={handleSignOut}>
+            {locale === 'es' ? 'Cerrar Sesión' : 'Sign Out'}
+          </Button>
         </div>
 
         {/* Stats Overview */}
