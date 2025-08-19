@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '@/hooks/useAuth';
+import { useNewAuth } from '@/components/providers/AuthProvider';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -80,7 +80,7 @@ export default function CourseOverviewPage({
 }: {
   params: { slug: string; locale: string }
 }) {
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated, user } = useNewAuth();
   const [course, setCourse] = useState<Course | null>(null);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);

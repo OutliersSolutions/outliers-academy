@@ -1,13 +1,16 @@
 'use client';
 
-import { createContext, useContext, ReactNode } from 'react';
+import { createContext, useContext, ReactNode, useState, useEffect } from 'react';
 import { toast } from 'sonner';
-import { useAuth as useOriginalAuth } from '@/hooks/useAuth';
 
 interface User {
   uid: number;
   login: string;
   name?: string;
+  email?: string;
+  id?: string | number;
+  image?: string | null;
+  odooUserId?: number;
 }
 
 interface LoginData {
@@ -41,8 +44,45 @@ interface AuthProviderProps {
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  // Use the original auth hook as the source of truth
-  const originalAuth = useOriginalAuth();
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  // Check authentication status on mount
+  useEffect(() => {
+    checkAuthStatus();
+  }, []);
+
+  const checkAuthStatus = async () => {
+    try {
+      const response = await fetch('/api/auth/verify', {
+        credentials: 'include'
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        if (data.authenticated && data.user) {
+          setUser({
+            uid: data.user.uid,
+            login: data.user.login,
+            name: data.user.name,
+            email: data.user.login, // login is typically the email
+            id: data.user.uid,
+            image: null,
+            odooUserId: data.user.uid
+          });
+        } else {
+          setUser(null);
+        }
+      } else {
+        setUser(null);
+      }
+    } catch (error) {
+      console.error('Auth check error:', error);
+      setUser(null);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const login = async (credentials: LoginData) => {
     try {
@@ -69,12 +109,20 @@ export function AuthProvider({ children }: AuthProviderProps) {
         throw new Error(data.error || 'Login failed');
       }
 
+      // Update user state immediately
+      if (data.user) {
+        setUser({
+          uid: data.user.uid,
+          login: data.user.login,
+          name: data.user.name,
+          email: data.user.login, // login is typically the email
+          id: data.user.uid,
+          image: null,
+          odooUserId: data.user.uid
+        });
+      }
+
       toast.success(`¡Bienvenido ${data.user?.name || data.user?.login || 'Usuario'}!`);
-      
-      // Force a page reload to ensure all components sync with new auth state
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
       
     } catch (error) {
       throw error;
@@ -88,31 +136,31 @@ export function AuthProvider({ children }: AuthProviderProps) {
         credentials: 'include'
       });
       
+      // Clear user state immediately
+      setUser(null);
+      
+      // Clear any localStorage/sessionStorage if used
+      if (typeof window !== 'undefined') {
+        localStorage.clear();
+        sessionStorage.clear();
+      }
+      
       toast.success('Sesión cerrada correctamente');
       
-      // Force a page reload to ensure all components sync
-      setTimeout(() => {
-        window.location.reload();
-      }, 500);
+      // Redirect to home page
+      window.location.href = '/';
       
     } catch (error) {
       toast.error('Error al cerrar sesión');
     }
   };
 
-  // Transform the original auth data to match our interface
-  const user: User | null = originalAuth.user ? {
-    uid: originalAuth.user.odooUserId || Number(originalAuth.user.id) || 0,
-    login: originalAuth.user.email || 'unknown@example.com',
-    name: originalAuth.user.name || undefined
-  } : null;
-
   const contextValue: AuthContextType = {
     user,
-    loading: originalAuth.isLoading,
+    loading,
     login,
     logout,
-    isAuthenticated: originalAuth.isAuthenticated
+    isAuthenticated: !!user
   };
 
   return (

@@ -11,7 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BookOpen, Award, Clock, PlayCircle, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useTranslations } from 'next-intl';
-import { useAuth } from "@/hooks/useAuth";
+import { useNewAuth } from "@/components/providers/AuthProvider";
 
 interface Course {
   id: number;
@@ -27,7 +27,7 @@ export default function DashboardPage() {
   const locale = pathname.split('/')[1] || 'es';
   const router = useRouter();
   const t = useTranslations('dashboard');
-  const { isAuthenticated, isLoading, user } = useAuth();
+  const { isAuthenticated, loading: isLoading, user } = useNewAuth();
 
   // Redirect to login if not authenticated
   useEffect(() => {

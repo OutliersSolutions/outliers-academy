@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import { useAuth } from '@/hooks/useAuth';
+import { useNewAuth } from "@/components/providers/AuthProvider";
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -76,7 +76,7 @@ export default function CourseLearnPage({
 }: {
   params: { slug: string; locale: string }
 }) {
-  const { isAuthenticated, isLoading: authLoading, user } = useAuth();
+  const { isAuthenticated, loading: authLoading, user } = useNewAuth();
   const [course, setCourse] = useState<Course | null>(null);
   const [currentLesson, setCurrentLesson] = useState<CourseLesson | null>(null);
   const [lessonIndex, setLessonIndex] = useState(0);

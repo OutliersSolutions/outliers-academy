@@ -20,14 +20,14 @@ import { useTheme } from "next-themes";
 import { SearchOverlay } from "@/components/ui/SearchOverlay";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { LoaderInline } from "@/components/ui/loader";
-import { useAuth } from "@/hooks/useAuth";
+import { useNewAuth } from "@/components/providers/AuthProvider";
 
 export function Navbar() {
   const pathname = usePathname();
   const locale = useLocale();
   const t = useTranslations("nav");
   const tCommon = useTranslations("common");
-  const { isAuthenticated, isLoading: authLoading, user } = useAuth();
+  const { isAuthenticated, loading: authLoading, user, logout } = useNewAuth();
   const [open, setOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -89,14 +89,8 @@ export function Navbar() {
     setTheme(isDark ? "light" : "dark");
   };
 
-  const handleSignOut = async () => {
-    try {
-      await fetch("/api/auth/logout", { method: "POST" });
-      window.location.href = `/${locale}`;
-    } catch (error) {
-      console.error("Logout error:", error);
-      window.location.href = `/${locale}`;
-    }
+  const handleSignOut = () => {
+    logout();
   };
 
   return (
