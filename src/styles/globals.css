@@ -535,6 +535,95 @@ body {
   overflow: hidden;
 } 
 
+/* Toast Customization */
+.toast-custom {
+  @apply transition-all duration-300 ease-out !important;
+}
+
+.toast-custom[data-type="success"] {
+  border-color: #16a34a !important;
+  background-color: #f0fdf4 !important;
+  color: #15803d !important;
+}
+
+.dark .toast-custom[data-type="success"] {
+  border-color: #16a34a !important;
+  background-color: rgba(22, 163, 74, 0.1) !important;
+  color: #4ade80 !important;
+}
+
+.toast-custom[data-type="error"] {
+  border-color: #dc2626 !important;
+  background-color: #fef2f2 !important;
+  color: #dc2626 !important;
+}
+
+.dark .toast-custom[data-type="error"] {
+  border-color: #dc2626 !important;
+  background-color: rgba(220, 38, 38, 0.1) !important;
+  color: #f87171 !important;
+}
+
+.toast-custom[data-type="info"] {
+  border-color: #2563eb !important;
+  background-color: #eff6ff !important;
+  color: #1d4ed8 !important;
+}
+
+.dark .toast-custom[data-type="info"] {
+  border-color: #2563eb !important;
+  background-color: rgba(37, 99, 235, 0.1) !important;
+  color: #60a5fa !important;
+}
+
+.toast-custom[data-type="warning"] {
+  border-color: #d97706 !important;
+  background-color: #fffbeb !important;
+  color: #92400e !important;
+}
+
+.dark .toast-custom[data-type="warning"] {
+  border-color: #d97706 !important;
+  background-color: rgba(217, 119, 6, 0.1) !important;
+  color: #fbbf24 !important;
+}
+
+/* Sonner toast container positioning and styling */
+[data-sonner-toaster] {
+  font-family: var(--font-inter), Inter, sans-serif !important;
+}
+
+[data-sonner-toast] {
+  border-radius: 0.75rem !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+  backdrop-filter: blur(8px) !important;
+  transform: translateX(0) !important;
+}
+
+[data-sonner-toast][data-styled="true"] {
+  padding: 1rem !important;
+}
+
+[data-sonner-toast] [data-icon] {
+  margin-right: 0.75rem !important;
+}
+
+[data-sonner-toast] [data-content] {
+  font-weight: 500 !important;
+  line-height: 1.6 !important;
+}
+
+[data-sonner-toast] [data-button] {
+  margin-left: auto !important;
+  border-radius: 0.375rem !important;
+  padding: 0.25rem !important;
+  transition: background-color 0.2s ease !important;
+}
+
+[data-sonner-toast] [data-button]:hover {
+  background-color: hsl(var(--muted) / 0.5) !important;
+}
+
 /* Solarized theme improvements */
 @layer utilities {
   .text-solarized-base01 {
