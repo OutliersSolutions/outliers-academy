@@ -351,7 +351,7 @@ export function Navbar() {
                         duration: 0.2,
                         ease: "easeOut"
                       }}
-                      className="absolute top-full right-4 mt-2 w-64 bg-solarized-base2/98 dark:bg-gray-800/98 backdrop-blur-xl rounded-xl shadow-2xl border border-solarized-base1/30 dark:border-gray-700/40 z-50 overflow-hidden"
+                      className="absolute top-full right-4 mt-2 w-64 bg-solarized-base2 dark:bg-gray-800 backdrop-blur-xl rounded-xl shadow-2xl border border-solarized-base1/50 dark:border-gray-700/60 z-50 overflow-hidden"
                     >
                     {/* Auth buttons for mobile */}
                     {!isAuthenticated ? (
