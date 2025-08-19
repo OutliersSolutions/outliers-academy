@@ -54,13 +54,19 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const checkAuthStatus = async () => {
     try {
+      console.log('🔍 AuthProvider: Checking auth status...');
       const response = await fetch('/api/auth/verify', {
         credentials: 'include'
       });
       
+      console.log('🔍 AuthProvider: Auth verify response status:', response.status);
+      
       if (response.ok) {
         const data = await response.json();
+        console.log('🔍 AuthProvider: Auth verify data:', data);
+        
         if (data.authenticated && data.user) {
+          console.log('✅ AuthProvider: Setting user as authenticated');
           setUser({
             uid: data.user.uid,
             login: data.user.login,
@@ -71,13 +77,15 @@ export function AuthProvider({ children }: AuthProviderProps) {
             odooUserId: data.user.uid
           });
         } else {
+          console.log('❌ AuthProvider: No authenticated user found, clearing state');
           setUser(null);
         }
       } else {
+        console.log('❌ AuthProvider: Auth verify failed, clearing state');
         setUser(null);
       }
     } catch (error) {
-      console.error('Auth check error:', error);
+      console.error('❌ AuthProvider: Auth check error:', error);
       setUser(null);
     } finally {
       setLoading(false);
@@ -138,28 +146,50 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const logout = async () => {
     try {
+      console.log('🔴 AuthProvider: Starting logout...');
+      
+      // Clear user state immediately FIRST to update UI
+      setUser(null);
+      console.log('🔴 AuthProvider: User state cleared');
+      
       await fetch('/api/auth/logout', {
         method: 'POST',
         credentials: 'include'
       });
       
-      // Clear user state immediately
-      setUser(null);
+      console.log('🔴 AuthProvider: Logout API called');
       
       // Clear any localStorage/sessionStorage if used
       if (typeof window !== 'undefined') {
         localStorage.clear();
         sessionStorage.clear();
+        
+        // Manually delete cookies from client side as well
+        document.cookie = 'oa_session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=; secure=false; samesite=lax;';
+        document.cookie = 'session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=;';
+        
+        console.log('🔴 AuthProvider: Storage and cookies cleared');
       }
       
       toast.success('Sesión cerrada correctamente');
       
-      // Redirect to localized home page
-      const currentLocale = window.location.pathname.split('/')[1] || 'es';
-      window.location.href = `/${currentLocale}`;
+      // Use a small delay to allow React to update the UI before redirect
+      setTimeout(() => {
+        const currentLocale = window.location.pathname.split('/')[1] || 'es';
+        console.log('🔴 AuthProvider: Redirecting to:', `/${currentLocale}`);
+        window.location.href = `/${currentLocale}`;
+      }, 300);
       
     } catch (error) {
+      console.error('🔴 AuthProvider: Logout error:', error);
       toast.error('Error al cerrar sesión');
+      // Even if logout API fails, clear user state locally
+      setUser(null);
+      
+      setTimeout(() => {
+        const currentLocale = window.location.pathname.split('/')[1] || 'es';
+        window.location.href = `/${currentLocale}`;
+      }, 300);
     }
   };
 
