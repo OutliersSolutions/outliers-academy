@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
@@ -8,7 +7,6 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Mail, Lock, User, Eye, EyeOff } from 'lucide-react';
 import Link from 'next/link';
-
 export default function SignupPage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -17,27 +15,23 @@ export default function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const [verificationMessage, setVerificationMessage] = useState('');
   const [showVerificationMessage, setShowVerificationMessage] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
   const locale = pathname.split('/')[1] || 'es';
-
   const handleEmailSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
-    
     if (password !== confirmPassword) {
-      alert(locale === 'es' ? 'Las contraseñas no coinciden' : 'Passwords do not match');
+      //TODO SHOW TOAST ERROR
       return;
     }
-
     if (password.length < 6) {
-      alert(locale === 'es' ? 'La contraseña debe tener al menos 6 caracteres' : 'Password must be at least 6 characters');
+      //TODO SHOW TOAST ERROR
       return;
     }
-
     setLoading(true);
-    
     try {
       const res = await fetch('/api/auth/signup', {
         method: 'POST',
@@ -48,11 +42,9 @@ export default function SignupPage() {
           password
         })
       });
-      
       if (res.ok) {
         const data = await res.json();
-        console.log('Signup successful:', data);
-        
+        //TODO SHOW TOAST ERROR
         // Check if email verification is required
         if (data.requiresVerification) {
           // Redirect to verify-email page with email parameter
@@ -66,13 +58,11 @@ export default function SignupPage() {
         throw new Error(data.error || (locale === 'es' ? 'Error en el registro' : 'Signup error'));
       }
     } catch (error) {
-      console.error('Signup error:', error);
-      alert((error as Error).message);
+      
     } finally {
       setLoading(false);
     }
   };
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 via-background to-secondary/5 px-4">
       <Card className="w-full max-w-md shadow-2xl border-0 bg-background/95 backdrop-blur">
@@ -86,7 +76,6 @@ export default function SignupPage() {
               : 'Join Outliers Academy and start your learning journey'}
           </CardDescription>
         </CardHeader>
-        
         <CardContent className="space-y-4">
           {/* Verification Success Message */}
           {showVerificationMessage && (
@@ -116,7 +105,6 @@ export default function SignupPage() {
               </div>
             </div>
           )}
-
           {/* Email/Password Form */}
           {!showVerificationMessage && (
             <form onSubmit={handleEmailSignUp} className="space-y-4">
@@ -137,7 +125,6 @@ export default function SignupPage() {
                 />
               </div>
             </div>
-
             <div className="space-y-2">
               <Label htmlFor="email" className="text-sm font-medium">
                 {locale === 'es' ? 'Correo electrónico' : 'Email'}
@@ -155,7 +142,6 @@ export default function SignupPage() {
                 />
               </div>
             </div>
-            
             <div className="space-y-2">
               <Label htmlFor="password" className="text-sm font-medium">
                 {locale === 'es' ? 'Contraseña' : 'Password'}
@@ -180,7 +166,6 @@ export default function SignupPage() {
                 </button>
               </div>
             </div>
-
             <div className="space-y-2">
               <Label htmlFor="confirmPassword" className="text-sm font-medium">
                 {locale === 'es' ? 'Confirmar contraseña' : 'Confirm password'}
@@ -205,7 +190,6 @@ export default function SignupPage() {
                 </button>
               </div>
             </div>
-
             <Button 
               type="submit" 
               disabled={loading}
@@ -218,7 +202,6 @@ export default function SignupPage() {
             </Button>
           </form>
           )}
-
           {!showVerificationMessage && (
             <div className="text-center text-sm text-muted-foreground">
               {locale === 'es' ? '¿Ya tienes cuenta?' : 'Already have an account?'}{' '}
@@ -234,4 +217,4 @@ export default function SignupPage() {
       </Card>
     </div>
   );
-} 
+}

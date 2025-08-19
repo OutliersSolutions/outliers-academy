@@ -10,7 +10,6 @@ import { CookieProvider } from '@/components/CookieProvider';
 import { AuthProvider } from '@/components/providers/AuthProvider';
 import { ToastProvider } from '@/components/providers/ToastProvider';
 import { Inter, Manrope, JetBrains_Mono } from 'next/font/google';
-
 // Font configurations with preload and fallback
 const inter = Inter({ 
   subsets: ['latin'],
@@ -19,7 +18,6 @@ const inter = Inter({
   preload: true,
   fallback: ['system-ui', 'arial', 'sans-serif'],
 });
-
 const manrope = Manrope({ 
   subsets: ['latin'],
   variable: '--font-manrope',
@@ -27,7 +25,6 @@ const manrope = Manrope({
   preload: true,
   fallback: ['system-ui', 'arial', 'sans-serif'],
 });
-
 const jetbrainsMono = JetBrains_Mono({ 
   subsets: ['latin'],
   variable: '--font-code-primary',
@@ -35,7 +32,6 @@ const jetbrainsMono = JetBrains_Mono({
   preload: true,
   fallback: ['Consolas', 'Monaco', 'monospace'],
 });
-
 export default async function RootLayout({
   children,
   params: { locale }
@@ -44,15 +40,12 @@ export default async function RootLayout({
   params: { locale: string };
 }) {
   const tCommon = await getTranslations('common');
-  
   let messages;
   try {
     messages = await getMessages();
   } catch (error) {
-    console.warn('Failed to load messages, using fallback');
     messages = {};
   }
-
   return (
     <>
       <head>
@@ -70,15 +63,12 @@ export default async function RootLayout({
         <meta name="twitter:image" content="/icons/logo.png" />
         <link rel="icon" href="/logo.ico" />
         <link rel="apple-touch-icon" href="/logo.ico" />
-        
         {/* Preload critical resources */}
         <link rel="preload" href="/models/chatbot.glb" as="object" type="model/gltf-binary" />
         <link rel="preload" href="/icons/logo.png" as="image" />
-        
         {/* DNS prefetch for external resources */}
         <link rel="dns-prefetch" href="//fonts.googleapis.com" />
         <link rel="dns-prefetch" href="//fonts.gstatic.com" />
-        
         {/* Resource hints */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -111,4 +101,4 @@ export default async function RootLayout({
       </body>
     </>
   );
-} 
+}

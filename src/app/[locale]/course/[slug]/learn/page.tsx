@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useState, useCallback } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useNewAuth } from "@/components/providers/AuthProvider";
@@ -34,7 +33,6 @@ import {
   MessageCircle
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-
 interface CourseLesson {
   id: number;
   title: string;
@@ -46,7 +44,6 @@ interface CourseLesson {
   completed?: boolean;
   order?: number;
 }
-
 interface Course {
   id: number;
   slug: string;
@@ -70,7 +67,6 @@ interface Course {
   tags?: string[];
   last_updated?: string;
 }
-
 export default function CourseLearnPage({
   params
 }: {
@@ -89,13 +85,10 @@ export default function CourseLearnPage({
   const locale = params.locale || 'es';
   const t = useTranslations('course');
   const tLoader = useTranslations('loader');
-
   const isSpanish = locale === 'es';
-
   const fetchCourse = useCallback(async () => {
     try {
       setLoading(true);
-      
       // Fetch course details
       const courseRes = await fetch(`/api/courses/${params.slug}`);
       if (!courseRes.ok) {
@@ -104,9 +97,7 @@ export default function CourseLearnPage({
         }
         throw new Error('Failed to fetch course');
       }
-      
       const courseData = await courseRes.json();
-      
       // If user is authenticated, get their progress
       if (isAuthenticated && user?.odooUserId) {
         try {
@@ -118,10 +109,9 @@ export default function CourseLearnPage({
             courseData.is_enrolled = progressData.is_enrolled;
           }
         } catch (error) {
-          console.error('Error fetching progress:', error);
+          //TODO SHOW TOAST ERROR
         }
       }
-      
       // Add mock data for better demonstration
       courseData.lessons = courseData.lessons || generateMockLessons();
       courseData.instructor = courseData.instructor || 'Dr. María González';
@@ -134,32 +124,26 @@ export default function CourseLearnPage({
       courseData.category = courseData.category || ['Inteligencia Artificial', 'Desarrollo Web', 'Data Science', 'Machine Learning'][Math.floor(Math.random() * 4)];
       courseData.tags = courseData.tags || ['Python', 'JavaScript', 'React', 'Node.js', 'AI'].slice(0, Math.floor(Math.random() * 3) + 2);
       courseData.last_updated = courseData.last_updated || new Date().toISOString();
-      
       // For demo purposes, assume user is enrolled if they are authenticated
       if (isAuthenticated) {
         courseData.is_enrolled = true;
       }
-      
       setCourse(courseData);
-      
       // Set first lesson as current
       if (courseData.lessons && courseData.lessons.length > 0) {
         setCurrentLesson(courseData.lessons[0]);
         setLessonIndex(0);
       }
-      
     } catch (error) {
-      console.error('Error fetching course:', error);
+      //TODO SHOW TOAST ERROR
       notFound();
     } finally {
       setLoading(false);
     }
   }, [params.slug, isAuthenticated, user?.odooUserId]);
-
   useEffect(() => {
     fetchCourse();
   }, [fetchCourse]);
-
   const generateMockLessons = (): CourseLesson[] => {
     const lessonTitles = [
       'Introducción y conceptos básicos',
@@ -173,7 +157,6 @@ export default function CourseLearnPage({
       'Testing y debugging',
       'Despliegue y producción'
     ];
-
     return lessonTitles.map((title, index) => ({
       id: index + 1,
       title,
@@ -185,7 +168,6 @@ export default function CourseLearnPage({
       order: index + 1
     }));
   };
-
   const nextLesson = () => {
     if (course?.lessons && lessonIndex < course.lessons.length - 1) {
       const newIndex = lessonIndex + 1;
@@ -193,7 +175,6 @@ export default function CourseLearnPage({
       setCurrentLesson(course.lessons[newIndex]);
     }
   };
-
   const previousLesson = () => {
     if (lessonIndex > 0 && course?.lessons) {
       const newIndex = lessonIndex - 1;
@@ -201,22 +182,18 @@ export default function CourseLearnPage({
       setCurrentLesson(course.lessons[newIndex]);
     }
   };
-
   const selectLesson = (lesson: CourseLesson, index: number) => {
     if (lesson.is_preview || course?.is_enrolled) {
       setCurrentLesson(lesson);
       setLessonIndex(index);
     }
   };
-
   const markLessonComplete = async () => {
     if (!currentLesson || !course?.is_enrolled) return;
-    
     try {
       await fetch(`/api/odoo/courses/${course.id}/lessons/${currentLesson.id}/complete`, {
         method: 'POST'
       });
-      
       // Update local state
       if (course.lessons) {
         const updatedLessons = course.lessons.map(lesson => 
@@ -225,10 +202,9 @@ export default function CourseLearnPage({
         setCourse({ ...course, lessons: updatedLessons });
       }
     } catch (error) {
-      console.error('Error marking lesson complete:', error);
+      //TODO SHOW TOAST ERROR
     }
   };
-
   const getDifficultyColor = (difficulty?: string) => {
     switch (difficulty) {
       case 'beginner': return 'bg-green-100 text-green-800';
@@ -237,7 +213,6 @@ export default function CourseLearnPage({
       default: return 'bg-gray-100 text-gray-800';
     }
   };
-
   const getDifficultyText = (difficulty?: string) => {
     switch (difficulty) {
       case 'beginner': return isSpanish ? 'Principiante' : 'Beginner';
@@ -246,7 +221,6 @@ export default function CourseLearnPage({
       default: return isSpanish ? 'Sin definir' : 'Undefined';
     }
   };
-
   if (authLoading || loading) {
     return (
       <Loader 
@@ -257,21 +231,17 @@ export default function CourseLearnPage({
       />
     );
   }
-
   if (!course) {
     return notFound();
   }
-
   // Check if user should have access
   if (!isAuthenticated) {
     router.push(`/${locale}/course/${params.slug}/overview`);
     return null;
   }
-
   const completedLessons = course.lessons?.filter(lesson => lesson.completed).length || 0;
   const totalLessons = course.lessons?.length || 0;
   const completionPercentage = totalLessons > 0 ? (completedLessons / totalLessons) * 100 : 0;
-
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Header */}
@@ -287,7 +257,6 @@ export default function CourseLearnPage({
               >
                 {sidebarOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
               </Button>
-              
               <nav className="hidden lg:flex items-center space-x-2 text-sm text-gray-500">
                 <Link href={`/${locale}`} className="hover:text-gray-700">
                   {isSpanish ? 'Inicio' : 'Home'}
@@ -306,7 +275,6 @@ export default function CourseLearnPage({
                 </span>
               </nav>
             </div>
-
             <div className="flex items-center space-x-2">
               {course.is_enrolled && (
                 <div className="hidden sm:flex items-center space-x-2 text-sm">
@@ -321,7 +289,6 @@ export default function CourseLearnPage({
                   </span>
                 </div>
               )}
-              
               <Button variant="ghost" size="sm">
                 <Share2 className="h-4 w-4" />
               </Button>
@@ -329,7 +296,6 @@ export default function CourseLearnPage({
           </div>
         </div>
       </div>
-
       <div className="flex h-[calc(100vh-4rem)]">
         {/* Sidebar */}
         <div className={`${sidebarOpen ? 'w-80' : 'w-0'} transition-all duration-300 overflow-hidden bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700`}>
@@ -341,7 +307,6 @@ export default function CourseLearnPage({
               {totalLessons} {isSpanish ? 'lecciones' : 'lessons'} • {course.duration}h {isSpanish ? 'total' : 'total'}
             </p>
           </div>
-          
           <div className="overflow-y-auto h-full pb-20">
             {course.lessons?.map((lesson, index) => (
               <div
@@ -361,7 +326,6 @@ export default function CourseLearnPage({
                       <Lock className="h-5 w-5 text-gray-400" />
                     )}
                   </div>
-                  
                   <div className="flex-1 min-w-0">
                     <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100 line-clamp-2">
                       {lesson.title}
@@ -381,7 +345,6 @@ export default function CourseLearnPage({
             ))}
           </div>
         </div>
-
         {/* Main content */}
         <div className="flex-1 flex flex-col overflow-hidden">
           {currentLesson ? (
@@ -414,7 +377,6 @@ export default function CourseLearnPage({
                     </div>
                   )}
                 </div>
-
                 {/* Video controls */}
                 {(currentLesson.is_preview || course.is_enrolled) && (
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -437,7 +399,6 @@ export default function CourseLearnPage({
                           {isMuted ? <VolumeX className="h-5 w-5" /> : <Volume2 className="h-5 w-5" />}
                         </Button>
                       </div>
-
                       <div className="flex items-center space-x-2">
                         <Button
                           variant="ghost"
@@ -458,7 +419,6 @@ export default function CourseLearnPage({
                   </div>
                 )}
               </div>
-
               {/* Lesson navigation */}
               <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 p-4">
                 <div className="flex items-center justify-between">
@@ -472,7 +432,6 @@ export default function CourseLearnPage({
                       <ChevronLeft className="h-4 w-4 mr-1" />
                       {isSpanish ? 'Anterior' : 'Previous'}
                     </Button>
-                    
                     <div className="text-center">
                       <h1 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
                         {currentLesson.title}
@@ -481,7 +440,6 @@ export default function CourseLearnPage({
                         {isSpanish ? 'Lección' : 'Lesson'} {lessonIndex + 1} {isSpanish ? 'de' : 'of'} {totalLessons}
                       </p>
                     </div>
-                    
                     <Button
                       variant="ghost"
                       size="sm"
@@ -492,7 +450,6 @@ export default function CourseLearnPage({
                       <ChevronRight className="h-4 w-4 ml-1" />
                     </Button>
                   </div>
-
                   {course.is_enrolled && !currentLesson.completed && (
                     <Button onClick={markLessonComplete}>
                       <CheckCircle className="h-4 w-4 mr-2" />
@@ -501,7 +458,6 @@ export default function CourseLearnPage({
                   )}
                 </div>
               </div>
-
               {/* Lesson content tabs */}
               <div className="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-900">
                 <div className="container mx-auto p-6">
@@ -520,7 +476,6 @@ export default function CourseLearnPage({
                         {isSpanish ? 'Recursos' : 'Resources'}
                       </TabsTrigger>
                     </TabsList>
-
                     <TabsContent value="overview" className="mt-6">
                       <Card>
                         <CardHeader>
@@ -535,7 +490,6 @@ export default function CourseLearnPage({
                         </CardContent>
                       </Card>
                     </TabsContent>
-
                     <TabsContent value="notes" className="mt-6">
                       <Card>
                         <CardHeader>
@@ -557,7 +511,6 @@ export default function CourseLearnPage({
                         </CardContent>
                       </Card>
                     </TabsContent>
-
                     <TabsContent value="discussion" className="mt-6">
                       <Card>
                         <CardHeader>
@@ -577,7 +530,6 @@ export default function CourseLearnPage({
                         </CardContent>
                       </Card>
                     </TabsContent>
-
                     <TabsContent value="resources" className="mt-6">
                       <Card>
                         <CardHeader>
@@ -629,4 +581,4 @@ export default function CourseLearnPage({
       </div>
     </div>
   );
-} 
+}

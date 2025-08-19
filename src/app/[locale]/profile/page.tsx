@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useNewAuth } from "@/components/providers/AuthProvider";
@@ -14,7 +13,6 @@ import { Loader } from "@/components/ui/loader";
 import { User, Mail, Calendar, Shield, Edit2, Save, X, Camera } from "lucide-react";
 import Link from "next/link";
 import { useTranslations } from 'next-intl';
-
 interface UserProfile {
   id: number;
   name: string;
@@ -22,7 +20,6 @@ interface UserProfile {
   image_1920?: string;
   create_date?: string;
 }
-
 export default function ProfilePage() {
   const { isAuthenticated, loading: authLoading, user } = useNewAuth();
   const [profile, setProfile] = useState<UserProfile | null>(null);
@@ -33,20 +30,16 @@ export default function ProfilePage() {
   const pathname = usePathname();
   const locale = pathname.split('/')[1] || 'es';
   const tLoader = useTranslations('loader');
-
   const isSpanish = locale === 'es';
-
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
       router.push(`/${locale}/login`);
       return;
     }
-
     if (isAuthenticated && user?.odooUserId) {
       fetchUserProfile();
     }
   }, [isAuthenticated, authLoading, user, router, locale]);
-
   const fetchUserProfile = async () => {
     try {
       const res = await fetch('/api/odoo/profile');
@@ -56,12 +49,10 @@ export default function ProfilePage() {
         setEditForm({ name: data.profile.name, email: data.profile.email });
       }
     } catch (error) {
-      console.error('Error fetching profile:', error);
     } finally {
       setLoading(false);
     }
   };
-
   const handleEditToggle = () => {
     if (editing) {
       // Cancel editing
@@ -69,7 +60,6 @@ export default function ProfilePage() {
     }
     setEditing(!editing);
   };
-
   const handleSaveProfile = async () => {
     try {
       const res = await fetch('/api/odoo/profile', {
@@ -77,20 +67,17 @@ export default function ProfilePage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(editForm)
       });
-
       if (res.ok) {
         const data = await res.json();
         setProfile(data.profile);
         setEditing(false);
       } else {
-        alert(isSpanish ? 'Error al actualizar perfil' : 'Error updating profile');
+        //TODO SHOW TOAST ERROR
       }
     } catch (error) {
-      console.error('Error updating profile:', error);
-      alert(isSpanish ? 'Error al actualizar perfil' : 'Error updating profile');
+      //TODO SHOW TOAST ERROR
     }
   };
-
   if (authLoading || loading) {
     return (
       <Loader 
@@ -101,11 +88,9 @@ export default function ProfilePage() {
       />
     );
   }
-
   if (!isAuthenticated || !user || !profile) {
     return null;
   }
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-secondary/5">
       <div className="container mx-auto px-4 py-8">
@@ -125,7 +110,6 @@ export default function ProfilePage() {
             </Link>
           </Button>
         </div>
-
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Profile Card */}
           <div className="lg:col-span-1">
@@ -159,7 +143,6 @@ export default function ProfilePage() {
               </CardContent>
             </Card>
           </div>
-
           {/* Profile Information */}
           <div className="lg:col-span-2">
             <Tabs defaultValue="info" className="space-y-6">
@@ -174,7 +157,6 @@ export default function ProfilePage() {
                   {isSpanish ? 'Preferencias' : 'Preferences'}
                 </TabsTrigger>
               </TabsList>
-
               <TabsContent value="info" className="space-y-6">
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between">
@@ -226,7 +208,6 @@ export default function ProfilePage() {
                         )}
                       </div>
                     </div>
-                    
                     {editing && (
                       <div className="flex space-x-2 pt-4">
                         <Button onClick={handleSaveProfile}>
@@ -241,7 +222,6 @@ export default function ProfilePage() {
                   </CardContent>
                 </Card>
               </TabsContent>
-
               <TabsContent value="security" className="space-y-6">
                 <Card>
                   <CardHeader>
@@ -268,7 +248,6 @@ export default function ProfilePage() {
                   </CardContent>
                 </Card>
               </TabsContent>
-
               <TabsContent value="preferences" className="space-y-6">
                 <Card>
                   <CardHeader>

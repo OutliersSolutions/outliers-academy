@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useState, useCallback } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useNewAuth } from "@/components/providers/AuthProvider";
@@ -23,7 +22,6 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useTranslations } from 'next-intl';
-
 interface Course {
   id: number;
   name: string;
@@ -38,7 +36,6 @@ interface Course {
   instructor?: string;
   thumbnail?: string;
 }
-
 export default function MyCoursesPage() {
   const { isAuthenticated, loading: authLoading, user } = useNewAuth();
   const [courses, setCourses] = useState<Course[]>([]);
@@ -50,23 +47,18 @@ export default function MyCoursesPage() {
   const pathname = usePathname();
   const locale = pathname.split('/')[1] || 'es';
   const tLoader = useTranslations('loader');
-
   const isSpanish = locale === 'es';
-
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
       router.push(`/${locale}/login`);
       return;
     }
-
     if (isAuthenticated && user?.odooUserId) {
       fetchUserCourses();
     }
   }, [isAuthenticated, authLoading, user, router, locale]);
-
   const filterCourses = useCallback(() => {
     let filtered = courses;
-
     // Filter by tab
     if (selectedTab === 'in-progress') {
       filtered = filtered.filter(course => course.completion > 0 && course.completion < 100);
@@ -75,7 +67,6 @@ export default function MyCoursesPage() {
     } else if (selectedTab === 'not-started') {
       filtered = filtered.filter(course => course.completion === 0);
     }
-
     // Filter by search query
     if (searchQuery) {
       filtered = filtered.filter(course =>
@@ -83,14 +74,11 @@ export default function MyCoursesPage() {
         course.description?.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
-
     setFilteredCourses(filtered);
   }, [courses, searchQuery, selectedTab]);
-
   useEffect(() => {
     filterCourses();
   }, [filterCourses]);
-
   const fetchUserCourses = async () => {
     try {
       const res = await fetch('/api/odoo/courses');
@@ -108,13 +96,11 @@ export default function MyCoursesPage() {
         setCourses(enhancedCourses);
       }
     } catch (error) {
-      console.error('Error fetching courses:', error);
+      //TODO SHOW TOAST ERROR
     } finally {
       setLoading(false);
     }
   };
-
-
   const getDifficultyColor = (difficulty?: string) => {
     switch (difficulty) {
       case 'beginner': return 'bg-green-100 text-green-800';
@@ -123,7 +109,6 @@ export default function MyCoursesPage() {
       default: return 'bg-gray-100 text-gray-800';
     }
   };
-
   const getDifficultyText = (difficulty?: string) => {
     switch (difficulty) {
       case 'beginner': return isSpanish ? 'Principiante' : 'Beginner';
@@ -132,7 +117,6 @@ export default function MyCoursesPage() {
       default: return isSpanish ? 'Sin definir' : 'Undefined';
     }
   };
-
   if (authLoading || loading) {
     return (
       <Loader 
@@ -143,15 +127,12 @@ export default function MyCoursesPage() {
       />
     );
   }
-
   if (!isAuthenticated || !user) {
     return null;
   }
-
   const completedCourses = courses.filter(course => course.completion >= 100);
   const inProgressCourses = courses.filter(course => course.completion > 0 && course.completion < 100);
   const notStartedCourses = courses.filter(course => course.completion === 0);
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-secondary/5">
       <div className="container mx-auto px-4 py-8">
@@ -178,7 +159,6 @@ export default function MyCoursesPage() {
             </Button>
           </div>
         </div>
-
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <Card>
@@ -234,7 +214,6 @@ export default function MyCoursesPage() {
             </CardContent>
           </Card>
         </div>
-
         {/* Search and Filters */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 space-y-4 md:space-y-0">
           <div className="relative flex-1 max-w-md">
@@ -251,7 +230,6 @@ export default function MyCoursesPage() {
             {isSpanish ? 'Filtros' : 'Filters'}
           </Button>
         </div>
-
         {/* Course Tabs */}
         <Tabs value={selectedTab} onValueChange={setSelectedTab} className="space-y-6">
           <TabsList className="grid w-full grid-cols-4">
@@ -268,7 +246,6 @@ export default function MyCoursesPage() {
               {isSpanish ? 'Sin iniciar' : 'Not Started'} ({notStartedCourses.length})
             </TabsTrigger>
           </TabsList>
-
           <TabsContent value={selectedTab} className="space-y-6">
             {filteredCourses.length === 0 ? (
               <Card>
@@ -310,7 +287,6 @@ export default function MyCoursesPage() {
                         {course.description || isSpanish ? 'Descripción del curso' : 'Course description'}
                       </CardDescription>
                     </CardHeader>
-                    
                     <CardContent className="space-y-4">
                       <div className="space-y-2">
                         <div className="flex justify-between text-sm">
@@ -319,7 +295,6 @@ export default function MyCoursesPage() {
                         </div>
                         <Progress value={course.completion} className="w-full" />
                       </div>
-                      
                       <div className="flex items-center justify-between text-sm text-muted-foreground">
                         <div className="flex items-center space-x-1">
                           <Clock className="h-3 w-3" />
@@ -330,7 +305,6 @@ export default function MyCoursesPage() {
                           <span>{course.slides_count} {isSpanish ? 'lecciones' : 'lessons'}</span>
                         </div>
                       </div>
-
                       {course.lastAccessed && (
                         <div className="flex items-center space-x-1 text-xs text-muted-foreground">
                           <Calendar className="h-3 w-3" />
@@ -340,7 +314,6 @@ export default function MyCoursesPage() {
                           </span>
                         </div>
                       )}
-                      
                       <div className="flex items-center justify-between pt-2">
                         <Badge 
                           variant={course.completion >= 100 ? "default" : course.completion > 0 ? "secondary" : "outline"}
@@ -352,7 +325,6 @@ export default function MyCoursesPage() {
                             : (isSpanish ? 'No iniciado' : 'Not started')
                           }
                         </Badge>
-                        
                         <Button size="sm" asChild className="group">
                           <Link href={`/${locale}/course/${course.slug || course.id}`}>
                             {course.completion > 0 

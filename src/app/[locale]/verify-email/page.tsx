@@ -1,26 +1,21 @@
 "use client";
-
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Mail, RefreshCw, AlertCircle, CheckCircle, ExternalLink } from 'lucide-react';
 import Link from 'next/link';
-
 export default function VerifyEmailPage() {
   const [isResending, setIsResending] = useState(false);
   const [resendStatus, setResendStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [resendMessage, setResendMessage] = useState('');
   const [canResend, setCanResend] = useState(true);
   const [countdown, setCountdown] = useState(0);
-  
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const locale = pathname.split('/')[1] || 'es';
-  
   const email = searchParams.get('email') || '';
-
   // Countdown timer for resend button
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -31,23 +26,18 @@ export default function VerifyEmailPage() {
     }
     return () => clearTimeout(timer);
   }, [countdown]);
-
   const handleResendEmail = async () => {
     if (!canResend || isResending || !email) return;
-
     setIsResending(true);
     setResendStatus('idle');
     setCanResend(false);
-    
     try {
       const res = await fetch('/api/auth/resend-verification', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ email })
       });
-      
       const data = await res.json();
-      
       if (res.ok) {
         setResendStatus('success');
         setResendMessage(data.message || (locale === 'es' 
@@ -60,7 +50,7 @@ export default function VerifyEmailPage() {
           : 'Error resending email'));
       }
     } catch (error) {
-      console.error('Resend error:', error);
+      //TODO SHOW TOAST ERROR
       setResendStatus('error');
       setResendMessage((error as Error).message);
       setCountdown(10); // Short cooldown on error
@@ -68,11 +58,9 @@ export default function VerifyEmailPage() {
       setIsResending(false);
     }
   };
-
   const openEmailClient = () => {
     const emailDomain = email.split('@')[1];
     let emailUrl = 'mailto:';
-    
     // Popular email providers
     if (emailDomain?.includes('gmail')) {
       emailUrl = 'https://mail.google.com';
@@ -81,16 +69,13 @@ export default function VerifyEmailPage() {
     } else if (emailDomain?.includes('yahoo')) {
       emailUrl = 'https://mail.yahoo.com';
     }
-    
     window.open(emailUrl, '_blank');
   };
-
   // Redirect to signup if no email provided
   if (!email) {
     router.push(`/${locale}/signup`);
     return null;
   }
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 via-background to-secondary/5 px-4">
       <Card className="w-full max-w-md shadow-2xl border-0 bg-background/95 backdrop-blur">
@@ -110,7 +95,6 @@ export default function VerifyEmailPage() {
             {email}
           </div>
         </CardHeader>
-        
         <CardContent className="space-y-6">
           {/* Instructions */}
           <div className="text-center space-y-3">
@@ -120,7 +104,6 @@ export default function VerifyEmailPage() {
                 : 'Open the link in your email to activate your account and sign in.'}
             </p>
           </div>
-
           {/* Resend Status Messages */}
           {resendStatus === 'success' && (
             <div className="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
@@ -132,7 +115,6 @@ export default function VerifyEmailPage() {
               </div>
             </div>
           )}
-
           {resendStatus === 'error' && (
             <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
               <div className="flex items-center space-x-2">
@@ -143,7 +125,6 @@ export default function VerifyEmailPage() {
               </div>
             </div>
           )}
-
           {/* Action Buttons */}
           <div className="space-y-3">
             <Button
@@ -166,7 +147,6 @@ export default function VerifyEmailPage() {
                 </>
               )}
             </Button>
-
             <Button
               onClick={openEmailClient}
               variant="default"
@@ -176,7 +156,6 @@ export default function VerifyEmailPage() {
               {locale === 'es' ? 'Abrir cliente de correo' : 'Open email client'}
             </Button>
           </div>
-
           {/* Tips */}
           <div className="bg-muted/50 rounded-lg p-4 space-y-2">
             <h4 className="text-sm font-medium">
@@ -188,7 +167,6 @@ export default function VerifyEmailPage() {
               <li>• {locale === 'es' ? 'El correo puede tardar unos minutos en llegar' : 'The email may take a few minutes to arrive'}</li>
             </ul>
           </div>
-
           {/* Back to signup */}
           <div className="text-center text-sm text-muted-foreground">
             {locale === 'es' ? '¿Email incorrecto?' : 'Wrong email?'}{' '}
@@ -199,7 +177,6 @@ export default function VerifyEmailPage() {
               {locale === 'es' ? 'Crear nueva cuenta' : 'Create new account'}
             </Link>
           </div>
-
           {/* Already verified? */}
           <div className="text-center text-sm text-muted-foreground">
             {locale === 'es' ? '¿Ya verificaste tu cuenta?' : 'Already verified your account?'}{' '}

@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useNewAuth } from '@/components/providers/AuthProvider';
@@ -28,7 +27,6 @@ import {
   Lock
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-
 interface CourseLesson {
   id: number;
   title: string;
@@ -38,7 +36,6 @@ interface CourseLesson {
   completed?: boolean;
   order?: number;
 }
-
 interface Course {
   id: number;
   slug: string;
@@ -65,7 +62,6 @@ interface Course {
   prerequisites?: string[];
   includes?: string[];
 }
-
 interface Review {
   id: number;
   user_name: string;
@@ -74,7 +70,6 @@ interface Review {
   comment: string;
   date: string;
 }
-
 export default function CourseOverviewPage({
   params
 }: {
@@ -88,9 +83,7 @@ export default function CourseOverviewPage({
   const locale = params.locale || 'es';
   const t = useTranslations('course');
   const tCommon = useTranslations('common');
-
   const isSpanish = locale === 'es';
-
   useEffect(() => {
     const generateMockLessons = (): CourseLesson[] => {
       const lessonTitles = isSpanish ? [
@@ -116,7 +109,6 @@ export default function CourseOverviewPage({
         'Testing and debugging',
         'Deployment and production'
       ];
-
       return lessonTitles.map((title, index) => ({
         id: index + 1,
         title,
@@ -129,7 +121,6 @@ export default function CourseOverviewPage({
         order: index + 1
       }));
     };
-
     const generateMockReviews = (): Review[] => {
       const names = ['Ana García', 'Carlos Rodríguez', 'Sofia Martín', 'Diego López', 'Elena Ruiz'];
       const comments = isSpanish ? [
@@ -145,7 +136,6 @@ export default function CourseOverviewPage({
         'The instructor explains in a very didactic way.',
         'I recommend this course 100%, worth every minute.'
       ];
-
       return names.map((name, index) => ({
         id: index + 1,
         user_name: name,
@@ -155,11 +145,9 @@ export default function CourseOverviewPage({
         date: new Date(Date.now() - Math.random() * 10000000000).toISOString()
       }));
     };
-
     const fetchCourse = async () => {
       try {
         setLoading(true);
-        
         const courseRes = await fetch(`/api/courses/${params.slug}`);
         if (!courseRes.ok) {
           if (courseRes.status === 404) {
@@ -167,9 +155,7 @@ export default function CourseOverviewPage({
           }
           throw new Error('Failed to fetch course');
         }
-        
         const courseData = await courseRes.json();
-        
         // Add enhanced mock data for better demonstration
         courseData.lessons = courseData.lessons || generateMockLessons();
         courseData.instructor = courseData.instructor || 'Dr. María González';
@@ -185,7 +171,6 @@ export default function CourseOverviewPage({
         courseData.difficulty = courseData.difficulty || ['beginner', 'intermediate', 'advanced'][Math.floor(Math.random() * 3)];
         courseData.category = courseData.category || ['Inteligencia Artificial', 'Desarrollo Web', 'Data Science', 'Machine Learning'][Math.floor(Math.random() * 4)];
         courseData.tags = courseData.tags || ['Python', 'JavaScript', 'React', 'Node.js', 'AI'].slice(0, Math.floor(Math.random() * 3) + 2);
-        
         // Enhanced course details with translations
         courseData.what_you_learn = courseData.what_you_learn || (isSpanish ? [
           'Dominar los conceptos fundamentales del tema',
@@ -202,7 +187,6 @@ export default function CourseOverviewPage({
           'Solve complex problems efficiently',
           'Prepare for job opportunities'
         ]);
-        
         courseData.prerequisites = courseData.prerequisites || (isSpanish ? [
           'Conocimientos básicos de programación',
           'Computadora con acceso a internet',
@@ -212,7 +196,6 @@ export default function CourseOverviewPage({
           'Computer with internet access',
           'Willingness to learn and practice'
         ]);
-        
         courseData.includes = courseData.includes || (isSpanish ? [
           `${courseData.lessons?.length || 10} lecciones en video`,
           'Ejercicios prácticos',
@@ -228,24 +211,18 @@ export default function CourseOverviewPage({
           'Lifetime access',
           'Community support'
         ]);
-        
         setCourse(courseData);
-        
         // Generate mock reviews
         setReviews(generateMockReviews());
-        
       } catch (error) {
-        console.error('Error fetching course:', error);
+        //TODO SHOW TOAST ERROR
         notFound();
       } finally {
         setLoading(false);
       }
     };
-
     fetchCourse();
   }, [params.slug, isSpanish]);
-
-
   const getDifficultyColor = (difficulty?: string) => {
     switch (difficulty) {
       case 'beginner': return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300';
@@ -254,7 +231,6 @@ export default function CourseOverviewPage({
       default: return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300';
     }
   };
-
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
@@ -265,14 +241,11 @@ export default function CourseOverviewPage({
       </div>
     );
   }
-
   if (!course) {
     return notFound();
   }
-
   const totalLessons = course.lessons?.length || 0;
   const previewLessons = course.lessons?.filter(lesson => lesson.is_preview).length || 0;
-
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Header */}
@@ -291,7 +264,6 @@ export default function CourseOverviewPage({
           </nav>
         </div>
       </div>
-
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main content */}
@@ -309,15 +281,12 @@ export default function CourseOverviewPage({
                   </Badge>
                 ))}
               </div>
-              
               <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
                 {course.name}
               </h1>
-              
               <p className="text-lg text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
                 {course.description}
               </p>
-
               <div className="flex flex-wrap items-center gap-6 text-sm text-gray-600 dark:text-gray-400">
                 <div className="flex items-center gap-2">
                   <Star className="h-4 w-4 text-yellow-400 fill-current" />
@@ -338,7 +307,6 @@ export default function CourseOverviewPage({
                 </div>
               </div>
             </div>
-
             {/* What you'll learn */}
             <Card>
               <CardHeader>
@@ -358,7 +326,6 @@ export default function CourseOverviewPage({
                 </div>
               </CardContent>
             </Card>
-
             {/* Course content */}
             <Card>
               <CardHeader>
@@ -410,7 +377,6 @@ export default function CourseOverviewPage({
                 </div>
               </CardContent>
             </Card>
-
             {/* Prerequisites */}
             <Card>
               <CardHeader>
@@ -430,7 +396,6 @@ export default function CourseOverviewPage({
                 </ul>
               </CardContent>
             </Card>
-
             {/* Instructor */}
             <Card>
               <CardHeader>
@@ -453,7 +418,6 @@ export default function CourseOverviewPage({
                 </div>
               </CardContent>
             </Card>
-
             {/* Reviews */}
             <Card>
               <CardHeader>
@@ -499,7 +463,6 @@ export default function CourseOverviewPage({
               </CardContent>
             </Card>
           </div>
-
           {/* Sidebar */}
           <div className="lg:col-span-1">
             <div className="sticky top-8">
@@ -521,7 +484,6 @@ export default function CourseOverviewPage({
                     {t('preview')}
                   </Button>
                 </div>
-
                 <CardContent className="p-6">
                   <div className="text-center mb-6">
                     <div className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
@@ -531,12 +493,10 @@ export default function CourseOverviewPage({
                       {t('oneTimePayment')}
                     </p>
                   </div>
-
                   <div className="space-y-4 mb-6">
                     <CheckoutButton courseId={course.id} className="w-full">
                       {t('enrollNowButton')}
                     </CheckoutButton>
-                    
                     <Button 
                       variant="outline" 
                       className="w-full"
@@ -545,7 +505,6 @@ export default function CourseOverviewPage({
                       {t('viewFreeLessons')}
                     </Button>
                   </div>
-
                   <div className="space-y-3 text-sm">
                     <div className="flex items-center gap-3">
                       <CheckCircle className="h-4 w-4 text-green-500" />
@@ -576,4 +535,4 @@ export default function CourseOverviewPage({
       </div>
     </div>
   );
-} 
+}
