@@ -5,17 +5,24 @@ export async function POST(request: NextRequest) {
   try {
     const response = NextResponse.json({ success: true });
     
-    // Clear all possible authentication cookies
-    const cookiesToClear = [AUTH_COOKIE, 'session', 'auth-token', 'oa_session'];
+    // Clear authentication cookies
+    response.cookies.set(AUTH_COOKIE, '', {
+      expires: new Date(0),
+      path: '/',
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax'
+    });
     
-    cookiesToClear.forEach(cookieName => {
-      response.cookies.set(cookieName, '', {
-        expires: new Date(0),
-        path: '/',
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict'
-      });
+    // Also clear any legacy cookies
+    response.cookies.set('session', '', {
+      expires: new Date(0),
+      path: '/',
+    });
+    
+    response.cookies.set('auth-token', '', {
+      expires: new Date(0),
+      path: '/',
     });
     
     return response;

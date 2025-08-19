@@ -86,6 +86,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const login = async (credentials: LoginData) => {
     try {
+      setLoading(true); // Set loading state during login
       const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: {
@@ -124,8 +125,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       toast.success(`¡Bienvenido ${data.user?.name || data.user?.login || 'Usuario'}!`);
       
+      // Re-check auth status after successful login to ensure sync
+      // Don't await this to avoid blocking the UI
+      checkAuthStatus();
+      
     } catch (error) {
       throw error;
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -147,8 +154,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
       
       toast.success('Sesión cerrada correctamente');
       
-      // Redirect to home page
-      window.location.href = '/';
+      // Redirect to localized home page
+      const currentLocale = window.location.pathname.split('/')[1] || 'es';
+      window.location.href = `/${currentLocale}`;
       
     } catch (error) {
       toast.error('Error al cerrar sesión');

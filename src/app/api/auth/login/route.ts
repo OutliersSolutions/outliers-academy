@@ -81,11 +81,11 @@ export async function POST(request: Request) {
     resJson.cookies.set({
       name: AUTH_COOKIE,
       value: token,
-      httpOnly: false, // Temporarily disable for testing
+      httpOnly: true, // Enable httpOnly for security
       path: '/',
       sameSite: 'lax',
       maxAge: 24 * 60 * 60, // 24 hours
-      secure: false // Force to false for localhost testing
+      secure: process.env.NODE_ENV === 'production' // Only secure in production
     });
     return resJson;
   } catch (err: any) {

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
+import { useNewAuth } from '@/components/providers/AuthProvider';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -14,11 +15,11 @@ export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const router = useRouter();
   const pathname = usePathname();
   const locale = pathname.split('/')[1] || 'es';
+  const { login, loading } = useNewAuth();
 
   const handleEmailSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,41 +27,20 @@ export default function LoginPage() {
     
     if (loading) return; // Prevent double submission
     
-    setLoading(true);
     setError(''); // Clear previous errors
     
     try {
-      const res = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({login: email, password})
-      });
+      await login({ email, password });
       
-      const data = await res.json();
+      // Login successful - redirect using router to maintain locale routing
+      setError('✅ Login exitoso! Redirigiendo...');
       
-      if (res.ok) {
-        // Login successful - redirect immediately
-        setError('✅ Login exitoso! Redirigiendo...');
-        
-        // Immediate redirect with absolute URL
-        window.location.href = `${window.location.origin}/${locale}/dashboard`;
-        return;
-      } else {
-        
-        // Check if user needs email verification
-        if (res.status === 403 && data.requiresVerification) {
-          // Redirect to verify-email page
-          router.push(`/${locale}/verify-email?email=${encodeURIComponent(data.email || email)}`);
-          return;
-        }
-        
-        throw new Error(data.error || (locale === 'es' ? 'Error de inicio de sesión' : 'Sign in error'));
-      }
+      // Use Next.js router for proper locale handling
+      router.push(`/${locale}/dashboard`);
+      
     } catch (error) {
       console.error('Email signin error:', error);
       setError((error as Error).message);
-    } finally {
-      setLoading(false);
     }
   };
 

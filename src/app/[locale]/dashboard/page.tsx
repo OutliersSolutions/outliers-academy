@@ -29,51 +29,34 @@ export default function DashboardPage() {
   const t = useTranslations('dashboard');
   const { isAuthenticated, loading: isLoading, user } = useNewAuth();
 
-  // Redirect to login if not authenticated
-  useEffect(() => {
-    console.log('Dashboard useEffect - isLoading:', isLoading, 'isAuthenticated:', isAuthenticated, 'user:', user);
-    if (!isLoading && !isAuthenticated) {
-      console.log('Dashboard: User not authenticated, redirecting to login');
-      router.push(`/${locale}/login`);
-      return;
-    }
-  }, [isAuthenticated, isLoading, router, locale, user]);
+  // Don't redirect here - let middleware handle auth protection
+  // The middleware already protects this route and redirects unauthenticated users
 
-  // Show loading spinner while checking authentication
+  // Show loading spinner while auth provider is initializing
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4" />
           <p className="text-muted-foreground">
-            {locale === 'es' ? 'Verificando autenticación...' : 'Checking authentication...'}
+            {locale === 'es' ? 'Cargando dashboard...' : 'Loading dashboard...'}
           </p>
         </div>
       </div>
     );
   }
 
-  // Show unauthorized message if not authenticated
-  if (!isAuthenticated || !user) {
+  // If we reach here, middleware has already verified auth
+  // If user is still null, show a loading state instead of unauthorized
+  if (!user) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <Card className="w-full max-w-md">
-          <CardHeader>
-            <CardTitle>
-              {locale === 'es' ? 'Acceso no autorizado' : 'Unauthorized Access'}
-            </CardTitle>
-            <CardDescription>
-              {locale === 'es' 
-                ? 'Debes iniciar sesión para acceder al dashboard.' 
-                : 'You must sign in to access the dashboard.'}
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Button onClick={() => router.push(`/${locale}/login`)} className="w-full">
-              {locale === 'es' ? 'Iniciar Sesión' : 'Sign In'}
-            </Button>
-          </CardContent>
-        </Card>
+        <div className="text-center">
+          <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4" />
+          <p className="text-muted-foreground">
+            {locale === 'es' ? 'Cargando perfil de usuario...' : 'Loading user profile...'}
+          </p>
+        </div>
       </div>
     );
   }

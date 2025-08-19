@@ -78,11 +78,9 @@ export function Navbar() {
   }, [pathname]);
 
   const switchLocalePath = (target: string) => {
-    // si tu routing es "/[locale]/..." esto sustituye el segmento 1
-    const parts = pathname.split("/");
-    parts[1] = target;
-    const next = parts.join("/") || "/";
-    return next.replace(/\/+/g, "/");
+    // With localePrefix: 'always', we need to handle the locale switching differently
+    const pathWithoutLocale = pathname.split('/').slice(2).join('/') || '';
+    return `/${target}${pathWithoutLocale ? '/' + pathWithoutLocale : ''}`;
   };
 
   const toggleTheme = () => {

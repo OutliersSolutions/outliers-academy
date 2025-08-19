@@ -5,7 +5,7 @@ import { verifyAuth } from '@/lib/auth';
 const intlMiddleware = createMiddleware({
   locales: ['es', 'en'],
   defaultLocale: 'es',
-  localePrefix: 'as-needed'
+  localePrefix: 'always'
 });
 
 export default async function middleware(request: NextRequest) {
