@@ -22,6 +22,10 @@ export default function LoginPage() {
 
   const handleEmailSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
+    e.stopPropagation();
+    
+    if (loading) return; // Prevent double submission
+    
     setLoading(true);
     setError(''); // Clear previous errors
     
@@ -32,14 +36,21 @@ export default function LoginPage() {
         body: JSON.stringify({login: email, password})
       });
       
+      const data = await res.json();
+      
       if (res.ok) {
-        const data = await res.json();
-        console.log('Login successful:', data);
+        // Login successful - show success and redirect
+        setError(''); // Clear any errors
         
-        // Redirect to dashboard
-        window.location.href = `/${locale}/dashboard`;
+        // Wait a moment for cookie to be set before redirecting  
+        setTimeout(() => {
+          window.location.href = `/${locale}/dashboard`;
+        }, 1000);
+        
+        // Show success message temporarily
+        setError('✅ Login exitoso! Redirigiendo...');
+        return;
       } else {
-        const data = await res.json();
         
         // Check if user needs email verification
         if (res.status === 403 && data.requiresVerification) {

@@ -40,17 +40,23 @@ export function verifySigned(signed: string): SessionPayload | null {
 export async function verifyAuth(request: NextRequest): Promise<SessionPayload | null> {
   try {
     const cookieValue = request.cookies.get(AUTH_COOKIE)?.value;
+    console.log('verifyAuth - cookieValue:', cookieValue ? 'exists' : 'missing');
     if (!cookieValue) return null;
     
     const session = verifySigned(cookieValue);
+    console.log('verifyAuth - session after verify:', session ? 'valid' : 'invalid');
     if (!session) return null;
     
     // Check if session is not too old (24 hours)
     const maxAge = 24 * 60 * 60 * 1000; // 24 hours in ms
-    if (Date.now() - session.issuedAt > maxAge) return null;
+    const age = Date.now() - session.issuedAt;
+    console.log('verifyAuth - session age:', age, 'maxAge:', maxAge);
+    if (age > maxAge) return null;
     
+    console.log('verifyAuth - success:', session);
     return session;
-  } catch {
+  } catch (error) {
+    console.log('verifyAuth - error:', error);
     return null;
   }
 }

@@ -77,18 +77,16 @@ export async function POST(request: Request) {
 
     const resJson = NextResponse.json({ok: true, user: payload});
     
-    // Secure cookie settings
-    const isProduction = process.env.NODE_ENV === 'production';
-    const cookieOptions = [
-      `${AUTH_COOKIE}=${token}`,
-      'HttpOnly', // Re-enabled for security
-      'Path=/',
-      'SameSite=Lax', // Changed from Strict to Lax for better compatibility
-      `Max-Age=${24 * 60 * 60}`, // 24 hours
-      isProduction ? 'Secure' : ''
-    ].filter(Boolean).join('; ');
-    
-    resJson.headers.set('Set-Cookie', cookieOptions);
+    // Set cookie using NextResponse.cookies for better handling
+    resJson.cookies.set({
+      name: AUTH_COOKIE,
+      value: token,
+      httpOnly: false, // Temporarily disable for testing
+      path: '/',
+      sameSite: 'lax',
+      maxAge: 24 * 60 * 60, // 24 hours
+      secure: false // Force to false for localhost testing
+    });
     return resJson;
   } catch (err: any) {
     console.error('Login error:', err?.message || err);

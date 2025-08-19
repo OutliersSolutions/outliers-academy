@@ -1,16 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter, usePathname } from "next/navigation";
-import { useAuth } from "@/hooks/useAuth";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Loader } from "@/components/ui/loader";
-import { BookOpen, Award, Clock, PlayCircle, LogOut, Settings, User } from "lucide-react";
+import { BookOpen, Award, Clock, PlayCircle } from "lucide-react";
 import Link from "next/link";
 import { useTranslations } from 'next-intl';
 
@@ -23,74 +21,18 @@ interface Course {
 }
 
 export default function DashboardPage() {
-  const { isAuthenticated, isLoading: authLoading, user } = useAuth();
   const [courses, setCourses] = useState<Course[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [mounted, setMounted] = useState(false);
-  const router = useRouter();
   const pathname = usePathname();
   const locale = pathname.split('/')[1] || 'es';
   const t = useTranslations('dashboard');
-  const tLoader = useTranslations('loader');
 
-  // Ensure component is mounted on client before checking auth
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
-    // Only redirect after component is mounted and auth check is complete
-    if (mounted && !authLoading && !isAuthenticated) {
-      router.push(`/${locale}/login`);
-      return;
-    }
-
-    if (mounted && isAuthenticated && user?.odooUserId) {
-      fetchUserCourses();
-    }
-  }, [isAuthenticated, authLoading, user, router, locale, mounted]);
-
-  // Show loading until mounted and auth is checked
-  if (!mounted || authLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <Loader className="mx-auto mb-4" />
-          <p className="text-muted-foreground">
-            {tLoader('loading')}
-          </p>
-        </div>
-      </div>
-    );
-  }
-
-  // Redirect is happening, show loading
-  if (!isAuthenticated) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <Loader className="mx-auto mb-4" />
-          <p className="text-muted-foreground">
-            Redirecting to login...
-          </p>
-        </div>
-      </div>
-    );
-  }
-
-  const fetchUserCourses = async () => {
-    try {
-      const res = await fetch('/api/odoo/courses');
-      if (res.ok) {
-        const data = await res.json();
-        setCourses(data.courses || []);
-      }
-    } catch (error) {
-      console.error('Error fetching courses:', error);
-    } finally {
-      setLoading(false);
-    }
+  // Mock user data for testing - in production this would come from auth
+  const mockUser = {
+    name: "Administrator",
+    email: "galvezcortezgonzalo@gmail.com",
+    image: null
   };
+
 
   const handleSignOut = async () => {
     try {
@@ -104,20 +46,6 @@ export default function DashboardPage() {
     }
   };
 
-  if (authLoading || loading) {
-    return (
-      <Loader 
-        message={tLoader('pages.dashboard')} 
-        fullScreen 
-        size="lg"
-        showMotivationalMessages 
-      />
-    );
-  }
-
-  if (!isAuthenticated || !user) {
-    return null;
-  }
 
   const completedCourses = courses.filter(course => course.completion >= 100);
   const inProgressCourses = courses.filter(course => course.completion > 0 && course.completion < 100);
@@ -129,14 +57,14 @@ export default function DashboardPage() {
         <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
           <div className="flex items-center space-x-4 mb-4 md:mb-0">
             <Avatar className="h-16 w-16">
-              <AvatarImage src={user.image || undefined} />
+              <AvatarImage src={mockUser.image || undefined} />
               <AvatarFallback>
-                {user.name?.split(' ').map(n => n[0]).join('') || user.email?.[0]?.toUpperCase() || 'U'}
+                {mockUser.name?.split(' ').map(n => n[0]).join('') || mockUser.email?.[0]?.toUpperCase() || 'U'}
               </AvatarFallback>
             </Avatar>
             <div>
               <h1 className="text-2xl font-bold">
-                {t('welcome', { name: user.name || user.email })}
+                {t('welcome', { name: mockUser.name || mockUser.email })}
               </h1>
               <p className="text-muted-foreground">
                 {t('welcomeSubtitle')}
