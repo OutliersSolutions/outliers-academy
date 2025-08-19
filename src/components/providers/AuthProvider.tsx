@@ -44,30 +44,42 @@ interface AuthProviderProps {
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
+  console.log('🏗️ AuthProvider: Component rendering...');
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  console.log('🏗️ AuthProvider: State initialized, loading =', loading, 'user =', user);
 
-  // Check authentication status on mount
+  // Simple initialization on mount
   useEffect(() => {
+    console.log('🚀 AuthProvider: useEffect triggered - checking auth status...');
     checkAuthStatus();
   }, []);
+
 
   const checkAuthStatus = async () => {
     try {
       console.log('🔍 AuthProvider: Checking auth status...');
+      console.log('🔍 AuthProvider: Current cookies:', document.cookie);
+      console.log('🔍 AuthProvider: Making request to /api/auth/verify');
+      
       const response = await fetch('/api/auth/verify', {
-        credentials: 'include'
+        credentials: 'include',
+        cache: 'no-cache' // Force fresh request
       });
       
       console.log('🔍 AuthProvider: Auth verify response status:', response.status);
+      console.log('🔍 AuthProvider: Response headers:', Object.fromEntries(response.headers.entries()));
       
       if (response.ok) {
         const data = await response.json();
-        console.log('🔍 AuthProvider: Auth verify data:', data);
+        console.log('🔍 AuthProvider: Auth verify data:', JSON.stringify(data, null, 2));
+        console.log('🔍 AuthProvider: data.authenticated =', data.authenticated);
+        console.log('🔍 AuthProvider: data.user =', data.user);
+        console.log('🔍 AuthProvider: Condition check result:', data.authenticated && data.user);
         
         if (data.authenticated && data.user) {
-          console.log('✅ AuthProvider: Setting user as authenticated');
-          setUser({
+          console.log('✅ AuthProvider: User authenticated, updating state');
+          const userData = {
             uid: data.user.uid,
             login: data.user.login,
             name: data.user.name,
@@ -75,19 +87,26 @@ export function AuthProvider({ children }: AuthProviderProps) {
             id: data.user.uid,
             image: null,
             odooUserId: data.user.uid
-          });
+          };
+          setUser(userData);
+          console.log('✅ AuthProvider: User state set to:', userData);
         } else {
-          console.log('❌ AuthProvider: No authenticated user found, clearing state');
+          console.log('❌ AuthProvider: No authenticated user, clearing state');
           setUser(null);
         }
       } else {
-        console.log('❌ AuthProvider: Auth verify failed, clearing state');
+        console.log('❌ AuthProvider: Auth verify failed with status:', response.status);
         setUser(null);
       }
     } catch (error) {
       console.error('❌ AuthProvider: Auth check error:', error);
+      console.error('❌ AuthProvider: Error details:', {
+        message: error.message,
+        stack: error.stack
+      });
       setUser(null);
     } finally {
+      console.log('🔍 AuthProvider: Setting loading to false');
       setLoading(false);
     }
   };
@@ -148,48 +167,24 @@ export function AuthProvider({ children }: AuthProviderProps) {
     try {
       console.log('🔴 AuthProvider: Starting logout...');
       
-      // Clear user state immediately FIRST to update UI
-      setUser(null);
-      console.log('🔴 AuthProvider: User state cleared');
-      
+      // Call logout API
       await fetch('/api/auth/logout', {
         method: 'POST',
         credentials: 'include'
       });
       
-      console.log('🔴 AuthProvider: Logout API called');
+      console.log('🔴 AuthProvider: Logout API called, reloading page...');
       
-      // Clear any localStorage/sessionStorage if used
-      if (typeof window !== 'undefined') {
-        localStorage.clear();
-        sessionStorage.clear();
-        
-        // Manually delete cookies from client side as well
-        document.cookie = 'oa_session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=; secure=false; samesite=lax;';
-        document.cookie = 'session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=;';
-        
-        console.log('🔴 AuthProvider: Storage and cookies cleared');
-      }
-      
-      toast.success('Sesión cerrada correctamente');
-      
-      // Use a small delay to allow React to update the UI before redirect
-      setTimeout(() => {
-        const currentLocale = window.location.pathname.split('/')[1] || 'es';
-        console.log('🔴 AuthProvider: Redirecting to:', `/${currentLocale}`);
-        window.location.href = `/${currentLocale}`;
-      }, 300);
+      // Simple approach: just reload the page completely
+      // This will force a fresh AuthProvider initialization
+      const currentLocale = window.location.pathname.split('/')[1] || 'es';
+      window.location.href = `/${currentLocale}`;
       
     } catch (error) {
       console.error('🔴 AuthProvider: Logout error:', error);
-      toast.error('Error al cerrar sesión');
-      // Even if logout API fails, clear user state locally
-      setUser(null);
-      
-      setTimeout(() => {
-        const currentLocale = window.location.pathname.split('/')[1] || 'es';
-        window.location.href = `/${currentLocale}`;
-      }, 300);
+      // Even if logout API fails, still redirect
+      const currentLocale = window.location.pathname.split('/')[1] || 'es';
+      window.location.href = `/${currentLocale}`;
     }
   };
 

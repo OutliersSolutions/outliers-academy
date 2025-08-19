@@ -27,11 +27,11 @@ export default function DashboardPage() {
   const locale = pathname.split('/')[1] || 'es';
   const router = useRouter();
   const t = useTranslations('dashboard');
-  const { isAuthenticated, loading: isLoading, user } = useNewAuth();
+  const { isAuthenticated, loading: isLoading, user, logout } = useNewAuth();
 
   // Don't redirect here - let middleware handle auth protection
   // The middleware already protects this route and redirects unauthenticated users
-
+  
   // Show loading spinner while auth provider is initializing
   if (isLoading) {
     return (
@@ -62,16 +62,8 @@ export default function DashboardPage() {
   }
 
 
-  const handleSignOut = async () => {
-    try {
-      await fetch('/api/auth/logout', { method: 'POST' });
-      window.location.href = `/${locale}`;
-    } catch (error) {
-      console.error('Logout error:', error);
-      // Fallback to just clearing cookies and redirecting
-      document.cookie = 'oa_session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-      window.location.href = `/${locale}`;
-    }
+  const handleSignOut = () => {
+    logout(); // Use AuthProvider logout for consistency
   };
 
 
