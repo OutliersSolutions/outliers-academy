@@ -39,16 +39,11 @@ export default function LoginPage() {
       const data = await res.json();
       
       if (res.ok) {
-        // Login successful - show success and redirect
-        setError(''); // Clear any errors
-        
-        // Wait a moment for cookie to be set before redirecting  
-        setTimeout(() => {
-          window.location.href = `${window.location.origin}/${locale}/dashboard`;
-        }, 1000);
-        
-        // Show success message temporarily
+        // Login successful - redirect immediately
         setError('✅ Login exitoso! Redirigiendo...');
+        
+        // Immediate redirect with absolute URL
+        window.location.href = `${window.location.origin}/${locale}/dashboard`;
         return;
       } else {
         
@@ -95,7 +90,7 @@ export default function LoginPage() {
           )}
 
           {/* Email/Password Form */}
-          <form onSubmit={handleEmailSignIn} className="space-y-4">
+          <form onSubmit={handleEmailSignIn} action="#" className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email" className="text-sm font-medium">
                 {locale === 'es' ? 'Correo electrónico' : 'Email'}
