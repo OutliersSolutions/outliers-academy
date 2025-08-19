@@ -2,7 +2,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Layouts/Footer';
-import { WhatsAppButton } from '@/components/ui/WhatsAppButton';
+import { ConditionalWhatsAppButton } from '@/components/ui/ConditionalWhatsAppButton';
 import { getTranslations } from 'next-intl/server';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { GlobalLoader } from '@/components/GlobalLoader';
@@ -91,7 +91,7 @@ export default async function RootLayout({
                       {children}
                     </main>
                     <Footer locale={locale} />
-                    <WhatsAppButton />
+                    <ConditionalWhatsAppButton />
                   </div>
                 </GlobalLoader>
               </CookieProvider>
