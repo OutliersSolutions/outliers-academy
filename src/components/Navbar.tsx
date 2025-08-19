@@ -16,6 +16,7 @@ import {
   Menu,
   X,
 } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "next-themes";
 import { SearchOverlay } from "@/components/ui/SearchOverlay";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -219,9 +220,9 @@ export function Navbar() {
                 </div>
               </div>
 
-              {/* Auth Buttons - Always Visible */}
+              {/* Auth Buttons - Desktop Only */}
               {isAuthenticated && user ? (
-                <div className="relative" ref={userMenuRef}>
+                <div className="relative hidden lg:block" ref={userMenuRef}>
                   <button
                     onClick={() => setUserMenuOpen((v) => !v)}
                     className="flex items-center gap-2 p-2 text-solarized-base00 dark:text-gray-400 hover:text-solarized-base01 dark:hover:text-white hover:bg-solarized-base2 dark:hover:bg-gray-800 rounded-lg transition-colors"
@@ -276,14 +277,14 @@ export function Navbar() {
                   )}
                 </div>
               ) : (
-                <div className="flex items-center gap-2">
+                <div className="hidden lg:flex items-center gap-2">
                   {authLoading ? (
                     <LoaderInline size="sm" />
                   ) : (
                     <>
                       <Link
                         href={`/${locale}/login`}
-                        className="hidden sm:inline-flex items-center gap-2 rounded-full px-3 sm:px-4 py-1.5 text-sm font-medium text-primary border border-primary bg-transparent transition-all duration-200 hover:bg-primary hover:text-white hover:shadow-md"
+                        className="inline-flex items-center gap-2 rounded-full px-3 sm:px-4 py-1.5 text-sm font-medium text-primary border border-primary bg-transparent transition-all duration-200 hover:bg-primary hover:text-white hover:shadow-md"
                       >
                         {t("signIn")}
                       </Link>
@@ -304,33 +305,62 @@ export function Navbar() {
 
               {/* Mobile Menu Button */}
               <div className="block lg:hidden ml-2" ref={mobileMenuRef}>
-                <button
+                <motion.button
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
                     setMobileMenuOpen(prev => !prev);
                   }}
-                  className="flex items-center justify-center p-3 w-11 h-11 text-solarized-base01 dark:text-gray-300 hover:text-primary dark:hover:text-white hover:bg-solarized-base2 dark:hover:bg-gray-800 rounded-lg transition-colors border border-solarized-base1 dark:border-gray-600 relative z-10"
+                  className="flex items-center justify-center p-3 w-11 h-11 text-solarized-base01 dark:text-gray-300 hover:text-primary dark:hover:text-white hover:bg-solarized-base2/50 dark:hover:bg-gray-800/50 rounded-xl transition-all duration-200 relative z-10"
                   aria-label="Toggle mobile menu"
                   aria-expanded={mobileMenuOpen}
                   type="button"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
                 >
                   <span className="sr-only">
                     {mobileMenuOpen ? 'Close menu' : 'Open menu'}
                   </span>
-                  {mobileMenuOpen ? (
-                    <X className="w-5 h-5 pointer-events-none" />
-                  ) : (
-                    <Menu className="w-5 h-5 pointer-events-none" />
-                  )}
-                </button>
+                  <AnimatePresence mode="wait" initial={false}>
+                    <motion.div
+                      key={mobileMenuOpen ? 'close' : 'open'}
+                      initial={{ opacity: 0, rotate: -90 }}
+                      animate={{ opacity: 1, rotate: 0 }}
+                      exit={{ opacity: 0, rotate: 90 }}
+                      transition={{ duration: 0.2 }}
+                      className="pointer-events-none"
+                    >
+                      {mobileMenuOpen ? (
+                        <X className="w-5 h-5" />
+                      ) : (
+                        <Menu className="w-5 h-5" />
+                      )}
+                    </motion.div>
+                  </AnimatePresence>
+                </motion.button>
 
                 {/* Mobile Menu Dropdown */}
-                {mobileMenuOpen && (
-                  <div className="absolute top-full right-4 mt-2 w-64 bg-solarized-base2 dark:bg-gray-800 rounded-lg shadow-lg border border-solarized-base1 dark:border-gray-700 z-50">
-                    {/* Auth buttons for small screens */}
-                    {!isAuthenticated && (
-                      <div className="sm:hidden p-4 border-b border-solarized-base1 dark:border-gray-700">
+                <AnimatePresence>
+                  {mobileMenuOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.95, y: -10 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.95, y: -10 }}
+                      transition={{ 
+                        duration: 0.2,
+                        ease: "easeOut"
+                      }}
+                      className="absolute top-full right-4 mt-2 w-64 bg-solarized-base2/98 dark:bg-gray-800/98 backdrop-blur-xl rounded-xl shadow-2xl border border-solarized-base1/30 dark:border-gray-700/40 z-50 overflow-hidden"
+                    >
+                    {/* Auth buttons for mobile */}
+                    {!isAuthenticated ? (
+                      <motion.div 
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.1, duration: 0.2 }}
+                        className="p-4 border-b border-solarized-base1/30 dark:border-gray-700/40"
+                      >
                         <div className="space-y-2">
                           <Link
                             href={`/${locale}/login`}
@@ -351,13 +381,75 @@ export function Navbar() {
                             {t("signUp")}
                           </Link>
                         </div>
-                      </div>
+                      </motion.div>
+                    ) : (
+                      <motion.div 
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.1, duration: 0.2 }}
+                        className="p-4 border-b border-solarized-base1/30 dark:border-gray-700/40"
+                      >
+                        <div className="flex items-center gap-3">
+                          <Avatar className="h-10 w-10">
+                            <AvatarImage src={user?.image || undefined} />
+                            <AvatarFallback>
+                              {user?.name
+                                ?.split(" ")
+                                .map((n) => n[0])
+                                .join("") ||
+                                user?.email?.[0]?.toUpperCase() ||
+                                "U"}
+                            </AvatarFallback>
+                          </Avatar>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-medium text-solarized-base01 dark:text-white truncate">
+                              {user?.name || user?.email}
+                            </p>
+                            <p className="text-xs text-solarized-base00 dark:text-gray-400 truncate">
+                              {user?.email}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="mt-3 space-y-1">
+                          <Link
+                            href={`/${locale}/dashboard`}
+                            className="w-full flex items-center gap-2 px-3 py-2 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3 dark:hover:bg-gray-700 rounded-md"
+                            onClick={() => setMobileMenuOpen(false)}
+                          >
+                            <BarChart3 className="w-4 h-4" />
+                            {t("myCourses")}
+                          </Link>
+                          <Link
+                            href={`/${locale}/profile`}
+                            className="w-full flex items-center gap-2 px-3 py-2 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3 dark:hover:bg-gray-700 rounded-md"
+                            onClick={() => setMobileMenuOpen(false)}
+                          >
+                            <User className="w-4 h-4" />
+                            {t("profile")}
+                          </Link>
+                          <button
+                            onClick={() => {
+                              handleSignOut();
+                              setMobileMenuOpen(false);
+                            }}
+                            className="w-full flex items-center gap-2 px-3 py-2 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3 dark:hover:bg-gray-700 rounded-md"
+                          >
+                            <LogOut className="w-4 h-4" />
+                            {t("signOut")}
+                          </button>
+                        </div>
+                      </motion.div>
                     )}
                     {/* Navigation Links */}
-                    <div className="py-2">
+                    <motion.div 
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.15, duration: 0.2 }}
+                      className="py-2"
+                    >
                       <Link
                         href={`/${locale}/catalog`}
-                        className="flex items-center gap-2 px-4 py-3 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3 dark:hover:bg-gray-700 transition-colors"
+                        className="flex items-center gap-2 px-4 py-3 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3/50 dark:hover:bg-gray-700/50 transition-all duration-200 rounded-lg mx-2"
                       >
                         <BookOpen className="w-4 h-4" />
                         {t("catalog")}
@@ -365,7 +457,7 @@ export function Navbar() {
                       {isAuthenticated && (
                         <Link
                           href={`/${locale}/my-courses`}
-                          className="flex items-center gap-2 px-4 py-3 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3 dark:hover:bg-gray-700 transition-colors"
+                          className="flex items-center gap-2 px-4 py-3 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3/50 dark:hover:bg-gray-700/50 transition-all duration-200 rounded-lg mx-2"
                         >
                           <BarChart3 className="w-4 h-4" />
                           {t("myCourses")}
@@ -373,45 +465,51 @@ export function Navbar() {
                       )}
                       <Link
                         href={`/${locale}/pricing`}
-                        className="flex items-center gap-2 px-4 py-3 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3 dark:hover:bg-gray-700 transition-colors"
+                        className="flex items-center gap-2 px-4 py-3 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3/50 dark:hover:bg-gray-700/50 transition-all duration-200 rounded-lg mx-2"
                       >
                         {t("pricing")}
                       </Link>
                       <Link
                         href={`/${locale}/about`}
-                        className="flex items-center gap-2 px-4 py-3 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3 dark:hover:bg-gray-700 transition-colors"
+                        className="flex items-center gap-2 px-4 py-3 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3/50 dark:hover:bg-gray-700/50 transition-all duration-200 rounded-lg mx-2"
                       >
                         {t("about")}
                       </Link>
                       <Link
                         href={`/${locale}/contact`}
-                        className="flex items-center gap-2 px-4 py-3 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3 dark:hover:bg-gray-700 transition-colors"
+                        className="flex items-center gap-2 px-4 py-3 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3/50 dark:hover:bg-gray-700/50 transition-all duration-200 rounded-lg mx-2"
                       >
                         {t("contact")}
                       </Link>
-                    </div>
+                    </motion.div>
 
-                    <hr className="border-solarized-base1 dark:border-gray-700" />
+                    <hr className="border-solarized-base1/40 dark:border-gray-700/50" />
 
                     {/* Search */}
-                    <button
+                    <motion.button
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.2, duration: 0.2 }}
                       onClick={() => {
                         setIsSearchOpen(true);
                         setMobileMenuOpen(false);
                       }}
-                      className="flex items-center gap-2 w-full px-4 py-3 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3 dark:hover:bg-gray-700 transition-colors"
+                      className="flex items-center gap-2 w-full px-4 py-3 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3/50 dark:hover:bg-gray-700/50 transition-colors rounded-lg mx-2"
                     >
                       <Search className="w-4 h-4" />
                       {tCommon("search")}
-                    </button>
+                    </motion.button>
 
                     {/* Theme Toggle */}
-                    <button
+                    <motion.button
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.25, duration: 0.2 }}
                       onClick={() => {
                         toggleTheme();
                         setMobileMenuOpen(false);
                       }}
-                      className="flex items-center gap-2 w-full px-4 py-3 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3 dark:hover:bg-gray-700 transition-colors"
+                      className="flex items-center gap-2 w-full px-4 py-3 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3/50 dark:hover:bg-gray-700/50 transition-colors rounded-lg mx-2"
                     >
                       {isDark ? (
                         <Sun className="w-4 h-4" />
@@ -419,18 +517,23 @@ export function Navbar() {
                         <Moon className="w-4 h-4" />
                       )}
                       {tCommon("toggleTheme")}
-                    </button>
+                    </motion.button>
 
-                    <hr className="border-solarized-base1 dark:border-gray-700" />
+                    <hr className="border-solarized-base1/40 dark:border-gray-700/50" />
 
                     {/* Language Selector */}
-                    <div className="py-2">
+                    <motion.div 
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.3, duration: 0.2 }}
+                      className="py-2"
+                    >
                       <div className="px-4 py-2 text-xs font-semibold text-solarized-base00 dark:text-gray-500 uppercase tracking-wide">
                         {locale === "es" ? "Idioma" : "Language"}
                       </div>
                       <Link
                         href={switchLocalePath("es")}
-                        className="flex items-center gap-3 px-4 py-3 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3 dark:hover:bg-gray-700 transition-colors"
+                        className="flex items-center gap-3 px-4 py-3 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3/50 dark:hover:bg-gray-700/50 transition-all duration-200 rounded-lg mx-2"
                         onClick={() => setMobileMenuOpen(false)}
                       >
                         <img
@@ -445,7 +548,7 @@ export function Navbar() {
                       </Link>
                       <Link
                         href={switchLocalePath("en")}
-                        className="flex items-center gap-3 px-4 py-3 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3 dark:hover:bg-gray-700 transition-colors"
+                        className="flex items-center gap-3 px-4 py-3 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3/50 dark:hover:bg-gray-700/50 transition-all duration-200 rounded-lg mx-2"
                         onClick={() => setMobileMenuOpen(false)}
                       >
                         <img
@@ -458,9 +561,10 @@ export function Navbar() {
                           <span className="ml-auto text-primary">✓</span>
                         )}
                       </Link>
-                    </div>
-                  </div>
-                )}
+                    </motion.div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             </div>
           </div>
