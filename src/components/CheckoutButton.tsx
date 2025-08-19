@@ -1,8 +1,6 @@
 "use client";
-
 import {useState} from 'react';
 import {Loader2} from 'lucide-react';
-
 interface CheckoutButtonProps {
   courseId?: number;
   productId?: number; 
@@ -13,7 +11,6 @@ interface CheckoutButtonProps {
   className?: string;
   odooCheckout?: boolean;
 }
-
 export function CheckoutButton({
   courseId, 
   productId, 
@@ -24,14 +21,11 @@ export function CheckoutButton({
   className = "btn-primary",
   odooCheckout = true
 }: CheckoutButtonProps) {
-  
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  
   async function onClick() {
     setIsLoading(true);
     setError(null);
-    
     try {
       if (odooCheckout && productId) {
         // Odoo-centric checkout flow
@@ -42,7 +36,7 @@ export function CheckoutButton({
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || 'Error en el checkout con Odoo');
-        
+        //TODO SHOW TOAST
         // Redirect to Odoo shop product page or sale order
         if (data.redirectUrl) {
           window.location.href = data.redirectUrl;
@@ -56,7 +50,7 @@ export function CheckoutButton({
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || 'Error en el checkout con Stripe');
-        
+        //TODO SHOW TOAST
         if (data.url) {
           window.location.href = data.url as string;
         } else {
@@ -66,13 +60,12 @@ export function CheckoutButton({
         throw new Error('No se especificó método de pago válido');
       }
     } catch (e) {
-      console.error('Checkout error:', e);
+      //TODO SHOW TOAST ERROR
       setError((e as Error).message);
     } finally {
       setIsLoading(false);
     }
   }
-
   return (
     <div className="w-full">
       <button 
@@ -89,7 +82,6 @@ export function CheckoutButton({
           children
         )}
       </button>
-      
       {error && (
         <div className="mt-2 text-sm text-red-600 bg-red-50 border border-red-200 rounded-md p-2">
           {error}
@@ -97,4 +89,4 @@ export function CheckoutButton({
       )}
     </div>
   );
-} 
+}

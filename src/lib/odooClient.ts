@@ -4,16 +4,12 @@ type JsonRpcResponse<T> = {
   result?: T;
   error?: {code: number; message: string; data?: any};
 };
-
 const ODOO_URL = (process.env.ODOO_URL as string | undefined)?.replace(/\/+$/, '');
 const ODOO_DB = process.env.ODOO_DB as string | undefined;
 const ODOO_USERNAME = process.env.ODOO_USERNAME as string | undefined;
 const ODOO_PASSWORD = process.env.ODOO_PASSWORD as string | undefined;
-
 const isOdooConfigured = Boolean(ODOO_URL && ODOO_DB && ODOO_USERNAME && ODOO_PASSWORD);
-
 let uidCache: number | null = null;
-
 async function jsonRpc<T>(endpoint: string, payload: any): Promise<T> {
   if (!ODOO_URL) throw new Error('ODOO_URL is not set');
   const base = ODOO_URL.replace(/\/+$/, '');
@@ -33,7 +29,6 @@ async function jsonRpc<T>(endpoint: string, payload: any): Promise<T> {
   }
   return data.result as T;
 }
-
 export async function authenticate(): Promise<number> {
   if (!isOdooConfigured) throw new Error('Odoo is not configured');
   if (uidCache) return uidCache;
@@ -48,7 +43,6 @@ export async function authenticate(): Promise<number> {
   uidCache = uid;
   return uid;
 }
-
 export async function odooExecuteKw(model: string, method: string, args: any[], kwargs: Record<string, any> = {}) {
   const uid = await authenticate();
   return jsonRpc<any>('/jsonrpc', {
@@ -60,15 +54,11 @@ export async function odooExecuteKw(model: string, method: string, args: any[], 
     }
   });
 }
-
 export async function sendVerificationEmail(userId: number, userEmail: string): Promise<boolean> {
   try {
-    console.log(`📧 Sending verification email to ${userEmail} for user ${userId}`);
-    
     // Generate a simple verification token (in production, use JWT or similar)
     const verificationToken = Buffer.from(`${userId}:${userEmail}:${Date.now()}`).toString('base64');
     const verificationUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/es/verify-account?token=${verificationToken}`;
-    
     // Create email manually (we know this works)
     const emailData = {
       email_to: userEmail,
@@ -79,26 +69,22 @@ export async function sendVerificationEmail(userId: number, userEmail: string): 
             <h1 style="color: #4F46E5; margin: 0;">🚀 Outliers Academy</h1>
             <h2 style="color: #374151; margin: 10px 0;">¡Bienvenido/a!</h2>
           </div>
-          
           <div style="background: #F9FAFB; padding: 25px; border-radius: 8px; margin: 20px 0;">
             <p style="font-size: 16px; color: #374151; margin: 0 0 20px 0;">
               Hola,<br><br>
               ¡Gracias por registrarte en Outliers Academy! Para completar tu registro y activar tu cuenta, necesitamos verificar tu dirección de correo electrónico.
             </p>
-            
             <div style="text-align: center; margin: 30px 0;">
               <a href="${verificationUrl}" 
                  style="background: #4F46E5; color: white; padding: 15px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; display: inline-block;">
                 ✅ Verificar mi cuenta
               </a>
             </div>
-            
             <p style="font-size: 14px; color: #6B7280; margin: 20px 0 0 0;">
               Si no puedes hacer clic en el botón, copia y pega este enlace en tu navegador:<br>
               <span style="word-break: break-all; color: #4F46E5;">${verificationUrl}</span>
             </p>
           </div>
-          
           <div style="margin: 30px 0;">
             <h3 style="color: #374151; font-size: 18px;">¿Qué sigue?</h3>
             <ul style="color: #6B7280; line-height: 1.6;">
@@ -108,9 +94,7 @@ export async function sendVerificationEmail(userId: number, userEmail: string): 
               <li>🏆 Obtén certificaciones reconocidas</li>
             </ul>
           </div>
-          
           <hr style="border: none; border-top: 1px solid #E5E7EB; margin: 30px 0;">
-          
           <div style="text-align: center;">
             <p style="color: #6B7280; font-size: 14px; margin: 0;">
               Si no creaste esta cuenta, puedes ignorar este email.<br>
@@ -126,22 +110,15 @@ export async function sendVerificationEmail(userId: number, userEmail: string): 
       auto_delete: false,
       state: 'outgoing'
     };
-
     // Create and send the email
     const mailId = await odooExecuteKw('mail.mail', 'create', [emailData]);
-    console.log(`📧 Verification email created with ID: ${mailId}`);
-
     // Force send immediately
     await odooExecuteKw('mail.mail', 'send', [[mailId]]);
-    console.log(`✅ Verification email sent to ${userEmail}`);
-
     return true;
   } catch (error: any) {
-    console.error('❌ Error sending verification email:', error.message);
     return false;
   }
 }
-
 const devSampleCourses = [
   {
     id: 1,
@@ -168,20 +145,16 @@ const devSampleCourses = [
     sections: [{title: 'Pandas'}, {title: 'Visualización'}, {title: 'Modelos'}]
   }
 ];
-
 // Helper function to create slug from name and id
 function createSlug(name: string, id: number): string {
   return `${name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}-${id}`;
 }
-
 export async function fetchCourses(options?: {slug?: string}) {
   if (!isOdooConfigured) {
     if (options?.slug) return devSampleCourses.filter((c) => c.slug === options.slug);
     return devSampleCourses;
   }
-
   let domain: any[] = [['website_published', '=', true]];
-  
   // Si se proporciona un slug, extraer el ID y buscarlo
   if (options?.slug) {
     const idMatch = options.slug.match(/-(\d+)$/);
@@ -193,17 +166,14 @@ export async function fetchCourses(options?: {slug?: string}) {
       domain.push(['name', 'ilike', options.slug.replace(/-/g, ' ')]);
     }
   }
-  
   const fields = ['id', 'name', 'description', 'product_id', 'website_published'];
   const channels = await odooExecuteKw('slide.channel', 'search_read', [domain], {fields, limit: 24});
-  
   // Get all unique product IDs
   const productIds = [...new Set(
     (channels || [])
       .map((c: any) => c.product_id && Array.isArray(c.product_id) ? c.product_id[0] : null)
       .filter(Boolean)
   )];
-  
   // Fetch all product prices in one call if there are any products
   const productPrices: Record<number, number> = {};
   if (productIds.length > 0) {
@@ -216,10 +186,8 @@ export async function fetchCourses(options?: {slug?: string}) {
         productPrices[product.id] = product.list_price || 0;
       }
     } catch (error) {
-      console.warn('Failed to fetch product prices:', error);
     }
   }
-  
   // Map channels with their prices
   return (channels || []).map((c: any) => ({
     id: c.id,
@@ -231,20 +199,15 @@ export async function fetchCourses(options?: {slug?: string}) {
     published: c.website_published
   }));
 }
-
 export async function fetchUserCourses(userId: number) {
   if (!isOdooConfigured) return [];
-  
   const domain = [['partner_ids', 'in', [userId]]];
   const fields = ['id', 'name', 'completion', 'slides_count'];
-  
   const enrollments = await odooExecuteKw('slide.channel.partner', 'search_read', [domain], {fields});
   return enrollments || [];
 }
-
 export async function fetchCourseContent(courseId: number, userId?: number) {
   if (!isOdooConfigured) return null;
-  
   // Check if user has access
   if (userId) {
     const access = await odooExecuteKw('slide.channel.partner', 'search_count', [
@@ -252,45 +215,35 @@ export async function fetchCourseContent(courseId: number, userId?: number) {
     ]);
     if (!access) throw new Error('Access denied to this course');
   }
-  
   const fields = ['id', 'name', 'slug', 'sequence', 'slide_type', 'duration', 'preview'];
   const slides = await odooExecuteKw('slide.slide', 'search_read', [
     [['channel_id', '=', courseId]]
   ], {fields, order: 'sequence ASC'});
-  
   return slides || [];
 }
-
 export async function createSaleOrder(userId: number, productId: number) {
   if (!isOdooConfigured) throw new Error('Odoo not configured');
-  
   // Create sale order
   const orderId = await odooExecuteKw('sale.order', 'create', [{
     partner_id: userId,
     state: 'draft'
   }]);
-  
   // Add product line
   await odooExecuteKw('sale.order.line', 'create', [{
     order_id: orderId,
     product_id: productId,
     product_uom_qty: 1
   }]);
-  
   return orderId;
 }
-
 export async function getUserProfile(userId: number) {
   if (!isOdooConfigured) return null;
-  
   const fields = ['id', 'name', 'email', 'image_1920'];
   const partners = await odooExecuteKw('res.partner', 'search_read', [
     [['id', '=', userId]]
   ], {fields});
-  
   return partners?.[0] || null;
 }
-
 export async function getAcademyStats() {
   if (!isOdooConfigured) {
     return {
@@ -300,36 +253,29 @@ export async function getAcademyStats() {
       totalCourses: 50
     };
   }
-
   try {
     // Count total students enrolled in courses (using slide.channel.partner for enrollments)
     const totalStudents = await odooExecuteKw('slide.channel.partner', 'search_count', [[]]);
-    
     // Count total published courses
     const totalCourses = await odooExecuteKw('slide.channel', 'search_count', [
       [['website_published', '=', true]]
     ]);
-    
     // Get average rating and review count from course ratings (if available)
     let averageRating = 4.8;
     let totalReviews = 0;
-    
     try {
       // Try to get ratings from website.rating model or slide.channel ratings
       const ratings = await odooExecuteKw('rating.rating', 'search_read', [
         [['res_model', '=', 'slide.channel'], ['rating', '>', 0]]
       ], {fields: ['rating']});
-      
       if (ratings && ratings.length > 0) {
         const sum = ratings.reduce((acc: number, r: any) => acc + r.rating, 0);
         averageRating = Math.round((sum / ratings.length) * 10) / 10;
         totalReviews = ratings.length;
       }
     } catch (ratingError) {
-      console.warn('Could not fetch ratings:', ratingError);
       // Keep default values
     }
-    
     return {
       totalStudents: totalStudents || 0,
       averageRating,
@@ -337,7 +283,6 @@ export async function getAcademyStats() {
       totalCourses: totalCourses || 0
     };
   } catch (error) {
-    console.error('Error fetching academy stats:', error);
     // Return fallback data
     return {
       totalStudents: 10000,
@@ -346,4 +291,4 @@ export async function getAcademyStats() {
       totalCourses: 50
     };
   }
-} 
+}

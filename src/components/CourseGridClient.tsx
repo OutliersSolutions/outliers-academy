@@ -1,11 +1,9 @@
 'use client';
-
 import { useTranslations } from 'next-intl';
 import { CheckoutButton } from './CheckoutButton';
 import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
-
 interface Course {
   id: number;
   title?: string; // From Odoo API
@@ -21,7 +19,6 @@ interface Course {
   product_id?: number;
   published?: boolean;
 }
-
 export function CourseGridClient() {
   const tCommon = useTranslations('common');
   const tCourse = useTranslations('course');
@@ -30,23 +27,16 @@ export function CourseGridClient() {
   const router = useRouter();
   const pathname = usePathname();
   const locale = pathname.split('/')[1] || 'es';
-
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        console.log('Fetching courses...');
         const res = await fetch(`/api/courses`, {
           cache: 'no-store'
         });
-        
         if (res.ok) {
           const data = await res.json();
-          console.log('Raw API data:', data);
-          
           // Handle both array and object responses
           const coursesArray = Array.isArray(data) ? data : (data.courses || []);
-          console.log('Courses array:', coursesArray);
-          
           // Map the courses to add missing fields and normalize data
           const mappedCourses = coursesArray.map((course: any) => ({
             ...course,
@@ -58,8 +48,6 @@ export function CourseGridClient() {
             rating: course.rating || (4 + Math.random()),
             students: course.students || Math.floor(Math.random() * 1000) + 100
           }));
-          
-          console.log('Mapped courses:', mappedCourses);
           setCourses(mappedCourses);
         } else {
           // Fallback data for development
@@ -154,10 +142,8 @@ export function CourseGridClient() {
         setLoading(false);
       }
     };
-
     fetchCourses();
   }, [locale]);
-
   if (loading) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -185,7 +171,6 @@ export function CourseGridClient() {
       </div>
     );
   }
-
   if (courses.length === 0) {
     return (
       <div className="text-center py-12">
@@ -193,12 +178,10 @@ export function CourseGridClient() {
       </div>
     );
   }
-
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {courses.map((c) => {
         const courseName = c.name || c.title || 'Curso sin título';
-        
         return (
           <div key={c.id} className="group relative bg-white dark:bg-gray-800 backdrop-blur-sm rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-500 transform hover:scale-[1.02] hover:-translate-y-1">
           {/* Course Image */}
@@ -210,24 +193,20 @@ export function CourseGridClient() {
                   <div className="absolute top-4 left-4 w-8 h-8 bg-white/20 rounded-full animate-pulse"></div>
                   <div className="absolute bottom-4 right-4 w-6 h-6 bg-white/15 rounded-full animate-pulse" style={{animationDelay: '1s'}}></div>
                   <div className="absolute top-1/2 right-8 w-4 h-4 bg-white/10 rounded-full animate-pulse" style={{animationDelay: '2s'}}></div>
-                  
                   {/* Tech-style course icon */}
                   <div className="relative z-10 w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center border border-white/30 shadow-lg">
                     <span className="text-2xl font-bold text-white drop-shadow-lg font-mono">
                       {courseName.charAt(0)}
                     </span>
                   </div>
-                  
                   {/* Grid pattern overlay */}
                   <div className="absolute inset-0 opacity-10" style={{backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)', backgroundSize: '20px 20px'}}></div>
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent group-hover:from-black/30 transition-all duration-500" />
-            
                 {/* Price Badge tech style */}
                 <div className="absolute top-4 right-4 bg-white dark:bg-gray-800 backdrop-blur-sm px-3 py-1 rounded-xl shadow-lg border border-blue-200 dark:border-blue-500">
                   <span className="font-bold text-blue-600 dark:text-blue-400 text-sm font-mono">${c.price}</span>
                 </div>
-
                 {/* Level badge tech style */}
                 {c.level && (
                   <div className="absolute bottom-4 left-4 bg-gradient-to-r from-blue-500 to-purple-500 backdrop-blur-sm px-3 py-1 rounded-full border border-white/30">
@@ -236,7 +215,6 @@ export function CourseGridClient() {
                 )}
               </div>
             </Link>
-
           {/* Course Content */}
             <div className="p-6">
               <Link href={`/${locale}/course/${c.slug}/overview`}>
@@ -244,11 +222,9 @@ export function CourseGridClient() {
                   {courseName}
                 </h3>
               </Link>
-            
               <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-2 leading-relaxed text-sm">
                 {c.description || tCommon('learnNewSkills')}
               </p>
-
               {/* Course Meta tech style */}
               <div className="flex items-center justify-between mb-4 text-xs">
                 {c.duration && (
@@ -268,7 +244,6 @@ export function CourseGridClient() {
                   </span>
                 )}
               </div>
-
               {/* Students Count tech style */}
               {c.students && (
                 <div className="text-xs mb-4 bg-purple-50 dark:bg-purple-900/30 px-3 py-2 rounded-xl border border-purple-200 dark:border-purple-700">
@@ -277,7 +252,6 @@ export function CourseGridClient() {
                   </span>
                 </div>
               )}
-
               {/* Action Buttons tech style */}
               <div className="space-y-2">
                 <Link
@@ -291,7 +265,6 @@ export function CourseGridClient() {
                 </CheckoutButton>
               </div>
             </div>
-
             {/* Tech hover effect */}
             <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 via-purple-500/0 to-amber-500/0 group-hover:from-blue-500/5 group-hover:via-purple-500/5 group-hover:to-amber-500/5 transition-all duration-500 rounded-3xl pointer-events-none"></div>
           </div>
@@ -299,4 +272,4 @@ export function CourseGridClient() {
       })}
     </div>
   );
-} 
+}

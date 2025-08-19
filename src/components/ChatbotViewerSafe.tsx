@@ -1,13 +1,10 @@
 'use client';
-
 import { useRef, useState, useEffect, useMemo, useCallback } from 'react';
 import { Sparkles } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-
 interface ChatbotViewerProps {
   className?: string;
 }
-
 export function ChatbotViewerSafe({ className = "w-full h-[400px]" }: ChatbotViewerProps) {
   const t = useTranslations('robot');
   const tChatbot = useTranslations('chatbot');
@@ -16,30 +13,25 @@ export function ChatbotViewerSafe({ className = "w-full h-[400px]" }: ChatbotVie
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPlaceholderIndex, setCurrentPlaceholderIndex] = useState(0);
   const [displayedPlaceholder, setDisplayedPlaceholder] = useState('');
-
   const placeholderTexts = useMemo(() => [
     tChatbot('placeholderTexts.ai'),
     tChatbot('placeholderTexts.webDev'),
     tChatbot('placeholderTexts.dataScience'),
     tChatbot('placeholderTexts.machineLearning')
   ], [tChatbot]);
-
   // Animate placeholder text
   useEffect(() => {
     let isTyping = true;
     let currentChar = 0;
     const currentText = placeholderTexts[currentPlaceholderIndex];
-    
     const typeInterval = setInterval(() => {
       if (!isTyping) return;
-      
       if (currentChar <= currentText.length) {
         setDisplayedPlaceholder(currentText.slice(0, currentChar));
         currentChar++;
       } else {
         isTyping = false;
         clearInterval(typeInterval);
-        
         // Wait before starting to delete
         setTimeout(() => {
           const deleteInterval = setInterval(() => {
@@ -55,22 +47,17 @@ export function ChatbotViewerSafe({ className = "w-full h-[400px]" }: ChatbotVie
         }, 1000);
       }
     }, 100);
-
     return () => {
       clearInterval(typeInterval);
       isTyping = false;
     };
   }, [currentPlaceholderIndex, placeholderTexts]);
-
   const mountedRef = useRef(true);
-
   const createModelViewer = useCallback(() => {
     try {
       if (!containerRef.current) return;
-
       // Limpiar contenedor antes de agregar nuevo modelo (evitar duplicación)
       containerRef.current.innerHTML = '';
-
       const modelViewer = document.createElement('model-viewer');
       modelViewer.setAttribute('src', '/3d/chatbot.glb');
       modelViewer.setAttribute('alt', tChatbot('modelAlt'));
@@ -81,30 +68,25 @@ export function ChatbotViewerSafe({ className = "w-full h-[400px]" }: ChatbotVie
       modelViewer.setAttribute('exposure', '1');
       modelViewer.setAttribute('animation-name', 'Idle');
       modelViewer.setAttribute('style', 'width: 100%; height: 100%; border-radius: 12px;');
-
       // Agregar evento para cuando el modelo esté listo
       modelViewer.addEventListener('load', () => {
         if (mountedRef.current) {
           setIsLoaded(true);
         }
       });
-
       // Agregar timeout para mostrar fallback si el modelo no carga
       setTimeout(() => {
         if (mountedRef.current && !isLoaded) {
           setIsLoaded(true);
         }
       }, 5000);
-
       containerRef.current.appendChild(modelViewer);
     } catch (error) {
-      console.warn('Failed to create model viewer:', error);
       if (mountedRef.current) {
         setIsLoaded(true);
       }
     }
   }, [tChatbot, isLoaded]);
-
   const loadModelViewer = useCallback(async () => {
     try {
       // Intentar cargar model-viewer si está disponible
@@ -127,39 +109,31 @@ export function ChatbotViewerSafe({ className = "w-full h-[400px]" }: ChatbotVie
         createModelViewer();
       }
     } catch (error) {
-      console.warn('Model viewer failed to load:', error);
       if (mountedRef.current) {
         setIsLoaded(true);
       }
     }
   }, [createModelViewer]);
-
   useEffect(() => {
     loadModelViewer();
-    
     // Timeout de fallback para mostrar la UI si el modelo no carga
     const fallbackTimeout = setTimeout(() => {
       if (mountedRef.current && !isLoaded) {
         setIsLoaded(true);
       }
     }, 3000);
-    
     return () => {
       mountedRef.current = false;
       clearTimeout(fallbackTimeout);
     };
   }, [loadModelViewer, isLoaded]);
-
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (!searchQuery.trim()) return;
-
     // Aquí puedes implementar la lógica de búsqueda
-    console.log('Searching for:', searchQuery);
     // Por ahora, redirigir al catálogo con la búsqueda
     window.location.href = `/catalog?search=${encodeURIComponent(searchQuery)}`;
   };
-
   return (
     <div className={className}>
       <div className="w-full h-full bg-white dark:bg-gray-900 rounded-2xl shadow-2xl overflow-hidden">
@@ -170,16 +144,13 @@ export function ChatbotViewerSafe({ className = "w-full h-[400px]" }: ChatbotVie
             <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
             <div className="w-3 h-3 bg-green-500 rounded-full"></div>
           </div>
-
           {/* AI Assistant Badge - Centered */}
           <div className="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-full text-xs font-medium text-gray-700 dark:text-gray-200">
             <Sparkles className="w-3 h-3 text-primary" />
             {t('aiAssistant')}
           </div>
-
           <div className="w-16"></div> {/* Spacer for centering */}
         </div>
-
         {/* Main Content */}
         <div className="p-6">
           <div className="flex flex-col lg:flex-row items-center gap-6">
@@ -203,13 +174,11 @@ export function ChatbotViewerSafe({ className = "w-full h-[400px]" }: ChatbotVie
                 </div>
               </div>
             </div>
-
             {/* Content - Right Side */}
             <div className="flex-1 text-center lg:text-left">
               <h3 className="text-xl lg:text-2xl font-bold text-gray-900 dark:text-white mb-4">
                 {t('question')}
               </h3>
-              
               <form onSubmit={handleSearch} className="relative">
                 <div className="relative">
                   <input
@@ -224,7 +193,6 @@ export function ChatbotViewerSafe({ className = "w-full h-[400px]" }: ChatbotVie
                   </div>
                 </div>
               </form>
-
               <p className="text-sm text-gray-600 dark:text-gray-400 mt-3">
                 {t('startFree')}
               </p>

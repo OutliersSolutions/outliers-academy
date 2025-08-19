@@ -75,6 +75,7 @@ export async function POST(request: Request) {
     const payload = {uid, login: userLogin, name: user.name, issuedAt: Date.now()};
     const token = await signPayload(payload);
 
+    //TODO SHOW TOAST
     const resJson = NextResponse.json({ok: true, user: payload});
     
     // Set cookie using NextResponse.cookies for better handling
@@ -90,6 +91,7 @@ export async function POST(request: Request) {
     return resJson;
   } catch (err: any) {
     console.error('Login error:', err?.message || err);
+    //TODO SHOW TOAST ERROR
     return NextResponse.json({error: err.message || 'Internal error'}, {status: 500});
   }
 } 

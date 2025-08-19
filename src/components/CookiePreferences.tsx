@@ -1,21 +1,17 @@
 'use client';
-
 import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
-
 interface CookiePreference {
   necessary: boolean;
   analytics: boolean;
   marketing: boolean;
   preferences: boolean;
 }
-
 interface CookiePreferencesProps {
   isOpen: boolean;
   onClose: () => void;
   onSave: (preferences: CookiePreference) => void;
 }
-
 export function CookiePreferences({ isOpen, onClose, onSave }: CookiePreferencesProps) {
   const [preferences, setPreferences] = useState<CookiePreference>({
     necessary: true,
@@ -23,9 +19,7 @@ export function CookiePreferences({ isOpen, onClose, onSave }: CookiePreferences
     marketing: false,
     preferences: false
   });
-
   const t = useTranslations('cookies');
-
   useEffect(() => {
     // Load existing preferences
     const savedConsent = localStorage.getItem('cookie-consent');
@@ -34,19 +28,15 @@ export function CookiePreferences({ isOpen, onClose, onSave }: CookiePreferences
         const parsed = JSON.parse(savedConsent);
         setPreferences(parsed);
       } catch (error) {
-        console.error('Error parsing cookie consent:', error);
       }
     }
   }, [isOpen]);
-
   const handleSave = () => {
     const consentData = {
       ...preferences,
       timestamp: new Date().toISOString()
     };
-    
     localStorage.setItem('cookie-consent', JSON.stringify(consentData));
-    
     // Update Google Analytics consent
     if (typeof window !== 'undefined' && window.gtag) {
       window.gtag('consent', 'update', {
@@ -56,11 +46,9 @@ export function CookiePreferences({ isOpen, onClose, onSave }: CookiePreferences
         personalization_storage: preferences.preferences ? 'granted' : 'denied'
       });
     }
-    
     onSave(preferences);
     onClose();
   };
-
   const handleAcceptAll = () => {
     const allAccepted = {
       necessary: true,
@@ -69,14 +57,11 @@ export function CookiePreferences({ isOpen, onClose, onSave }: CookiePreferences
       preferences: true
     };
     setPreferences(allAccepted);
-    
     const consentData = {
       ...allAccepted,
       timestamp: new Date().toISOString()
     };
-    
     localStorage.setItem('cookie-consent', JSON.stringify(consentData));
-    
     if (typeof window !== 'undefined' && window.gtag) {
       window.gtag('consent', 'update', {
         analytics_storage: 'granted',
@@ -85,11 +70,9 @@ export function CookiePreferences({ isOpen, onClose, onSave }: CookiePreferences
         personalization_storage: 'granted'
       });
     }
-    
     onSave(allAccepted);
     onClose();
   };
-
   const handleDeclineAll = () => {
     const onlyNecessary = {
       necessary: true,
@@ -98,14 +81,11 @@ export function CookiePreferences({ isOpen, onClose, onSave }: CookiePreferences
       preferences: false
     };
     setPreferences(onlyNecessary);
-    
     const consentData = {
       ...onlyNecessary,
       timestamp: new Date().toISOString()
     };
-    
     localStorage.setItem('cookie-consent', JSON.stringify(consentData));
-    
     if (typeof window !== 'undefined' && window.gtag) {
       window.gtag('consent', 'update', {
         analytics_storage: 'denied',
@@ -114,13 +94,10 @@ export function CookiePreferences({ isOpen, onClose, onSave }: CookiePreferences
         personalization_storage: 'denied'
       });
     }
-    
     onSave(onlyNecessary);
     onClose();
   };
-
   if (!isOpen) return null;
-
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
       <div className="bg-white dark:bg-gray-900 rounded-3xl shadow-2xl border border-gray-200 dark:border-gray-700 w-full max-w-2xl max-h-[90vh] overflow-hidden">
@@ -143,11 +120,9 @@ export function CookiePreferences({ isOpen, onClose, onSave }: CookiePreferences
             {t('preferences.description') || 'Customize your cookie preferences. You can change these settings at any time.'}
           </p>
         </div>
-
         {/* Content */}
         <div className="p-6 overflow-y-auto max-h-96">
           <div className="space-y-6">
-            
             {/* Necessary Cookies */}
             <div className="flex items-start gap-4">
               <div className="flex-shrink-0 mt-1">
@@ -167,7 +142,6 @@ export function CookiePreferences({ isOpen, onClose, onSave }: CookiePreferences
                 <span className="text-xs text-green-600 dark:text-green-400 font-medium">Always active</span>
               </div>
             </div>
-
             {/* Analytics Cookies */}
             <div className="flex items-start gap-4">
               <div className="flex-shrink-0 mt-1">
@@ -190,7 +164,6 @@ export function CookiePreferences({ isOpen, onClose, onSave }: CookiePreferences
                 </p>
               </div>
             </div>
-
             {/* Marketing Cookies */}
             <div className="flex items-start gap-4">
               <div className="flex-shrink-0 mt-1">
@@ -213,7 +186,6 @@ export function CookiePreferences({ isOpen, onClose, onSave }: CookiePreferences
                 </p>
               </div>
             </div>
-
             {/* Preference Cookies */}
             <div className="flex items-start gap-4">
               <div className="flex-shrink-0 mt-1">
@@ -238,7 +210,6 @@ export function CookiePreferences({ isOpen, onClose, onSave }: CookiePreferences
             </div>
           </div>
         </div>
-
         {/* Footer */}
         <div className="p-6 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50">
           <div className="flex flex-col sm:flex-row gap-3 sm:justify-end">

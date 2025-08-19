@@ -32,14 +32,14 @@ export default function LoginPage() {
     try {
       await login({ email, password });
       
-      // Login successful - redirect using router to maintain locale routing
-      setError('✅ Login exitoso! Redirigiendo...');
+      //TODO SHOW TOAST
       
       // Use Next.js router for proper locale handling
       router.push(`/${locale}/dashboard`);
       
     } catch (error) {
       console.error('Email signin error:', error);
+      //TODO SHOW TOAST ERROR
       setError((error as Error).message);
     }
   };

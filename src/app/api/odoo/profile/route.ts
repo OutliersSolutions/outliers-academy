@@ -1,51 +1,40 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyAuth } from '@/lib/auth';
 import { getUserProfile, odooExecuteKw } from '@/lib/odooClient';
-
 export async function GET(request: NextRequest) {
   try {
     const session = await verifyAuth(request);
     if (!session) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
-
     const profile = await getUserProfile(session.uid);
     if (!profile) {
       return NextResponse.json({ error: 'Profile not found' }, { status: 404 });
     }
-
     return NextResponse.json({ profile });
   } catch (error) {
-    console.error('Error fetching profile:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
-
 export async function PUT(request: NextRequest) {
   try {
     const session = await verifyAuth(request);
     if (!session) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
-
     const { name, email } = await request.json();
-    
     if (!name || !email) {
       return NextResponse.json({ error: 'Name and email are required' }, { status: 400 });
     }
-
     // Update user profile in Odoo
     await odooExecuteKw('res.partner', 'write', [[session.uid], {
       name: name,
       email: email
     }]);
-
     // Fetch updated profile
     const updatedProfile = await getUserProfile(session.uid);
-    
     return NextResponse.json({ profile: updatedProfile });
   } catch (error) {
-    console.error('Error updating profile:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

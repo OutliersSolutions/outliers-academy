@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { fetchCourses } from '@/lib/odooClient';
-
 interface Course {
   id: number;
   name: string;
@@ -19,7 +18,6 @@ interface Course {
   website_published?: boolean;
   create_date?: string;
 }
-
 // Generate slug from course name
 function generateSlug(name: string): string {
   return name
@@ -32,23 +30,19 @@ function generateSlug(name: string): string {
     .trim()
     .replace(/^-|-$/g, ''); // Remove leading/trailing hyphens
 }
-
 export async function GET(
   request: NextRequest,
   { params }: { params: { slug: string } }
 ) {
   try {
     const { slug } = params;
-
     // Fetch all courses from Odoo
     const courses = await fetchCourses();
-
     // Find course by slug or generate slug and match
     let course = courses.find((c: Course) => {
       const courseSlug = c.slug || generateSlug(c.name);
       return courseSlug === slug;
     });
-
     // If no course found, create a demo course for testing
     if (!course) {
       // Create a demo course based on the slug
@@ -56,7 +50,6 @@ export async function GET(
         .split('-')
         .map(word => word.charAt(0).toUpperCase() + word.slice(1))
         .join(' ');
-      
       course = {
         id: Math.floor(Math.random() * 1000000), // Random ID for demo
         name: demoTitle,
@@ -69,12 +62,10 @@ export async function GET(
         create_date: new Date().toISOString()
       };
     }
-
     // Ensure course has a slug
     if (!course.slug) {
       course.slug = generateSlug(course.name);
     }
-
     // Add mock data for better demo experience
     const enhancedCourse = {
       ...course,
@@ -93,11 +84,8 @@ export async function GET(
       is_enrolled: false,
       completion_percentage: 0
     };
-
     return NextResponse.json(enhancedCourse);
-
   } catch (error) {
-    console.error('Error fetching course:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

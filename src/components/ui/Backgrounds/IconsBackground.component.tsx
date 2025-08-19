@@ -3,12 +3,10 @@ import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { type Container, type ISourceOptions } from "@tsparticles/engine";
 import { loadSlim } from "@tsparticles/slim";
 import { useThemeState } from "@/hooks/useTheme";
-
 export const IconsBackground = () => {
     const [init, setInit] = useState(false);
     const { theme } = useThemeState();
     const containerRef = useRef<Container | null>(null);
-
     const [options, setOptions] = useState<ISourceOptions>({
         autoPlay: true,
         background: {
@@ -86,7 +84,6 @@ export const IconsBackground = () => {
                         { src: "/icons/technologies/systems/nodejs.svg", width: 15, height: 15 },
                         { src: "/icons/technologies/systems/python.svg", width: 15, height: 15 }
                     ]
-
                 }
             },
             size: {
@@ -134,7 +131,6 @@ export const IconsBackground = () => {
             { src: "/icons/technologies/systems/python.svg", width: 15, height: 15 }
         ]
     });
-
     useEffect(() => {
         initParticlesEngine(async (engine) => {
             await loadSlim(engine);
@@ -142,7 +138,6 @@ export const IconsBackground = () => {
             setInit(true);
         });
     }, []);
-
     // Actualiza la configuración del fondo según el tema
     useEffect(() => {
         setOptions((prevOptions) => ({
@@ -151,20 +146,15 @@ export const IconsBackground = () => {
                 opacity: 1,
             }
         }));
-
         // Llama a refresh si el contenedor ya está disponible
         if (containerRef.current) {
             containerRef.current.refresh();
         }
     }, [theme]);
-
     const particlesLoaded = async (container?: Container): Promise<void> => {
         containerRef.current = container || null;
-        console.log(container);
     };
-
     if (!init) return null;
-
     return (
         <div className="bg-gray-100 dark:bg-gray-900 fixed top-0 left-0 w-full h-full z-[-1] pointer-events-none overflow-hidden">
             <Particles

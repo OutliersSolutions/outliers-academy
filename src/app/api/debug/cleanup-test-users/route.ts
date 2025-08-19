@@ -3,8 +3,6 @@ import {odooExecuteKw} from '@/lib/odooClient';
 
 export async function POST() {
   try {
-    console.log('🧹 Iniciando limpieza de usuarios de test...');
-    
     // Buscar usuarios de test
     const testUsers = await odooExecuteKw('res.users', 'search_read', [
       [['login', 'ilike', 'test-']], // Solo usuarios con login que contenga 'test-'
@@ -17,8 +15,6 @@ export async function POST() {
 
     for (const user of testUsers) {
       try {
-        console.log(`Eliminando usuario: ${user.name} (${user.login})`);
-        
         // Primero eliminar el usuario
         await odooExecuteKw('res.users', 'unlink', [[user.id]]);
         
@@ -28,24 +24,20 @@ export async function POST() {
           try {
             await odooExecuteKw('res.partner', 'unlink', [[partnerId]]);
           } catch (partnerError: any) {
-            console.warn(`No se pudo eliminar partner ${partnerId}:`, partnerError.message);
+            // Error silencioso si no se puede eliminar el partner
           }
         }
-        
+
         deleted++;
         deletedUsers.push({
           name: user.name,
           login: user.login,
           id: user.id
         });
-        
       } catch (deleteError: any) {
-        console.error(`Error eliminando usuario ${user.id}:`, deleteError.message);
         errors++;
       }
     }
-
-    console.log(`✅ Limpieza completada: ${deleted} eliminados, ${errors} errores`);
 
     return NextResponse.json({
       success: true,
@@ -54,9 +46,7 @@ export async function POST() {
       errors,
       deletedUsers
     });
-
   } catch (error: any) {
-    console.error('Error en limpieza:', error);
     return NextResponse.json({
       error: error.message || 'Error en limpieza',
       success: false,

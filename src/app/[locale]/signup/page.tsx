@@ -16,7 +16,6 @@ export default function SignupPage() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [verificationMessage, setVerificationMessage] = useState('');
   const [showVerificationMessage, setShowVerificationMessage] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
@@ -25,10 +24,12 @@ export default function SignupPage() {
     e.preventDefault();
     if (password !== confirmPassword) {
       //TODO SHOW TOAST ERROR
+      setError(locale === 'es' ? 'Las contraseñas no coinciden' : 'Passwords do not match');
       return;
     }
     if (password.length < 6) {
-      //TODO SHOW TOAST ERROR
+      //TODO SHOW TOAST ERROR 
+      setError(locale === 'es' ? 'La contraseña debe tener al menos 6 caracteres' : 'Password must be at least 6 characters');
       return;
     }
     setLoading(true);
@@ -44,7 +45,7 @@ export default function SignupPage() {
       });
       if (res.ok) {
         const data = await res.json();
-        //TODO SHOW TOAST ERROR
+        //TODO SHOW TOAST
         // Check if email verification is required
         if (data.requiresVerification) {
           // Redirect to verify-email page with email parameter
@@ -58,7 +59,8 @@ export default function SignupPage() {
         throw new Error(data.error || (locale === 'es' ? 'Error en el registro' : 'Signup error'));
       }
     } catch (error) {
-      
+      //TODO SHOW TOAST ERROR
+      setError(error instanceof Error ? error.message : (locale === 'es' ? 'Error en el registro' : 'Signup error'));
     } finally {
       setLoading(false);
     }

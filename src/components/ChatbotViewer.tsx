@@ -1,16 +1,11 @@
 'use client';
-
 import { useEffect, useRef } from 'react';
-
 export function ChatbotViewer() {
   const containerRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     let mounted = true;
-
     const loadModel = async () => {
       if (!containerRef.current || !mounted) return;
-
       try {
         // Create model-viewer element
         const modelViewer = document.createElement('model-viewer');
@@ -20,12 +15,10 @@ export function ChatbotViewer() {
         modelViewer.setAttribute('camera-controls', '');
         modelViewer.setAttribute('style', 'width: 100%; height: 300px; background-color: transparent;');
         modelViewer.setAttribute('loading', 'eager');
-
         // Clear container and add model
         containerRef.current.innerHTML = '';
         containerRef.current.appendChild(modelViewer);
       } catch (error) {
-        console.warn('3D model loading failed, using fallback:', error);
         // Fallback to animated SVG
         if (containerRef.current && mounted) {
           containerRef.current.innerHTML = `
@@ -45,7 +38,6 @@ export function ChatbotViewer() {
         }
       }
     };
-
     // Load model-viewer script if not already loaded
     if (!window.customElements.get('model-viewer')) {
       const script = document.createElement('script');
@@ -57,12 +49,10 @@ export function ChatbotViewer() {
     } else {
       loadModel();
     }
-
     return () => {
       mounted = false;
     };
   }, []);
-
   return (
     <div 
       ref={containerRef} 

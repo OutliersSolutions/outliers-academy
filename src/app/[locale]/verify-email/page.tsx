@@ -39,6 +39,7 @@ export default function VerifyEmailPage() {
       });
       const data = await res.json();
       if (res.ok) {
+        //TODO SHOW TOAST
         setResendStatus('success');
         setResendMessage(data.message || (locale === 'es' 
           ? 'Correo reenviado exitosamente' 

@@ -1,6 +1,5 @@
 import { getTranslations } from 'next-intl/server';
 import { CheckoutButton } from './CheckoutButton';
-
 interface Course {
   id: number;
   name: string;
@@ -13,23 +12,18 @@ interface Course {
   rating?: number;
   students?: number;
 }
-
 export async function CourseGrid() {
   const tCommon = await getTranslations('common');
-  
   let courses: Course[] = [];
-
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/courses`, {
       cache: 'no-store'
     });
-    
     if (res.ok) {
       const data = await res.json();
       courses = data.courses || [];
     }
   } catch (error) {
-    console.error('Error fetching courses:', error);
     // Fallback data for development
     courses = [
       {
@@ -70,7 +64,6 @@ export async function CourseGrid() {
       }
     ];
   }
-
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {courses.map((c) => (
@@ -83,23 +76,19 @@ export async function CourseGrid() {
               </div>
             </div>
             <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors duration-300" />
-            
             {/* Price Badge */}
             <div className="absolute top-4 right-4 bg-white dark:bg-gray-800 px-3 py-1 rounded-full shadow-lg">
               <span className="font-bold text-primary">${c.price}</span>
             </div>
           </div>
-
           {/* Course Content */}
           <div className="p-6">
             <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-primary transition-colors">
               {c.name}
               </h3>
-              
             <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-2">
               {c.description || tCommon('learnNewSkills')}
             </p>
-
             {/* Course Meta */}
             <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4">
               <div className="flex items-center gap-4">
@@ -117,7 +106,6 @@ export async function CourseGrid() {
                   </span>
                 )}
               </div>
-              
               {c.rating && (
                 <div className="flex items-center gap-1">
                   <svg className="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
@@ -127,14 +115,12 @@ export async function CourseGrid() {
                 </div>
                   )}
                 </div>
-
             {/* Students Count */}
             {c.students && (
               <div className="text-sm text-gray-500 dark:text-gray-400 mb-4">
                 {c.students.toLocaleString()} estudiantes inscritos
               </div>
             )}
-
             {/* CTA Button */}
             <CheckoutButton 
               courseId={c.id} 
@@ -145,9 +131,8 @@ export async function CourseGrid() {
           </div>
         </div>
       ))}
-      
       {/* Spacer to push footer to bottom */}
       <div className="h-8" />
     </div>
   );
-} 
+}

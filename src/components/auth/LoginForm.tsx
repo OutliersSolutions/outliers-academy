@@ -1,5 +1,4 @@
 'use client';
-
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useNewAuth } from '@/components/providers/AuthProvider';
@@ -9,36 +8,29 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
-
 export function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { login } = useNewAuth();
   const router = useRouter();
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
     if (!email || !password) {
       toast.error('Por favor completa todos los campos');
       return;
     }
-
     setIsSubmitting(true);
-    
     try {
       await login({ email, password });
       // El AuthProvider ya maneja el toast de éxito
       router.push('/dashboard'); // O la ruta que prefieras después del login
     } catch (error: any) {
       // El AuthProvider ya maneja el toast de error
-      console.error('Login error:', error);
     } finally {
       setIsSubmitting(false);
     }
   };
-
   return (
     <Card className="w-full max-w-md mx-auto">
       <CardHeader className="space-y-1">
@@ -61,7 +53,6 @@ export function LoginForm() {
               required
             />
           </div>
-          
           <div className="space-y-2">
             <Label htmlFor="password">Contraseña</Label>
             <Input
@@ -74,7 +65,6 @@ export function LoginForm() {
               required
             />
           </div>
-
           <Button 
             type="submit" 
             className="w-full" 
