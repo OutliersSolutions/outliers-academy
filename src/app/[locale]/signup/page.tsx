@@ -115,15 +115,15 @@ export default function SignUpPage() {
   const t = texts[locale as keyof typeof texts] || texts.es
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 flex">
+    <div className="min-h-screen bg-gradient-to-br from-background via-muted/30 to-accent/5 flex">
       {/* Left side - Branding */}
-      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-indigo-600 to-purple-700 p-12 items-center justify-center relative overflow-hidden">
+      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-primary to-accent p-12 items-center justify-center relative overflow-hidden">
         <div className="absolute inset-0 bg-black/10" />
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="relative z-10 text-center text-white"
+          className="relative z-10 text-center text-primary-foreground"
         >
           <motion.div
             initial={{ scale: 0.5, opacity: 0 }}
@@ -132,35 +132,47 @@ export default function SignUpPage() {
             className="mb-8"
           >
             <div className="w-20 h-20 mx-auto mb-6 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-              <span className="text-3xl font-bold">O</span>
+              <span className="text-3xl font-heading font-bold">O</span>
             </div>
           </motion.div>
-          <h1 className="text-4xl font-bold mb-4">Outliers Academy</h1>
-          <p className="text-xl opacity-90 mb-8">
+          <h1 className="text-4xl font-heading font-bold mb-4">Outliers Academy</h1>
+          <p className="text-xl opacity-90 mb-8 font-sans">
             {locale === 'es' 
               ? 'Únete a la comunidad de emprendedores que están transformando el futuro'
               : 'Join the community of entrepreneurs transforming the future'
             }
           </p>
-          <div className="flex items-center justify-center space-x-8 text-sm opacity-80">
-            <div className="text-center">
-              <div className="text-2xl font-bold">1000+</div>
-              <div>{t.students}</div>
+          <div className="space-y-4 text-left max-w-sm mx-auto">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                <span className="text-white font-semibold">✓</span>
+              </div>
+              <span className="text-white/90 font-sans">
+                {locale === 'es' ? 'Acceso a todos los cursos' : 'Access to all courses'}
+              </span>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold">50+</div>
-              <div>{t.courses}</div>
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                <span className="text-white font-semibold">✓</span>
+              </div>
+              <span className="text-white/90 font-sans">
+                {locale === 'es' ? 'Progreso personalizado' : 'Personalized progress'}
+              </span>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold">95%</div>
-              <div>{t.satisfaction}</div>
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                <span className="text-white font-semibold">✓</span>
+              </div>
+              <span className="text-white/90 font-sans">
+                {locale === 'es' ? 'Certificados oficiales' : 'Official certificates'}
+              </span>
             </div>
           </div>
         </motion.div>
       </div>
 
       {/* Right side - Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-background">
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -173,15 +185,15 @@ export default function SignUpPage() {
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="mb-8 p-6 bg-green-50 border border-green-200 rounded-lg"
+              className="mb-8 p-6 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg"
             >
               <div className="flex items-center space-x-3">
-                <CheckCircle className="h-6 w-6 text-green-600" />
+                <CheckCircle className="h-6 w-6 text-green-600 dark:text-green-400" />
                 <div>
-                  <h4 className="font-medium text-green-800">
+                  <h4 className="font-medium text-green-800 dark:text-green-200 font-heading">
                     {locale === 'es' ? '¡Cuenta creada exitosamente!' : 'Account created successfully!'}
                   </h4>
-                  <p className="text-sm text-green-700 mt-1">
+                  <p className="text-sm text-green-700 dark:text-green-300 mt-1 font-sans">
                     {locale === 'es' 
                       ? 'Revisa tu correo electrónico y haz clic en el enlace de verificación para activar tu cuenta.'
                       : 'Check your email and click the verification link to activate your account.'}
@@ -192,7 +204,7 @@ export default function SignUpPage() {
                 onClick={() => setShowVerificationMessage(false)}
                 variant="outline"
                 size="sm"
-                className="mt-4 text-green-700 border-green-300"
+                className="mt-4 text-green-700 dark:text-green-300 border-green-300 dark:border-green-700 font-sans"
               >
                 {locale === 'es' ? 'Crear otra cuenta' : 'Create another account'}
               </Button>
@@ -206,7 +218,7 @@ export default function SignUpPage() {
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.1 }}
-                  className="text-3xl font-bold text-gray-900 mb-2"
+                  className="text-3xl font-heading font-bold text-foreground mb-2"
                 >
                   {t.title}
                 </motion.h2>
@@ -214,7 +226,7 @@ export default function SignUpPage() {
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.2 }}
-                  className="text-gray-600"
+                  className="text-muted-foreground font-sans"
                 >
                   {t.description}
                 </motion.p>
@@ -228,60 +240,60 @@ export default function SignUpPage() {
                 className="space-y-6"
               >
                 <div className="space-y-2">
-                  <Label htmlFor="name" className="text-sm font-medium text-gray-700">
+                  <Label htmlFor="name" className="text-sm font-medium text-foreground font-sans">
                     {t.fullName}
                   </Label>
                   <div className="relative">
-                    <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                    <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
                     <Input
                       id="name"
                       type="text"
                       placeholder={t.fullNamePlaceholder}
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      className="pl-10 h-12 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-lg transition-all duration-200"
+                      className="pl-10 h-12 border-2 border-input focus:border-ring focus:ring-2 focus:ring-ring/20 rounded-lg transition-all duration-200 bg-background text-foreground font-sans hover:border-ring/60"
                       required
                     />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="email" className="text-sm font-medium text-gray-700">
+                  <Label htmlFor="email" className="text-sm font-medium text-foreground font-sans">
                     {t.email}
                   </Label>
                   <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
                     <Input
                       id="email"
                       type="email"
                       placeholder={t.emailPlaceholder}
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="pl-10 h-12 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-lg transition-all duration-200"
+                      className="pl-10 h-12 border-2 border-input focus:border-ring focus:ring-2 focus:ring-ring/20 rounded-lg transition-all duration-200 bg-background text-foreground font-sans hover:border-ring/60"
                       required
                     />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="password" className="text-sm font-medium text-gray-700">
+                  <Label htmlFor="password" className="text-sm font-medium text-foreground font-sans">
                     {t.password}
                   </Label>
                   <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
                     <Input
                       id="password"
                       type={showPassword ? 'text' : 'password'}
                       placeholder={t.passwordPlaceholder}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="pl-10 pr-10 h-12 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-lg transition-all duration-200"
+                      className="pl-10 pr-10 h-12 border-2 border-input focus:border-ring focus:ring-2 focus:ring-ring/20 rounded-lg transition-all duration-200 bg-background text-foreground font-sans hover:border-ring/60"
                       required
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                     >
                       {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                     </button>
@@ -289,24 +301,24 @@ export default function SignUpPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="confirmPassword" className="text-sm font-medium text-gray-700">
+                  <Label htmlFor="confirmPassword" className="text-sm font-medium text-foreground font-sans">
                     {t.confirmPassword}
                   </Label>
                   <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
                     <Input
                       id="confirmPassword"
                       type={showConfirmPassword ? 'text' : 'password'}
                       placeholder={t.confirmPasswordPlaceholder}
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
-                      className="pl-10 pr-10 h-12 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-lg transition-all duration-200"
+                      className="pl-10 pr-10 h-12 border-2 border-input focus:border-ring focus:ring-2 focus:ring-ring/20 rounded-lg transition-all duration-200 bg-background text-foreground font-sans hover:border-ring/60"
                       required
                     />
                     <button
                       type="button"
                       onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                     >
                       {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                     </button>
@@ -319,8 +331,8 @@ export default function SignUpPage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <Alert variant="destructive" className="bg-red-50 border-red-200">
-                      <AlertDescription className="text-red-800">{error}</AlertDescription>
+                    <Alert variant="destructive" className="bg-destructive/10 border-destructive/20">
+                      <AlertDescription className="text-destructive font-sans">{error}</AlertDescription>
                     </Alert>
                   </motion.div>
                 )}
@@ -332,7 +344,7 @@ export default function SignUpPage() {
                   <Button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full h-12 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-medium rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full h-12 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground font-medium rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed font-sans"
                   >
                     {isLoading ? (
                       <div className="flex items-center justify-center space-x-2">
@@ -352,11 +364,11 @@ export default function SignUpPage() {
                 transition={{ duration: 0.6, delay: 0.5 }}
                 className="mt-8 text-center"
               >
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-muted-foreground font-sans">
                   {t.alreadyHaveAccount}{' '}
                   <Link 
                     href={`/${locale}/login`}
-                    className="font-medium text-indigo-600 hover:text-indigo-500 transition-colors duration-200"
+                    className="font-medium text-primary hover:text-primary/80 transition-colors duration-200"
                   >
                     {t.signIn}
                   </Link>
