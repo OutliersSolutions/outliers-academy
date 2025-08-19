@@ -73,7 +73,7 @@ export async function POST(request: Request) {
     }
 
     const payload = {uid, login: userLogin, name: user.name, issuedAt: Date.now()};
-    const token = signPayload(payload);
+    const token = await signPayload(payload);
 
     const resJson = NextResponse.json({ok: true, user: payload});
     

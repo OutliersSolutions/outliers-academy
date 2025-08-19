@@ -1,16 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BookOpen, Award, Clock, PlayCircle } from "lucide-react";
+import { BookOpen, Award, Clock, PlayCircle, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useTranslations } from 'next-intl';
+import { useAuth } from "@/hooks/useAuth";
 
 interface Course {
   id: number;
@@ -24,14 +25,57 @@ export default function DashboardPage() {
   const [courses, setCourses] = useState<Course[]>([]);
   const pathname = usePathname();
   const locale = pathname.split('/')[1] || 'es';
+  const router = useRouter();
   const t = useTranslations('dashboard');
+  const { isAuthenticated, isLoading, user } = useAuth();
 
-  // Mock user data for testing - in production this would come from auth
-  const mockUser = {
-    name: "Administrator",
-    email: "galvezcortezgonzalo@gmail.com",
-    image: null
-  };
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (!isLoading && !isAuthenticated) {
+      console.log('Dashboard: User not authenticated, redirecting to login');
+      router.push(`/${locale}/login`);
+      return;
+    }
+  }, [isAuthenticated, isLoading, router, locale]);
+
+  // Show loading spinner while checking authentication
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4" />
+          <p className="text-muted-foreground">
+            {locale === 'es' ? 'Verificando autenticación...' : 'Checking authentication...'}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show unauthorized message if not authenticated
+  if (!isAuthenticated || !user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Card className="w-full max-w-md">
+          <CardHeader>
+            <CardTitle>
+              {locale === 'es' ? 'Acceso no autorizado' : 'Unauthorized Access'}
+            </CardTitle>
+            <CardDescription>
+              {locale === 'es' 
+                ? 'Debes iniciar sesión para acceder al dashboard.' 
+                : 'You must sign in to access the dashboard.'}
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button onClick={() => router.push(`/${locale}/login`)} className="w-full">
+              {locale === 'es' ? 'Iniciar Sesión' : 'Sign In'}
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
 
   const handleSignOut = async () => {
@@ -57,14 +101,14 @@ export default function DashboardPage() {
         <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
           <div className="flex items-center space-x-4 mb-4 md:mb-0">
             <Avatar className="h-16 w-16">
-              <AvatarImage src={mockUser.image || undefined} />
+              <AvatarImage src={user.image || undefined} />
               <AvatarFallback>
-                {mockUser.name?.split(' ').map(n => n[0]).join('') || mockUser.email?.[0]?.toUpperCase() || 'U'}
+                {user.name?.split(' ').map(n => n[0]).join('') || user.email?.[0]?.toUpperCase() || 'U'}
               </AvatarFallback>
             </Avatar>
             <div>
               <h1 className="text-2xl font-bold">
-                {t('welcome', { name: mockUser.name || mockUser.email })}
+                {t('welcome', { name: user.name || user.email })}
               </h1>
               <p className="text-muted-foreground">
                 {t('welcomeSubtitle')}
