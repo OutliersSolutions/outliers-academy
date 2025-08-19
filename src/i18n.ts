@@ -5,7 +5,7 @@ export default getRequestConfig(async ({locale}) => {
     const messages = (await import(`./messages/${locale}.json`)).default;
     return {messages};
   } catch (error) {
-    const fallback = (await import(`./messages/es.json`)).default;
+    const fallback = (await import(`./messages/en.json`)).default;
     return {messages: fallback};
   }
 }); 
