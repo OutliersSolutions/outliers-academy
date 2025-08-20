@@ -50,8 +50,8 @@ export default async function HomePage({
       <section className="hero-gradient relative overflow-hidden">
         <ParticlesBackground particleColor="#ff5a1f" opacity={0.6} particleSize={3} drawLines={false} density={4500} className="absolute inset-0 w-full h-full z-0" />
         <div className="container mx-auto px-6 py-20 md:py-32 relative z-10">
-          <div className="flex flex-col lg:flex-row items-center lg:items-center">
-            <div className="flex-shrink-0 lg:pr-4">
+          <div className="flex flex-col lg:flex-row items-center lg:items-start gap-12 lg:gap-16">
+            <div className="flex-shrink-0 lg:w-1/2 lg:max-w-lg">
               <span className="inline-flex items-center gap-2 bg-gradient-to-r from-primary/20 to-accent/20 backdrop-blur-sm border border-primary/30 text-primary dark:text-primary px-6 py-3 rounded-full text-sm font-medium mb-6">
                 <span className="h-2 w-2 bg-primary dark:bg-primary rounded-full animate-pulse"></span> 
                 <span className="font-mono">{t('badge')}</span>
@@ -88,11 +88,11 @@ export default async function HomePage({
               <AcademyStats locale={params.locale} />
             </div>
             
-            <div className="relative hidden lg:block flex-1">
+            <div className="relative hidden lg:block flex-1 lg:min-w-0 lg:-mt-8">
               <ImageCarousel 
                 images={carouselImages}
                 interval={6000}
-                className="w-full h-[550px] max-w-[850px]"
+                className="w-full h-[650px] rounded-2xl shadow-2xl"
               />
             </div>
           </div>
