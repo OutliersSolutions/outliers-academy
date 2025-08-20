@@ -37,10 +37,7 @@ export default async function HomePage({
   // Images for the carousel - optimized WebP format (131 total images)
   const carouselImages = [
     // Groups & Professionals
-    '/images/carousel/professionals-group.webp',
-    '/images/carousel/group-2695.webp',
-    '/images/carousel/group-2697.webp',
-    '/images/carousel/group-2698.webp',
+
     
     // Students
     '/images/carousel/peruvian-students-1.webp',
