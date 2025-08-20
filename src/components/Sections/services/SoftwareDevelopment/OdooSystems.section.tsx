@@ -10,8 +10,30 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/Buttons/Button.component";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
-import { chartData, fadeInUp, staggerContainer } from "@/data";
 import { useTranslation } from "react-i18next";
+
+// Datos hardcodeados temporalmente - TODO: traer del backend
+const chartData = [
+  { name: 'Ventas', value: 85 },
+  { name: 'Inventario', value: 92 },
+  { name: 'Contabilidad', value: 78 },
+  { name: 'CRM', value: 88 },
+  { name: 'Compras', value: 95 }
+];
+
+const fadeInUp = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.6 }
+};
+
+const staggerContainer = {
+  animate: {
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
 
 
 export const OdooSystemSection = () => {

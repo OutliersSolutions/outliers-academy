@@ -1,6 +1,55 @@
-import { teamMembers } from "@/data";
 import { TeamMemberCard } from "@/components";
 import { getTranslations } from "next-intl/server";
+
+interface SocialLink {
+  platform: "facebook" | "instagram" | "linkedin" | "twitter" | "github";
+  url: string;
+  icon: string;
+}
+
+interface TeamMember {
+  id: number;
+  name: string;
+  role: string;
+  department: string;
+  description: string;
+  imageUrl: string;
+  socialLinks?: SocialLink[];
+}
+
+// Datos hardcodeados temporalmente - TODO: traer del backend
+const teamMembers: TeamMember[] = [
+  {
+    id: 1,
+    name: "Juan Pérez",
+    role: "CEO & Founder",
+    department: "Leadership",
+    description: "Líder visionario con más de 10 años de experiencia en transformación digital.",
+    imageUrl: "/images/team/juan-perez.jpg",
+    socialLinks: [
+      {
+        platform: "linkedin",
+        url: "https://linkedin.com/in/juanperez",
+        icon: "linkedin"
+      }
+    ]
+  },
+  {
+    id: 2,
+    name: "María García",
+    role: "CTO",
+    department: "Technology",
+    description: "Experta en tecnología con pasión por la innovación y IA.",
+    imageUrl: "/images/team/maria-garcia.jpg",
+    socialLinks: [
+      {
+        platform: "linkedin",
+        url: "https://linkedin.com/in/mariagarcia",
+        icon: "linkedin"
+      }
+    ]
+  }
+];
 
 interface TeamSectionProps {
   locale: string;

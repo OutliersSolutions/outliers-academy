@@ -1,11 +1,30 @@
 import { useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { AnimatedColumn, BenefitChip } from "@/components";
-import { benefits, column1Icons, column2Icons, column3Icons } from "@/data";
 import { useThemeState } from "@/hooks/useTheme";
-import { SquareArrowOutUpRight } from "lucide-react";
+import { SquareArrowOutUpRight, Bot, MessageSquare, Zap } from "lucide-react";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
+
+// Datos hardcodeados temporalmente - TODO: traer del backend
+const benefits = [
+  { icon: Bot, text: "Automatización inteligente" },
+  { icon: MessageSquare, text: "Respuestas instantáneas" },
+  { icon: Zap, text: "Disponibilidad 24/7" }
+];
+
+const column1Icons = [
+  { name: "Bot", label: "Chatbot AI" },
+  { name: "MessageSquare", label: "Mensajes" }
+];
+const column2Icons = [
+  { name: "Zap", label: "Velocidad" },
+  { name: "Bot", label: "Automatización" }
+];
+const column3Icons = [
+  { name: "MessageSquare", label: "Comunicación" },
+  { name: "Zap", label: "Eficiencia" }
+];
 
 export const HeroAgentsAiSection = () => {
   const { theme } = useThemeState();
@@ -22,7 +41,7 @@ export const HeroAgentsAiSection = () => {
   const isButtonsInView = useInView(buttonsRef, { once: true });
   const isBenefitsInView = useInView(benefitsRef, { once: true });
 
-  const benefitsList = [] as string[];
+  const benefitsList = benefits.map(b => b.text);
 
   return (
     <section className="pt-8 sm:pt-8 md:pt-10 lg:pt-15 xl:pt-16 w-full overflow-hidden flex items-center text-gray-600 dark:text-gray-300 leading-relaxed">
@@ -151,14 +170,17 @@ export const HeroAgentsAiSection = () => {
               transition={{ duration: 0.7, delay: 0.6, ease: "easeOut" }}
               className="flex flex-wrap gap-2"
             >
-              {benefitsList.map((benefit, index) => (
-                <BenefitChip
-                  key={index}
-                  icon={benefits[index]?.icon}
-                  text={benefit}
-                  delay={index * 0.1}
-                />
-              ))}
+              {benefitsList.map((benefit, index) => {
+                const IconComponent = benefits[index]?.icon;
+                return (
+                  <BenefitChip
+                    key={index}
+                    icon={IconComponent ? <IconComponent size={16} /> : null}
+                    text={benefit}
+                    delay={index * 0.1}
+                  />
+                );
+              })}
             </motion.div>
           </div>
 

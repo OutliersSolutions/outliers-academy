@@ -24,45 +24,9 @@ export async function CourseGrid() {
       courses = data.courses || [];
     }
   } catch (error) {
-    // Fallback data for development
-    courses = [
-      {
-        id: 1,
-        name: "Python para Principiantes",
-        description: "Aprende los fundamentos de Python desde cero",
-        price: 49.99,
-        image: "/images/python-course.jpg",
-        slug: "python-basics",
-        duration: 8,
-        level: "Principiante",
-        rating: 4.8,
-        students: 1250
-      },
-      {
-        id: 2,
-        name: "React.js Completo",
-        description: "Desarrollo de aplicaciones web modernas con React",
-        price: 79.99,
-        image: "/images/react-course.jpg",
-        slug: "react-complete",
-        duration: 12,
-        level: "Intermedio",
-        rating: 4.9,
-        students: 890
-      },
-      {
-        id: 3,
-        name: "Machine Learning Básico",
-        description: "Introducción a la inteligencia artificial y ML",
-        price: 99.99,
-        image: "/images/ml-course.jpg",
-        slug: "machine-learning-basics",
-        duration: 10,
-        level: "Intermedio",
-        rating: 4.7,
-        students: 650
-      }
-    ];
+    console.error('Error fetching courses:', error);
+    // No fallback data - rely on Odoo backend
+    courses = [];
   }
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

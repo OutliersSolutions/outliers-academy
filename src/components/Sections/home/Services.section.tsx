@@ -1,12 +1,56 @@
 import { motion } from "framer-motion";
 import { ServiceCard } from "@/components";
-import { useServices } from "@/data";
 import { useTranslation } from "react-i18next";
+import { Cpu, BrainCircuit, Megaphone } from "lucide-react";
 
 export const ServiceSection = () => {
   const { t } = useTranslation();
 
-  const { services } = useServices();
+  // Usar directamente las traducciones sin datos dummy
+  const serviceTags = {
+    marketing: (t('home.service_section.services.marketing.tags', { returnObjects: true }) as string[]).map((text, index) => ({
+      id: index + 1,
+      text,
+    })),
+    sistemas: (t('home.service_section.services.sistemas.tags', { returnObjects: true }) as string[]).map((text, index) => ({
+      id: index + 1,
+      text,
+    })),
+    ia: (t('home.service_section.services.ia.tags', { returnObjects: true }) as string[]).map((text, index) => ({
+      id: index + 1,
+      text,
+    })),
+  };
+
+  const services = [
+    {
+      id: "marketing-node",
+      icon: Megaphone,
+      title: t('home.service_section.services.marketing.title'),
+      description: t('home.service_section.services.marketing.description'),
+      tags: serviceTags.marketing,
+      delay: 0.1,
+      link: "/marketing",
+    },
+    {
+      id: "sistemas-node",
+      icon: Cpu,
+      title: t('home.service_section.services.sistemas.title'),
+      description: t('home.service_section.services.sistemas.description'),
+      tags: serviceTags.sistemas,
+      delay: 0.3,
+      link: "/systems",
+    },
+    {
+      id: "ia-node",
+      icon: BrainCircuit,
+      title: t('home.service_section.services.ia.title'),
+      description: t('home.service_section.services.ia.description'),
+      tags: serviceTags.ia,
+      delay: 0.5,
+      link: "/ai-agents",
+    },
+  ];
 
   return (
     <section className="relative pt-0 sm:pt-16 md:pt-16 lg:pt-16 pb-0 sm:pb-0 md:pb-0 lg:pb-0 xl:pb-40 overflow-hidden">

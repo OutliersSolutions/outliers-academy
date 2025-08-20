@@ -50,94 +50,12 @@ export function CourseGridClient() {
           }));
           setCourses(mappedCourses);
         } else {
-          // Fallback data for development
-          const fallbackCourses = [
-            {
-              id: 1,
-              name: "Docker para D",
-              title: "Docker para D",
-              description: "Aprende los fundamentos de Docker desde cero",
-              price: 99.99,
-              image: "/images/docker-course.jpg",
-              slug: "docker-para-d-1",
-              duration: 8,
-              level: "Principiante",
-              rating: 4.8,
-              students: 1250
-            },
-            {
-              id: 2,
-              name: "Crea tu primera Waifu: Hipoteticamente",
-              title: "Crea tu primera Waifu: Hipoteticamente",
-              description: "Desarrollo de aplicaciones con IA generativa",
-              price: 99.99,
-              image: "/images/waifu-course.jpg",
-              slug: "crea-tu-primera-waifu-hipoteticamente-2",
-              duration: 12,
-              level: "Intermedio",
-              rating: 4.9,
-              students: 890
-            },
-            {
-              id: 3,
-              name: "Machine Learning Básico",
-              title: "Machine Learning Básico",
-              description: "Introducción a la inteligencia artificial y ML",
-              price: 99.99,
-              image: "/images/ml-course.jpg",
-              slug: "machine-learning-basics",
-              duration: 10,
-              level: "Intermedio",
-              rating: 4.7,
-              students: 650
-            }
-          ];
-          setCourses(fallbackCourses);
+          console.warn('No courses data received from API');
+          setCourses([]);
         }
       } catch (error) {
-        // Fallback data for development
-        const errorFallbackCourses = [
-          {
-            id: 1,
-            name: "Docker para D",
-            title: "Docker para D",
-            description: "Aprende los fundamentos de Docker desde cero",
-            price: 99.99,
-            image: "/images/docker-course.jpg",
-            slug: "docker-para-d-1",
-            duration: 8,
-            level: "Principiante",
-            rating: 4.8,
-            students: 1250
-          },
-          {
-            id: 2,
-            name: "Crea tu primera Waifu: Hipoteticamente",
-            title: "Crea tu primera Waifu: Hipoteticamente",
-            description: "Desarrollo de aplicaciones con IA generativa",
-            price: 99.99,
-            image: "/images/waifu-course.jpg",
-            slug: "crea-tu-primera-waifu-hipoteticamente-2",
-            duration: 12,
-            level: "Intermedio",
-            rating: 4.9,
-            students: 890
-          },
-          {
-            id: 3,
-            name: "Machine Learning Básico",
-            title: "Machine Learning Básico",
-            description: "Introducción a la inteligencia artificial y ML",
-            price: 99.99,
-            image: "/images/ml-course.jpg",
-            slug: "machine-learning-basics",
-            duration: 10,
-            level: "Intermedio",
-            rating: 4.7,
-            students: 650
-          }
-        ];
-        setCourses(errorFallbackCourses);
+        console.error('Error fetching courses:', error);
+        setCourses([]);
       } finally {
         setLoading(false);
       }
