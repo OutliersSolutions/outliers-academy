@@ -238,11 +238,27 @@ export async function createSaleOrder(userId: number, productId: number) {
 }
 export async function getUserProfile(userId: number) {
   if (!isOdooConfigured) return null;
-  const fields = ['id', 'name', 'email', 'image_1920'];
+  const fields = ['id', 'name', 'email', 'image_1920', 'phone', 'create_date'];
   const partners = await odooExecuteKw('res.partner', 'search_read', [
     [['id', '=', userId]]
   ], {fields});
   return partners?.[0] || null;
+}
+
+export async function updateUserProfile(userId: number, data: {name?: string; email?: string; phone?: string}) {
+  if (!isOdooConfigured) throw new Error('Odoo not configured');
+  
+  await odooExecuteKw('res.partner', 'write', [[userId], data]);
+  return getUserProfile(userId);
+}
+
+export async function updateUserAvatar(userId: number, avatarBase64: string) {
+  if (!isOdooConfigured) throw new Error('Odoo not configured');
+  
+  await odooExecuteKw('res.partner', 'write', [[userId], {
+    image_1920: avatarBase64
+  }]);
+  return getUserProfile(userId);
 }
 export async function getAcademyStats() {
   if (!isOdooConfigured) {

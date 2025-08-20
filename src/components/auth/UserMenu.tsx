@@ -10,12 +10,39 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { User, LogOut, Settings, BookOpen, Loader2 } from 'lucide-react';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { UserAvatar } from '@/components/ui/UserAvatar';
+
+interface UserProfile {
+  id: number;
+  name: string;
+  email: string;
+  image_1920?: string;
+}
 
 export function UserMenu() {
   const { user, logout, loading, isAuthenticated } = useNewAuth();
+  const [profile, setProfile] = useState<UserProfile | null>(null);
+
+  useEffect(() => {
+    if (isAuthenticated && user?.odooUserId) {
+      fetchUserProfile();
+    }
+  }, [isAuthenticated, user]);
+
+  const fetchUserProfile = async () => {
+    try {
+      const res = await fetch('/api/odoo/profile');
+      if (res.ok) {
+        const data = await res.json();
+        setProfile(data.profile);
+      }
+    } catch (error) {
+      // Silent fail
+    }
+  };
 
   if (loading) {
     return (
@@ -38,35 +65,28 @@ export function UserMenu() {
     );
   }
 
-  const initials = user.name
-    ? user.name
-        .split(' ')
-        .map((n) => n[0])
-        .join('')
-        .toUpperCase()
-        .slice(0, 2)
-    : user.login.slice(0, 2).toUpperCase();
+  const displayName = profile?.name || user.name || user.login;
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-          <Avatar className="h-8 w-8">
-            <AvatarImage src={`/avatars/${user.uid}.jpg`} alt={user.name || user.login} />
-            <AvatarFallback className="bg-primary text-primary-foreground">
-              {initials}
-            </AvatarFallback>
-          </Avatar>
+          <UserAvatar 
+            name={displayName}
+            email={profile?.email}
+            image={profile?.image_1920}
+            size="sm"
+          />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none">
-              {user.name || 'Usuario'}
+              {displayName}
             </p>
             <p className="text-xs leading-none text-muted-foreground">
-              {user.login}
+              {profile?.email || user.login}
             </p>
           </div>
         </DropdownMenuLabel>

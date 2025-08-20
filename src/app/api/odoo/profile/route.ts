@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyAuth } from '@/lib/auth';
-import { getUserProfile, odooExecuteKw } from '@/lib/odooClient';
+import { getUserProfile, updateUserProfile, updateUserAvatar } from '@/lib/odooClient';
+
 export async function GET(request: NextRequest) {
   try {
     const session = await verifyAuth(request);
@@ -16,23 +17,45 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
+
 export async function PUT(request: NextRequest) {
   try {
     const session = await verifyAuth(request);
     if (!session) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
-    const { name, email } = await request.json();
+    
+    const { name, email, phone } = await request.json();
+    
     if (!name || !email) {
       return NextResponse.json({ error: 'Name and email are required' }, { status: 400 });
     }
+    
     // Update user profile in Odoo
-    await odooExecuteKw('res.partner', 'write', [[session.uid], {
-      name: name,
-      email: email
-    }]);
-    // Fetch updated profile
-    const updatedProfile = await getUserProfile(session.uid);
+    const updatedProfile = await updateUserProfile(session.uid, { name, email, phone });
+    
+    return NextResponse.json({ profile: updatedProfile });
+  } catch (error) {
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  }
+}
+
+export async function PATCH(request: NextRequest) {
+  try {
+    const session = await verifyAuth(request);
+    if (!session) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+    
+    const { avatarBase64 } = await request.json();
+    
+    if (!avatarBase64) {
+      return NextResponse.json({ error: 'Avatar data is required' }, { status: 400 });
+    }
+    
+    // Update user avatar in Odoo
+    const updatedProfile = await updateUserAvatar(session.uid, avatarBase64);
+    
     return NextResponse.json({ profile: updatedProfile });
   } catch (error) {
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
