@@ -1,4 +1,3 @@
-// Simple theme hook for Next.js compatibility
 import { useTheme as useNextTheme } from 'next-themes';
 
 export const useThemeState = () => {

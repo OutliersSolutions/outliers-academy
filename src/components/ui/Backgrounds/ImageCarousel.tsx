@@ -22,7 +22,6 @@ export default function ImageCarousel({
 }: ImageCarouselProps) {
   const { theme, systemTheme } = useTheme();
   
-  // Smart theme-based image selection
   const getThemeBasedImages = useCallback(() => {
     if (imagesByTheme && imagesByTheme.dark && imagesByTheme.light) {
       const currentTheme = theme === 'system' ? systemTheme : theme;
@@ -36,13 +35,11 @@ export default function ImageCarousel({
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set([0]));
   
-  // Refs to access current values without triggering re-renders
   const themeRef = useRef(theme);
   const systemThemeRef = useRef(systemTheme);
   const imagesByThemeRef = useRef(imagesByTheme);
   const imagesRef = useRef(images);
   
-  // Update refs when values change
   useEffect(() => {
     themeRef.current = theme;
     systemThemeRef.current = systemTheme;
@@ -50,10 +47,6 @@ export default function ImageCarousel({
     imagesRef.current = images;
   }, [theme, systemTheme, imagesByTheme, images]);
 
-
-  // NO automatic theme updates - let timer handle everything
-
-  // Initial load when component mounts
   useEffect(() => {
     if (currentImages.length === 0) {
       const initialImages = getThemeBasedImages();
@@ -63,7 +56,6 @@ export default function ImageCarousel({
     }
   }, [getThemeBasedImages, currentImages.length]);
 
-  // Preload initial images
   useEffect(() => {
     if (currentImages.length > 0) {
       const toLoad = new Set<number>();
@@ -75,10 +67,8 @@ export default function ImageCarousel({
     }
   }, [currentImageIndex, currentImages]);
 
-  // Main timer - starts once and never restarts unless interval changes
   useEffect(() => {
     const timer = setInterval(() => {
-      // At the moment of timer firing, get current theme images using refs
       const currentTheme = themeRef.current === 'system' ? systemThemeRef.current : themeRef.current;
       const isDark = currentTheme === 'dark';
       let availableImages: string[] = [];
@@ -92,13 +82,11 @@ export default function ImageCarousel({
       if (availableImages.length <= 1) return;
 
       setCurrentImageIndex((prevIndex) => {
-        // Random selection avoiding current
         let nextIndex;
         do {
           nextIndex = Math.floor(Math.random() * availableImages.length);
         } while (nextIndex === prevIndex && availableImages.length > 1);
         
-        // Only update images if they actually changed to prevent flash
         setCurrentImages(currentImgs => {
           if (JSON.stringify(currentImgs) !== JSON.stringify(availableImages)) {
             return availableImages;
@@ -109,7 +97,6 @@ export default function ImageCarousel({
         return nextIndex;
       });
       
-      // Preload around new position
       const toLoad = new Set<number>();
       const newIndex = Math.floor(Math.random() * availableImages.length);
       for (let i = -2; i <= 2; i++) {
@@ -120,7 +107,7 @@ export default function ImageCarousel({
     }, interval);
 
     return () => clearInterval(timer);
-  }, [interval]); // ONLY restart if interval changes - refs won't cause restarts!
+  }, [interval]);
 
   if (currentImages.length === 0) return null;
 
@@ -133,7 +120,6 @@ export default function ImageCarousel({
       }}
     >
       {currentImages.map((image, index) => {
-        // Only render images that should be loaded
         const shouldLoad = loadedImages.has(index);
         
         return (

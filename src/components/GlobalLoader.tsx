@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 interface GlobalLoaderProps {
   children: React.ReactNode;
-  minimumLoadTime?: number; // Tiempo mínimo de carga en ms
+  minimumLoadTime?: number;
 }
 export function GlobalLoader({ children, minimumLoadTime = 2500 }: GlobalLoaderProps) {
   const t = useTranslations('loader.global');

@@ -31,10 +31,8 @@ export default async function HomePage({
 }) {
   unstable_setRequestLocale(params.locale);
   const t = await getTranslations('home');
-  //TODO MAKE THIS DYNAMIC, USE A SERVER COMPONENT TO FETCH DYNAMIC DATA
-  // Smart theme-based image selection system
+  
   const imagesByTheme = {
-    // Warm/Light theme images (bright, natural lighting, warm tones)
     light: [
       '/images/carousel/professionals-group.webp',
       '/images/carousel/group-2695.webp',
@@ -88,7 +86,6 @@ export default async function HomePage({
       '/images/carousel/candid-group-3.webp'
     ],
     
-    // Cool/Dark theme images (darker tones, cooler lighting, night vibes)  
     dark: [
       '/images/carousel/students-2713.webp',
       '/images/carousel/students-2714.webp',
