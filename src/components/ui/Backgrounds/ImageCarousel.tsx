@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import Image from 'next/image';
 import { useTheme } from 'next-themes';
 
@@ -35,46 +35,23 @@ export default function ImageCarousel({
   const [currentImages, setCurrentImages] = useState<string[]>([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set([0]));
-
-  // Smart random index selection
-  const getRandomIndex = useCallback((arrayLength: number, excludeIndex?: number) => {
-    if (arrayLength <= 1) return 0;
-    let randomIndex;
-    do {
-      randomIndex = Math.floor(Math.random() * arrayLength);
-    } while (randomIndex === excludeIndex && arrayLength > 1);
-    return randomIndex;
-  }, []);
-
-  // Preload images around current index for smooth transitions
-  const preloadImages = useCallback((centerIndex: number, imagesArray: string[]) => {
-    const toLoad = new Set<number>();
-    
-    // Load current, next 2, and previous 2 images
-    for (let i = -2; i <= 2; i++) {
-      const index = (centerIndex + i + imagesArray.length) % imagesArray.length;
-      toLoad.add(index);
-    }
-    
-    setLoadedImages(prev => new Set([...prev, ...toLoad]));
-  }, []);
-
-  // Update image pool when theme changes (but keep current image)
+  
+  // Refs to access current values without triggering re-renders
+  const themeRef = useRef(theme);
+  const systemThemeRef = useRef(systemTheme);
+  const imagesByThemeRef = useRef(imagesByTheme);
+  const imagesRef = useRef(images);
+  
+  // Update refs when values change
   useEffect(() => {
-    const newImages = getThemeBasedImages();
-    if (newImages.length > 0 && JSON.stringify(newImages) !== JSON.stringify(currentImages)) {
-      // Just update the pool, don't change current image
-      setCurrentImages(newImages);
-      // Keep current index if possible, otherwise reset
-      if (currentImageIndex >= newImages.length) {
-        setCurrentImageIndex(0);
-      }
-      // Preload around current position with new image set
-      if (currentImageIndex < newImages.length) {
-        preloadImages(currentImageIndex, newImages);
-      }
-    }
-  }, [getThemeBasedImages, currentImages, currentImageIndex, preloadImages]);
+    themeRef.current = theme;
+    systemThemeRef.current = systemTheme;
+    imagesByThemeRef.current = imagesByTheme;
+    imagesRef.current = images;
+  }, [theme, systemTheme, imagesByTheme, images]);
+
+
+  // NO automatic theme updates - let timer handle everything
 
   // Initial load when component mounts
   useEffect(() => {
@@ -89,25 +66,61 @@ export default function ImageCarousel({
   // Preload initial images
   useEffect(() => {
     if (currentImages.length > 0) {
-      preloadImages(currentImageIndex, currentImages);
+      const toLoad = new Set<number>();
+      for (let i = -2; i <= 2; i++) {
+        const index = (currentImageIndex + i + currentImages.length) % currentImages.length;
+        toLoad.add(index);
+      }
+      setLoadedImages(prev => new Set([...prev, ...toLoad]));
     }
-  }, [currentImageIndex, preloadImages, currentImages]);
+  }, [currentImageIndex, currentImages]);
 
+  // Main timer - starts once and never restarts unless interval changes
   useEffect(() => {
-    if (currentImages.length <= 1) return;
-
     const timer = setInterval(() => {
+      // At the moment of timer firing, get current theme images using refs
+      const currentTheme = themeRef.current === 'system' ? systemThemeRef.current : themeRef.current;
+      const isDark = currentTheme === 'dark';
+      let availableImages: string[] = [];
+      
+      if (imagesByThemeRef.current && imagesByThemeRef.current.dark && imagesByThemeRef.current.light) {
+        availableImages = isDark ? imagesByThemeRef.current.dark : imagesByThemeRef.current.light;
+      } else if (imagesRef.current) {
+        availableImages = imagesRef.current;
+      }
+      
+      if (availableImages.length <= 1) return;
+
       setCurrentImageIndex((prevIndex) => {
-        // Random selection instead of sequential
-        const nextIndex = getRandomIndex(currentImages.length, prevIndex);
-        // Preload images around next position
-        preloadImages(nextIndex, currentImages);
+        // Random selection avoiding current
+        let nextIndex;
+        do {
+          nextIndex = Math.floor(Math.random() * availableImages.length);
+        } while (nextIndex === prevIndex && availableImages.length > 1);
+        
+        // Only update images if they actually changed to prevent flash
+        setCurrentImages(currentImgs => {
+          if (JSON.stringify(currentImgs) !== JSON.stringify(availableImages)) {
+            return availableImages;
+          }
+          return currentImgs;
+        });
+        
         return nextIndex;
       });
+      
+      // Preload around new position
+      const toLoad = new Set<number>();
+      const newIndex = Math.floor(Math.random() * availableImages.length);
+      for (let i = -2; i <= 2; i++) {
+        const index = (newIndex + i + availableImages.length) % availableImages.length;
+        toLoad.add(index);
+      }
+      setLoadedImages(prev => new Set([...prev, ...toLoad]));
     }, interval);
 
     return () => clearInterval(timer);
-  }, [currentImages.length, interval, preloadImages, currentImages, getRandomIndex]);
+  }, [interval]); // ONLY restart if interval changes - refs won't cause restarts!
 
   if (currentImages.length === 0) return null;
 
@@ -126,8 +139,8 @@ export default function ImageCarousel({
         return (
           <div
             key={image}
-            className={`absolute inset-0 transition-all duration-1000 ease-in-out ${
-              index === currentImageIndex ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
+            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+              index === currentImageIndex ? 'opacity-100' : 'opacity-0'
             }`}
             style={{
               maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.05) 5%, rgba(0,0,0,0.15) 10%, rgba(0,0,0,0.3) 15%, rgba(0,0,0,0.5) 20%, rgba(0,0,0,0.7) 25%, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0.95) 35%, rgba(0,0,0,1) 40%)',
