@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import {getTranslations, unstable_setRequestLocale} from 'next-intl/server';
 import {CourseGrid} from '@/components/CourseGrid';
-import {ChatbotViewerSafe} from '@/components/ChatbotViewerSafe';
 import dynamic from 'next/dynamic';
 
 const ParticlesBackground = dynamic(() => import('@/components/ui/ParticlesBackground').then(mod => ({ default: mod.ParticlesBackground })), {
@@ -9,16 +8,9 @@ const ParticlesBackground = dynamic(() => import('@/components/ui/ParticlesBackg
   loading: () => <div className="absolute inset-0 w-full h-full z-0 bg-transparent" />
 });
 
-const ChatbotViewerOptimized = dynamic(() => import('@/components/ChatbotViewerSafe').then(mod => ({ default: mod.ChatbotViewerSafe })), {
+const ImageCarousel = dynamic(() => import('@/components/ui/Backgrounds/ImageCarousel'), {
   ssr: false,
-  loading: () => (
-    <div className="w-full h-80 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-xl flex items-center justify-center">
-      <div className="text-center">
-        <div className="w-16 h-16 mx-auto mb-4 bg-indigo-200 dark:bg-indigo-800 rounded-full animate-pulse"></div>
-        <p className="text-sm text-gray-600 dark:text-gray-400">Cargando modelo 3D...</p>
-      </div>
-    </div>
-  )
+  loading: () => <div className="w-full h-80 bg-gradient-to-br from-indigo-50/20 to-purple-50/20 rounded-xl animate-pulse" />
 });
 import {AcademyStats} from '@/components/AcademyStats';
 import {ArrowIcon} from '@/components/ui/ArrowIcon';
@@ -42,13 +34,24 @@ export default async function HomePage({
   unstable_setRequestLocale(params.locale);
   const t = await getTranslations('home');
 
+  // Images for the carousel - you can modify these paths
+  const carouselImages = [
+    '/images/adriandiazmarro-ia.webp',
+    '/images/carolinaoleascpa-ia.webp',
+    '/images/dcarlos-ia.webp',
+    '/images/fashionbutton-ia.webp',
+    '/images/marcelogallardoburga-ia.webp',
+    '/images/ryomori-ia.webp',
+    '/images/thegivecircle-ia.webp'
+  ];
+
   return (
     <div>
       <section className="hero-gradient relative overflow-hidden">
         <ParticlesBackground particleColor="#ff5a1f" opacity={0.6} particleSize={3} drawLines={false} density={4500} className="absolute inset-0 w-full h-full z-0" />
         <div className="container mx-auto px-6 py-20 md:py-32 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="max-w-2xl">
+          <div className="flex flex-col lg:flex-row items-center lg:items-center">
+            <div className="flex-shrink-0 lg:pr-4">
               <span className="inline-flex items-center gap-2 bg-gradient-to-r from-primary/20 to-accent/20 backdrop-blur-sm border border-primary/30 text-primary dark:text-primary px-6 py-3 rounded-full text-sm font-medium mb-6">
                 <span className="h-2 w-2 bg-primary dark:bg-primary rounded-full animate-pulse"></span> 
                 <span className="font-mono">{t('badge')}</span>
@@ -85,8 +88,12 @@ export default async function HomePage({
               <AcademyStats locale={params.locale} />
             </div>
             
-            <div className="relative min-h-[320px] flex items-center justify-center">
-              <ChatbotViewerOptimized className="w-full h-80" />
+            <div className="relative hidden lg:block flex-1">
+              <ImageCarousel 
+                images={carouselImages}
+                interval={6000}
+                className="w-full h-[550px] max-w-[850px]"
+              />
             </div>
           </div>
         </div>
