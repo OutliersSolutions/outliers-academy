@@ -224,7 +224,7 @@ export default async function HomePage({
               <ImageCarousel 
                 images={carouselImages}
                 interval={6000}
-                className="w-full h-[650px] rounded-2xl shadow-2xl"
+                className="w-full h-[650px] rounded-2xl"
               />
             </div>
           </div>
