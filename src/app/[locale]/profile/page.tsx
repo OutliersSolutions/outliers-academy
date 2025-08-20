@@ -9,7 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Loader } from "@/components/ui/loader";
-import { User, Mail, Calendar, Shield, Edit2, Save, X, Camera, Phone } from "lucide-react";
+import { User, Mail, Calendar, Shield, Edit2, Save, X, Camera, Phone, Globe, Briefcase } from "lucide-react";
 import Link from "next/link";
 import { useTranslations } from 'next-intl';
 import { UserAvatar } from '@/components/ui/UserAvatar';
@@ -20,16 +20,34 @@ interface UserProfile {
   name: string;
   email: string;
   phone?: string;
+  mobile?: string;
+  website?: string;
+  title?: string;
+  function?: string;
+  street?: string;
+  city?: string;
+  country_id?: [number, string];
   image_1920?: string;
   create_date?: string;
+  timezone?: string;
 }
 export default function ProfilePage() {
   const { isAuthenticated, loading: authLoading, user } = useNewAuth();
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [, setError] = useState<string | null>(null);
   const [editing, setEditing] = useState(false);
-  const [editForm, setEditForm] = useState({ name: '', email: '', phone: '' });
+  const [editForm, setEditForm] = useState({ 
+    name: '', 
+    email: '', 
+    phone: '', 
+    mobile: '', 
+    website: '', 
+    title: '', 
+    function: '', 
+    street: '', 
+    city: '' 
+  });
   const [avatarUploading, setAvatarUploading] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
@@ -46,7 +64,13 @@ export default function ProfilePage() {
         setEditForm({ 
           name: data.profile.name, 
           email: data.profile.email,
-          phone: data.profile.phone || ''
+          phone: data.profile.phone || '',
+          mobile: data.profile.mobile || '',
+          website: data.profile.website || '',
+          title: data.profile.title || '',
+          function: data.profile.function || '',
+          street: data.profile.street || '',
+          city: data.profile.city || ''
         });
       } else {
         // If profile not found, create a fallback profile from user data
@@ -62,7 +86,13 @@ export default function ProfilePage() {
           setEditForm({ 
             name: fallbackProfile.name, 
             email: fallbackProfile.email,
-            phone: ''
+            phone: '',
+            mobile: '',
+            website: '',
+            title: '',
+            function: '',
+            street: '',
+            city: ''
           });
         } else {
           setError(`Error ${res.status}: ${res.statusText}`);
@@ -83,7 +113,13 @@ export default function ProfilePage() {
         setEditForm({ 
           name: fallbackProfile.name, 
           email: fallbackProfile.email,
-          phone: ''
+          phone: '',
+          mobile: '',
+          website: '',
+          title: '',
+          function: '',
+          street: '',
+          city: ''
         });
       }
     } finally {
@@ -106,7 +142,13 @@ export default function ProfilePage() {
       setEditForm({ 
         name: profile?.name || '', 
         email: profile?.email || '',
-        phone: profile?.phone || ''
+        phone: profile?.phone || '',
+        mobile: profile?.mobile || '',
+        website: profile?.website || '',
+        title: profile?.title || '',
+        function: profile?.function || '',
+        street: profile?.street || '',
+        city: profile?.city || ''
       });
     }
     setEditing(!editing);
@@ -146,9 +188,19 @@ export default function ProfilePage() {
         if (res.ok) {
           const data = await res.json();
           setProfile(data.profile);
-          toast.success(isSpanish ? 'Avatar actualizado correctamente' : 'Avatar updated successfully');
+          toast.success(
+            isSpanish ? 'Avatar actualizado correctamente' : 'Avatar updated successfully',
+            {
+              description: isSpanish ? 'Tu imagen de perfil se ha guardado exitosamente' : 'Your profile picture has been saved successfully'
+            }
+          );
         } else {
-          toast.error(isSpanish ? 'Error al actualizar el avatar' : 'Error updating avatar');
+          toast.error(
+            isSpanish ? 'Error al actualizar el avatar' : 'Error updating avatar',
+            {
+              description: isSpanish ? 'Por favor intenta de nuevo o contacta soporte' : 'Please try again or contact support'
+            }
+          );
         }
       };
       reader.readAsDataURL(file);
@@ -160,21 +212,29 @@ export default function ProfilePage() {
   };
   const handleSaveProfile = async () => {
     try {
+      
       const res = await fetch('/api/odoo/profile', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(editForm)
       });
+      
+      
       if (res.ok) {
         const data = await res.json();
         setProfile(data.profile);
         setEditing(false);
-        toast.success(isSpanish ? 'Perfil actualizado correctamente' : 'Profile updated successfully');
+        toast.success(
+          isSpanish ? 'Perfil actualizado correctamente' : 'Profile updated successfully',
+          {
+            description: isSpanish ? 'Tus datos personales se han guardado exitosamente' : 'Your personal information has been saved successfully'
+          }
+        );
       } else {
-        toast.error(isSpanish ? 'Error al actualizar el perfil' : 'Error updating profile');
+        toast.error(isSpanish ? `Error al actualizar el perfil: ${res.status}` : `Error updating profile: ${res.status}`);
       }
     } catch (error) {
-      toast.error(isSpanish ? 'Error al guardar los cambios' : 'Error saving changes');
+      toast.error(isSpanish ? 'Error de conexión al guardar los cambios' : 'Connection error saving changes');
     }
   };
   if (authLoading || loading) {
@@ -322,7 +382,7 @@ export default function ProfilePage() {
                           </div>
                         )}
                       </div>
-                      <div className="space-y-2 md:col-span-2">
+                      <div className="space-y-2">
                         <Label htmlFor="phone">
                           {isSpanish ? 'Teléfono' : 'Phone'}
                         </Label>
@@ -338,6 +398,62 @@ export default function ProfilePage() {
                           <div className="flex items-center space-x-2 p-2 border rounded-md bg-muted/50">
                             <Phone className="h-4 w-4 text-muted-foreground" />
                             <span>{profile.phone || (isSpanish ? 'No especificado' : 'Not specified')}</span>
+                          </div>
+                        )}
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="mobile">
+                          {isSpanish ? 'Móvil' : 'Mobile'}
+                        </Label>
+                        {editing ? (
+                          <Input
+                            id="mobile"
+                            type="tel"
+                            value={editForm.mobile}
+                            onChange={(e) => setEditForm(prev => ({ ...prev, mobile: e.target.value }))}
+                            placeholder={isSpanish ? 'Opcional' : 'Optional'}
+                          />
+                        ) : (
+                          <div className="flex items-center space-x-2 p-2 border rounded-md bg-muted/50">
+                            <Phone className="h-4 w-4 text-muted-foreground" />
+                            <span>{profile.mobile || (isSpanish ? 'No especificado' : 'Not specified')}</span>
+                          </div>
+                        )}
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="title">
+                          {isSpanish ? 'Título/Cargo' : 'Title/Position'}
+                        </Label>
+                        {editing ? (
+                          <Input
+                            id="title"
+                            value={editForm.title}
+                            onChange={(e) => setEditForm(prev => ({ ...prev, title: e.target.value }))}
+                            placeholder={isSpanish ? 'Ej: Ingeniero, Estudiante' : 'Ex: Engineer, Student'}
+                          />
+                        ) : (
+                          <div className="flex items-center space-x-2 p-2 border rounded-md bg-muted/50">
+                            <Briefcase className="h-4 w-4 text-muted-foreground" />
+                            <span>{profile.title || (isSpanish ? 'No especificado' : 'Not specified')}</span>
+                          </div>
+                        )}
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="website">
+                          {isSpanish ? 'Sitio Web' : 'Website'}
+                        </Label>
+                        {editing ? (
+                          <Input
+                            id="website"
+                            type="url"
+                            value={editForm.website}
+                            onChange={(e) => setEditForm(prev => ({ ...prev, website: e.target.value }))}
+                            placeholder={isSpanish ? 'https://tusitio.com' : 'https://yoursite.com'}
+                          />
+                        ) : (
+                          <div className="flex items-center space-x-2 p-2 border rounded-md bg-muted/50">
+                            <Globe className="h-4 w-4 text-muted-foreground" />
+                            <span>{profile.website || (isSpanish ? 'No especificado' : 'Not specified')}</span>
                           </div>
                         )}
                       </div>

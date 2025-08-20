@@ -25,7 +25,9 @@ export async function PUT(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
     
-    const { name, email, phone } = await request.json();
+    const body = await request.json();
+    
+    const { name, email, phone } = body;
     
     if (!name || !email) {
       return NextResponse.json({ error: 'Name and email are required' }, { status: 400 });
@@ -35,8 +37,11 @@ export async function PUT(request: NextRequest) {
     const updatedProfile = await updateUserProfile(session.uid, { name, email, phone });
     
     return NextResponse.json({ profile: updatedProfile });
-  } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  } catch (error: any) {
+    return NextResponse.json({ 
+      error: 'Internal server error', 
+      details: error.message 
+    }, { status: 500 });
   }
 }
 
