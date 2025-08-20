@@ -9,11 +9,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Loader } from "@/components/ui/loader";
-import { User, Mail, Calendar, Shield, Edit2, Save, X, Camera, Phone, Globe, Briefcase } from "lucide-react";
+import { User, Mail, Calendar, Shield, Edit2, Save, X, Camera, Phone, Globe, Briefcase, Languages, Sun, Moon } from "lucide-react";
 import Link from "next/link";
 import { useTranslations } from 'next-intl';
 import { UserAvatar } from '@/components/ui/UserAvatar';
 import { toast } from 'sonner';
+import { useTheme } from 'next-themes';
 
 interface UserProfile {
   id: number;
@@ -33,6 +34,7 @@ interface UserProfile {
 }
 export default function ProfilePage() {
   const { isAuthenticated, loading: authLoading, user } = useNewAuth();
+  const { theme, setTheme } = useTheme();
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
   const [, setError] = useState<string | null>(null);
@@ -251,43 +253,64 @@ export default function ProfilePage() {
     return null;
   }
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-secondary/5">
-      <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen hero-gradient relative overflow-hidden">
+      {/* Background Effects */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 animate-gradient"></div>
+      <div className="absolute top-20 right-20 w-72 h-72 bg-primary/10 rounded-full blur-3xl animate-pulse"></div>
+      <div className="absolute bottom-20 left-20 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+      
+      <div className="container mx-auto px-4 py-12 relative z-10">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="text-3xl font-bold">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-12 animate-fade-in">
+          <div className="mb-6 md:mb-0">
+            <h1 className="h1-hero bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
               {isSpanish ? 'Mi Perfil' : 'My Profile'}
             </h1>
-            <p className="text-muted-foreground">
-              {isSpanish ? 'Gestiona tu información personal' : 'Manage your personal information'}
+            <p className="p-lead mt-2">
+              {isSpanish ? 'Gestiona tu información personal y preferencias' : 'Manage your personal information and preferences'}
             </p>
           </div>
-          <Button asChild variant="outline">
+          <Button asChild variant="outline" className="glass border-primary/20 backdrop-blur-sm hover:bg-primary/10 transition-all duration-300">
             <Link href={`/${locale}/dashboard`}>
               {isSpanish ? 'Volver al Dashboard' : 'Back to Dashboard'}
             </Link>
           </Button>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 animate-slide-in-left">
           {/* Profile Card */}
           <div className="lg:col-span-1">
-            <Card>
-              <CardHeader className="text-center">
-                <div className="relative mx-auto mb-4">
-                  <UserAvatar 
-                    name={profile.name}
-                    email={profile.email}
-                    image={profile.image_1920}
-                    size="xl"
-                  />
-                  <label htmlFor="avatar-upload" className="absolute bottom-0 right-0">
-                    <Button size="sm" className="rounded-full h-8 w-8 p-0" disabled={avatarUploading} asChild>
+            <Card className="glass border-primary/10 backdrop-blur-md hover-lift transition-all duration-300 animate-scale-in">
+              <CardHeader className="text-center relative">
+                {/* Decorative gradient */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 rounded-t-lg"></div>
+                
+                <div className="relative mx-auto mb-6">
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary to-accent rounded-full p-1 animate-glow">
+                      <div className="bg-background rounded-full p-1">
+                        <UserAvatar 
+                          name={profile.name}
+                          email={profile.email}
+                          image={profile.image_1920}
+                          size="xl"
+                        />
+                      </div>
+                    </div>
+                    <UserAvatar 
+                      name={profile.name}
+                      email={profile.email}
+                      image={profile.image_1920}
+                      size="xl"
+                    />
+                  </div>
+                  
+                  <label htmlFor="avatar-upload" className="absolute -bottom-2 -right-2">
+                    <Button size="sm" className="rounded-full h-10 w-10 p-0 shadow-lg hover:shadow-xl transition-all duration-300 bg-gradient-to-r from-primary to-accent" disabled={avatarUploading} asChild>
                       <span>
                         {avatarUploading ? (
                           <div className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full" />
                         ) : (
-                          <Camera className="h-4 w-4" />
+                          <Camera className="h-4 w-4 text-white" />
                         )}
                       </span>
                     </Button>
@@ -301,48 +324,85 @@ export default function ProfilePage() {
                     disabled={avatarUploading}
                   />
                 </div>
-                <CardTitle className="text-xl">{profile.name}</CardTitle>
-                <CardDescription>{profile.email}</CardDescription>
-                <Badge variant="secondary" className="w-fit mx-auto mt-2">
-                  {isSpanish ? 'Estudiante' : 'Student'}
+                
+                <CardTitle className="h3-title gradient-text">{profile.name}</CardTitle>
+                <CardDescription className="text-muted-foreground/80">{profile.email}</CardDescription>
+                
+                <Badge variant="secondary" className="w-fit mx-auto mt-4 bg-gradient-to-r from-primary/10 to-accent/10 border-primary/20 text-primary font-medium px-4 py-1">
+                  {isSpanish ? 'Estudiante Activo' : 'Active Student'}
                 </Badge>
               </CardHeader>
-              <CardContent className="text-center space-y-2">
-                <div className="flex items-center justify-center space-x-2 text-sm text-muted-foreground">
-                  <Calendar className="h-4 w-4" />
-                  <span>
+              
+              <CardContent className="text-center space-y-4 relative">
+                <div className="flex items-center justify-center space-x-2 text-sm text-muted-foreground bg-muted/30 rounded-lg p-3">
+                  <Calendar className="h-4 w-4 text-primary" />
+                  <span className="font-medium">
                     {isSpanish ? 'Miembro desde ' : 'Member since '}
                     {profile.create_date ? new Date(profile.create_date).toLocaleDateString() : 'N/A'}
                   </span>
+                </div>
+                
+                {/* Stats Cards */}
+                <div className="grid grid-cols-2 gap-3 mt-6">
+                  <div className="bg-gradient-to-br from-primary/5 to-primary/10 rounded-lg p-3 border border-primary/10">
+                    <div className="text-2xl font-bold text-primary">12</div>
+                    <div className="text-xs text-muted-foreground">{isSpanish ? 'Cursos' : 'Courses'}</div>
+                  </div>
+                  <div className="bg-gradient-to-br from-accent/5 to-accent/10 rounded-lg p-3 border border-accent/10">
+                    <div className="text-2xl font-bold text-accent">85%</div>
+                    <div className="text-xs text-muted-foreground">{isSpanish ? 'Progreso' : 'Progress'}</div>
+                  </div>
                 </div>
               </CardContent>
             </Card>
           </div>
           {/* Profile Information */}
-          <div className="lg:col-span-2">
-            <Tabs defaultValue="info" className="space-y-6">
-              <TabsList className="grid w-full grid-cols-3">
-                <TabsTrigger value="info">
+          <div className="lg:col-span-2 animate-slide-in-right">
+            <Tabs defaultValue="info" className="space-y-8">
+              <TabsList className="grid w-full grid-cols-3 glass border-primary/10 backdrop-blur-md">
+                <TabsTrigger value="info" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-accent data-[state=active]:text-white transition-all duration-300">
+                  <User className="h-4 w-4 mr-2" />
                   {isSpanish ? 'Información' : 'Information'}
                 </TabsTrigger>
-                <TabsTrigger value="security">
+                <TabsTrigger value="security" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-accent data-[state=active]:text-white transition-all duration-300">
+                  <Shield className="h-4 w-4 mr-2" />
                   {isSpanish ? 'Seguridad' : 'Security'}
                 </TabsTrigger>
-                <TabsTrigger value="preferences">
+                <TabsTrigger value="preferences" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-accent data-[state=active]:text-white transition-all duration-300">
+                  <User className="h-4 w-4 mr-2" />
                   {isSpanish ? 'Preferencias' : 'Preferences'}
                 </TabsTrigger>
               </TabsList>
-              <TabsContent value="info" className="space-y-6">
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between">
-                    <div>
-                      <CardTitle>{isSpanish ? 'Información Personal' : 'Personal Information'}</CardTitle>
-                      <CardDescription>
-                        {isSpanish ? 'Actualiza tu información personal' : 'Update your personal information'}
+              <TabsContent value="info" className="space-y-8 animate-fade-in">
+                <Card className="glass border-primary/10 backdrop-blur-md hover-lift transition-all duration-300">
+                  <CardHeader className="flex flex-row items-center justify-between relative">
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 rounded-t-lg"></div>
+                    <div className="relative">
+                      <CardTitle className="h3-title text-foreground flex items-center gap-2">
+                        <User className="h-5 w-5 text-primary" />
+                        {isSpanish ? 'Información Personal' : 'Personal Information'}
+                      </CardTitle>
+                      <CardDescription className="text-muted-foreground/80 mt-1">
+                        {isSpanish ? 'Actualiza tu información personal y mantén tu perfil actualizado' : 'Update your personal information and keep your profile current'}
                       </CardDescription>
                     </div>
-                    <Button variant="outline" size="sm" onClick={handleEditToggle}>
-                      {editing ? <X className="h-4 w-4" /> : <Edit2 className="h-4 w-4" />}
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      onClick={handleEditToggle}
+                      className="glass border-primary/20 hover:bg-primary/10 transition-all duration-300 relative"
+                    >
+                      {editing ? (
+                        <>
+                          <X className="h-4 w-4 mr-2" />
+                          {isSpanish ? 'Cancelar' : 'Cancel'}
+                        </>
+                      ) : (
+                        <>
+                          <Edit2 className="h-4 w-4 mr-2" />
+                          {isSpanish ? 'Editar' : 'Edit'}
+                        </>
+                      )}
                     </Button>
                   </CardHeader>
                   <CardContent className="space-y-4">
@@ -356,11 +416,14 @@ export default function ProfilePage() {
                             id="name"
                             value={editForm.name}
                             onChange={(e) => setEditForm(prev => ({ ...prev, name: e.target.value }))}
+                            className="glass border-primary/20 backdrop-blur-sm focus:border-primary/40 transition-all duration-300"
                           />
                         ) : (
-                          <div className="flex items-center space-x-2 p-2 border rounded-md bg-muted/50">
-                            <User className="h-4 w-4 text-muted-foreground" />
-                            <span>{profile.name}</span>
+                          <div className="flex items-center space-x-3 p-4 border rounded-lg bg-gradient-to-r from-muted/30 to-muted/20 border-muted/40 hover:border-primary/20 transition-all duration-300">
+                            <div className="p-2 bg-primary/10 rounded-full">
+                              <User className="h-4 w-4 text-primary" />
+                            </div>
+                            <span className="font-medium text-foreground">{profile.name}</span>
                           </div>
                         )}
                       </div>
@@ -374,11 +437,14 @@ export default function ProfilePage() {
                             type="email"
                             value={editForm.email}
                             onChange={(e) => setEditForm(prev => ({ ...prev, email: e.target.value }))}
+                            className="glass border-primary/20 backdrop-blur-sm focus:border-primary/40 transition-all duration-300"
                           />
                         ) : (
-                          <div className="flex items-center space-x-2 p-2 border rounded-md bg-muted/50">
-                            <Mail className="h-4 w-4 text-muted-foreground" />
-                            <span>{profile.email}</span>
+                          <div className="flex items-center space-x-3 p-4 border rounded-lg bg-gradient-to-r from-muted/30 to-muted/20 border-muted/40 hover:border-primary/20 transition-all duration-300">
+                            <div className="p-2 bg-accent/10 rounded-full">
+                              <Mail className="h-4 w-4 text-accent" />
+                            </div>
+                            <span className="font-medium text-foreground">{profile.email}</span>
                           </div>
                         )}
                       </div>
@@ -393,11 +459,14 @@ export default function ProfilePage() {
                             value={editForm.phone}
                             onChange={(e) => setEditForm(prev => ({ ...prev, phone: e.target.value }))}
                             placeholder={isSpanish ? 'Opcional' : 'Optional'}
+                            className="glass border-primary/20 backdrop-blur-sm focus:border-primary/40 transition-all duration-300"
                           />
                         ) : (
-                          <div className="flex items-center space-x-2 p-2 border rounded-md bg-muted/50">
-                            <Phone className="h-4 w-4 text-muted-foreground" />
-                            <span>{profile.phone || (isSpanish ? 'No especificado' : 'Not specified')}</span>
+                          <div className="flex items-center space-x-3 p-4 border rounded-lg bg-gradient-to-r from-muted/30 to-muted/20 border-muted/40 hover:border-primary/20 transition-all duration-300">
+                            <div className="p-2 bg-primary/10 rounded-full">
+                              <Phone className="h-4 w-4 text-primary" />
+                            </div>
+                            <span className="font-medium text-foreground">{profile.phone || (isSpanish ? 'No especificado' : 'Not specified')}</span>
                           </div>
                         )}
                       </div>
@@ -412,11 +481,14 @@ export default function ProfilePage() {
                             value={editForm.mobile}
                             onChange={(e) => setEditForm(prev => ({ ...prev, mobile: e.target.value }))}
                             placeholder={isSpanish ? 'Opcional' : 'Optional'}
+                            className="glass border-primary/20 backdrop-blur-sm focus:border-primary/40 transition-all duration-300"
                           />
                         ) : (
-                          <div className="flex items-center space-x-2 p-2 border rounded-md bg-muted/50">
-                            <Phone className="h-4 w-4 text-muted-foreground" />
-                            <span>{profile.mobile || (isSpanish ? 'No especificado' : 'Not specified')}</span>
+                          <div className="flex items-center space-x-3 p-4 border rounded-lg bg-gradient-to-r from-muted/30 to-muted/20 border-muted/40 hover:border-primary/20 transition-all duration-300">
+                            <div className="p-2 bg-accent/10 rounded-full">
+                              <Phone className="h-4 w-4 text-accent" />
+                            </div>
+                            <span className="font-medium text-foreground">{profile.mobile || (isSpanish ? 'No especificado' : 'Not specified')}</span>
                           </div>
                         )}
                       </div>
@@ -430,11 +502,14 @@ export default function ProfilePage() {
                             value={editForm.title}
                             onChange={(e) => setEditForm(prev => ({ ...prev, title: e.target.value }))}
                             placeholder={isSpanish ? 'Ej: Ingeniero, Estudiante' : 'Ex: Engineer, Student'}
+                            className="glass border-primary/20 backdrop-blur-sm focus:border-primary/40 transition-all duration-300"
                           />
                         ) : (
-                          <div className="flex items-center space-x-2 p-2 border rounded-md bg-muted/50">
-                            <Briefcase className="h-4 w-4 text-muted-foreground" />
-                            <span>{profile.title || (isSpanish ? 'No especificado' : 'Not specified')}</span>
+                          <div className="flex items-center space-x-3 p-4 border rounded-lg bg-gradient-to-r from-muted/30 to-muted/20 border-muted/40 hover:border-primary/20 transition-all duration-300">
+                            <div className="p-2 bg-primary/10 rounded-full">
+                              <Briefcase className="h-4 w-4 text-primary" />
+                            </div>
+                            <span className="font-medium text-foreground">{profile.title || (isSpanish ? 'No especificado' : 'Not specified')}</span>
                           </div>
                         )}
                       </div>
@@ -449,22 +524,33 @@ export default function ProfilePage() {
                             value={editForm.website}
                             onChange={(e) => setEditForm(prev => ({ ...prev, website: e.target.value }))}
                             placeholder={isSpanish ? 'https://tusitio.com' : 'https://yoursite.com'}
+                            className="glass border-primary/20 backdrop-blur-sm focus:border-primary/40 transition-all duration-300"
                           />
                         ) : (
-                          <div className="flex items-center space-x-2 p-2 border rounded-md bg-muted/50">
-                            <Globe className="h-4 w-4 text-muted-foreground" />
-                            <span>{profile.website || (isSpanish ? 'No especificado' : 'Not specified')}</span>
+                          <div className="flex items-center space-x-3 p-4 border rounded-lg bg-gradient-to-r from-muted/30 to-muted/20 border-muted/40 hover:border-primary/20 transition-all duration-300">
+                            <div className="p-2 bg-accent/10 rounded-full">
+                              <Globe className="h-4 w-4 text-accent" />
+                            </div>
+                            <span className="font-medium text-foreground">{profile.website || (isSpanish ? 'No especificado' : 'Not specified')}</span>
                           </div>
                         )}
                       </div>
                     </div>
                     {editing && (
-                      <div className="flex space-x-2 pt-4">
-                        <Button onClick={handleSaveProfile}>
+                      <div className="flex space-x-3 pt-6 animate-fade-in">
+                        <Button 
+                          onClick={handleSaveProfile}
+                          className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white shadow-lg hover:shadow-xl transition-all duration-300"
+                        >
                           <Save className="h-4 w-4 mr-2" />
-                          {isSpanish ? 'Guardar' : 'Save'}
+                          {isSpanish ? 'Guardar Cambios' : 'Save Changes'}
                         </Button>
-                        <Button variant="outline" onClick={handleEditToggle}>
+                        <Button 
+                          variant="outline" 
+                          onClick={handleEditToggle}
+                          className="glass border-muted/40 hover:bg-muted/20 transition-all duration-300"
+                        >
+                          <X className="h-4 w-4 mr-2" />
                           {isSpanish ? 'Cancelar' : 'Cancel'}
                         </Button>
                       </div>
@@ -472,51 +558,140 @@ export default function ProfilePage() {
                   </CardContent>
                 </Card>
               </TabsContent>
-              <TabsContent value="security" className="space-y-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>{isSpanish ? 'Configuración de Seguridad' : 'Security Settings'}</CardTitle>
-                    <CardDescription>
+              <TabsContent value="security" className="space-y-8 animate-fade-in">
+                <Card className="glass border-primary/10 backdrop-blur-md hover-lift transition-all duration-300">
+                  <CardHeader className="relative">
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 rounded-t-lg"></div>
+                    <CardTitle className="h3-title text-foreground flex items-center gap-2 relative">
+                      <Shield className="h-5 w-5 text-primary" />
+                      {isSpanish ? 'Configuración de Seguridad' : 'Security Settings'}
+                    </CardTitle>
+                    <CardDescription className="text-muted-foreground/80 mt-1 relative">
                       {isSpanish ? 'Gestiona tu contraseña y configuraciones de seguridad' : 'Manage your password and security settings'}
                     </CardDescription>
                   </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="flex items-center justify-between p-4 border rounded-lg">
-                      <div className="flex items-center space-x-3">
-                        <Shield className="h-5 w-5 text-green-500" />
+                  <CardContent className="space-y-6">
+                    <div className="flex items-center justify-between p-6 border rounded-xl bg-gradient-to-r from-green-50/50 to-emerald-50/50 dark:from-green-950/20 dark:to-emerald-950/20 border-green-200/50 dark:border-green-800/50 hover:border-green-300/50 dark:hover:border-green-700/50 transition-all duration-300">
+                      <div className="flex items-center space-x-4">
+                        <div className="p-3 bg-green-100 dark:bg-green-900/30 rounded-full">
+                          <Shield className="h-6 w-6 text-green-600 dark:text-green-400" />
+                        </div>
                         <div>
-                          <p className="font-medium">{isSpanish ? 'Contraseña' : 'Password'}</p>
-                          <p className="text-sm text-muted-foreground">
+                          <p className="font-semibold text-foreground">{isSpanish ? 'Contraseña' : 'Password'}</p>
+                          <p className="text-sm text-muted-foreground/80">
                             {isSpanish ? 'Última actualización hace 30 días' : 'Last updated 30 days ago'}
+                          </p>
+                          <p className="text-xs text-green-600 dark:text-green-400 font-medium mt-1">
+                            {isSpanish ? '🔒 Segura' : '🔒 Secure'}
                           </p>
                         </div>
                       </div>
-                      <Button variant="outline">
+                      <Button 
+                        variant="outline"
+                        className="glass border-green-200/50 hover:bg-green-50/50 dark:border-green-800/50 dark:hover:bg-green-950/30 transition-all duration-300"
+                      >
                         {isSpanish ? 'Cambiar' : 'Change'}
                       </Button>
+                    </div>
+                    
+                    {/* Additional Security Features */}
+                    <div className="grid gap-4">
+                      <div className="p-4 border rounded-lg bg-gradient-to-r from-muted/20 to-muted/10 border-muted/40 hover:border-primary/20 transition-all duration-300">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center space-x-3">
+                            <div className="p-2 bg-primary/10 rounded-full">
+                              <Shield className="h-4 w-4 text-primary" />
+                            </div>
+                            <div>
+                              <p className="font-medium">{isSpanish ? 'Autenticación de dos factores' : 'Two-factor authentication'}</p>
+                              <p className="text-sm text-muted-foreground">{isSpanish ? 'Próximamente disponible' : 'Coming soon'}</p>
+                            </div>
+                          </div>
+                          <Badge variant="secondary">{isSpanish ? 'Próximamente' : 'Soon'}</Badge>
+                        </div>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
               </TabsContent>
-              <TabsContent value="preferences" className="space-y-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>{isSpanish ? 'Preferencias' : 'Preferences'}</CardTitle>
-                    <CardDescription>
-                      {isSpanish ? 'Personaliza tu experiencia de aprendizaje' : 'Customize your learning experience'}
+              <TabsContent value="preferences" className="space-y-8 animate-fade-in">
+                <Card className="glass border-primary/10 backdrop-blur-md hover-lift transition-all duration-300">
+                  <CardHeader className="relative">
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 rounded-t-lg"></div>
+                    <CardTitle className="h3-title text-foreground flex items-center gap-2 relative">
+                      <User className="h-5 w-5 text-primary" />
+                      {isSpanish ? 'Preferencias' : 'Preferences'}
+                    </CardTitle>
+                    <CardDescription className="text-muted-foreground/80 mt-1 relative">
+                      {isSpanish ? 'Personaliza tu experiencia de aprendizaje y configura tus preferencias' : 'Customize your learning experience and configure your preferences'}
                     </CardDescription>
                   </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="font-medium">{isSpanish ? 'Idioma' : 'Language'}</p>
-                        <p className="text-sm text-muted-foreground">
-                          {isSpanish ? 'Español' : 'English'}
-                        </p>
+                  <CardContent className="space-y-6">
+                    <div className="grid gap-4">
+                      <div className="flex items-center justify-between p-6 border rounded-xl bg-gradient-to-r from-muted/20 to-muted/10 border-muted/40 hover:border-primary/20 transition-all duration-300">
+                        <div className="flex items-center space-x-4">
+                          <div className="p-3 bg-primary/10 rounded-full">
+                            <Languages className="h-6 w-6 text-primary" />
+                          </div>
+                          <div>
+                            <p className="font-semibold text-foreground">{isSpanish ? 'Idioma' : 'Language'}</p>
+                            <p className="text-sm text-muted-foreground/80">
+                              {isSpanish ? 'Español (España)' : 'English (US)'}
+                            </p>
+                          </div>
+                        </div>
+                        <Button 
+                          variant="outline"
+                          className="glass border-primary/20 hover:bg-primary/10 transition-all duration-300"
+                        >
+                          {isSpanish ? 'Cambiar' : 'Change'}
+                        </Button>
                       </div>
-                      <Button variant="outline">
-                        {isSpanish ? 'Cambiar' : 'Change'}
-                      </Button>
+                      
+                      <div className="flex items-center justify-between p-6 border rounded-xl bg-gradient-to-r from-muted/20 to-muted/10 border-muted/40 hover:border-primary/20 transition-all duration-300">
+                        <div className="flex items-center space-x-4">
+                          <div className="p-3 bg-accent/10 rounded-full">
+                            {theme === 'dark' ? <Moon className="h-6 w-6 text-accent" /> : <Sun className="h-6 w-6 text-accent" />}
+                          </div>
+                          <div>
+                            <p className="font-semibold text-foreground">{isSpanish ? 'Tema' : 'Theme'}</p>
+                            <p className="text-sm text-muted-foreground/80">
+                              {theme === 'dark' ? (isSpanish ? 'Modo oscuro' : 'Dark mode') : (isSpanish ? 'Modo claro' : 'Light mode')}
+                            </p>
+                          </div>
+                        </div>
+                        <Button 
+                          variant="outline"
+                          onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                          className="glass border-accent/20 hover:bg-accent/10 transition-all duration-300"
+                        >
+                          {isSpanish ? 'Cambiar' : 'Toggle'}
+                        </Button>
+                      </div>
+                      
+                      <div className="p-6 border rounded-xl bg-gradient-to-r from-muted/20 to-muted/10 border-muted/40">
+                        <div className="flex items-center space-x-4">
+                          <div className="p-3 bg-primary/10 rounded-full">
+                            <Mail className="h-6 w-6 text-primary" />
+                          </div>
+                          <div>
+                            <p className="font-semibold text-foreground">{isSpanish ? 'Notificaciones por email' : 'Email notifications'}</p>
+                            <p className="text-sm text-muted-foreground/80">
+                              {isSpanish ? 'Recibe actualizaciones sobre cursos y novedades' : 'Receive updates about courses and news'}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="mt-4 space-y-2">
+                          <label className="flex items-center space-x-2">
+                            <input type="checkbox" className="rounded" defaultChecked />
+                            <span className="text-sm">{isSpanish ? 'Nuevos cursos disponibles' : 'New courses available'}</span>
+                          </label>
+                          <label className="flex items-center space-x-2">
+                            <input type="checkbox" className="rounded" defaultChecked />
+                            <span className="text-sm">{isSpanish ? 'Actualizaciones de progreso' : 'Progress updates'}</span>
+                          </label>
+                        </div>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
