@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import {getTranslations, unstable_setRequestLocale} from 'next-intl/server';
-import {CourseGrid} from '@/components/CourseGrid';
 import dynamic from 'next/dynamic';
 
 const ParticlesBackground = dynamic(() => import('@/components/ui/ParticlesBackground').then(mod => ({ default: mod.ParticlesBackground })), {
@@ -20,7 +19,6 @@ import {CTASection} from '@/components/Sections/home/CTASection';
 import {FeaturedCoursesSection} from '@/components/Sections/home/FeaturedCoursesSection';
 import {LearningSection} from '@/components/Sections/home/LearningSection';
 import type {Route} from 'next';
-import {GlitchText} from '@/components/ui/GlitchText';
 
 export function generateStaticParams() {
   return [{locale: 'es'}, {locale: 'en'}];
