@@ -2,55 +2,96 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
+import { useTheme } from 'next-themes';
 
 interface ImageCarouselProps {
-  images: string[];
+  images?: string[];
+  imagesByTheme?: {
+    light: string[];
+    dark: string[];
+  };
   interval?: number;
   className?: string;
 }
 
 export default function ImageCarousel({ 
   images, 
+  imagesByTheme,
   interval = 6000, 
   className = '' 
 }: ImageCarouselProps) {
+  const { theme, systemTheme } = useTheme();
+  
+  // Smart theme-based image selection
+  const getThemeBasedImages = useCallback(() => {
+    if (imagesByTheme && imagesByTheme.dark && imagesByTheme.light) {
+      const currentTheme = theme === 'system' ? systemTheme : theme;
+      const isDark = currentTheme === 'dark';
+      return isDark ? imagesByTheme.dark : imagesByTheme.light;
+    }
+    return images || [];
+  }, [theme, systemTheme, imagesByTheme, images]);
+
+  const [currentImages, setCurrentImages] = useState<string[]>([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set([0])); // Load first image immediately
+  const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set([0]));
+
+  // Initialize and update images when theme changes
+  useEffect(() => {
+    const newImages = getThemeBasedImages();
+    if (newImages.length > 0) {
+      setCurrentImages(newImages);
+      setCurrentImageIndex(0);
+      setLoadedImages(new Set([0]));
+    }
+  }, [getThemeBasedImages]);
+
+  // Initial load when component mounts
+  useEffect(() => {
+    if (currentImages.length === 0) {
+      const initialImages = getThemeBasedImages();
+      if (initialImages.length > 0) {
+        setCurrentImages(initialImages);
+      }
+    }
+  }, [getThemeBasedImages, currentImages.length]);
 
   // Preload images around current index for smooth transitions
-  const preloadImages = useCallback((centerIndex: number) => {
+  const preloadImages = useCallback((centerIndex: number, imagesArray: string[]) => {
     const toLoad = new Set<number>();
     
     // Load current, next 2, and previous 2 images
     for (let i = -2; i <= 2; i++) {
-      const index = (centerIndex + i + images.length) % images.length;
+      const index = (centerIndex + i + imagesArray.length) % imagesArray.length;
       toLoad.add(index);
     }
     
     setLoadedImages(prev => new Set([...prev, ...toLoad]));
-  }, [images.length]);
+  }, []);
 
   // Preload initial images
   useEffect(() => {
-    preloadImages(currentImageIndex);
-  }, [currentImageIndex, preloadImages]);
+    if (currentImages.length > 0) {
+      preloadImages(currentImageIndex, currentImages);
+    }
+  }, [currentImageIndex, preloadImages, currentImages]);
 
   useEffect(() => {
-    if (images.length <= 1) return;
+    if (currentImages.length <= 1) return;
 
     const timer = setInterval(() => {
       setCurrentImageIndex((prevIndex) => {
-        const nextIndex = (prevIndex + 1) % images.length;
+        const nextIndex = (prevIndex + 1) % currentImages.length;
         // Preload images around next position
-        preloadImages(nextIndex);
+        preloadImages(nextIndex, currentImages);
         return nextIndex;
       });
     }, interval);
 
     return () => clearInterval(timer);
-  }, [images.length, interval, preloadImages]);
+  }, [currentImages.length, interval, preloadImages, currentImages]);
 
-  if (images.length === 0) return null;
+  if (currentImages.length === 0) return null;
 
   return (
     <div 
@@ -60,7 +101,7 @@ export default function ImageCarousel({
         opacity: 0
       }}
     >
-      {images.map((image, index) => {
+      {currentImages.map((image, index) => {
         // Only render images that should be loaded
         const shouldLoad = loadedImages.has(index);
         
