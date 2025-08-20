@@ -36,25 +36,15 @@ export default function ImageCarousel({
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set([0]));
 
-  // Initialize and update images when theme changes
-  useEffect(() => {
-    const newImages = getThemeBasedImages();
-    if (newImages.length > 0) {
-      setCurrentImages(newImages);
-      setCurrentImageIndex(0);
-      setLoadedImages(new Set([0]));
-    }
-  }, [getThemeBasedImages]);
-
-  // Initial load when component mounts
-  useEffect(() => {
-    if (currentImages.length === 0) {
-      const initialImages = getThemeBasedImages();
-      if (initialImages.length > 0) {
-        setCurrentImages(initialImages);
-      }
-    }
-  }, [getThemeBasedImages, currentImages.length]);
+  // Smart random index selection
+  const getRandomIndex = useCallback((arrayLength: number, excludeIndex?: number) => {
+    if (arrayLength <= 1) return 0;
+    let randomIndex;
+    do {
+      randomIndex = Math.floor(Math.random() * arrayLength);
+    } while (randomIndex === excludeIndex && arrayLength > 1);
+    return randomIndex;
+  }, []);
 
   // Preload images around current index for smooth transitions
   const preloadImages = useCallback((centerIndex: number, imagesArray: string[]) => {
@@ -69,6 +59,33 @@ export default function ImageCarousel({
     setLoadedImages(prev => new Set([...prev, ...toLoad]));
   }, []);
 
+  // Update image pool when theme changes (but keep current image)
+  useEffect(() => {
+    const newImages = getThemeBasedImages();
+    if (newImages.length > 0 && JSON.stringify(newImages) !== JSON.stringify(currentImages)) {
+      // Just update the pool, don't change current image
+      setCurrentImages(newImages);
+      // Keep current index if possible, otherwise reset
+      if (currentImageIndex >= newImages.length) {
+        setCurrentImageIndex(0);
+      }
+      // Preload around current position with new image set
+      if (currentImageIndex < newImages.length) {
+        preloadImages(currentImageIndex, newImages);
+      }
+    }
+  }, [getThemeBasedImages, currentImages, currentImageIndex, preloadImages]);
+
+  // Initial load when component mounts
+  useEffect(() => {
+    if (currentImages.length === 0) {
+      const initialImages = getThemeBasedImages();
+      if (initialImages.length > 0) {
+        setCurrentImages(initialImages);
+      }
+    }
+  }, [getThemeBasedImages, currentImages.length]);
+
   // Preload initial images
   useEffect(() => {
     if (currentImages.length > 0) {
@@ -81,7 +98,8 @@ export default function ImageCarousel({
 
     const timer = setInterval(() => {
       setCurrentImageIndex((prevIndex) => {
-        const nextIndex = (prevIndex + 1) % currentImages.length;
+        // Random selection instead of sequential
+        const nextIndex = getRandomIndex(currentImages.length, prevIndex);
         // Preload images around next position
         preloadImages(nextIndex, currentImages);
         return nextIndex;
@@ -89,7 +107,7 @@ export default function ImageCarousel({
     }, interval);
 
     return () => clearInterval(timer);
-  }, [currentImages.length, interval, preloadImages, currentImages]);
+  }, [currentImages.length, interval, preloadImages, currentImages, getRandomIndex]);
 
   if (currentImages.length === 0) return null;
 
@@ -108,8 +126,8 @@ export default function ImageCarousel({
         return (
           <div
             key={image}
-            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-              index === currentImageIndex ? 'opacity-100' : 'opacity-0'
+            className={`absolute inset-0 transition-all duration-1000 ease-in-out ${
+              index === currentImageIndex ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
             }`}
             style={{
               maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.05) 5%, rgba(0,0,0,0.15) 10%, rgba(0,0,0,0.3) 15%, rgba(0,0,0,0.5) 20%, rgba(0,0,0,0.7) 25%, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0.95) 35%, rgba(0,0,0,1) 40%)',
