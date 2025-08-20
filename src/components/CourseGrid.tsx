@@ -71,23 +71,22 @@ export async function CourseGrid() {
           {/* Course Image */}
           <div className="relative h-48 overflow-hidden">
             <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-              <div className="text-4xl font-bold text-primary/50">
+              <div className="text-4xl font-heading font-bold text-primary/50">
                 {c.name.charAt(0)}
               </div>
             </div>
             <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors duration-300" />
             {/* Price Badge */}
             <div className="absolute top-4 right-4 bg-white dark:bg-gray-800 px-3 py-1 rounded-full shadow-lg">
-              <span className="font-bold text-primary">${c.price}</span>
+              <span className="font-sans font-bold text-primary">${c.price}</span>
             </div>
           </div>
           {/* Course Content */}
           <div className="p-6">
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-primary transition-colors">
+            <h3 className="text-xl font-heading font-bold text-gray-900 dark:text-white mb-2 group-hover:text-primary transition-colors">
               {c.name}
               </h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-2">
-              {c.description || tCommon('learnNewSkills')}
+            <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-2 font-sans">{c.description || tCommon('learnNewSkills')}
             </p>
             {/* Course Meta */}
             <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4">

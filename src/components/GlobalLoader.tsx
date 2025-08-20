@@ -137,7 +137,7 @@ export function GlobalLoader({ children, minimumLoadTime = 2500 }: GlobalLoaderP
                   alt="Outliers Academy" 
                   className="w-8 h-8 object-contain"
                 />
-                <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+                <h1 className="text-2xl font-heading font-bold text-gray-900 dark:text-white">
                   <span className="text-primary">Outliers</span> Academy
                 </h1>
               </motion.div>

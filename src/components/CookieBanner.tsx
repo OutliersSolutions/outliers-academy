@@ -95,15 +95,14 @@ export function CookieBanner({ onAccept, onDecline, onManagePreferences }: Cooki
 
               {/* Content */}
               <div className="flex-1 min-w-0">
-                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
+                <h3 className="text-lg font-heading font-bold text-gray-900 dark:text-white mb-2">
                   {t('title') || 'We use cookies to enhance your experience'}
                 </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                  {t('description') || 'We use cookies and similar technologies to provide, protect, and improve our services and to personalize content. By clicking "Accept All", you consent to our use of cookies.'}
+                <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed font-sans">{t('description') || 'We use cookies and similar technologies to provide, protect, and improve our services and to personalize content. By clicking "Accept All", you consent to our use of cookies.'}
                   {' '}
                   <button 
                     onClick={handleManagePreferences}
-                    className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium underline underline-offset-2 transition-colors"
+                    className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-sans font-medium underline underline-offset-2 transition-colors"
                   >
                     {t('learnMore') || 'Learn more'}
                   </button>
@@ -114,19 +113,19 @@ export function CookieBanner({ onAccept, onDecline, onManagePreferences }: Cooki
               <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto lg:flex-shrink-0">
                 <button
                   onClick={handleDecline}
-                  className="px-6 py-3 text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white border border-gray-300 dark:border-gray-600 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200 lg:order-2"
+                  className="px-6 py-3 text-sm font-sans font-semibold text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white border border-gray-300 dark:border-gray-600 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200 lg:order-2"
                 >
                   {t('decline') || 'Decline'}
                 </button>
                 <button
                   onClick={handleAcceptAll}
-                  className="px-6 py-3 text-sm font-semibold text-white bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl lg:order-3"
+                  className="px-6 py-3 text-sm font-sans font-semibold text-white bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl lg:order-3"
                 >
                   {t('acceptAll') || 'Accept All'}
                 </button>
                 <button
                   onClick={handleManagePreferences}
-                  className="px-6 py-3 text-sm font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 border border-blue-200 dark:border-blue-800 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-200 lg:order-1"
+                  className="px-6 py-3 text-sm font-sans font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 border border-blue-200 dark:border-blue-800 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-200 lg:order-1"
                 >
                   {t('customize') || 'Customize'}
                 </button>

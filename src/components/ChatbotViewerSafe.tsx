@@ -145,7 +145,7 @@ export function ChatbotViewerSafe({ className = "w-full h-[400px]" }: ChatbotVie
             <div className="w-3 h-3 bg-green-500 rounded-full"></div>
           </div>
           {/* AI Assistant Badge - Centered */}
-          <div className="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-full text-xs font-medium text-gray-700 dark:text-gray-200">
+          <div className="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-full text-xs font-sans font-medium text-gray-700 dark:text-gray-200">
             <Sparkles className="w-3 h-3 text-primary" />
             {t('aiAssistant')}
           </div>
@@ -176,7 +176,7 @@ export function ChatbotViewerSafe({ className = "w-full h-[400px]" }: ChatbotVie
             </div>
             {/* Content - Right Side */}
             <div className="flex-1 text-center lg:text-left">
-              <h3 className="text-xl lg:text-2xl font-bold text-gray-900 dark:text-white mb-4">
+              <h3 className="text-xl lg:text-2xl font-heading font-bold text-gray-900 dark:text-white mb-4">
                 {t('question')}
               </h3>
               <form onSubmit={handleSearch} className="relative">

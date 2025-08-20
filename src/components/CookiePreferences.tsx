@@ -104,7 +104,7 @@ export function CookiePreferences({ isOpen, onClose, onSave }: CookiePreferences
         {/* Header */}
         <div className="p-6 border-b border-gray-200 dark:border-gray-700">
           <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+            <h2 className="text-2xl font-heading font-bold text-gray-900 dark:text-white">
               {t('preferences.title') || 'Cookie Preferences'}
             </h2>
             <button
@@ -133,13 +133,12 @@ export function CookiePreferences({ isOpen, onClose, onSave }: CookiePreferences
                 </div>
               </div>
               <div className="flex-1">
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
+                <h3 className="font-heading font-semibold text-gray-900 dark:text-white mb-1">
                   {t('preferences.necessary.title') || 'Necessary Cookies'}
                 </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">
-                  {t('preferences.necessary.description') || 'These cookies are essential for the website to function properly. They cannot be disabled.'}
+                <p className="text-sm text-gray-600 dark:text-gray-300 mb-2 font-sans">{t('preferences.necessary.description') || 'These cookies are essential for the website to function properly. They cannot be disabled.'}
                 </p>
-                <span className="text-xs text-green-600 dark:text-green-400 font-medium">Always active</span>
+                <span className="text-xs text-green-600 dark:text-green-400 font-sans font-medium">Always active</span>
               </div>
             </div>
             {/* Analytics Cookies */}
@@ -156,11 +155,10 @@ export function CookiePreferences({ isOpen, onClose, onSave }: CookiePreferences
                 </label>
               </div>
               <div className="flex-1">
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
+                <h3 className="font-heading font-semibold text-gray-900 dark:text-white mb-1">
                   {t('preferences.analytics.title') || 'Analytics Cookies'}
                 </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-300">
-                  {t('preferences.analytics.description') || 'Help us understand how visitors interact with our website by collecting and reporting information anonymously.'}
+                <p className="text-sm text-gray-600 dark:text-gray-300 font-sans">{t('preferences.analytics.description') || 'Help us understand how visitors interact with our website by collecting and reporting information anonymously.'}
                 </p>
               </div>
             </div>
@@ -178,11 +176,10 @@ export function CookiePreferences({ isOpen, onClose, onSave }: CookiePreferences
                 </label>
               </div>
               <div className="flex-1">
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
+                <h3 className="font-heading font-semibold text-gray-900 dark:text-white mb-1">
                   {t('preferences.marketing.title') || 'Marketing Cookies'}
                 </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-300">
-                  {t('preferences.marketing.description') || 'Used to track visitors across websites to display relevant and engaging advertisements.'}
+                <p className="text-sm text-gray-600 dark:text-gray-300 font-sans">{t('preferences.marketing.description') || 'Used to track visitors across websites to display relevant and engaging advertisements.'}
                 </p>
               </div>
             </div>
@@ -200,11 +197,10 @@ export function CookiePreferences({ isOpen, onClose, onSave }: CookiePreferences
                 </label>
               </div>
               <div className="flex-1">
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
+                <h3 className="font-heading font-semibold text-gray-900 dark:text-white mb-1">
                   {t('preferences.preferences.title') || 'Preference Cookies'}
                 </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-300">
-                  {t('preferences.preferences.description') || 'Enable the website to remember information that changes how it behaves or looks, like your preferred language or region.'}
+                <p className="text-sm text-gray-600 dark:text-gray-300 font-sans">{t('preferences.preferences.description') || 'Enable the website to remember information that changes how it behaves or looks, like your preferred language or region.'}
                 </p>
               </div>
             </div>
@@ -215,19 +211,19 @@ export function CookiePreferences({ isOpen, onClose, onSave }: CookiePreferences
           <div className="flex flex-col sm:flex-row gap-3 sm:justify-end">
             <button
               onClick={handleDeclineAll}
-              className="px-6 py-3 text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white border border-gray-300 dark:border-gray-600 rounded-xl hover:bg-white dark:hover:bg-gray-700 transition-all duration-200"
+              className="px-6 py-3 text-sm font-sans font-semibold text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white border border-gray-300 dark:border-gray-600 rounded-xl hover:bg-white dark:hover:bg-gray-700 transition-all duration-200"
             >
               {t('preferences.declineAll') || 'Decline All'}
             </button>
             <button
               onClick={handleSave}
-              className="px-6 py-3 text-sm font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 border border-blue-200 dark:border-blue-800 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-200"
+              className="px-6 py-3 text-sm font-sans font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 border border-blue-200 dark:border-blue-800 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-200"
             >
               {t('preferences.savePreferences') || 'Save Preferences'}
             </button>
             <button
               onClick={handleAcceptAll}
-              className="px-6 py-3 text-sm font-semibold text-white bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+              className="px-6 py-3 text-sm font-sans font-semibold text-white bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
             >
               {t('preferences.acceptAll') || 'Accept All'}
             </button>

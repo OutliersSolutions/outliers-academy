@@ -19,7 +19,7 @@ export const GlitchText = ({ children, className = "" }: GlitchTextProps) => {
   return (
     <span className={`relative inline-block ${className}`}>
       {/* Main text - always visible for LCP */}
-      <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 font-bold">
+      <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 font-heading font-bold">
         {children}
       </span>
       

@@ -15,7 +15,7 @@ interface AnimatedTextWrapperProps {
 const AnimatedText = dynamic(() => import('./AnimatedText').then(mod => ({ default: mod.AnimatedText })), {
   ssr: false,
   loading: () => (
-    <span className="inline-block min-w-[200px] min-h-[2.5em] text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 font-bold">
+    <span className="inline-block min-w-[200px] min-h-[2.5em] text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 font-heading font-bold">
        
     </span>
   )
