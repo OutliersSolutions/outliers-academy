@@ -33,16 +33,16 @@ export default async function HomePage({
 }) {
   unstable_setRequestLocale(params.locale);
   const t = await getTranslations('home');
-
+  //TODO MAKE THIS DYNAMIC, USE A SERVER COMPONENT TO FETCH DYNAMIC DATA
   // Images for the carousel - you can modify these paths
   const carouselImages = [
-    '/images/adriandiazmarro-ia.webp',
-    '/images/carolinaoleascpa-ia.webp',
-    '/images/dcarlos-ia.webp',
-    '/images/fashionbutton-ia.webp',
-    '/images/marcelogallardoburga-ia.webp',
-    '/images/ryomori-ia.webp',
-    '/images/thegivecircle-ia.webp'
+    '/images/freepik__a-diverse-group-of-young-professionals-smiling-and__2696.png',
+    '/images/freepik__dynamic-cinematic-photo-of-young-peruvian-students__2707.png',
+    '/images/freepik__realistic-cinematic-photo-of-young-peruvian-progra__2719.png',
+    '/images/freepik__the-style-is-candid-image-photography-with-natural__2611.png',
+    '/images/freepik__the-style-is-candid-image-photography-with-natural__2625.png',
+    '/images/freepik__the-style-is-candid-image-photography-with-natural__2650.png',
+    '/images/freepik__the-style-is-candid-image-photography-with-natural__2670.png'
   ];
 
   return (
