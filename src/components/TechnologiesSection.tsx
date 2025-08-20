@@ -49,13 +49,13 @@ export function TechnologiesSection({ locale }: TechnologiesSectionProps) {
   const getLevelColor = (level: string) => {
     switch (level) {
       case 'beginner':
-        return 'bg-primary/20 text-primary border-primary/30';
+        return 'bg-lime-100 text-lime-800 border-lime-300 dark:bg-lime-900/30 dark:text-lime-400 dark:border-lime-600'; // Verde claro (Auto)
       case 'intermediate':
-        return 'bg-accent/20 text-accent border-accent/30';
+        return 'bg-emerald-100 text-emerald-800 border-emerald-300 dark:bg-emerald-900/30 dark:text-emerald-400 dark:border-emerald-600'; // Verde (Easy/Normal)
       case 'advanced':
-        return 'bg-gold/20 text-gold border-gold/30';
+        return 'bg-gradient-to-r from-red-100 to-purple-100 text-red-800 border-red-300 dark:from-red-900/30 dark:to-purple-900/30 dark:text-red-400 dark:border-red-600'; // Rojo-Morado (Harder/Insane)
       default:
-        return 'bg-muted/20 text-muted border-muted/30';
+        return 'bg-gray-100 text-gray-800 border-gray-300 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600';
     }
   };
 

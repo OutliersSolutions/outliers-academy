@@ -207,10 +207,10 @@ export default function CourseLearnPage({
   };
   const getDifficultyColor = (difficulty?: string) => {
     switch (difficulty) {
-      case 'beginner': return 'bg-green-100 text-green-800';
-      case 'intermediate': return 'bg-yellow-100 text-yellow-800';
-      case 'advanced': return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'beginner': return 'bg-lime-100 text-lime-800 dark:bg-lime-900/30 dark:text-lime-400'; // Verde claro (Auto)
+      case 'intermediate': return 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400'; // Verde (Easy/Normal)
+      case 'advanced': return 'bg-gradient-to-r from-red-100 to-purple-100 text-red-800 dark:from-red-900/30 dark:to-purple-900/30 dark:text-red-400'; // Rojo-Morado (Harder/Insane)
+      default: return 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300';
     }
   };
   const getDifficultyText = (difficulty?: string) => {
