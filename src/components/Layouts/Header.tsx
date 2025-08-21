@@ -5,7 +5,7 @@ import { Sun, Menu, X, Languages, ChevronDown, Moon } from "lucide-react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
 import { useTranslations } from "next-intl";
-import { CartIcon } from "@/components/CartIcon";
+import { ShoppingCart } from "@/components/ShoppingCart";
 
 export const Header = () => {
     const { theme, setTheme } = useTheme();
@@ -154,8 +154,8 @@ export const Header = () => {
                         )}
                     </div>
 
-                    {/* Cart Icon */}
-                    <CartIcon />
+                    {/* Shopping Cart */}
+                    <ShoppingCart />
 
                     {/* Theme Toggle */}
                     <button
