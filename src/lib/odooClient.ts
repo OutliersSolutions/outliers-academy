@@ -151,7 +151,7 @@ const devSampleCourses = [
 function createSlug(name: string, id: number): string {
   return `${name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}-${id}`;
 }
-export async function fetchCourses(options?: {slug?: string}) {
+export async function fetchCourses(options?: {slug?: string, limit?: number, sortBy?: string}) {
   if (!isOdooConfigured) {
     if (options?.slug) return devSampleCourses.filter((c) => c.slug === options.slug);
     return devSampleCourses;
@@ -168,8 +168,33 @@ export async function fetchCourses(options?: {slug?: string}) {
       domain.push(['name', 'ilike', options.slug.replace(/-/g, ' ')]);
     }
   }
-  const fields = ['id', 'name', 'description', 'product_id', 'website_published'];
-  const channels = await odooExecuteKw('slide.channel', 'search_read', [domain], {fields, limit: 24});
+  
+  // Incluir más campos relevantes de Odoo para datos reales
+  const fields = [
+    'id', 'name', 'description', 'product_id', 'website_published',
+    'members_count', 'rating_avg', 'total_slides', 'total_time', 'total_views',
+    'channel_type', 'image_1920'
+  ];
+  
+  // Configurar ordenamiento - por defecto por número de miembros (más populares)
+  let order = 'members_count DESC';
+  if (options?.sortBy === 'rating') {
+    order = 'rating_avg DESC';
+  } else if (options?.sortBy === 'views') {
+    order = 'total_views DESC';
+  } else if (options?.sortBy === 'popularity') {
+    order = 'members_count DESC';
+  }
+  
+  // Limitar a 6 cursos para la sección "Top courses" si no se especifica otra cosa
+  const limit = options?.limit || (options?.slug ? 1 : 6);
+  
+  const channels = await odooExecuteKw('slide.channel', 'search_read', [domain], {
+    fields, 
+    limit, 
+    order
+  });
+  
   // Get all unique product IDs
   const productIds = [...new Set(
     (channels || [])
@@ -190,7 +215,7 @@ export async function fetchCourses(options?: {slug?: string}) {
     } catch (error) {
     }
   }
-  // Map channels with their prices
+  // Map channels with their real data from Odoo
   return (channels || []).map((c: any) => ({
     id: c.id,
     title: c.name,
@@ -198,7 +223,14 @@ export async function fetchCourses(options?: {slug?: string}) {
     description: c.description || '',
     price: c.product_id?.[0] ? (productPrices[c.product_id[0]] || 0) : 0,
     product_id: c.product_id?.[0],
-    published: c.website_published
+    published: c.website_published,
+    // Datos reales de Odoo sin mock
+    students: c.members_count || 0,
+    rating: c.rating_avg || 0,
+    duration: c.total_time || 0,
+    lessons_count: c.total_slides || 0,
+    views: c.total_views || 0,
+    image: c.image_1920 ? `/web/image/slide.channel/${c.id}/image_1920` : null
   }));
 }
 export async function fetchUserCourses(userId: number) {

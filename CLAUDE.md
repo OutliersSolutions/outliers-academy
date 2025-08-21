@@ -163,3 +163,87 @@ AUTH_SECRET=change_me
 - fetchCourseContent() - Slides con verificación de acceso
 - createSaleOrder() - Crear orden de venta
 - getUserProfile() - Perfil del usuario
+
+# Sistema de Carrito e-Commerce - IMPLEMENTADO COMPLETAMENTE
+
+## Arquitectura Híbrida: Suscripciones + Cursos Individuales
+
+### 🛒 **Flujos Diferenciados**
+```
+📚 CURSOS INDIVIDUALES → Carrito → Checkout Odoo
+🔄 SUSCRIPCIONES → Checkout Stripe Directo
+```
+
+## 1. APIs del Carrito - IMPLEMENTADAS
+- **GET/POST** `/api/cart` - Gestión completa del carrito con autenticación
+- **POST** `/api/cart/checkout` - Checkout integrado con Odoo
+- **Persistencia** con cookies seguras (`oa_cart`)
+- **Validación** de autenticación en todas las operaciones
+
+## 2. Componentes del Carrito - IMPLEMENTADOS
+- **ShoppingCart** (`src/components/ShoppingCart.tsx`): Panel lateral con overlay
+- **AddToCartButton** (`src/components/AddToCartButton.tsx`): Botón para añadir cursos
+- **CartProvider** (`src/components/providers/CartProvider.tsx`): Estado global del carrito
+- **CartIcon** en Header: Contador con badge de items
+
+## 3. Protección de Autenticación - IMPLEMENTADA
+- **API protegida**: Requiere autenticación (`verifyAuth`) para todas las operaciones
+- **UI condicional**: 
+  - Usuario no autenticado → Icono de usuario en header
+  - Usuario autenticado → Icono de carrito con contador
+- **Botones adaptativos**: "Añadir al carrito" se convierte en "Inicia sesión para añadir"
+- **Redirección automática**: Error 401 redirige a `/login` con toast explicativo
+
+## 4. Gestión de Estado del Carrito
+- **Cookies seguras**: Persistencia entre sesiones con `HttpOnly`, `Secure`, `SameSite`
+- **Eventos personalizados**: `cartUpdated` para sincronización en tiempo real
+- **Validación de productos**: Verificación de existencia de cursos via Odoo
+- **Cálculo automático**: Totales y contadores actualizados dinámicamente
+
+## 5. Estructura del Carrito
+```typescript
+interface CartItem {
+  courseId: number;
+  productId: number;
+  courseName: string;
+  price: number;
+  slug: string;
+  quantity: number;
+}
+
+interface Cart {
+  items: CartItem[];
+  total: number;
+  itemCount: number;
+}
+```
+
+## 6. Funcionalidades Implementadas
+- ✅ **Añadir/Remover** cursos del carrito
+- ✅ **Visualización** completa del carrito con overlay
+- ✅ **Checkout integrado** con Odoo para cursos individuales
+- ✅ **Protección de autenticación** completa
+- ✅ **Persistencia** entre sesiones y navegación
+- ✅ **UX fluida** con estados de carga y feedback
+
+## 7. Integración con Sistemas Existentes
+- **Stripe**: Mantiene checkout directo para suscripciones
+- **Odoo**: Integración completa para cursos y órdenes de venta
+- **Autenticación**: Usa sistema existente (`useNewAuth`, `verifyAuth`)
+- **i18n**: Soporte para traducciones en componentes del carrito
+
+## 8. Endpoints de Carrito
+- `GET /api/cart` - Obtener carrito del usuario autenticado
+- `POST /api/cart` - Añadir/remover/limpiar items del carrito
+- `POST /api/cart/checkout` - Crear orden en Odoo y redirigir a checkout
+
+## 9. Librerías del Carrito
+- `src/lib/cart.ts`: Utilidades para manipulación del carrito
+- Cookie management con `CART_COOKIE`
+- Funciones: `getCart`, `addToCart`, `removeFromCart`, `clearCart`
+
+## 10. UX y Estados
+- **Loading states**: Durante operaciones async
+- **Toast notifications**: Feedback inmediato al usuario
+- **Error handling**: Manejo graceful de errores de red/auth
+- **Responsive design**: Funciona en móvil y desktop
