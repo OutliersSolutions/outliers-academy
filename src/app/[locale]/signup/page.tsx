@@ -9,6 +9,8 @@ import Link from 'next/link'
 import { useRouter, usePathname } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { User, Mail, Lock, Eye, EyeOff, Loader2, CheckCircle } from 'lucide-react'
+import { useTranslations } from 'next-intl'
+
 export default function SignUpPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -22,17 +24,19 @@ export default function SignUpPage() {
   const router = useRouter()
   const pathname = usePathname()
   const locale = pathname.split('/')[1] || 'es'
+  const t = useTranslations('notifications.auth.signup')
+  const tAuth = useTranslations('notifications.auth')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
     if (password !== confirmPassword) {
-      setError(locale === 'es' ? 'Las contraseñas no coinciden' : 'Passwords do not match')
+      setError(t('passwordMismatch'))
       return
     }
 
     if (password.length < 6) {
-      setError(locale === 'es' ? 'La contraseña debe tener al menos 6 caracteres' : 'Password must be at least 6 characters')
+      setError(t('passwordTooShort'))
       return
     }
 
@@ -62,57 +66,14 @@ export default function SignUpPage() {
         }
       } else {
         const data = await response.json()
-        setError(data.error || (locale === 'es' ? 'Error en el registro' : 'Signup error'))
+        setError(data.error || t('signupError'))
       }
     } catch (error) {
-      setError(error instanceof Error ? error.message : (locale === 'es' ? 'Error en el registro' : 'Signup error'))
+      setError(error instanceof Error ? error.message : t('signupError'))
     } finally {
       setIsLoading(false)
     }
   }
-
-  const texts = {
-    es: {
-      title: 'Crear Cuenta',
-      description: 'Únete a Outliers Academy y comienza tu aprendizaje',
-      fullName: 'Nombre completo',
-      fullNamePlaceholder: 'Tu nombre completo',
-      email: 'Correo electrónico',
-      emailPlaceholder: 'tu@email.com',
-      password: 'Contraseña',
-      passwordPlaceholder: 'Mínimo 6 caracteres',
-      confirmPassword: 'Confirmar contraseña',
-      confirmPasswordPlaceholder: 'Confirma tu contraseña',
-      signUp: 'Crear Cuenta',
-      signingUp: 'Creando cuenta...',
-      alreadyHaveAccount: '¿Ya tienes cuenta?',
-      signIn: 'Iniciar sesión',
-      students: 'Estudiantes',
-      courses: 'Cursos',
-      satisfaction: 'Satisfacción'
-    },
-    en: {
-      title: 'Create Account',
-      description: 'Join Outliers Academy and start your learning journey',
-      fullName: 'Full name',
-      fullNamePlaceholder: 'Your full name',
-      email: 'Email',
-      emailPlaceholder: 'you@email.com',
-      password: 'Password',
-      passwordPlaceholder: 'Minimum 6 characters',
-      confirmPassword: 'Confirm password',
-      confirmPasswordPlaceholder: 'Confirm your password',
-      signUp: 'Create Account',
-      signingUp: 'Creating account...',
-      alreadyHaveAccount: 'Already have an account?',
-      signIn: 'Sign in',
-      students: 'Students',
-      courses: 'Courses',
-      satisfaction: 'Satisfaction'
-    }
-  }
-
-  const t = texts[locale as keyof typeof texts] || texts.es
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-muted/30 to-accent/5 flex">
@@ -137,10 +98,7 @@ export default function SignUpPage() {
           </motion.div>
           <h1 className="text-4xl font-heading font-bold mb-4 text-white">Outliers Academy</h1>
           <p className="text-xl opacity-90 mb-8 font-sans text-white">
-            {locale === 'es' 
-              ? 'Únete a la comunidad de emprendedores que están transformando el futuro'
-              : 'Join the community of entrepreneurs transforming the future'
-            }
+            {t('joinCommunity')}
           </p>
           <div className="space-y-4 text-left max-w-sm mx-auto">
             <div className="flex items-center gap-3">
@@ -148,7 +106,7 @@ export default function SignUpPage() {
                 <span className="text-white font-semibold">✓</span>
               </div>
               <span className="text-white/90 font-sans">
-                {locale === 'es' ? 'Acceso a todos los cursos' : 'Access to all courses'}
+                {t('accessAllCourses')}
               </span>
             </div>
             <div className="flex items-center gap-3">
@@ -156,7 +114,7 @@ export default function SignUpPage() {
                 <span className="text-white font-semibold">✓</span>
               </div>
               <span className="text-white/90 font-sans">
-                {locale === 'es' ? 'Progreso personalizado' : 'Personalized progress'}
+                {t('personalizedProgress')}
               </span>
             </div>
             <div className="flex items-center gap-3">
@@ -164,7 +122,7 @@ export default function SignUpPage() {
                 <span className="text-white font-semibold">✓</span>
               </div>
               <span className="text-white/90 font-sans">
-                {locale === 'es' ? 'Certificados oficiales' : 'Official certificates'}
+                {t('officialCertificates')}
               </span>
             </div>
           </div>
@@ -191,12 +149,10 @@ export default function SignUpPage() {
                 <CheckCircle className="h-6 w-6 text-green-600 dark:text-green-400" />
                 <div>
                   <h4 className="font-medium text-green-800 dark:text-green-200 font-heading">
-                    {locale === 'es' ? '¡Cuenta creada exitosamente!' : 'Account created successfully!'}
+                    {t('accountCreatedSuccess')}
                   </h4>
                   <p className="text-sm text-green-700 dark:text-green-300 mt-1 font-sans">
-                    {locale === 'es' 
-                      ? 'Revisa tu correo electrónico y haz clic en el enlace de verificación para activar tu cuenta.'
-                      : 'Check your email and click the verification link to activate your account.'}
+                    {t('checkEmailVerification')}
                   </p>
                 </div>
               </div>
@@ -206,7 +162,7 @@ export default function SignUpPage() {
                 size="sm"
                 className="mt-4 text-green-700 dark:text-green-300 border-green-300 dark:border-green-700 font-sans"
               >
-                {locale === 'es' ? 'Crear otra cuenta' : 'Create another account'}
+                {t('createAnotherAccount')}
               </Button>
             </motion.div>
           )}
@@ -220,7 +176,7 @@ export default function SignUpPage() {
                   transition={{ duration: 0.6, delay: 0.1 }}
                   className="text-3xl font-heading font-bold text-foreground mb-2"
                 >
-                  {t.title}
+                  {t('title')}
                 </motion.h2>
                 <motion.p
                   initial={{ opacity: 0, y: -10 }}
@@ -228,7 +184,7 @@ export default function SignUpPage() {
                   transition={{ duration: 0.6, delay: 0.2 }}
                   className="text-muted-foreground font-sans"
                 >
-                  {t.description}
+                  {t('description')}
                 </motion.p>
               </div>
 
@@ -241,14 +197,14 @@ export default function SignUpPage() {
               >
                 <div className="space-y-2">
                   <Label htmlFor="name" className="text-sm font-medium text-foreground font-sans">
-                    {t.fullName}
+                    {t('fullName')}
                   </Label>
                   <div className="relative">
                     <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
                     <Input
                       id="name"
                       type="text"
-                      placeholder={t.fullNamePlaceholder}
+                      placeholder={t('fullNamePlaceholder')}
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       className="pl-10 h-12 border-2 border-input focus:border-ring focus:ring-2 focus:ring-ring/20 rounded-lg transition-all duration-200 bg-background text-foreground font-sans hover:border-ring/60"
@@ -259,14 +215,14 @@ export default function SignUpPage() {
 
                 <div className="space-y-2">
                   <Label htmlFor="email" className="text-sm font-medium text-foreground font-sans">
-                    {t.email}
+                    {t('email')}
                   </Label>
                   <div className="relative">
                     <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
                     <Input
                       id="email"
                       type="email"
-                      placeholder={t.emailPlaceholder}
+                      placeholder={t('emailPlaceholder')}
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       className="pl-10 h-12 border-2 border-input focus:border-ring focus:ring-2 focus:ring-ring/20 rounded-lg transition-all duration-200 bg-background text-foreground font-sans hover:border-ring/60"
@@ -277,14 +233,14 @@ export default function SignUpPage() {
 
                 <div className="space-y-2">
                   <Label htmlFor="password" className="text-sm font-medium text-foreground font-sans">
-                    {t.password}
+                    {t('password')}
                   </Label>
                   <div className="relative">
                     <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
                     <Input
                       id="password"
                       type={showPassword ? 'text' : 'password'}
-                      placeholder={t.passwordPlaceholder}
+                      placeholder={t('passwordPlaceholder')}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       className="pl-10 pr-10 h-12 border-2 border-input focus:border-ring focus:ring-2 focus:ring-ring/20 rounded-lg transition-all duration-200 bg-background text-foreground font-sans hover:border-ring/60"
@@ -302,14 +258,14 @@ export default function SignUpPage() {
 
                 <div className="space-y-2">
                   <Label htmlFor="confirmPassword" className="text-sm font-medium text-foreground font-sans">
-                    {t.confirmPassword}
+                    {t('confirmPassword')}
                   </Label>
                   <div className="relative">
                     <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
                     <Input
                       id="confirmPassword"
                       type={showConfirmPassword ? 'text' : 'password'}
-                      placeholder={t.confirmPasswordPlaceholder}
+                      placeholder={t('confirmPasswordPlaceholder')}
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
                       className="pl-10 pr-10 h-12 border-2 border-input focus:border-ring focus:ring-2 focus:ring-ring/20 rounded-lg transition-all duration-200 bg-background text-foreground font-sans hover:border-ring/60"
@@ -349,10 +305,10 @@ export default function SignUpPage() {
                     {isLoading ? (
                       <div className="flex items-center justify-center space-x-2">
                         <Loader2 className="h-5 w-5 animate-spin" />
-                        <span>{t.signingUp}</span>
+                        <span>{t('signingUp')}</span>
                       </div>
                     ) : (
-                      t.signUp
+                      t('signUp')
                     )}
                   </Button>
                 </motion.div>
@@ -365,12 +321,12 @@ export default function SignUpPage() {
                 className="mt-8 text-center"
               >
                 <p className="text-sm text-muted-foreground font-sans">
-                  {t.alreadyHaveAccount}{' '}
+                  {t('alreadyHaveAccount')}{' '}
                   <Link 
                     href={`/${locale}/login`}
                     className="font-medium text-primary hover:text-primary/80 transition-colors duration-200"
                   >
-                    {t.signIn}
+                    {t('signIn')}
                   </Link>
                 </p>
               </motion.div>

@@ -10,6 +10,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Mail, Lock, Eye, EyeOff, Loader2, ArrowLeft } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -20,6 +21,7 @@ export default function LoginPage() {
   const pathname = usePathname()
   const locale = pathname.split('/')[1] || 'es'
   const { login, loading } = useNewAuth()
+  const t = useTranslations('notifications.auth.login')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -37,53 +39,6 @@ export default function LoginPage() {
       setError((error as Error).message)
     }
   }
-
-  const texts = {
-    es: {
-      title: 'Iniciar Sesión',
-      description: 'Accede a tu cuenta de Outliers Academy',
-      email: 'Correo electrónico',
-      emailPlaceholder: 'tu@email.com',
-      password: 'Contraseña',
-      passwordPlaceholder: 'Tu contraseña',
-      signIn: 'Iniciar Sesión',
-      signingIn: 'Iniciando sesión...',
-      dontHaveAccount: '¿No tienes cuenta?',
-      signUp: 'Crear cuenta',
-      students: 'Estudiantes',
-      courses: 'Cursos',
-      satisfaction: 'Satisfacción',
-      backToHome: 'Volver al inicio',
-      welcomeBack: 'Bienvenido de vuelta',
-      continueJourney: 'Continúa tu viaje de aprendizaje con nosotros',
-      accessAllCourses: 'Acceso a todos los cursos',
-      personalizedProgress: 'Progreso personalizado',
-      officialCertificates: 'Certificados oficiales'
-    },
-    en: {
-      title: 'Sign In',
-      description: 'Access your Outliers Academy account',
-      email: 'Email',
-      emailPlaceholder: 'you@email.com',
-      password: 'Password',
-      passwordPlaceholder: 'Your password',
-      signIn: 'Sign In',
-      signingIn: 'Signing in...',
-      dontHaveAccount: "Don't have an account?",
-      signUp: 'Sign up',
-      students: 'Students',
-      courses: 'Courses',
-      satisfaction: 'Satisfaction',
-      backToHome: 'Back to home',
-      welcomeBack: 'Welcome back',
-      continueJourney: 'Continue your learning journey with us',
-      accessAllCourses: 'Access to all courses',
-      personalizedProgress: 'Personalized progress',
-      officialCertificates: 'Official certificates'
-    }
-  }
-
-  const t = texts[locale as keyof typeof texts] || texts.es
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-muted/30 to-accent/5 flex">
@@ -108,7 +63,7 @@ export default function LoginPage() {
           </motion.div>
           <h1 className="text-4xl font-heading font-bold mb-4 text-white">Outliers Academy</h1>
           <p className="text-xl opacity-90 mb-8 font-sans text-white">
-            {t.continueJourney}
+            {t('continueJourney')}
           </p>
           <div className="space-y-4 text-left max-w-sm mx-auto">
             <div className="flex items-center gap-3">
@@ -116,7 +71,7 @@ export default function LoginPage() {
                 <span className="text-white font-semibold">✓</span>
               </div>
               <span className="text-white/90 font-sans">
-                {t.accessAllCourses}
+                {t('accessAllCourses')}
               </span>
             </div>
             <div className="flex items-center gap-3">
@@ -124,7 +79,7 @@ export default function LoginPage() {
                 <span className="text-white font-semibold">✓</span>
               </div>
               <span className="text-white/90 font-sans">
-                {t.personalizedProgress}
+                {t('personalizedProgress')}
               </span>
             </div>
             <div className="flex items-center gap-3">
@@ -132,7 +87,7 @@ export default function LoginPage() {
                 <span className="text-white font-semibold">✓</span>
               </div>
               <span className="text-white/90 font-sans">
-                {t.officialCertificates}
+                {t('officialCertificates')}
               </span>
             </div>
           </div>
@@ -154,7 +109,7 @@ export default function LoginPage() {
               className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors font-sans"
             >
               <ArrowLeft className="w-4 h-4" />
-              {t.backToHome}
+              {t('backToHome')}
             </Link>
           </div>
 
@@ -165,7 +120,7 @@ export default function LoginPage() {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="text-3xl font-heading font-bold text-foreground mb-2"
             >
-              {t.title}
+              {t('title')}
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: -10 }}
@@ -173,7 +128,7 @@ export default function LoginPage() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-muted-foreground font-sans"
             >
-              {t.description}
+              {t('description')}
             </motion.p>
           </div>
 
@@ -199,14 +154,14 @@ export default function LoginPage() {
           >
             <div className="space-y-2">
               <Label htmlFor="email" className="text-sm font-medium text-foreground font-sans">
-                {t.email}
+                {t('email')}
               </Label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
                 <Input
                   id="email"
                   type="email"
-                  placeholder={t.emailPlaceholder}
+                  placeholder={t('emailPlaceholder')}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="pl-10 h-12 border-2 border-input focus:border-ring focus:ring-2 focus:ring-ring/20 rounded-lg transition-all duration-200 bg-background text-foreground font-sans hover:border-ring/60"
@@ -217,14 +172,14 @@ export default function LoginPage() {
 
             <div className="space-y-2">
               <Label htmlFor="password" className="text-sm font-medium text-foreground font-sans">
-                {t.password}
+                {t('password')}
               </Label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
                 <Input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
-                  placeholder={t.passwordPlaceholder}
+                  placeholder={t('passwordPlaceholder')}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="pl-10 pr-10 h-12 border-2 border-input focus:border-ring focus:ring-2 focus:ring-ring/20 rounded-lg transition-all duration-200 bg-background text-foreground font-sans hover:border-ring/60"
@@ -255,10 +210,10 @@ export default function LoginPage() {
                 {loading ? (
                   <div className="flex items-center justify-center space-x-2">
                     <Loader2 className="h-5 w-5 animate-spin" />
-                    <span>{t.signingIn}</span>
+                    <span>{t('signingIn')}</span>
                   </div>
                 ) : (
-                  t.signIn
+                  t('signIn')
                 )}
               </Button>
             </motion.div>
@@ -271,12 +226,12 @@ export default function LoginPage() {
             className="mt-8 text-center"
           >
             <p className="text-sm text-muted-foreground font-sans">
-              {t.dontHaveAccount}{' '}
+              {t('dontHaveAccount')}{' '}
               <Link 
                 href={`/${locale}/signup`}
                 className="font-medium text-primary hover:text-primary/80 transition-colors duration-200"
               >
-                {t.signUp}
+                {t('signUp')}
               </Link>
             </p>
           </motion.div>
