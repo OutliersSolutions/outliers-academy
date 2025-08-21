@@ -21,7 +21,7 @@ export default function LoginPage() {
   const pathname = usePathname()
   const locale = pathname.split('/')[1] || 'es'
   const { login, loading } = useNewAuth()
-  const t = useTranslations('notifications.auth.login')
+  const t = useTranslations('toast.auth.login')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()

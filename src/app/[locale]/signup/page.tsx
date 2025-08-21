@@ -24,8 +24,8 @@ export default function SignUpPage() {
   const router = useRouter()
   const pathname = usePathname()
   const locale = pathname.split('/')[1] || 'es'
-  const t = useTranslations('notifications.auth.signup')
-  const tAuth = useTranslations('notifications.auth')
+  const t = useTranslations('toast.auth.signup')
+  const tAuth = useTranslations('toast.auth')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
