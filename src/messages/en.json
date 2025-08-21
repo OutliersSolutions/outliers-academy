@@ -607,6 +607,45 @@
         "securitySettings": "Manage your password and security settings",
         "customizeExperience": "Customize your learning experience"
     },
+    "cart": {
+        "title": "Shopping Cart",
+        "addToCart": "Add to cart",
+        "addedToCart": "Added",
+        "removeFromCart": "Remove from cart",
+        "clearCart": "Clear cart",
+        "proceedToCheckout": "Proceed to checkout",
+        "emptyCart": "Your cart is empty",
+        "emptyCartTitle": "Your cart is empty",
+        "emptyCartDescription": "Explore our courses and start your learning journey",
+        "browseCourses": "Browse courses",
+        "continueShopping": "Continue shopping",
+        "itemsInCart": "{count, plural, =0 {No courses} =1 {1 course} other {# courses}} in your cart",
+        "orderSummary": "Order summary",
+        "total": "Total",
+        "secureCheckout": "Secure SSL checkout",
+        "processing": "Processing...",
+        "loginRequired": "You must sign in to purchase",
+        "courseAccess": "Lifetime course access",
+        "digitalProduct": "Digital product",
+        "oneTimePayment": "One-time payment",
+        "addToCartError": "Error adding to cart",
+        "removeError": "Error removing from cart",
+        "clearError": "Error clearing cart",
+        "fetchError": "Error loading cart",
+        "checkoutError": "Error processing payment",
+        "emptyCartError": "Your cart is empty",
+        "cartCleared": "Cart cleared",
+        "removedFromCart": "Course {courseName} removed from cart",
+        "discountCode": "Discount code",
+        "discountCodePlaceholder": "Enter your code",
+        "applyDiscount": "Apply",
+        "discountApplied": "Discount applied",
+        "removeDiscount": "Remove discount",
+        "invalidDiscountCode": "Invalid discount code",
+        "discountMinAmount": "This discount requires a minimum of ${amount}",
+        "subtotal": "Subtotal",
+        "discount": "Discount"
+    },
     "cookies": {
         "title": "We use cookies to enhance your experience",
         "description": "We use cookies and similar technologies to provide, protect, and improve our services and to personalize content. By clicking \"Accept All\", you consent to our use of cookies.",
@@ -636,6 +675,49 @@
             "acceptAll": "Accept All",
             "declineAll": "Decline All",
             "savePreferences": "Save Preferences"
+        }
+    },
+    "toast": {
+        "profile": {
+            "invalidImage": "Please select a valid image",
+            "imageTooLarge": "Image is too large. Maximum 2MB",
+            "uploadSuccess": "Image updated successfully",
+            "uploadError": "Error uploading image",
+            "updateSuccess": "Profile updated successfully",
+            "updateError": "Error updating profile",
+            "connectionError": "Connection error saving changes"
+        },
+        "auth": {
+            "completeFields": "Please complete all fields",
+            "verificationNeeded": "Your account needs email verification",
+            "loginError": "Error logging in",
+            "welcomeMessage": "Welcome!"
+        },
+        "cart": {
+            "addedToCart": "Added to cart: {courseName}",
+            "removedFromCart": "Removed from cart: {courseName}",
+            "cartCleared": "Cart cleared",
+            "orderCreated": "Order created successfully. Redirecting to payment...",
+            "fetchError": "Error loading cart",
+            "removeError": "Error removing course",
+            "clearError": "Error clearing cart",
+            "emptyCartError": "Cart is empty",
+            "checkoutError": "Error processing payment",
+            "addToCartError": "Error adding to cart"
+        },
+        "discount": {
+            "enterCode": "Enter a discount code",
+            "applied": "Discount code applied",
+            "removed": "Discount code removed",
+            "error": "Error applying discount code",
+            "invalid": "Invalid discount code"
+        },
+        "common": {
+            "success": "Operation successful",
+            "error": "An error occurred",
+            "loading": "Loading...",
+            "saved": "Saved successfully",
+            "deleted": "Deleted successfully"
         }
     }
 }

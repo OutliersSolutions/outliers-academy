@@ -9,6 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { CheckoutButton } from '@/components/CheckoutButton';
+import { AddToCartButton } from '@/components/AddToCartButton';
 import { 
   BookOpen, 
   PlayCircle, 
@@ -497,8 +498,15 @@ export default function CourseOverviewPage({
                     <CheckoutButton courseId={course.id} className="w-full">
                       {t('enrollNowButton')}
                     </CheckoutButton>
+                    <AddToCartButton
+                      courseId={course.id}
+                      productId={course.product_id}
+                      courseName={course.name}
+                      variant="outline"
+                      className="w-full"
+                    />
                     <Button 
-                      variant="outline" 
+                      variant="ghost" 
                       className="w-full"
                       onClick={() => router.push(`/${locale}/course/${params.slug}/learn`)}
                     >

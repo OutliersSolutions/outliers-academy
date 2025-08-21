@@ -208,15 +208,89 @@ export async function fetchUserCourses(userId: number) {
   const enrollments = await odooExecuteKw('slide.channel.partner', 'search_read', [domain], {fields});
   return enrollments || [];
 }
-export async function fetchCourseContent(courseId: number, userId?: number) {
-  if (!isOdooConfigured) return null;
-  // Check if user has access
-  if (userId) {
-    const access = await odooExecuteKw('slide.channel.partner', 'search_count', [
+export async function checkCourseAccess(courseId: number, userId: number): Promise<boolean> {
+  if (!isOdooConfigured) {
+    // In development, allow access to any course
+    return true;
+  }
+  
+  try {
+    // Check if user is enrolled in the course
+    const enrollment = await odooExecuteKw('slide.channel.partner', 'search_count', [
       [['channel_id', '=', courseId], ['partner_id', '=', userId]]
     ]);
-    if (!access) throw new Error('Access denied to this course');
+    
+    if (enrollment > 0) {
+      return true;
+    }
+
+    // Check if user has purchased the course (check sale orders)
+    const orders = await odooExecuteKw('sale.order', 'search_read', [
+      [
+        ['partner_id', '=', userId],
+        ['state', 'in', ['sale', 'done']] // Confirmed or completed orders
+      ]
+    ], {fields: ['id', 'order_line']});
+
+    for (const order of orders || []) {
+      if (order.order_line && Array.isArray(order.order_line)) {
+        // Get order lines to check if this course's product is included
+        const lines = await odooExecuteKw('sale.order.line', 'search_read', [
+          [['id', 'in', order.order_line]]
+        ], {fields: ['product_id']});
+
+        // Get the course's product_id
+        const course = await odooExecuteKw('slide.channel', 'search_read', [
+          [['id', '=', courseId]]
+        ], {fields: ['product_id']});
+
+        if (course?.[0]?.product_id) {
+          const courseProductId = Array.isArray(course[0].product_id) 
+            ? course[0].product_id[0] 
+            : course[0].product_id;
+
+          // Check if any order line contains this course's product
+          const hasCourseProduct = lines?.some((line: any) => {
+            const lineProductId = Array.isArray(line.product_id) 
+              ? line.product_id[0] 
+              : line.product_id;
+            return lineProductId === courseProductId;
+          });
+
+          if (hasCourseProduct) {
+            // Automatically enroll user in the course if they purchased it
+            try {
+              await odooExecuteKw('slide.channel.partner', 'create', [{
+                channel_id: courseId,
+                partner_id: userId
+              }]);
+            } catch (enrollError) {
+              // Enrollment might already exist, ignore error
+            }
+            return true;
+          }
+        }
+      }
+    }
+
+    return false;
+  } catch (error) {
+    console.error('Error checking course access:', error);
+    return false;
   }
+}
+
+export async function fetchCourseContent(courseId: number, userId?: number) {
+  if (!isOdooConfigured) return null;
+  
+  // Check if user has access
+  if (userId) {
+    const hasAccess = await checkCourseAccess(courseId, userId);
+    if (!hasAccess) {
+      throw new Error('Access denied to this course');
+    }
+  }
+  
   const fields = ['id', 'name', 'slug', 'sequence', 'slide_type', 'duration', 'preview'];
   const slides = await odooExecuteKw('slide.slide', 'search_read', [
     [['channel_id', '=', courseId]]

@@ -1,6 +1,7 @@
 'use client';
 import { useTranslations } from 'next-intl';
 import { CheckoutButton } from './CheckoutButton';
+import { AddToCartButton } from './AddToCartButton';
 import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
@@ -178,9 +179,18 @@ export function CourseGridClient() {
                 >
                   {tCourse('viewDetails')}
                 </Link>
-                <CheckoutButton courseId={c.id} className="w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-2 px-4 rounded-xl transition-all duration-300 text-sm">
-                  {tCourse('enroll')}
-                </CheckoutButton>
+                <div className="grid grid-cols-2 gap-2">
+                  <AddToCartButton
+                    courseId={c.id}
+                    productId={c.product_id}
+                    courseName={courseName}
+                    variant="outline"
+                    className="text-xs py-2"
+                  />
+                  <CheckoutButton courseId={c.id} className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-2 px-4 rounded-xl transition-all duration-300 text-xs">
+                    {tCourse('enroll')}
+                  </CheckoutButton>
+                </div>
               </div>
             </div>
             {/* Tech hover effect */}

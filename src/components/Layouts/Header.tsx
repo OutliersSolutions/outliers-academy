@@ -5,6 +5,7 @@ import { Sun, Menu, X, Languages, ChevronDown, Moon } from "lucide-react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
 import { useTranslations } from "next-intl";
+import { CartIcon } from "@/components/CartIcon";
 
 export const Header: React.FC = () => {
     const { theme, setTheme } = useTheme();
@@ -152,6 +153,9 @@ export const Header: React.FC = () => {
                             </div>
                         )}
                     </div>
+
+                    {/* Cart Icon */}
+                    <CartIcon />
 
                     {/* Theme Toggle */}
                     <button

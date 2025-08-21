@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect, createContext, useContext } from 'react';
+import { useState, useEffect, createContext, useContext, useCallback } from 'react';
 import { CookieBanner } from './CookieBanner';
 import { CookiePreferences } from './CookiePreferences';
 interface CookieConsent {
@@ -30,23 +30,8 @@ export function CookieProvider({ children }: CookieProviderProps) {
   const [consent, setConsent] = useState<CookieConsent | null>(null);
   const [showPreferencesModal, setShowPreferencesModal] = useState(false);
   const [isClient, setIsClient] = useState(false);
-  useEffect(() => {
-    setIsClient(true);
-    // Load saved consent
-    const savedConsent = localStorage.getItem('cookie-consent');
-    if (savedConsent) {
-      try {
-        const parsed = JSON.parse(savedConsent);
-        setConsent(parsed);
-        // Initialize Google Analytics based on saved consent
-        if (parsed.analytics && typeof window !== 'undefined') {
-          initializeAnalytics();
-        }
-      } catch (error) {
-      }
-    }
-  }, []);
-  const initializeAnalytics = () => {
+  
+  const initializeAnalytics = useCallback(() => {
     // Google Analytics 4 initialization
     if (process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && typeof window !== 'undefined') {
       const script = document.createElement('script');
@@ -91,7 +76,25 @@ export function CookieProvider({ children }: CookieProviderProps) {
       noscript.innerHTML = `<iframe src="https://www.googletagmanager.com/ns.html?id=${process.env.NEXT_PUBLIC_GTM_ID}" height="0" width="0" style="display:none;visibility:hidden"></iframe>`;
       document.body.appendChild(noscript);
     }
-  };
+  }, [consent]);
+
+  useEffect(() => {
+    setIsClient(true);
+    // Load saved consent
+    const savedConsent = localStorage.getItem('cookie-consent');
+    if (savedConsent) {
+      try {
+        const parsed = JSON.parse(savedConsent);
+        setConsent(parsed);
+        // Initialize Google Analytics based on saved consent
+        if (parsed.analytics && typeof window !== 'undefined') {
+          initializeAnalytics();
+        }
+      } catch (error) {
+      }
+    }
+  }, [initializeAnalytics]);
+
   const updateConsent = (newConsent: CookieConsent) => {
     const consentWithTimestamp = {
       ...newConsent,

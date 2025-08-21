@@ -607,6 +607,45 @@
         "securitySettings": "Gestiona tu contraseña y configuraciones de seguridad",
         "customizeExperience": "Personaliza tu experiencia de aprendizaje"
     },
+    "cart": {
+        "title": "Carrito de Compras",
+        "addToCart": "Agregar al carrito",
+        "addedToCart": "Agregado",
+        "removeFromCart": "Quitar del carrito",
+        "clearCart": "Vaciar carrito",
+        "proceedToCheckout": "Proceder al pago",
+        "emptyCart": "Tu carrito está vacío",
+        "emptyCartTitle": "Tu carrito está vacío",
+        "emptyCartDescription": "Explora nuestros cursos y comienza tu viaje de aprendizaje",
+        "browseCourses": "Explorar cursos",
+        "continueShopping": "Seguir comprando",
+        "itemsInCart": "{count, plural, =0 {No hay cursos} =1 {1 curso} other {# cursos}} en tu carrito",
+        "orderSummary": "Resumen del pedido",
+        "total": "Total",
+        "secureCheckout": "Pago seguro con SSL",
+        "processing": "Procesando...",
+        "loginRequired": "Debes iniciar sesión para comprar",
+        "courseAccess": "Acceso de por vida al curso",
+        "digitalProduct": "Producto digital",
+        "oneTimePayment": "Pago único",
+        "addToCartError": "Error al agregar al carrito",
+        "removeError": "Error al quitar del carrito",
+        "clearError": "Error al vaciar el carrito",
+        "fetchError": "Error al cargar el carrito",
+        "checkoutError": "Error al procesar el pago",
+        "emptyCartError": "Tu carrito está vacío",
+        "cartCleared": "Carrito vaciado",
+        "removedFromCart": "Curso {courseName} removido del carrito",
+        "discountCode": "Código de descuento",
+        "discountCodePlaceholder": "Ingresa tu código",
+        "applyDiscount": "Aplicar",
+        "discountApplied": "Descuento aplicado",
+        "removeDiscount": "Quitar descuento",
+        "invalidDiscountCode": "Código de descuento inválido",
+        "discountMinAmount": "Este descuento requiere un mínimo de ${amount}",
+        "subtotal": "Subtotal",
+        "discount": "Descuento"
+    },
     "cookies": {
         "title": "Usamos cookies para mejorar tu experiencia",
         "description": "Utilizamos cookies y tecnologías similares para proporcionar, proteger y mejorar nuestros servicios y personalizar contenido. Al hacer clic en \"Aceptar todas\", consientes nuestro uso de cookies.",
@@ -636,6 +675,49 @@
             "acceptAll": "Aceptar todas",
             "declineAll": "Rechazar todas",
             "savePreferences": "Guardar preferencias"
+        }
+    },
+    "toast": {
+        "profile": {
+            "invalidImage": "Por favor selecciona una imagen válida",
+            "imageTooLarge": "La imagen es muy grande. Máximo 2MB",
+            "uploadSuccess": "Imagen actualizada exitosamente",
+            "uploadError": "Error al subir la imagen",
+            "updateSuccess": "Perfil actualizado exitosamente",
+            "updateError": "Error al actualizar el perfil",
+            "connectionError": "Error de conexión al guardar los cambios"
+        },
+        "auth": {
+            "completeFields": "Por favor completa todos los campos",
+            "verificationNeeded": "Tu cuenta necesita verificación de email",
+            "loginError": "Error al iniciar sesión",
+            "welcomeMessage": "¡Bienvenido!"
+        },
+        "cart": {
+            "addedToCart": "Agregado al carrito: {courseName}",
+            "removedFromCart": "Removido del carrito: {courseName}",
+            "cartCleared": "Carrito vaciado",
+            "orderCreated": "Orden creada exitosamente. Redirigiendo al pago...",
+            "fetchError": "Error al cargar el carrito",
+            "removeError": "Error al remover el curso",
+            "clearError": "Error al vaciar el carrito",
+            "emptyCartError": "El carrito está vacío",
+            "checkoutError": "Error al procesar el pago",
+            "addToCartError": "Error al agregar al carrito"
+        },
+        "discount": {
+            "enterCode": "Ingresa un código de descuento",
+            "applied": "Código de descuento aplicado",
+            "removed": "Código de descuento removido",
+            "error": "Error al aplicar el código de descuento",
+            "invalid": "Código de descuento inválido"
+        },
+        "common": {
+            "success": "Operación exitosa",
+            "error": "Ocurrió un error",
+            "loading": "Cargando...",
+            "saved": "Guardado exitosamente",
+            "deleted": "Eliminado exitosamente"
         }
     }
 }

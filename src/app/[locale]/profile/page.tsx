@@ -9,7 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Loader } from "@/components/ui/loader";
-import { User, Mail, Calendar, Shield, Edit2, Save, X, Camera, Phone, Globe, Briefcase, Languages, Sun, Moon } from "lucide-react";
+import { User, Mail, Calendar, Shield, Edit2, Save, X, Camera, Phone, Globe, Briefcase, Languages, Sun, Moon, BookOpen, PlayCircle, Clock, Award } from "lucide-react";
 import Link from "next/link";
 import { useTranslations } from 'next-intl';
 import { UserAvatar } from '@/components/ui/UserAvatar';
@@ -51,10 +51,14 @@ export default function ProfilePage() {
     city: '' 
   });
   const [avatarUploading, setAvatarUploading] = useState(false);
+  const [enrolledCourses, setEnrolledCourses] = useState<any[]>([]);
   const router = useRouter();
   const pathname = usePathname();
   const locale = pathname.split('/')[1] || 'es';
+  const t = useTranslations('profile');
+  const tNav = useTranslations('nav');
   const tLoader = useTranslations('loader');
+  const tToast = useTranslations('toast');
   const isSpanish = locale === 'es';
   const fetchUserProfile = useCallback(async () => {
     try {
@@ -129,6 +133,18 @@ export default function ProfilePage() {
     }
   }, [user]);
 
+  const fetchEnrolledCourses = useCallback(async () => {
+    try {
+      const res = await fetch('/api/odoo/courses');
+      if (res.ok) {
+        const data = await res.json();
+        setEnrolledCourses(data.courses || []);
+      }
+    } catch (error) {
+      console.error('Error fetching enrolled courses:', error);
+    }
+  }, []);
+
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
       router.push(`/${locale}/login`);
@@ -136,8 +152,9 @@ export default function ProfilePage() {
     }
     if (isAuthenticated && user?.odooUserId) {
       fetchUserProfile();
+      fetchEnrolledCourses();
     }
-  }, [isAuthenticated, authLoading, user, router, locale, fetchUserProfile]);
+  }, [isAuthenticated, authLoading, user, router, locale, fetchUserProfile, fetchEnrolledCourses]);
   const handleEditToggle = () => {
     if (editing) {
       // Cancel editing
@@ -162,13 +179,13 @@ export default function ProfilePage() {
 
     // Validate file type
     if (!file.type.startsWith('image/')) {
-      toast.error(isSpanish ? 'Por favor selecciona una imagen válida' : 'Please select a valid image');
+      toast.error(tToast('profile.invalidImage'));
       return;
     }
 
     // Validate file size (max 2MB)
     if (file.size > 2 * 1024 * 1024) {
-      toast.error(isSpanish ? 'La imagen es muy grande. Máximo 2MB' : 'Image is too large. Maximum 2MB');
+      toast.error(tToast('profile.imageTooLarge'));
       return;
     }
 
@@ -190,24 +207,14 @@ export default function ProfilePage() {
         if (res.ok) {
           const data = await res.json();
           setProfile(data.profile);
-          toast.success(
-            isSpanish ? 'Avatar actualizado correctamente' : 'Avatar updated successfully',
-            {
-              description: isSpanish ? 'Tu imagen de perfil se ha guardado exitosamente' : 'Your profile picture has been saved successfully'
-            }
-          );
+          toast.success(tToast('profile.uploadSuccess'));
         } else {
-          toast.error(
-            isSpanish ? 'Error al actualizar el avatar' : 'Error updating avatar',
-            {
-              description: isSpanish ? 'Por favor intenta de nuevo o contacta soporte' : 'Please try again or contact support'
-            }
-          );
+          toast.error(tToast('profile.uploadError'));
         }
       };
       reader.readAsDataURL(file);
     } catch (error) {
-      toast.error(isSpanish ? 'Error al subir la imagen' : 'Error uploading image');
+      toast.error(tToast('profile.uploadError'));
     } finally {
       setAvatarUploading(false);
     }
@@ -226,17 +233,12 @@ export default function ProfilePage() {
         const data = await res.json();
         setProfile(data.profile);
         setEditing(false);
-        toast.success(
-          isSpanish ? 'Perfil actualizado correctamente' : 'Profile updated successfully',
-          {
-            description: isSpanish ? 'Tus datos personales se han guardado exitosamente' : 'Your personal information has been saved successfully'
-          }
-        );
+        toast.success(tToast('profile.updateSuccess'));
       } else {
-        toast.error(isSpanish ? `Error al actualizar el perfil: ${res.status}` : `Error updating profile: ${res.status}`);
+        toast.error(tToast('profile.updateError'));
       }
     } catch (error) {
-      toast.error(isSpanish ? 'Error de conexión al guardar los cambios' : 'Connection error saving changes');
+      toast.error(tToast('profile.connectionError'));
     }
   };
   if (authLoading || loading) {
@@ -345,12 +347,17 @@ export default function ProfilePage() {
                 {/* Stats Cards */}
                 <div className="grid grid-cols-2 gap-3 mt-6">
                   <div className="bg-gradient-to-br from-primary/5 to-primary/10 rounded-lg p-3 border border-primary/10">
-                    <div className="text-2xl font-bold text-primary">12</div>
+                    <div className="text-2xl font-bold text-primary">{enrolledCourses.length}</div>
                     <div className="text-xs text-muted-foreground">{isSpanish ? 'Cursos' : 'Courses'}</div>
                   </div>
                   <div className="bg-gradient-to-br from-accent/5 to-accent/10 rounded-lg p-3 border border-accent/10">
-                    <div className="text-2xl font-bold text-accent">85%</div>
-                    <div className="text-xs text-muted-foreground">{isSpanish ? 'Progreso' : 'Progress'}</div>
+                    <div className="text-2xl font-bold text-accent">
+                      {enrolledCourses.length > 0 
+                        ? Math.round((enrolledCourses.filter(c => c.completion > 80).length / enrolledCourses.length) * 100)
+                        : 0
+                      }%
+                    </div>
+                    <div className="text-xs text-muted-foreground">{isSpanish ? 'Completados' : 'Completed'}</div>
                   </div>
                 </div>
               </CardContent>
@@ -359,10 +366,14 @@ export default function ProfilePage() {
           {/* Profile Information */}
           <div className="lg:col-span-2 animate-slide-in-right">
             <Tabs defaultValue="info" className="space-y-8">
-              <TabsList className="grid w-full grid-cols-3 glass border-primary/10 backdrop-blur-md">
+              <TabsList className="grid w-full grid-cols-4 glass border-primary/10 backdrop-blur-md">
                 <TabsTrigger value="info" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-accent data-[state=active]:text-white transition-all duration-300">
                   <User className="h-4 w-4 mr-2" />
                   {isSpanish ? 'Información' : 'Information'}
+                </TabsTrigger>
+                <TabsTrigger value="courses" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-accent data-[state=active]:text-white transition-all duration-300">
+                  <BookOpen className="h-4 w-4 mr-2" />
+                  {isSpanish ? 'Mis Cursos' : 'My Courses'}
                 </TabsTrigger>
                 <TabsTrigger value="security" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-accent data-[state=active]:text-white transition-all duration-300">
                   <Shield className="h-4 w-4 mr-2" />
@@ -553,6 +564,103 @@ export default function ProfilePage() {
                           <X className="h-4 w-4 mr-2" />
                           {isSpanish ? 'Cancelar' : 'Cancel'}
                         </Button>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              </TabsContent>
+              <TabsContent value="courses" className="space-y-8 animate-fade-in">
+                <Card className="glass border-primary/10 backdrop-blur-md hover-lift transition-all duration-300">
+                  <CardHeader className="relative">
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 rounded-t-lg"></div>
+                    <CardTitle className="h3-title text-foreground flex items-center gap-2 relative">
+                      <BookOpen className="h-5 w-5 text-primary" />
+                      {isSpanish ? 'Mis Cursos' : 'My Courses'}
+                    </CardTitle>
+                    <CardDescription className="text-muted-foreground/80 mt-1 relative">
+                      {isSpanish ? 'Cursos en los que estás inscrito y tu progreso' : 'Courses you are enrolled in and your progress'}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    {enrolledCourses.length === 0 ? (
+                      <div className="text-center py-12">
+                        <BookOpen className="h-16 w-16 mx-auto mb-4 text-gray-300 dark:text-gray-600" />
+                        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                          {isSpanish ? 'No tienes cursos aún' : 'No courses yet'}
+                        </h3>
+                        <p className="text-gray-500 dark:text-gray-400 mb-6">
+                          {isSpanish ? 'Explora nuestro catálogo y comienza tu viaje de aprendizaje' : 'Explore our catalog and start your learning journey'}
+                        </p>
+                        <Button asChild className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90">
+                          <Link href={`/${locale}/catalog`}>
+                            {isSpanish ? 'Explorar cursos' : 'Browse courses'}
+                          </Link>
+                        </Button>
+                      </div>
+                    ) : (
+                      <div className="grid gap-6">
+                        {enrolledCourses.map((course) => (
+                          <div
+                            key={course.id}
+                            className="p-6 border rounded-xl bg-gradient-to-r from-muted/20 to-muted/10 border-muted/40 hover:border-primary/20 transition-all duration-300 group"
+                          >
+                            <div className="flex items-start justify-between">
+                              <div className="flex-1">
+                                <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
+                                  {course.name}
+                                </h3>
+                                <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
+                                  {course.description || (isSpanish ? 'Descripción del curso no disponible' : 'Course description not available')}
+                                </p>
+                                
+                                <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
+                                  <div className="flex items-center gap-1">
+                                    <Clock className="h-4 w-4" />
+                                    <span>{course.slides_count || 0} {isSpanish ? 'lecciones' : 'lessons'}</span>
+                                  </div>
+                                  <div className="flex items-center gap-1">
+                                    <PlayCircle className="h-4 w-4" />
+                                    <span>{Math.round((course.completion || 0) * 100)}% {isSpanish ? 'completado' : 'completed'}</span>
+                                  </div>
+                                  {course.completion >= 0.8 && (
+                                    <div className="flex items-center gap-1 text-green-600 dark:text-green-400">
+                                      <Award className="h-4 w-4" />
+                                      <span>{isSpanish ? 'Completado' : 'Completed'}</span>
+                                    </div>
+                                  )}
+                                </div>
+                                
+                                {/* Progress bar */}
+                                <div className="mb-4">
+                                  <div className="flex items-center justify-between text-sm mb-2">
+                                    <span className="text-muted-foreground">{isSpanish ? 'Progreso' : 'Progress'}</span>
+                                    <span className="font-medium text-foreground">{Math.round((course.completion || 0) * 100)}%</span>
+                                  </div>
+                                  <div className="w-full bg-muted rounded-full h-2">
+                                    <div 
+                                      className="bg-gradient-to-r from-primary to-accent h-2 rounded-full transition-all duration-300"
+                                      style={{ width: `${Math.round((course.completion || 0) * 100)}%` }}
+                                    ></div>
+                                  </div>
+                                </div>
+                              </div>
+                              
+                              <div className="ml-6 flex flex-col gap-2">
+                                <Button asChild size="sm" className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90">
+                                  <Link href={`/${locale}/course/${course.slug}/learn`}>
+                                    <PlayCircle className="h-4 w-4 mr-2" />
+                                    {isSpanish ? 'Continuar' : 'Continue'}
+                                  </Link>
+                                </Button>
+                                <Button asChild variant="outline" size="sm" className="glass border-primary/20 hover:bg-primary/10">
+                                  <Link href={`/${locale}/course/${course.slug}/overview`}>
+                                    {isSpanish ? 'Ver detalles' : 'View details'}
+                                  </Link>
+                                </Button>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
                       </div>
                     )}
                   </CardContent>
