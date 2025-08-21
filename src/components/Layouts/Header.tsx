@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Sun, Menu, X, Languages, ChevronDown, Moon } from "lucide-react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
 import { useTranslations } from "next-intl";
 import { CartIcon } from "@/components/CartIcon";
 
-export const Header: React.FC = () => {
+export const Header = () => {
     const { theme, setTheme } = useTheme();
     const t = useTranslations('header');
 

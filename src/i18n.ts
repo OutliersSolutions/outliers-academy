@@ -1,11 +1,11 @@
-import {getRequestConfig} from 'next-intl/server';
+import { getRequestConfig } from "next-intl/server";
 
-export default getRequestConfig(async ({locale}) => {
+export default getRequestConfig(async ({ locale }) => {
   try {
     const messages = (await import(`./messages/${locale}.json`)).default;
-    return {messages};
+    return { messages };
   } catch (error) {
     const fallback = (await import(`./messages/en.json`)).default;
-    return {messages: fallback};
+    return { messages: fallback };
   }
 }); 

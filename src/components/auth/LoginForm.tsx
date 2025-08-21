@@ -1,13 +1,13 @@
-'use client';
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { useNewAuth } from '@/components/providers/AuthProvider';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Loader2 } from 'lucide-react';
-import { toast } from 'sonner';
+"use client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useNewAuth } from "@/components/providers/AuthProvider";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
 export function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

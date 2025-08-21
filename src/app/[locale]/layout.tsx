@@ -1,14 +1,16 @@
-import { NextIntlClientProvider } from 'next-intl';
-import { getMessages } from 'next-intl/server';
-import { Navbar } from '@/components/Navbar';
-import { Footer } from '@/components/Layouts/Footer';
-import { ConditionalWhatsAppButton } from '@/components/ui/ConditionalWhatsAppButton';
-import { getTranslations } from 'next-intl/server';
-import { ThemeProvider } from '@/components/ThemeProvider';
-import { GlobalLoader } from '@/components/GlobalLoader';
-import { CookieProvider } from '@/components/CookieProvider';
-import { AuthProvider } from '@/components/providers/AuthProvider';
-import { ToastProvider } from '@/components/providers/ToastProvider';
+// External libraries
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages, getTranslations } from "next-intl/server";
+
+// Internal components
+import { Navbar } from "@/components/Navbar";
+import { Footer } from "@/components/Layouts/Footer";
+import { ConditionalWhatsAppButton } from "@/components/ui/ConditionalWhatsAppButton";
+import { ThemeProvider } from "@/components/ThemeProvider";
+import { GlobalLoader } from "@/components/GlobalLoader";
+import { CookieProvider } from "@/components/CookieProvider";
+import { AuthProvider } from "@/components/providers/AuthProvider";
+import { ToastProvider } from "@/components/providers/ToastProvider";
 // System font variables for CSS custom properties
 const systemFontVariables = {
   '--font-inter': 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
