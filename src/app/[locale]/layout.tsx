@@ -9,29 +9,12 @@ import { GlobalLoader } from '@/components/GlobalLoader';
 import { CookieProvider } from '@/components/CookieProvider';
 import { AuthProvider } from '@/components/providers/AuthProvider';
 import { ToastProvider } from '@/components/providers/ToastProvider';
-import { Inter, Manrope, JetBrains_Mono } from 'next/font/google';
-// Font configurations with preload and fallback
-const inter = Inter({ 
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
-  preload: true,
-  fallback: ['system-ui', 'arial', 'sans-serif'],
-});
-const manrope = Manrope({ 
-  subsets: ['latin'],
-  variable: '--font-manrope',
-  display: 'swap',
-  preload: true,
-  fallback: ['system-ui', 'arial', 'sans-serif'],
-});
-const jetbrainsMono = JetBrains_Mono({ 
-  subsets: ['latin'],
-  variable: '--font-code-primary',
-  display: 'swap',
-  preload: true,
-  fallback: ['Consolas', 'Monaco', 'monospace'],
-});
+// System font variables for CSS custom properties
+const systemFontVariables = {
+  '--font-inter': 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+  '--font-manrope': 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+  '--font-code-primary': 'ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace',
+};
 export default async function RootLayout({
   children,
   params: { locale }
@@ -66,14 +49,11 @@ export default async function RootLayout({
         {/* Preload critical resources */}
         <link rel="preload" href="/models/chatbot.glb" as="object" type="model/gltf-binary" />
         <link rel="preload" href="/icons/logo.png" as="image" />
-        {/* DNS prefetch for external resources */}
-        <link rel="dns-prefetch" href="//fonts.googleapis.com" />
-        <link rel="dns-prefetch" href="//fonts.gstatic.com" />
-        {/* Resource hints */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
-      <body className={`${inter.variable} ${manrope.variable} ${jetbrainsMono.variable} font-sans`}>
+      <body 
+        className="font-sans"
+        style={systemFontVariables as React.CSSProperties}
+      >
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider
             attribute="class"

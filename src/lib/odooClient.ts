@@ -66,7 +66,7 @@ export async function sendVerificationEmail(userId: number, userEmail: string): 
       email_to: userEmail,
       subject: '🚀 Verifica tu cuenta de Outliers Academy',
       body_html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+        <div style="font-family: system-ui, -apple-system, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <div style="text-align: center; margin-bottom: 30px;">
             <h1 style="color: #4F46E5; margin: 0;">🚀 Outliers Academy</h1>
             <h2 style="color: #374151; margin: 10px 0;">¡Bienvenido/a!</h2>

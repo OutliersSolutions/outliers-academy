@@ -17,7 +17,7 @@ export function ToastProvider() {
           color: 'hsl(var(--card-foreground))',
           border: '1px solid hsl(var(--border))',
           borderRadius: '0.75rem',
-          fontFamily: 'var(--font-inter), Inter, sans-serif',
+          fontFamily: 'var(--font-inter), system-ui, -apple-system, sans-serif',
           fontSize: '0.875rem',
           fontWeight: '500',
           boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
