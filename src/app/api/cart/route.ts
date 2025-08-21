@@ -1,9 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getCart, addToCart, removeFromCart, clearCart, cartToString, CART_COOKIE, CartItem } from '@/lib/cart';
 import { fetchCourses } from '@/lib/odooClient';
+import { verifyAuth } from '@/lib/auth';
 
 export async function GET(request: NextRequest) {
   try {
+    // Check authentication
+    const user = await verifyAuth(request);
+    if (!user) {
+      return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
+    }
+
     const cart = getCart(request);
     return NextResponse.json(cart);
   } catch (error) {
@@ -13,6 +20,12 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
+    // Check authentication
+    const user = await verifyAuth(request);
+    if (!user) {
+      return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
+    }
+
     const { action, courseId, productId } = await request.json();
     
     if (!action) {

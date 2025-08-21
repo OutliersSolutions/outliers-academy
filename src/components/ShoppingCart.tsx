@@ -2,9 +2,13 @@
 
 import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
-import { ShoppingCart as CartIcon, Trash2, X } from 'lucide-react';
+import { ShoppingCart as CartIcon, Trash2, X, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { useNewAuth } from '@/components/providers/AuthProvider';
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
+import { toast } from 'sonner';
 
 interface CartItem {
   courseId: number;
@@ -25,6 +29,9 @@ export function ShoppingCart() {
   const [cart, setCart] = useState<Cart>({ items: [], total: 0, itemCount: 0 });
   const [isLoading, setIsLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
+  const { isAuthenticated, loading: authLoading } = useNewAuth();
+  const pathname = usePathname();
+  const locale = pathname.split('/')[1] || 'es';
   const t = useTranslations('cart');
 
   // Fetch cart data
@@ -34,6 +41,9 @@ export function ShoppingCart() {
       if (response.ok) {
         const cartData = await response.json();
         setCart(cartData);
+      } else if (response.status === 401) {
+        // User not authenticated, clear cart
+        setCart({ items: [], total: 0, itemCount: 0 });
       }
     } catch (error) {
       console.error('Error fetching cart:', error);
@@ -56,6 +66,9 @@ export function ShoppingCart() {
         setCart(updatedCart);
         // Dispatch event for other components
         window.dispatchEvent(new CustomEvent('cartUpdated'));
+      } else if (response.status === 401) {
+        toast.error('Debes iniciar sesión para gestionar el carrito');
+        window.location.href = `/${locale}/login`;
       }
     } catch (error) {
       console.error('Error removing item:', error);
@@ -74,6 +87,9 @@ export function ShoppingCart() {
       if (response.ok) {
         setCart({ items: [], total: 0, itemCount: 0 });
         window.dispatchEvent(new CustomEvent('cartUpdated'));
+      } else if (response.status === 401) {
+        toast.error('Debes iniciar sesión para gestionar el carrito');
+        window.location.href = `/${locale}/login`;
       }
     } catch (error) {
       console.error('Error clearing cart:', error);
@@ -105,15 +121,31 @@ export function ShoppingCart() {
 
   // Listen for cart updates
   useEffect(() => {
-    fetchCart();
+    // Only fetch cart if user is authenticated
+    if (isAuthenticated) {
+      fetchCart();
+    }
 
     const handleCartUpdate = () => {
-      fetchCart();
+      if (isAuthenticated) {
+        fetchCart();
+      }
     };
 
     window.addEventListener('cartUpdated', handleCartUpdate);
     return () => window.removeEventListener('cartUpdated', handleCartUpdate);
-  }, []);
+  }, [isAuthenticated]);
+
+  // If user is not authenticated, show login button instead
+  if (!authLoading && !isAuthenticated) {
+    return (
+      <Link href={`/${locale}/login`}>
+        <Button variant="ghost" size="sm" className="relative">
+          <User className="h-5 w-5" />
+        </Button>
+      </Link>
+    );
+  }
 
   return (
     <div className="relative">
