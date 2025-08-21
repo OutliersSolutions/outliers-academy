@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
         }
 
         // Fetch course details to ensure it exists and get current data
-        const courses = await fetchCourses({ slug: courseId.toString() });
+        const courses = await fetchCourses();
         const course = courses.find((c: any) => c.id === courseId);
         
         if (!course) {

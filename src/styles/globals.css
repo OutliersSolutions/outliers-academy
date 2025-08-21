@@ -448,29 +448,36 @@ body {
 
 /* Buttons */
 .btn-primary {
-  @apply inline-flex items-center gap-2 rounded-full px-5 py-3 font-semibold text-white transition-all duration-200 font-sans;
+  @apply inline-flex items-center gap-2 rounded-full px-5 py-3 font-semibold transition-all duration-200 font-sans;
   background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+  color: #ffffff !important;
+  border: none;
 }
 .btn-primary:hover {
   filter: brightness(1.05);
   transform: translateY(-1px);
   box-shadow: 0 8px 25px rgba(47, 39, 206, 0.3);
+  color: #ffffff !important;
 }
 .btn-primary.btn-lg {
   @apply px-8 py-4 text-lg font-sans;
 }
 .btn-secondary {
-  @apply inline-flex items-center gap-2 rounded-full px-5 py-3 font-semibold text-text bg-secondary transition-all duration-200 font-sans;
+  @apply inline-flex items-center gap-2 rounded-full px-5 py-3 font-semibold bg-secondary transition-all duration-200 font-sans;
+  color: var(--color-text) !important;
 }
 .btn-secondary:hover {
   transform: translateY(-1px);
   box-shadow: 0 4px 15px rgba(47, 39, 206, 0.15);
 }
 .btn-outline {
-  @apply inline-flex items-center gap-2 rounded-full px-6 py-3 font-semibold text-primary border-2 border-primary bg-transparent transition-all duration-200 font-sans;
+  @apply inline-flex items-center gap-2 rounded-full px-6 py-3 font-semibold bg-transparent transition-all duration-200 font-sans;
+  color: var(--color-primary) !important;
+  border: 2px solid var(--color-primary);
 }
 .btn-outline:hover {
-  @apply bg-primary text-white;
+  background: var(--color-primary) !important;
+  color: #ffffff !important;
   transform: translateY(-1px);
 }
 

@@ -135,8 +135,8 @@ export default function SignUpPage() {
               <span className="text-3xl font-heading font-bold">O</span>
             </div>
           </motion.div>
-          <h1 className="text-4xl font-heading font-bold mb-4">Outliers Academy</h1>
-          <p className="text-xl opacity-90 mb-8 font-sans">
+          <h1 className="text-4xl font-heading font-bold mb-4 text-white">Outliers Academy</h1>
+          <p className="text-xl opacity-90 mb-8 font-sans text-white">
             {locale === 'es' 
               ? 'Únete a la comunidad de emprendedores que están transformando el futuro'
               : 'Join the community of entrepreneurs transforming the future'
@@ -344,7 +344,7 @@ export default function SignUpPage() {
                   <Button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full h-12 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground font-medium rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed font-sans"
+                    className="w-full h-12 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white font-medium rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed font-sans"
                   >
                     {isLoading ? (
                       <div className="flex items-center justify-center space-x-2">

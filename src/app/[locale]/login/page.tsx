@@ -106,8 +106,8 @@ export default function LoginPage() {
               <span className="text-3xl font-heading font-bold">O</span>
             </div>
           </motion.div>
-          <h1 className="text-4xl font-heading font-bold mb-4">Outliers Academy</h1>
-          <p className="text-xl opacity-90 mb-8 font-sans">
+          <h1 className="text-4xl font-heading font-bold mb-4 text-white">Outliers Academy</h1>
+          <p className="text-xl opacity-90 mb-8 font-sans text-white">
             {t.continueJourney}
           </p>
           <div className="space-y-4 text-left max-w-sm mx-auto">
@@ -250,7 +250,7 @@ export default function LoginPage() {
               <Button
                 type="submit"
                 disabled={loading}
-                className="w-full h-12 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground font-medium rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed font-sans"
+                className="w-full h-12 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white font-medium rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed font-sans"
               >
                 {loading ? (
                   <div className="flex items-center justify-center space-x-2">
