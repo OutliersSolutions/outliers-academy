@@ -584,6 +584,18 @@
         "heroDescription": "Creamos soluciones digitales a medida que mejoran procesos, optimizan la experiencia de usuario y generan un impacto medible en el crecimiento de tu negocio."
     },
     "courses": {
+        "defaults": {
+            "untitledCourse": "Curso sin título",
+            "courseDescription": "Descripción del curso",
+            "defaultLevel": "Intermedio"
+        },
+        "stats": {
+            "students": "estudiantes",
+            "reviews": "reseñas"
+        },
+        "ui": {
+            "successfulTransformation": "Transformación exitosa"
+        },
         "lessons": {
             "environment": "Configuración del entorno de desarrollo",
             "firstSteps": "Primeros pasos con el framework",
@@ -609,8 +621,27 @@
         }
     },
     "myCourses": {
+        "title": "Mis Cursos",
         "manageLearning": "Gestiona y continúa tu aprendizaje",
-        "adjustFilters": "Intenta ajustar tus filtros o explora nuevos cursos"
+        "adjustFilters": "Intenta ajustar tus filtros o explora nuevos cursos",
+        "exploreCourses": "Explorar Cursos",
+        "dashboard": "Dashboard",
+        "total": "Total",
+        "inProgress": "En progreso",
+        "completed": "Completados",
+        "notStarted": "Sin iniciar",
+        "searchPlaceholder": "Buscar cursos...",
+        "filters": "Filtros",
+        "all": "Todos",
+        "noCoursesFound": "No se encontraron cursos",
+        "browseCourses": "Explorar Cursos",
+        "courseDescription": "Descripción del curso",
+        "levels": {
+            "beginner": "Principiante",
+            "intermediate": "Intermedio",
+            "advanced": "Avanzado",
+            "undefined": "Sin definir"
+        }
     },
     "profile": {
         "securitySettings": "Gestiona tu contraseña y configuraciones de seguridad",

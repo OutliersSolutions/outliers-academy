@@ -115,15 +115,7 @@ export default function VerifyAccountPage() {
             <div className="space-y-4">
               <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
                 <p className="text-sm text-red-700 dark:text-red-300">
-                  {status === 'expired' ? (
-                    locale === 'es' 
-                      ? 'El enlace de verificación ha expirado por seguridad. Puedes solicitar uno nuevo.'
-                      : 'The verification link has expired for security. You can request a new one.'
-                  ) : (
-                    locale === 'es'
-                      ? 'Hubo un problema con el enlace de verificación. Verifica que hayas copiado la URL completa.'
-                      : 'There was a problem with the verification link. Make sure you copied the complete URL.'
-                  )}
+                  {status === 'expired' ? t('expiredSecurityMessage') : t('problemWithLinkMessage')}
                 </p>
               </div>
               

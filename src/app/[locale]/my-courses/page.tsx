@@ -47,6 +47,7 @@ export default function MyCoursesPage() {
   const pathname = usePathname();
   const locale = pathname.split('/')[1] || 'es';
   const tLoader = useTranslations('loader');
+  const t = useTranslations('myCourses');
   const isSpanish = locale === 'es';
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
@@ -140,21 +141,21 @@ export default function MyCoursesPage() {
         <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold">
-              {isSpanish ? 'Mis Cursos' : 'My Courses'}
+              {t('title')}
             </h1>
             <p className="text-muted-foreground">
-              {isSpanish ? 'Gestiona y continúa tu aprendizaje' : 'Manage and continue your learning'}
+              {t('manageLearning')}
             </p>
           </div>
           <div className="flex items-center space-x-2 mt-4 md:mt-0">
             <Button asChild variant="outline">
               <Link href={`/${locale}/catalog`}>
-                {isSpanish ? 'Explorar Cursos' : 'Explore Courses'}
+                {t('exploreCourses')}
               </Link>
             </Button>
             <Button asChild>
               <Link href={`/${locale}/dashboard`}>
-                {isSpanish ? 'Dashboard' : 'Dashboard'}
+                {t('dashboard')}
               </Link>
             </Button>
           </div>
@@ -168,7 +169,7 @@ export default function MyCoursesPage() {
                 <div>
                   <p className="text-2xl font-bold">{courses.length}</p>
                   <p className="text-sm text-muted-foreground">
-                    {isSpanish ? 'Total' : 'Total'}
+                    {t('total')}
                   </p>
                 </div>
               </div>
@@ -181,7 +182,7 @@ export default function MyCoursesPage() {
                 <div>
                   <p className="text-2xl font-bold">{inProgressCourses.length}</p>
                   <p className="text-sm text-muted-foreground">
-                    {isSpanish ? 'En progreso' : 'In Progress'}
+                    {t('inProgress')}
                   </p>
                 </div>
               </div>
@@ -194,7 +195,7 @@ export default function MyCoursesPage() {
                 <div>
                   <p className="text-2xl font-bold">{completedCourses.length}</p>
                   <p className="text-sm text-muted-foreground">
-                    {isSpanish ? 'Completados' : 'Completed'}
+                    {t('completed')}
                   </p>
                 </div>
               </div>
@@ -207,7 +208,7 @@ export default function MyCoursesPage() {
                 <div>
                   <p className="text-2xl font-bold">{notStartedCourses.length}</p>
                   <p className="text-sm text-muted-foreground">
-                    {isSpanish ? 'Sin iniciar' : 'Not Started'}
+                    {t('notStarted')}
                   </p>
                 </div>
               </div>
@@ -219,7 +220,7 @@ export default function MyCoursesPage() {
           <div className="relative flex-1 max-w-md">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder={isSpanish ? 'Buscar cursos...' : 'Search courses...'}
+              placeholder={t('searchPlaceholder')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-10"
@@ -227,14 +228,14 @@ export default function MyCoursesPage() {
           </div>
           <Button variant="outline" className="md:ml-4">
             <Filter className="h-4 w-4 mr-2" />
-            {isSpanish ? 'Filtros' : 'Filters'}
+            {t('filters')}
           </Button>
         </div>
         {/* Course Tabs */}
         <Tabs value={selectedTab} onValueChange={setSelectedTab} className="space-y-6">
           <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="all">
-              {isSpanish ? 'Todos' : 'All'} ({courses.length})
+              {t('all')} ({courses.length})
             </TabsTrigger>
             <TabsTrigger value="in-progress">
               {isSpanish ? 'En progreso' : 'In Progress'} ({inProgressCourses.length})

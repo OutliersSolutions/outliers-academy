@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { StarRating } from '@/components/ui/StarRating';
 import { UserAvatars } from '@/components/ui/UserAvatars';
 interface AcademyStatsData {
@@ -14,6 +15,7 @@ interface AcademyStatsProps {
 export function AcademyStats({ locale }: AcademyStatsProps) {
   const [stats, setStats] = useState<AcademyStatsData | null>(null);
   const [loading, setLoading] = useState(true);
+  const t = useTranslations('courses.stats');
   useEffect(() => {
     async function fetchStats() {
       try {
@@ -73,12 +75,8 @@ export function AcademyStats({ locale }: AcademyStatsProps) {
     }
     return count.toString();
   };
-  const studentsText = locale === 'es' 
-    ? `${formatStudentCount(stats.totalStudents)} estudiantes`
-    : `${formatStudentCount(stats.totalStudents)} students`;
-  const reviewsText = locale === 'es'
-    ? `${stats.averageRating} (${formatReviewCount(stats.totalReviews)} reseñas)`
-    : `${stats.averageRating} (${formatReviewCount(stats.totalReviews)} reviews)`;
+  const studentsText = `${formatStudentCount(stats.totalStudents)} ${t('students')}`;
+  const reviewsText = `${stats.averageRating} (${formatReviewCount(stats.totalReviews)} ${t('reviews')})`;
   return (
     <div className="flex items-center gap-8 text-sm text-neutral-600 dark:text-neutral-300">
       <div className="flex items-center gap-2">

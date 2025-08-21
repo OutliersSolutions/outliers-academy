@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 
 interface ProfileCarouselProps {
@@ -10,6 +11,7 @@ interface ProfileCarouselProps {
 
 export const ProfileCarousel = ({ className = '' }: ProfileCarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(0)
+  const t = useTranslations('courses.ui')
 
   const profiles = [
     {
@@ -149,7 +151,7 @@ export const ProfileCarousel = ({ className = '' }: ProfileCarouselProps) => {
             <div className="flex items-center justify-center gap-2 text-green-600 dark:text-green-400">
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
               <span className="text-sm font-medium">
-                {locale === 'es' ? 'Transformación exitosa' : 'Successful transformation'}
+                {t('successfulTransformation')}
               </span>
             </div>
           </motion.div>

@@ -23,6 +23,7 @@ interface Course {
 export function CourseGridClient() {
   const tCommon = useTranslations('common');
   const tCourse = useTranslations('course');
+  const tDefaults = useTranslations('courses.defaults');
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
@@ -41,11 +42,11 @@ export function CourseGridClient() {
           // Map the courses to add missing fields and normalize data
           const mappedCourses = coursesArray.map((course: any) => ({
             ...course,
-            name: course.title || course.name || 'Curso sin título',
-            description: course.description || 'Descripción del curso',
+            name: course.title || course.name || tDefaults('untitledCourse'),
+            description: course.description || tDefaults('courseDescription'),
             image: course.image || `/images/course-${course.id}.jpg`,
             duration: course.duration || Math.floor(Math.random() * 20) + 5,
-            level: course.level || (locale === 'es' ? 'Intermedio' : 'Intermediate'),
+            level: course.level || tDefaults('defaultLevel'),
             rating: course.rating || (4 + Math.random()),
             students: course.students || Math.floor(Math.random() * 1000) + 100
           }));
@@ -62,7 +63,7 @@ export function CourseGridClient() {
       }
     };
     fetchCourses();
-  }, [locale]);
+  }, [locale, tDefaults]);
   if (loading) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

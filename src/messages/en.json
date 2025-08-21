@@ -83,7 +83,6 @@
             "signUpFree": "Sign up — it's free",
             "exploreCatalog": "Explore catalog"
         }
-        }
     },
     "nav": {
         "catalog": "Catalog",
@@ -585,6 +584,18 @@
         "heroDescription": "We create custom digital solutions that improve processes, optimize user experience and generate measurable impact on your business growth."
     },
     "courses": {
+        "defaults": {
+            "untitledCourse": "Untitled Course",
+            "courseDescription": "Course description",
+            "defaultLevel": "Intermediate"
+        },
+        "stats": {
+            "students": "students",
+            "reviews": "reviews"
+        },
+        "ui": {
+            "successfulTransformation": "Successful transformation"
+        },
         "lessons": {
             "environment": "Development environment setup",
             "firstSteps": "First steps with the framework",
@@ -610,8 +621,27 @@
         }
     },
     "myCourses": {
+        "title": "My Courses",
         "manageLearning": "Manage and continue your learning",
-        "adjustFilters": "Try adjusting your filters or explore new courses"
+        "adjustFilters": "Try adjusting your filters or explore new courses",
+        "exploreCourses": "Explore Courses",
+        "dashboard": "Dashboard",
+        "total": "Total",
+        "inProgress": "In Progress",
+        "completed": "Completed",
+        "notStarted": "Not Started",
+        "searchPlaceholder": "Search courses...",
+        "filters": "Filters",
+        "all": "All",
+        "noCoursesFound": "No courses found",
+        "browseCourses": "Browse Courses",
+        "courseDescription": "Course description",
+        "levels": {
+            "beginner": "Beginner",
+            "intermediate": "Intermediate",
+            "advanced": "Advanced",
+            "undefined": "Undefined"
+        }
     },
     "profile": {
         "securitySettings": "Manage your password and security settings",
