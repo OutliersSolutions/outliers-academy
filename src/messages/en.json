@@ -90,7 +90,8 @@
         "signUp": "Sign up",
         "signOut": "Sign out",
         "profile": "Profile",
-        "faq": "FAQ"
+        "faq": "FAQ",
+        "legal": "Legal"
     },
     "footer": {
         "description": "We transform ideas into digital realities through visionary code and innovative marketing strategies.",
@@ -101,6 +102,7 @@
         "catalog": "Catalog",
         "schedule": "Schedule",
         "faq": "FAQ",
+        "legal": "Legal",
         "services": "Services",
         "otherServices": "Other Services",
         "digitalMarketing": "Digital Marketing",
@@ -718,6 +720,89 @@
             "loading": "Loading...",
             "saved": "Saved successfully",
             "deleted": "Deleted successfully"
+        }
+    },
+    "legal": {
+        "title": "Legal Terms",
+        "subtitle": "Legal information and policies for Outliers Academy",
+        "lastUpdated": "Last updated",
+        "sections": {
+            "terms": {
+                "title": "Terms and Conditions",
+                "content": {
+                    "intro": "Welcome to Outliers Academy. By accessing and using our services, you agree to be bound by the following terms and conditions.",
+                    "acceptance": {
+                        "title": "1. Acceptance of Terms",
+                        "content": "By using our services, you confirm that you have read, understood, and agree to be bound by these terms. If you do not agree with any part of these terms, you should not use our services."
+                    },
+                    "services": {
+                        "title": "2. Description of Services",
+                        "content": "Outliers Academy is an online educational platform that offers technology courses, including but not limited to programming, artificial intelligence, data science, and web development."
+                    },
+                    "userAccounts": {
+                        "title": "3. User Accounts",
+                        "content": "To access certain services, you must create an account. You are responsible for maintaining the confidentiality of your account and password, and accept responsibility for all activities that occur under your account."
+                    },
+                    "intellectual": {
+                        "title": "4. Intellectual Property",
+                        "content": "All course content, including videos, texts, images, and materials, is protected by copyright and other intellectual property rights. You may not copy, distribute, or modify this content without authorization."
+                    },
+                    "payment": {
+                        "title": "5. Payments and Refunds",
+                        "content": "Payments must be made through the methods specified on the platform. We offer refunds within 30 days of purchase, subject to our refund policies."
+                    }
+                }
+            },
+            "privacy": {
+                "title": "Privacy Policy",
+                "content": {
+                    "intro": "At Outliers Academy, we respect your privacy and are committed to protecting your personal information.",
+                    "collection": {
+                        "title": "1. Information We Collect",
+                        "content": "We collect information you provide directly to us, such as when you create an account, enroll in a course, or communicate with us. We also automatically collect information about your use of our services."
+                    },
+                    "use": {
+                        "title": "2. How We Use Your Information",
+                        "content": "We use your information to provide and improve our services, process transactions, communicate with you, and comply with legal obligations."
+                    },
+                    "sharing": {
+                        "title": "3. Information Sharing",
+                        "content": "We do not sell, trade, or transfer your personal information to third parties, except when necessary to provide our services or when required by law."
+                    },
+                    "security": {
+                        "title": "4. Data Security",
+                        "content": "We implement appropriate technical and organizational security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction."
+                    },
+                    "rights": {
+                        "title": "5. Your Rights",
+                        "content": "You have the right to access, correct, delete, or transfer your personal information. You may also object to the processing of your data in certain circumstances."
+                    }
+                }
+            },
+            "cookies": {
+                "title": "Cookie Policy",
+                "content": {
+                    "intro": "We use cookies and similar technologies to improve your experience on our website.",
+                    "what": {
+                        "title": "1. What are Cookies?",
+                        "content": "Cookies are small text files that are stored on your device when you visit our website. They help us remember your preferences and improve your experience."
+                    },
+                    "types": {
+                        "title": "2. Types of Cookies We Use",
+                        "content": "We use essential cookies for site functionality, performance cookies to analyze usage, and functionality cookies to remember your preferences."
+                    },
+                    "control": {
+                        "title": "3. Cookie Control",
+                        "content": "You can control and delete cookies through your browser settings. However, this may affect the functionality of our website."
+                    }
+                }
+            }
+        },
+        "contact": {
+            "title": "Legal Contact",
+            "description": "If you have questions about these legal terms, you can contact us:",
+            "email": "legal@outliersacademy.com",
+            "address": "Lima, Peru"
         }
     }
 }

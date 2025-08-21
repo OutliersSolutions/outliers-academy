@@ -90,7 +90,8 @@
         "signUp": "Registrarse",
         "signOut": "Cerrar sesión",
         "profile": "Perfil",
-        "faq": "FAQ"
+        "faq": "FAQ",
+        "legal": "Legal"
     },
     "footer": {
         "description": "Transformamos ideas en realidades digitales a través de código visionario y estrategias de marketing innovadoras.",
@@ -101,6 +102,7 @@
         "catalog": "Catálogo",
         "schedule": "Agendar",
         "faq": "FAQ",
+        "legal": "Legal",
         "services": "Servicios",
         "otherServices": "Otros Servicios",
         "digitalMarketing": "Marketing Digital",
@@ -718,6 +720,89 @@
             "loading": "Cargando...",
             "saved": "Guardado exitosamente",
             "deleted": "Eliminado exitosamente"
+        }
+    },
+    "legal": {
+        "title": "Términos Legales",
+        "subtitle": "Información legal y políticas de Outliers Academy",
+        "lastUpdated": "Última actualización",
+        "sections": {
+            "terms": {
+                "title": "Términos y Condiciones",
+                "content": {
+                    "intro": "Bienvenido a Outliers Academy. Al acceder y utilizar nuestros servicios, usted acepta estar sujeto a los siguientes términos y condiciones.",
+                    "acceptance": {
+                        "title": "1. Aceptación de los Términos",
+                        "content": "Al utilizar nuestros servicios, usted confirma que ha leído, entendido y acepta estar sujeto a estos términos. Si no está de acuerdo con alguna parte de estos términos, no debe usar nuestros servicios."
+                    },
+                    "services": {
+                        "title": "2. Descripción de los Servicios",
+                        "content": "Outliers Academy es una plataforma educativa en línea que ofrece cursos de tecnología, incluyendo pero no limitado a programación, inteligencia artificial, ciencia de datos y desarrollo web."
+                    },
+                    "userAccounts": {
+                        "title": "3. Cuentas de Usuario",
+                        "content": "Para acceder a ciertos servicios, debe crear una cuenta. Usted es responsable de mantener la confidencialidad de su cuenta y contraseña, y acepta la responsabilidad de todas las actividades que ocurran bajo su cuenta."
+                    },
+                    "intellectual": {
+                        "title": "4. Propiedad Intelectual",
+                        "content": "Todo el contenido de los cursos, incluyendo videos, textos, imágenes y materiales, está protegido por derechos de autor y otros derechos de propiedad intelectual. No puede copiar, distribuir o modificar este contenido sin autorización."
+                    },
+                    "payment": {
+                        "title": "5. Pagos y Reembolsos",
+                        "content": "Los pagos deben realizarse a través de los métodos especificados en la plataforma. Ofrecemos reembolsos dentro de los 30 días posteriores a la compra, sujeto a nuestras políticas de reembolso."
+                    }
+                }
+            },
+            "privacy": {
+                "title": "Política de Privacidad",
+                "content": {
+                    "intro": "En Outliers Academy, respetamos su privacidad y nos comprometemos a proteger su información personal.",
+                    "collection": {
+                        "title": "1. Información que Recopilamos",
+                        "content": "Recopilamos información que usted nos proporciona directamente, como cuando crea una cuenta, se inscribe en un curso o se comunica con nosotros. También recopilamos información automáticamente sobre su uso de nuestros servicios."
+                    },
+                    "use": {
+                        "title": "2. Cómo Utilizamos su Información",
+                        "content": "Utilizamos su información para proporcionar y mejorar nuestros servicios, procesar transacciones, comunicarnos con usted y cumplir con obligaciones legales."
+                    },
+                    "sharing": {
+                        "title": "3. Compartir Información",
+                        "content": "No vendemos, comercializamos o transferimos su información personal a terceros, excepto cuando sea necesario para proporcionar nuestros servicios o cuando lo requiera la ley."
+                    },
+                    "security": {
+                        "title": "4. Seguridad de los Datos",
+                        "content": "Implementamos medidas de seguridad técnicas y organizativas apropiadas para proteger su información personal contra acceso no autorizado, alteración, divulgación o destrucción."
+                    },
+                    "rights": {
+                        "title": "5. Sus Derechos",
+                        "content": "Usted tiene derecho a acceder, corregir, eliminar o transferir su información personal. También puede oponerse al procesamiento de sus datos en ciertas circunstancias."
+                    }
+                }
+            },
+            "cookies": {
+                "title": "Política de Cookies",
+                "content": {
+                    "intro": "Utilizamos cookies y tecnologías similares para mejorar su experiencia en nuestro sitio web.",
+                    "what": {
+                        "title": "1. ¿Qué son las Cookies?",
+                        "content": "Las cookies son pequeños archivos de texto que se almacenan en su dispositivo cuando visita nuestro sitio web. Nos ayudan a recordar sus preferencias y mejorar su experiencia."
+                    },
+                    "types": {
+                        "title": "2. Tipos de Cookies que Utilizamos",
+                        "content": "Utilizamos cookies esenciales para el funcionamiento del sitio, cookies de rendimiento para analizar el uso, y cookies de funcionalidad para recordar sus preferencias."
+                    },
+                    "control": {
+                        "title": "3. Control de Cookies",
+                        "content": "Puede controlar y eliminar cookies a través de la configuración de su navegador. Sin embargo, esto puede afectar la funcionalidad de nuestro sitio web."
+                    }
+                }
+            }
+        },
+        "contact": {
+            "title": "Contacto Legal",
+            "description": "Si tiene preguntas sobre estos términos legales, puede contactarnos:",
+            "email": "legal@outliersacademy.com",
+            "address": "Lima, Perú"
         }
     }
 }

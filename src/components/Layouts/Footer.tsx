@@ -55,6 +55,7 @@ export const Footer = async ({ locale }: FooterProps) => {
                             <li><Link href={`/${locale}/catalog`} className="hover:text-primary transition-colors">{t('catalog')}</Link></li>
                             <li><a href="https://calendly.com/outlierssolutions108/discovery-meeting" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">{t('schedule')}</a></li>
                             <li><Link href={`/${locale}/faq`} className="hover:text-primary transition-colors">{t('faq')}</Link></li>
+                            <li><Link href={`/${locale}/legal`} className="hover:text-primary transition-colors">{t('legal')}</Link></li>
                         </ul>
                     </div>
 
