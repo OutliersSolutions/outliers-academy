@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { GlitchText } from '@/components/ui/GlitchText';
 import { CanvasDots } from '@/components/ui/CanvasDots';
 import type { Route } from 'next';
@@ -27,6 +27,7 @@ export function CTASection({
   secondaryLink 
 }: CTASectionProps) {
   const locale = useLocale();
+  const t = useTranslations('home');
   return (
     <section className="relative py-20 md:py-28 bg-gradient-to-br from-surface via-bg to-surface dark:from-surface dark:via-bg dark:to-surface overflow-hidden">
       {/* Canvas Background with Dots */}
@@ -96,13 +97,13 @@ export function CTASection({
             href={`/${locale}/signup`} 
             className="bg-gradient-to-r from-primary to-accent text-white px-8 py-4 rounded-full font-heading font-semibold hover:brightness-110 hover:scale-105 transition-all duration-200 text-lg hover:shadow-lg"
           >
-            {locale === 'es' ? 'Registrarse — es gratis' : 'Sign up — it\'s free'}
+            {t('ctaSection.signUpFree')}
           </Link>
           <Link 
             href={`/${locale}/catalog`}
             className="text-primary dark:text-primary hover:text-accent dark:hover:text-accent transition-colors duration-200 font-sans font-medium underline underline-offset-4"
           >
-            {locale === 'es' ? 'Explorar catálogo' : 'Explore catalog'}
+            {t('ctaSection.exploreCatalog')}
           </Link>
         </div>
       </div>

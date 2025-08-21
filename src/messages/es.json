@@ -71,13 +71,17 @@
         },
         "technologies": {
             "title": "Tecnologías que aprenderás",
-            "subhead": "Domina las herramientas y frameworks más demandados en la industria"
+            "subhead": "Domina las herramientas y frameworks más demandados en la industria",
+            "lookingForSpecific": "¿Buscas algo más específico?",
+            "exploreFullCatalog": "Explorar catálogo completo"
         },
         "ctaSection": {
             "title": "¿Listo para transformar tu carrera?",
             "desc": "Únete a miles de profesionales que ya están construyendo su futuro en tecnología",
             "primary": "Comenzar ahora",
-            "secondary": "Ver precios"
+            "secondary": "Ver precios",
+            "signUpFree": "Registrarse — es gratis",
+            "exploreCatalog": "Explorar catálogo"
         }
     },
     "nav": {
@@ -366,6 +370,9 @@
     "dashboard": {
         "welcome": "¡Hola, {name}!",
         "welcomeSubtitle": "Bienvenido a tu panel de estudiante",
+        "signOut": "Cerrar Sesión",
+        "loadingDashboard": "Cargando dashboard...",
+        "loadingProfile": "Cargando perfil de usuario...",
         "stats": {
             "enrolledCourses": "Cursos Inscritos",
             "completedCourses": "Cursos Completados",
@@ -737,6 +744,21 @@
                 "accountCreatedSuccess": "¡Cuenta creada exitosamente!",
                 "checkEmailVerification": "Revisa tu correo electrónico y haz clic en el enlace de verificación para activar tu cuenta.",
                 "createAnotherAccount": "Crear otra cuenta"
+            },
+            "verification": {
+                "loading": "Verificando cuenta...",
+                "success": "¡Cuenta verificada!",
+                "error": "Error en la verificación",
+                "expired": "Token expirado",
+                "invalidToken": "Token de verificación no válido",
+                "goToDashboard": "Ir al Dashboard",
+                "backToLogin": "Volver al Login",
+                "requestNewToken": "Solicitar nuevo token",
+                "accountActive": "Tu cuenta está ahora activa. Puedes iniciar sesión con tu email y contraseña.",
+                "linkExpiredMessage": "El enlace de verificación ha expirado",
+                "successMessage": "¡Tu cuenta ha sido verificada exitosamente!",
+                "expiredSecurityMessage": "El enlace de verificación ha expirado por seguridad. Puedes solicitar uno nuevo.",
+                "problemWithLinkMessage": "Hubo un problema con el enlace de verificación. Verifica que hayas copiado la URL completa."
             }
         },
         "cart": {

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { CheckCircle, XCircle, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -15,15 +16,14 @@ export default function VerifyAccountPage() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const locale = pathname.split('/')[1] || 'es';
+  const t = useTranslations('notifications.auth.verification');
   
   const token = searchParams.get('token');
 
   useEffect(() => {
     if (!token) {
       setStatus('error');
-      setMessage(locale === 'es' 
-        ? 'Token de verificación no válido' 
-        : 'Invalid verification token');
+      setMessage(t('invalidToken'));
       return;
     }
 
@@ -39,9 +39,7 @@ export default function VerifyAccountPage() {
       
       if (hoursDiff > 24) {
         setStatus('expired');
-        setMessage(locale === 'es' 
-          ? 'El enlace de verificación ha expirado' 
-          : 'Verification link has expired');
+        setMessage(t('linkExpiredMessage'));
         return;
       }
 
@@ -49,18 +47,14 @@ export default function VerifyAccountPage() {
       // For now, we'll simulate success
       setTimeout(() => {
         setStatus('success');
-        setMessage(locale === 'es' 
-          ? '¡Tu cuenta ha sido verificada exitosamente!' 
-          : 'Your account has been verified successfully!');
+        setMessage(t('successMessage'));
       }, 2000);
 
     } catch (error) {
       setStatus('error');
-      setMessage(locale === 'es' 
-        ? 'Token de verificación inválido' 
-        : 'Invalid verification token');
+      setMessage(t('invalidToken'));
     }
-  }, [token, locale]);
+  }, [token, t]);
 
   const handleContinue = () => {
     router.push(`/${locale}/login`);
@@ -91,10 +85,10 @@ export default function VerifyAccountPage() {
           </div>
           
           <CardTitle className="text-2xl font-bold tracking-tight">
-            {status === 'loading' && (locale === 'es' ? 'Verificando cuenta...' : 'Verifying account...')}
-            {status === 'success' && (locale === 'es' ? '¡Cuenta verificada!' : 'Account verified!')}
-            {status === 'error' && (locale === 'es' ? 'Error de verificación' : 'Verification error')}
-            {status === 'expired' && (locale === 'es' ? 'Enlace expirado' : 'Link expired')}
+            {status === 'loading' && t('loading')}
+            {status === 'success' && t('success')}
+            {status === 'error' && t('error')}
+            {status === 'expired' && t('expired')}
           </CardTitle>
           
           <CardDescription className="text-muted-foreground">
@@ -107,14 +101,12 @@ export default function VerifyAccountPage() {
             <div className="space-y-4">
               <div className="p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
                 <p className="text-sm text-green-700 dark:text-green-300">
-                  {locale === 'es' 
-                    ? 'Tu cuenta está ahora activa. Puedes iniciar sesión con tu email y contraseña.'
-                    : 'Your account is now active. You can sign in with your email and password.'}
+                  {t('accountActive')}
                 </p>
               </div>
               
               <Button onClick={handleContinue} className="w-full">
-                {locale === 'es' ? 'Continuar al inicio de sesión' : 'Continue to sign in'}
+                {t('backToLogin')}
               </Button>
             </div>
           )}

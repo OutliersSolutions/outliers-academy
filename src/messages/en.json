@@ -71,13 +71,18 @@
         },
         "technologies": {
             "title": "Technologies you will learn",
-            "subhead": "Master the most in-demand tools and frameworks in the industry"
+            "subhead": "Master the most in-demand tools and frameworks in the industry",
+            "lookingForSpecific": "Looking for something specific?",
+            "exploreFullCatalog": "Explore full catalog"
         },
         "ctaSection": {
             "title": "Ready to transform your career?",
             "desc": "Join thousands of professionals already building their future in technology",
             "primary": "Start now",
-            "secondary": "See pricing"
+            "secondary": "See pricing",
+            "signUpFree": "Sign up — it's free",
+            "exploreCatalog": "Explore catalog"
+        }
         }
     },
     "nav": {
@@ -366,6 +371,9 @@
     "dashboard": {
         "welcome": "Hello, {name}!",
         "welcomeSubtitle": "Welcome to your student dashboard",
+        "signOut": "Sign Out",
+        "loadingDashboard": "Loading dashboard...",
+        "loadingProfile": "Loading user profile...",
         "stats": {
             "enrolledCourses": "Enrolled Courses",
             "completedCourses": "Completed Courses",
@@ -737,6 +745,21 @@
                 "accountCreatedSuccess": "Account created successfully!",
                 "checkEmailVerification": "Check your email and click the verification link to activate your account.",
                 "createAnotherAccount": "Create another account"
+            },
+            "verification": {
+                "loading": "Verifying account...",
+                "success": "Account verified!",
+                "error": "Verification error",
+                "expired": "Token expired",
+                "invalidToken": "Invalid verification token",
+                "goToDashboard": "Go to Dashboard",
+                "backToLogin": "Back to Login",
+                "requestNewToken": "Request new token",
+                "accountActive": "Your account is now active. You can sign in with your email and password.",
+                "linkExpiredMessage": "Verification link has expired",
+                "successMessage": "Your account has been verified successfully!",
+                "expiredSecurityMessage": "The verification link has expired for security. You can request a new one.",
+                "problemWithLinkMessage": "There was a problem with the verification link. Make sure you copied the complete URL."
             }
         },
         "cart": {

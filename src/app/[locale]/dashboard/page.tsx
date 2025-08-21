@@ -39,7 +39,7 @@ export default function DashboardPage() {
         <div className="text-center">
           <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4" />
           <p className="text-muted-foreground">
-            {locale === 'es' ? 'Cargando dashboard...' : 'Loading dashboard...'}
+            {t('loadingDashboard')}
           </p>
         </div>
       </div>
@@ -54,7 +54,7 @@ export default function DashboardPage() {
         <div className="text-center">
           <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4" />
           <p className="text-muted-foreground">
-            {locale === 'es' ? 'Cargando perfil de usuario...' : 'Loading user profile...'}
+            {t('loadingProfile')}
           </p>
         </div>
       </div>
@@ -93,7 +93,7 @@ export default function DashboardPage() {
           </div>
           
           <Button variant="outline" onClick={handleSignOut}>
-            {locale === 'es' ? 'Cerrar Sesión' : 'Sign Out'}
+            {t('signOut')}
           </Button>
         </div>
 

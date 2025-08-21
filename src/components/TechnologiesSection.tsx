@@ -169,13 +169,13 @@ export function TechnologiesSection({ locale }: TechnologiesSectionProps) {
         {/* Call to Action */}
         <div className="text-center">
           <p className="text-solarized-base01 dark:text-white/90 mb-6 text-lg font-mono font-medium">
-            {locale === 'es' ? '¿Buscas algo más específico?' : 'Looking for something specific?'}
+            {t('technologies.lookingForSpecific')}
           </p>
           <Link 
             href={`/${locale}/catalog` as Route} 
             className="inline-flex items-center gap-2 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white dark:text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-primary/25 dark:hover:shadow-primary/25"
           >
-            {locale === 'es' ? 'Explorar catálogo completo' : 'Explore full catalog'}
+            {t('technologies.exploreFullCatalog')}
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
