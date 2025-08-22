@@ -37,8 +37,6 @@ export function AnimatedText({
     if (stableWords.length > 0) {
       setCurrentText(stableWords[0]);
     }
-    // Note: Currently only 'typing' effect is implemented
-    console.debug('AnimatedText effect:', effect);
   }, [stableWords, effect]);
 
   useEffect(() => {
