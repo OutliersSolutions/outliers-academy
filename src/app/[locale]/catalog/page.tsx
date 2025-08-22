@@ -68,11 +68,6 @@ export default function CatalogPage({ params }: CatalogPageProps) {
         <div className="container mx-auto px-4 py-12">
           {/* Header mejorado */}
           <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-sm border border-blue-400/30 text-blue-600 dark:text-blue-300 px-6 py-3 rounded-full text-sm font-medium mb-8">
-              <div className="w-2 h-2 bg-blue-500 dark:bg-blue-400 rounded-full animate-pulse"></div>
-              <span className="font-mono">CATÁLOGO</span>
-            </div>
-            
             <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
               <span className="bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 dark:from-white dark:via-blue-100 dark:to-purple-200 bg-clip-text text-transparent">
                 {t('title') || 'Catálogo de Cursos'}
