@@ -917,7 +917,22 @@
         "cta": {
             "title": "¿No estás seguro qué plan elegir?",
             "description": "Nuestro equipo te ayudará a encontrar la solución perfecta para tus necesidades.",
-            "button": "Hablar con un Experto"
+            "button": "Hablar con un Experto",
+            "contact": {
+                "form": {
+                    "title": "Formulario de Contacto",
+                    "description": "Envíanos un mensaje detallado"
+                },
+                "email": {
+                    "title": "Email Directo",
+                    "description": "info@outliersacademy.com"
+                },
+                "calendar": {
+                    "title": "Agendar Llamada",
+                    "description": "Reunión de 30 minutos"
+                },
+                "whatsapp": "WhatsApp"
+            }
         }
     },
     "legal": {

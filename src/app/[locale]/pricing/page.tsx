@@ -1,7 +1,7 @@
 import {CheckoutButton} from '@/components/CheckoutButton';
 import {Badge} from '@/components/ui/badge';
 import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from '@/components/ui/card';
-import {Check, X} from 'lucide-react';
+import {Check, X, MessageCircle, Mail, Calendar} from 'lucide-react';
 import {useTranslations} from 'next-intl';
 
 interface Plan {
@@ -169,17 +169,69 @@ export default function PricingPage() {
         </div>
 
 
-        {/* CTA Final */}
-        <div className="mt-20 text-center">
-          <h2 className="h2-section mb-4">
-            {t('cta.title')}
-          </h2>
-          <p className="p-lead mb-6">
-            {t('cta.description')}
-          </p>
-          <a href="/contact" className="btn-primary">
-            {t('cta.button')}
-          </a>
+        {/* CTA Final Mejorado */}
+        <div className="mt-20">
+          <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-700 rounded-3xl p-8 md:p-12 text-center border border-gray-100 dark:border-gray-600">
+            <h2 className="h2-section mb-4">
+              {t('cta.title')}
+            </h2>
+            <p className="p-lead mb-8 max-w-2xl mx-auto">
+              {t('cta.description')}
+            </p>
+            
+            {/* Opciones de Contacto */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto mb-8">
+              <a 
+                href="/contact" 
+                className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-600 hover:shadow-lg transition-all duration-300 group"
+              >
+                <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/20 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
+                  <MessageCircle className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                </div>
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">{t('cta.contact.form.title')}</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400">{t('cta.contact.form.description')}</p>
+              </a>
+              
+              <a 
+                href="mailto:info@outliersacademy.com" 
+                className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-600 hover:shadow-lg transition-all duration-300 group"
+              >
+                <div className="w-12 h-12 bg-green-100 dark:bg-green-900/20 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
+                  <Mail className="h-6 w-6 text-green-600 dark:text-green-400" />
+                </div>
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">{t('cta.contact.email.title')}</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400">{t('cta.contact.email.description')}</p>
+              </a>
+              
+              <a 
+                href="https://calendly.com/outliersacademy" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-600 hover:shadow-lg transition-all duration-300 group"
+              >
+                <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/20 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
+                  <Calendar className="h-6 w-6 text-purple-600 dark:text-purple-400" />
+                </div>
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">{t('cta.contact.calendar.title')}</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400">{t('cta.contact.calendar.description')}</p>
+              </a>
+            </div>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a href="/contact" className="btn-primary">
+                {t('cta.button')}
+              </a>
+              <a 
+                href="https://wa.me/51999999999" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="btn-outline flex items-center gap-2"
+              >
+                <MessageCircle className="h-4 w-4" />
+                {t('cta.contact.whatsapp')}
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
