@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useTranslations } from 'next-intl';
 import { usePathname } from 'next/navigation';
 import { CourseGridSkeleton } from '@/components/ui/Skeleton';
@@ -58,49 +58,49 @@ export function CourseSearch({
   const locale = pathname.split('/')[1] || 'es';
 
   // Fetch all courses
-  useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        const res = await fetch('/api/courses', {
-          cache: 'no-store'
-        });
-        
-        if (!res.ok) {
-          throw new Error(`HTTP ${res.status}`);
-        }
-        
-        const data = await res.json();
-        const coursesArray = Array.isArray(data) ? data : (data.courses || []);
-        
-        const mappedCourses = coursesArray.map((course: any) => ({
-          ...course,
-          name: course.title || course.name || tDefaults('untitledCourse'),
-          description: (course.description || tDefaults('courseDescription'))
-            .replace(/<[^>]*>/g, '')
-            .replace(/&nbsp;/g, ' ')
-            .trim(),
-          image: course.image,
-          duration: course.duration || 0,
-          level: course.level || tDefaults('defaultLevel'),
-          rating: course.rating || 0,
-          students: course.students || 0,
-          price: Math.round((course.price || 0) * 100) / 100
-        }));
-        
-        setCourses(mappedCourses);
-      } catch (error) {
-        console.error('Error fetching courses:', error);
-        setError('Failed to load courses');
-        setCourses([]);
-      } finally {
-        setLoading(false);
+  const fetchCourses = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const res = await fetch('/api/courses', {
+        cache: 'no-store'
+      });
+      
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}`);
       }
-    };
+      
+      const data = await res.json();
+      const coursesArray = Array.isArray(data) ? data : (data.courses || []);
+      
+      const mappedCourses = coursesArray.map((course: any) => ({
+        ...course,
+        name: course.title || course.name || tDefaults('untitledCourse'),
+        description: (course.description || tDefaults('courseDescription'))
+          .replace(/<[^>]*>/g, '')
+          .replace(/&nbsp;/g, ' ')
+          .trim(),
+        image: course.image,
+        duration: course.duration || 0,
+        level: course.level || tDefaults('defaultLevel'),
+        rating: course.rating || 0,
+        students: course.students || 0,
+        price: Math.round((course.price || 0) * 100) / 100
+      }));
+      
+      setCourses(mappedCourses);
+    } catch (error) {
+      console.error('Error fetching courses:', error);
+      setError('Failed to load courses');
+      setCourses([]);
+    } finally {
+      setLoading(false);
+    }
+  }, [tDefaults]);
 
+  useEffect(() => {
     fetchCourses();
-  }, [locale, tDefaults]);
+  }, [fetchCourses]);
 
   // Filter and sort courses
   const filteredCourses = useMemo(() => {
@@ -154,14 +154,18 @@ export function CourseSearch({
   }, [courses, searchTerm, selectedCategory, selectedLevel, sortBy]);
 
   // Notify parent of results change
-  useEffect(() => {
+  const notifyResultsChange = useCallback(() => {
     if (onResultsChange) {
       onResultsChange(courses.length, filteredCourses.length);
     }
-  }, [courses.length, filteredCourses.length, onResultsChange]);
+  }, [onResultsChange, courses.length, filteredCourses.length]);
+
+  useEffect(() => {
+    notifyResultsChange();
+  }, [notifyResultsChange]);
 
   // Function to get level colors
-  const getLevelColor = (level: string) => {
+  const getLevelColor = useCallback((level: string) => {
     const normalizedLevel = level.toLowerCase();
     if (normalizedLevel.includes('principiante') || normalizedLevel.includes('beginner') || normalizedLevel.includes('básico') || normalizedLevel.includes('basic')) {
       return 'bg-green-500';
@@ -171,9 +175,9 @@ export function CourseSearch({
       return 'bg-red-500';
     }
     return 'bg-blue-500';
-  };
+  }, []);
 
-  const formatDuration = (duration: number) => {
+  const formatDuration = useCallback((duration: number) => {
     if (duration === 0) return tStats('notAvailable');
     if (duration < 1) {
       const minutes = Math.round(duration * 60);
@@ -181,7 +185,7 @@ export function CourseSearch({
     }
     const hours = Math.round(duration);
     return `${hours} ${hours === 1 ? tStats('hour') : tStats('hours')}`;
-  };
+  }, [tStats]);
 
   if (loading) {
     return <CourseGridSkeleton count={6} />;
