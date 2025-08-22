@@ -64,31 +64,23 @@ export default async function AboutPage({
       
       {/* Hero Section with Empire State Building */}
       <section className="relative py-20 md:py-28 overflow-hidden z-10">
-        {/* Empire State Building Background */}
+        {/* Empire State Building Background - Real Image */}
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-r from-gray-50/95 via-gray-50/90 to-gray-50/80 dark:from-gray-900/95 dark:via-gray-900/90 dark:to-gray-900/80"></div>
-          <div className="absolute right-0 top-0 bottom-0 w-1/2 lg:w-1/3 opacity-20">
-            <div className="relative h-full w-full">
-              {/* Empire State Building Silhouette */}
-              <div className="absolute bottom-0 right-0 w-full h-full">
-                {/* Main Building */}
-                <div className="absolute bottom-0 right-0 w-32 h-96 bg-gradient-to-t from-gray-800 to-gray-600 rounded-t-lg"></div>
-                {/* Spire */}
-                <div className="absolute bottom-96 right-14 w-4 h-32 bg-gradient-to-t from-gray-800 to-gray-600"></div>
-                {/* Antenna */}
-                <div className="absolute bottom-96 right-15 w-2 h-16 bg-gradient-to-t from-gray-800 to-gray-600"></div>
-                {/* Windows */}
-                <div className="absolute bottom-8 right-2 w-28 h-80 bg-gradient-to-t from-yellow-400/20 to-transparent rounded-t-lg"></div>
-                {/* Base */}
-                <div className="absolute bottom-0 right-0 w-40 h-8 bg-gradient-to-t from-gray-700 to-gray-500 rounded-t-lg"></div>
-              </div>
-            </div>
+          <div className="absolute inset-0 bg-gradient-to-l from-gray-50/95 via-gray-50/90 to-gray-50/80 dark:from-gray-900/95 dark:via-gray-900/90 dark:to-gray-900/80"></div>
+          <div className="absolute right-0 top-0 bottom-0 w-1/3 lg:w-1/4 opacity-40 dark:opacity-35">
+            <img 
+              src="/images/vectors/empire-state-building.webp" 
+              alt="Empire State Building" 
+              className="w-full h-full object-cover object-center scale-110"
+            />
+            {/* Overlay gradient más sutil para integrar mejor */}
+            <div className="absolute inset-0 bg-gradient-to-l from-transparent via-gray-50/30 to-gray-50/80 dark:via-gray-900/30 dark:to-gray-900/80"></div>
           </div>
         </div>
         
         <div className="container relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="text-left">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[70vh]">
+            <div className="lg:order-1 text-left">
               <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
                 <span className="bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 dark:from-white dark:via-blue-100 dark:to-purple-200 bg-clip-text text-transparent">
                   {t('title')}
@@ -99,13 +91,46 @@ export default async function AboutPage({
                   </GlitchText>
                 </span>
               </h1>
-              <p className="text-xl font-sans text-gray-700 dark:text-gray-300 max-w-xl leading-relaxed font-medium">
+              <p className="text-xl font-sans text-gray-700 dark:text-gray-300 max-w-2xl leading-relaxed font-medium mb-8">
                 {t('description')}
               </p>
+              
+              {/* Estadísticas destacadas */}
+              <div className="grid grid-cols-2 gap-6 mb-8">
+                <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl p-4 border border-gray-200/50 dark:border-gray-600/50">
+                  <div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-1">500+</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400">Estudiantes Activos</div>
+                </div>
+                <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl p-4 border border-gray-200/50 dark:border-gray-600/50">
+                  <div className="text-3xl font-bold text-purple-600 dark:text-purple-400 mb-1">50+</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400">Cursos Premium</div>
+                </div>
+              </div>
+
+              {/* Call to action */}
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link
+                  href={`/${params.locale}/catalog`}
+                  className="group px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white rounded-2xl font-semibold transition-all duration-300 text-center shadow-lg hover:shadow-xl transform hover:scale-105"
+                >
+                  <span className="flex items-center justify-center gap-2">
+                    Explorar Cursos
+                    <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                  </span>
+                </Link>
+                <Link
+                  href={`/${params.locale}/contact`}
+                  className="px-8 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-2 border-gray-300 dark:border-gray-600 hover:border-blue-400 dark:hover:border-blue-500 text-gray-800 dark:text-gray-200 rounded-2xl font-semibold transition-all duration-300 text-center hover:shadow-lg"
+                >
+                  Contactanos
+                </Link>
+              </div>
             </div>
             
-            <div className="hidden lg:block">
-              {/* Placeholder for future content */}
+            <div className="lg:order-2 hidden lg:block">
+              {/* Espacio reservado para el Empire State Building - ya está en el fondo */}
             </div>
           </div>
         </div>
