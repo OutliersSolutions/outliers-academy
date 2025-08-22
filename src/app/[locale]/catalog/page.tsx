@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { CourseGridClient } from '@/components/CourseGridClient';
+import { CourseSearch } from '@/components/CourseSearch';
 
 interface CatalogPageProps {
   params: { locale: string }
@@ -44,25 +44,7 @@ export default function CatalogPage({ params }: CatalogPageProps) {
     { id: 'price-high', name: t('sort.priceHigh') || 'Precio: mayor a menor' }
   ];
 
-  // Fetch course counts for display
-  useEffect(() => {
-    const fetchCourseCount = async () => {
-      try {
-        const response = await fetch('/api/courses');
-        if (response.ok) {
-          const data = await response.json();
-          const coursesArray = Array.isArray(data) ? data : (data.courses || []);
-          setTotalCourses(coursesArray.length);
-          setFilteredCourses(coursesArray.length); // For now, show all as filtered
-        }
-      } catch (error) {
-        console.error('Error fetching course count:', error);
-        setTotalCourses(0);
-        setFilteredCourses(0);
-      }
-    };
-    fetchCourseCount();
-  }, []);
+  // Course counts will be managed by CourseSearch component
 
   return (
     <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-black">
@@ -270,7 +252,22 @@ export default function CatalogPage({ params }: CatalogPageProps) {
           </div>
 
           {/* Grid de cursos */}
-          <CourseGridClient />
+          <CourseSearch 
+            searchTerm={searchTerm}
+            selectedCategory={selectedCategory}
+            selectedLevel={selectedLevel}
+            sortBy={sortBy}
+            onResultsChange={(total, filtered) => {
+              setTotalCourses(total);
+              setFilteredCourses(filtered);
+            }}
+            onClearSearch={() => setSearchTerm('')}
+            onClearFilters={() => {
+              setSearchTerm('');
+              setSelectedCategory('all');
+              setSelectedLevel('all');
+            }}
+          />
 
           {/* Paginación mejorada */}
           <div className="mt-20 flex justify-center">

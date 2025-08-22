@@ -931,15 +931,18 @@
             "contact": {
                 "form": {
                     "title": "Formulario de Contacto",
-                    "description": "Envíanos un mensaje detallado"
+                    "description": "Envíanos un mensaje detallado",
+                    "action": "Ir al formulario"
                 },
                 "email": {
                     "title": "Email Directo",
-                    "description": "Contáctanos directamente"
+                    "description": "Contáctanos directamente",
+                    "action": "Enviar email"
                 },
                 "calendar": {
                     "title": "Agendar Llamada",
-                    "description": "Reunión de 30 minutos"
+                    "description": "Reunión de 30 minutos",
+                    "action": "Agendar reunión"
                 },
                 "whatsapp": "WhatsApp"
             }
@@ -1026,6 +1029,53 @@
             "description": "Si tiene preguntas sobre estos términos legales, puede contactarnos:",
             "email": "legal@outliersacademy.com",
             "address": "Lima, Perú"
+        }
+    },
+    "emptyStates": {
+        "courses": {
+            "title": "No se encontraron cursos",
+            "description": "No hay cursos disponibles en este momento. Prueba ajustando tus filtros o vuelve más tarde.",
+            "action": "Ver todos los cursos"
+        },
+        "search": {
+            "title": "Sin resultados",
+            "description": "No encontramos cursos que coincidan con tu búsqueda. Intenta con otros términos o categorías.",
+            "action": "Limpiar búsqueda"
+        },
+        "myCourses": {
+            "title": "Aún no tienes cursos",
+            "description": "Explora nuestro catálogo y encuentra el curso perfecto para comenzar tu journey de aprendizaje.",
+            "action": "Explorar catálogo"
+        },
+        "wishlist": {
+            "title": "Tu lista de deseos está vacía",
+            "description": "Guarda cursos que te interesen para encontrarlos fácilmente más tarde.",
+            "action": "Descubrir cursos"
+        },
+        "notifications": {
+            "title": "No tienes notificaciones",
+            "description": "Te notificaremos sobre actualizaciones de cursos, nuevos contenidos y más.",
+            "action": null
+        },
+        "reviews": {
+            "title": "Sin reseñas aún",
+            "description": "Sé el primero en compartir tu experiencia con este curso.",
+            "action": "Escribir reseña"
+        },
+        "error": {
+            "title": "Algo salió mal",
+            "description": "No pudimos cargar el contenido. Por favor, intenta nuevamente.",
+            "action": "Reintentar"
+        },
+        "offline": {
+            "title": "Sin conexión",
+            "description": "Verifica tu conexión a internet e intenta nuevamente.",
+            "action": "Reintentar"
+        },
+        "maintenance": {
+            "title": "En mantenimiento",
+            "description": "Estamos mejorando la plataforma. Volvemos pronto.",
+            "action": null
         }
     }
 }

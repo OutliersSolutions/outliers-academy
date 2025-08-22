@@ -930,15 +930,18 @@
             "contact": {
                 "form": {
                     "title": "Contact Form",
-                    "description": "Send us a detailed message"
+                    "description": "Send us a detailed message",
+                    "action": "Go to form"
                 },
                 "email": {
                     "title": "Direct Email",
-                    "description": "Contact us directly"
+                    "description": "Contact us directly",
+                    "action": "Send email"
                 },
                 "calendar": {
                     "title": "Schedule Call",
-                    "description": "30-minute meeting"
+                    "description": "30-minute meeting",
+                    "action": "Schedule meeting"
                 },
                 "whatsapp": "WhatsApp"
             }
@@ -1025,6 +1028,53 @@
             "description": "If you have questions about these legal terms, you can contact us:",
             "email": "legal@outliersacademy.com",
             "address": "Lima, Peru"
+        }
+    },
+    "emptyStates": {
+        "courses": {
+            "title": "No courses found",
+            "description": "No courses are available at the moment. Try adjusting your filters or come back later.",
+            "action": "View all courses"
+        },
+        "search": {
+            "title": "No results",
+            "description": "We couldn't find courses matching your search. Try different terms or categories.",
+            "action": "Clear search"
+        },
+        "myCourses": {
+            "title": "You don't have any courses yet",
+            "description": "Explore our catalog and find the perfect course to start your learning journey.",
+            "action": "Explore catalog"
+        },
+        "wishlist": {
+            "title": "Your wishlist is empty",
+            "description": "Save courses you're interested in to find them easily later.",
+            "action": "Discover courses"
+        },
+        "notifications": {
+            "title": "No notifications",
+            "description": "We'll notify you about course updates, new content and more.",
+            "action": null
+        },
+        "reviews": {
+            "title": "No reviews yet",
+            "description": "Be the first to share your experience with this course.",
+            "action": "Write review"
+        },
+        "error": {
+            "title": "Something went wrong",
+            "description": "We couldn't load the content. Please try again.",
+            "action": "Retry"
+        },
+        "offline": {
+            "title": "No connection",
+            "description": "Check your internet connection and try again.",
+            "action": "Retry"
+        },
+        "maintenance": {
+            "title": "Under maintenance",
+            "description": "We're improving the platform. We'll be back soon.",
+            "action": null
         }
     }
 }

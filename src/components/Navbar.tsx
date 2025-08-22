@@ -46,6 +46,8 @@ export function Navbar() {
     const onClickOutside = (e: MouseEvent) => {
       const target = e.target as Node;
       
+      if (!target) return;
+      
       // Language dropdown
       if (dropdownRef.current && !dropdownRef.current.contains(target)) {
         setOpen(false);
@@ -56,20 +58,16 @@ export function Navbar() {
         setUserMenuOpen(false);
       }
       
-      // Mobile menu - more specific check
-      if (mobileMenuRef.current && !mobileMenuRef.current.contains(target)) {
+      // Mobile menu - only close if clicking completely outside the menu area
+      if (mobileMenuRef.current && !mobileMenuRef.current.contains(target) && 
+          !(target as Element).closest('[data-mobile-menu-trigger]')) {
         setMobileMenuOpen(false);
       }
     };
 
-    const handleDocumentClick = (e: MouseEvent) => {
-      // Small delay to ensure proper event handling
-      setTimeout(() => onClickOutside(e), 0);
-    };
-
     if (typeof document !== 'undefined') {
-      document.addEventListener("mousedown", handleDocumentClick, true);
-      return () => document.removeEventListener("mousedown", handleDocumentClick, true);
+      document.addEventListener("mousedown", onClickOutside);
+      return () => document.removeEventListener("mousedown", onClickOutside);
     }
   }, []);
 
@@ -96,7 +94,7 @@ export function Navbar() {
     <>
       <header className="sticky top-0 z-50 w-full border-b border-solarized-base1 dark:border-gray-700 bg-solarized-base3/90 dark:bg-gray-900/90 shadow-sm backdrop-blur-md">
         <div className="container mx-auto px-4">
-          <div className="flex h-16 items-center justify-between">
+          <div className="flex h-[67px] items-center justify-between">
             {/* Logo */}
             <Link
               href={`/${locale}`}
@@ -302,15 +300,12 @@ export function Navbar() {
               {/* Mobile Menu Button */}
               <div className="block lg:hidden ml-2" ref={mobileMenuRef}>
                 <motion.button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    setMobileMenuOpen(prev => !prev);
-                  }}
+                  onClick={() => setMobileMenuOpen(prev => !prev)}
                   className="flex items-center justify-center p-3 w-11 h-11 text-solarized-base01 dark:text-gray-300 hover:text-primary dark:hover:text-white hover:bg-solarized-base2/50 dark:hover:bg-gray-800/50 rounded-xl transition-all duration-200 relative z-10"
                   aria-label="Toggle mobile menu"
                   aria-expanded={mobileMenuOpen}
                   type="button"
+                  data-mobile-menu-trigger
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   transition={{ type: "spring", stiffness: 400, damping: 17 }}
@@ -442,6 +437,7 @@ export function Navbar() {
                       <Link
                         href={`/${locale}/catalog`}
                         className="flex items-center gap-2 px-4 py-3 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3/50 dark:hover:bg-gray-700/50 transition-all duration-200 rounded-lg mx-2"
+                        onClick={() => setMobileMenuOpen(false)}
                       >
                         <BookOpen className="w-4 h-4" />
                         {t("catalog")}
@@ -450,6 +446,7 @@ export function Navbar() {
                         <Link
                           href={`/${locale}/my-courses`}
                           className="flex items-center gap-2 px-4 py-3 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3/50 dark:hover:bg-gray-700/50 transition-all duration-200 rounded-lg mx-2"
+                          onClick={() => setMobileMenuOpen(false)}
                         >
                           <BarChart3 className="w-4 h-4" />
                           {t("myCourses")}
@@ -458,18 +455,21 @@ export function Navbar() {
                       <Link
                         href={`/${locale}/pricing`}
                         className="flex items-center gap-2 px-4 py-3 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3/50 dark:hover:bg-gray-700/50 transition-all duration-200 rounded-lg mx-2"
+                        onClick={() => setMobileMenuOpen(false)}
                       >
                         {t("pricing")}
                       </Link>
                       <Link
                         href={`/${locale}/about`}
                         className="flex items-center gap-2 px-4 py-3 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3/50 dark:hover:bg-gray-700/50 transition-all duration-200 rounded-lg mx-2"
+                        onClick={() => setMobileMenuOpen(false)}
                       >
                         {t("about")}
                       </Link>
                       <Link
                         href={`/${locale}/contact`}
                         className="flex items-center gap-2 px-4 py-3 text-sm text-solarized-base01 dark:text-gray-300 hover:bg-solarized-base3/50 dark:hover:bg-gray-700/50 transition-all duration-200 rounded-lg mx-2"
+                        onClick={() => setMobileMenuOpen(false)}
                       >
                         {t("contact")}
                       </Link>

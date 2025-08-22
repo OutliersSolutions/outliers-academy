@@ -187,53 +187,89 @@ export default function PricingPage() {
               {t('cta.description')}
             </p>
             
-            {/* Opciones de Contacto */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto mb-8">
-              <a 
-                href="/contact" 
-                className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-600 hover:shadow-lg transition-all duration-300 group"
-              >
-                <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/20 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
-                  <MessageCircle className="h-6 w-6 text-blue-600 dark:text-blue-400" />
-                </div>
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">{t('cta.contact.form.title')}</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">{t('cta.contact.form.description')}</p>
-              </a>
+            {/* Opciones de Contacto Mejoradas */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mb-10">
+              <Card className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-0 bg-gradient-to-br from-blue-50 to-blue-100/50 dark:from-blue-950/20 dark:to-blue-900/10">
+                <CardContent className="p-6 text-center">
+                  <div className="relative">
+                    <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-105 transition-transform shadow-lg">
+                      <MessageCircle className="h-8 w-8 text-white" />
+                    </div>
+                    <div className="absolute -top-1 -right-1 w-6 h-6 bg-blue-500 rounded-full opacity-20 group-hover:opacity-30 transition-opacity"></div>
+                  </div>
+                  <h3 className="font-bold text-lg text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                    {t('cta.contact.form.title')}
+                  </h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                    {t('cta.contact.form.description')}
+                  </p>
+                  <a 
+                    href="/contact"
+                    className="inline-block mt-4 text-blue-600 dark:text-blue-400 font-medium text-sm hover:underline"
+                  >
+                    {t('cta.contact.form.action')} →
+                  </a>
+                </CardContent>
+              </Card>
               
-              <a 
-                href={`mailto:${contactInfo.email}`}
-                className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-600 hover:shadow-lg transition-all duration-300 group"
-              >
-                <div className="w-12 h-12 bg-green-100 dark:bg-green-900/20 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
-                  <Mail className="h-6 w-6 text-green-600 dark:text-green-400" />
-                </div>
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">{t('cta.contact.email.title')}</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">{t('cta.contact.email.description')}</p>
-              </a>
+              <Card className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-0 bg-gradient-to-br from-green-50 to-green-100/50 dark:from-green-950/20 dark:to-green-900/10">
+                <CardContent className="p-6 text-center">
+                  <div className="relative">
+                    <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-105 transition-transform shadow-lg">
+                      <Mail className="h-8 w-8 text-white" />
+                    </div>
+                    <div className="absolute -top-1 -right-1 w-6 h-6 bg-green-500 rounded-full opacity-20 group-hover:opacity-30 transition-opacity"></div>
+                  </div>
+                  <h3 className="font-bold text-lg text-gray-900 dark:text-white mb-2 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">
+                    {t('cta.contact.email.title')}
+                  </h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                    {t('cta.contact.email.description')}
+                  </p>
+                  <a 
+                    href={`mailto:${contactInfo.email}`}
+                    className="inline-block mt-4 text-green-600 dark:text-green-400 font-medium text-sm hover:underline"
+                  >
+                    {t('cta.contact.email.action')} →
+                  </a>
+                </CardContent>
+              </Card>
               
-              <a 
-                href={contactInfo.calendly}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-600 hover:shadow-lg transition-all duration-300 group"
-              >
-                <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/20 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
-                  <Calendar className="h-6 w-6 text-purple-600 dark:text-purple-400" />
-                </div>
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">{t('cta.contact.calendar.title')}</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">{t('cta.contact.calendar.description')}</p>
-              </a>
+              <Card className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-0 bg-gradient-to-br from-purple-50 to-purple-100/50 dark:from-purple-950/20 dark:to-purple-900/10">
+                <CardContent className="p-6 text-center">
+                  <div className="relative">
+                    <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-105 transition-transform shadow-lg">
+                      <Calendar className="h-8 w-8 text-white" />
+                    </div>
+                    <div className="absolute -top-1 -right-1 w-6 h-6 bg-purple-500 rounded-full opacity-20 group-hover:opacity-30 transition-opacity"></div>
+                  </div>
+                  <h3 className="font-bold text-lg text-gray-900 dark:text-white mb-2 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+                    {t('cta.contact.calendar.title')}
+                  </h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                    {t('cta.contact.calendar.description')}
+                  </p>
+                  <a 
+                    href={contactInfo.calendly}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block mt-4 text-purple-600 dark:text-purple-400 font-medium text-sm hover:underline"
+                  >
+                    {t('cta.contact.calendar.action')} →
+                  </a>
+                </CardContent>
+              </Card>
             </div>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="/contact" className="btn-primary">
+              <a href="/contact" className="btn-primary px-8 py-3 font-semibold">
                 {t('cta.button')}
               </a>
               <a 
                 href={`https://wa.me/${contactInfo.whatsapp}`}
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="btn-outline flex items-center gap-2"
+                className="btn-outline px-8 py-3 flex items-center justify-center gap-2 font-medium"
               >
                 <MessageCircle className="h-4 w-4" />
                 {t('cta.contact.whatsapp')}
