@@ -28,49 +28,28 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Mock search results - in real app, this would be an API call
-  const mockResults: SearchResult[] = [
-    {
-      id: '1',
+  // Search results would come from Odoo in real implementation
+  const searchResults: SearchResult[] = [];
+
+  // Show message when Odoo is not configured
+  const isOdooConfigured = Boolean(
+    process.env.ODOO_URL && 
+    process.env.ODOO_DB && 
+    process.env.ODOO_USERNAME && 
+    process.env.ODOO_PASSWORD
+  );
+
+  if (!isOdooConfigured && query.trim()) {
+    // Return error state when trying to search without Odoo
+    searchResults.push({
+      id: 'error',
       type: 'course',
-      title: t('results.python.title'),
-      description: t('results.python.description'),
-      url: '/course/python-basics',
-      icon: '🐍'
-    },
-    {
-      id: '2',
-      type: 'path',
-      title: t('results.fullstack.title'),
-      description: t('results.fullstack.description'),
-      url: '/path/fullstack-development',
-      icon: '💻'
-    },
-    {
-      id: '3',
-      type: 'course',
-      title: t('results.dataAnalysis.title'),
-      description: t('results.dataAnalysis.description'),
-      url: '/course/data-analysis',
-      icon: '📊'
-    },
-    {
-      id: '4',
-      type: 'course',
-      title: t('results.cybersecurity.title'),
-      description: t('results.cybersecurity.description'),
-      url: '/course/cybersecurity',
-      icon: '🔒'
-    },
-    {
-      id: '5',
-      type: 'course',
-      title: t('results.ai.title'),
-      description: t('results.ai.description'),
-      url: '/course/artificial-intelligence',
-      icon: '🤖'
-    }
-  ];
+      title: '🤦‍♂️ ¡Ups! No configuraste Odoo, cuy',
+      description: 'La búsqueda necesita conexión real con Odoo. Configura las variables de entorno.',
+      url: '#',
+      icon: '❌'
+    });
+  }
 
   // Popular searches from translations t.raw('popularTerms') || 
   const popularSearches = ['Python', 'React', 'JavaScript', 'Machine Learning', 'Web Development'];
@@ -119,8 +98,8 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
     // Simulate API delay
     await new Promise(resolve => setTimeout(resolve, 300));
     
-    // Filter mock results based on query
-    const filtered = mockResults.filter(result =>
+    // Filter search results based on query (would be API call in real implementation)
+    const filtered = searchResults.filter(result =>
       result.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       result.description.toLowerCase().includes(searchQuery.toLowerCase())
     );

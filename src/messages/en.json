@@ -537,6 +537,16 @@
         "pagination": {
             "previous": "Previous",
             "next": "Next"
+        },
+        "empty": {
+            "noCourses": "No courses available at the moment.",
+            "noResults": "No courses found with the applied filters.",
+            "tryDifferentFilters": "Try different filters or search terms.",
+            "browseAll": "Browse all courses"
+        },
+        "loading": {
+            "courses": "Loading courses...",
+            "searching": "Searching courses..."
         }
     },
     "common": {

@@ -3,7 +3,7 @@ import { useTranslations } from 'next-intl';
 import { CheckoutButton } from './CheckoutButton';
 import { AddToCartButton } from './AddToCartButton';
 import { useEffect, useState } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 interface Course {
   id: number;
@@ -25,9 +25,9 @@ export function CourseGridClient() {
   const tCourse = useTranslations('course');
   const tDefaults = useTranslations('courses.defaults');
   const tStats = useTranslations('courses.stats');
+  const tCatalog = useTranslations('catalog');
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
-  const router = useRouter();
   const pathname = usePathname();
   const locale = pathname.split('/')[1] || 'es';
 
@@ -97,7 +97,7 @@ export function CourseGridClient() {
       }
     };
     fetchCourses();
-  }, [locale, tDefaults, tStats]);
+  }, [locale, tDefaults, tStats, tCatalog]);
   if (loading) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -128,14 +128,14 @@ export function CourseGridClient() {
   if (courses.length === 0) {
     return (
       <div className="text-center py-12">
-        <p className="text-gray-500 dark:text-gray-400">No hay cursos disponibles en este momento.</p>
+        <p className="text-gray-500 dark:text-gray-400">{tCatalog('empty.noCourses')}</p>
       </div>
     );
   }
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {courses.map((c) => {
-        const courseName = c.name || c.title || 'Curso sin título';
+        const courseName = c.name || c.title || tDefaults('untitledCourse');
         return (
           <div key={c.id} className="group relative bg-white dark:bg-gray-800 backdrop-blur-sm rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-500 transform hover:scale-[1.02] hover:-translate-y-1 flex flex-col min-h-[520px]">
           {/* Course Image */}

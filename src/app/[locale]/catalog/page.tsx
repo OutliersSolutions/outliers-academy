@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { CourseGridClient } from '@/components/CourseGridClient';
 
@@ -16,6 +16,8 @@ export default function CatalogPage({ params }: CatalogPageProps) {
   const [selectedLevel, setSelectedLevel] = useState('all');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [sortBy, setSortBy] = useState('popular');
+  const [totalCourses, setTotalCourses] = useState(0);
+  const [filteredCourses, setFilteredCourses] = useState(0);
 
   const categories = [
     { id: 'all', name: t('categories.all') || 'Todos los cursos' },
@@ -41,6 +43,26 @@ export default function CatalogPage({ params }: CatalogPageProps) {
     { id: 'price-low', name: t('sort.priceLow') || 'Precio: menor a mayor' },
     { id: 'price-high', name: t('sort.priceHigh') || 'Precio: mayor a menor' }
   ];
+
+  // Fetch course counts for display
+  useEffect(() => {
+    const fetchCourseCount = async () => {
+      try {
+        const response = await fetch('/api/courses');
+        if (response.ok) {
+          const data = await response.json();
+          const coursesArray = Array.isArray(data) ? data : (data.courses || []);
+          setTotalCourses(coursesArray.length);
+          setFilteredCourses(coursesArray.length); // For now, show all as filtered
+        }
+      } catch (error) {
+        console.error('Error fetching course count:', error);
+        setTotalCourses(0);
+        setFilteredCourses(0);
+      }
+    };
+    fetchCourseCount();
+  }, []);
 
   return (
     <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-black">
@@ -243,7 +265,7 @@ export default function CatalogPage({ params }: CatalogPageProps) {
           {/* Contador de resultados mejorado */}
           <div className="mb-8">
             <p className="text-gray-700 dark:text-white/90 font-medium text-lg">
-              {t('results.showing') || 'Mostrando'} <span className="font-bold text-blue-600 dark:text-blue-300">2</span> {t('results.of') || 'cursos de'} <span className="font-bold text-blue-600 dark:text-blue-300">2</span> {t('results.available') || 'disponibles'}
+              {t('results.showing')} <span className="font-bold text-blue-600 dark:text-blue-300">{filteredCourses}</span> {t('results.of')} <span className="font-bold text-blue-600 dark:text-blue-300">{totalCourses}</span> {t('results.available')}
             </p>
           </div>
 

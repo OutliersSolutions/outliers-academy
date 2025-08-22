@@ -121,40 +121,15 @@ export async function sendVerificationEmail(userId: number, userEmail: string): 
     return false;
   }
 }
-const devSampleCourses = [
-  {
-    id: 1,
-    title: 'Introducción a la Programación',
-    slug: 'intro-programacion',
-    description: 'Aprende los fundamentos: variables, control de flujo y funciones.',
-    price: 0,
-    sections: [{title: 'Variables'}, {title: 'Condicionales'}, {title: 'Funciones'}]
-  },
-  {
-    id: 2,
-    title: 'Desarrollo Web con Next.js',
-    slug: 'nextjs-web',
-    description: 'Crea sitios modernos con React, rutas y API Routes en Next.js.',
-    price: 49,
-    sections: [{title: 'App Router'}, {title: 'SSR/SSG'}, {title: 'API Routes'}]
-  },
-  {
-    id: 3,
-    title: 'Fundamentos de Data Science',
-    slug: 'data-science',
-    description: 'Pandas, visualización y modelos básicos para análisis de datos.',
-    price: 79,
-    sections: [{title: 'Pandas'}, {title: 'Visualización'}, {title: 'Modelos'}]
-  }
-];
+
 // Helper function to create slug from name and id
 function createSlug(name: string, id: number): string {
   return `${name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}-${id}`;
 }
+
 export async function fetchCourses(options?: {slug?: string, limit?: number, sortBy?: string}) {
   if (!isOdooConfigured) {
-    if (options?.slug) return devSampleCourses.filter((c) => c.slug === options.slug);
-    return devSampleCourses;
+    throw new Error('🤦‍♂️ ¡Ups! No configuraste Odoo, cuy. Configura las variables de entorno: ODOO_URL, ODOO_DB, ODOO_USERNAME, ODOO_PASSWORD');
   }
   let domain: any[] = [['website_published', '=', true]];
   // Si se proporciona un slug, extraer el ID y buscarlo
@@ -235,7 +210,9 @@ export async function fetchCourses(options?: {slug?: string, limit?: number, sor
   }));
 }
 export async function fetchUserCourses(userId: number) {
-  if (!isOdooConfigured) return [];
+  if (!isOdooConfigured) {
+    throw new Error('🤦‍♂️ ¡Ups! No configuraste Odoo, cuy. Los cursos necesitan conexión real con Odoo.');
+  }
   
   // First get user enrollments
   const enrollmentDomain = [['partner_ids', 'in', [userId]]];
@@ -337,7 +314,9 @@ export async function checkCourseAccess(courseId: number, userId: number): Promi
 }
 
 export async function fetchCourseContent(courseId: number, userId?: number) {
-  if (!isOdooConfigured) return null;
+  if (!isOdooConfigured) {
+    throw new Error('🤦‍♂️ ¡Ups! No configuraste Odoo, cuy. El contenido del curso necesita conexión real.');
+  }
   
   // Check if user has access
   if (userId) {
@@ -369,17 +348,8 @@ export async function createSaleOrder(userId: number, productId: number) {
   return orderId;
 }
 export async function getUserProfile(userId: number) {
-  
   if (!isOdooConfigured) {
-    // Return mock profile for testing
-    return {
-      id: userId,
-      name: 'Administrador',
-      email: 'galvezcortezgonzalo@gmail.com',
-      phone: '',
-      image_1920: null,
-      create_date: new Date().toISOString()
-    };
+    throw new Error('🤦‍♂️ ¡Ups! No configuraste Odoo, cuy. Los perfiles necesitan conexión real con Odoo.');
   }
   
   const fields = ['id', 'name', 'email', 'image_1920', 'phone', 'mobile', 'website', 'title', 'function', 'street', 'city', 'country_id', 'create_date', 'timezone'];
@@ -390,24 +360,8 @@ export async function getUserProfile(userId: number) {
 }
 
 export async function updateUserProfile(userId: number, data: {name?: string; email?: string; phone?: string; mobile?: string; website?: string; title?: string; function?: string; street?: string; city?: string}) {
-  
   if (!isOdooConfigured) {
-    // Return mock updated profile for testing
-    const mockProfile = {
-      id: userId,
-      name: data.name || 'Test User',
-      email: data.email || 'test@example.com',
-      phone: data.phone || '',
-      mobile: data.mobile || '',
-      website: data.website || '',
-      title: data.title || '',
-      function: data.function || '',
-      street: data.street || '',
-      city: data.city || '',
-      image_1920: null,
-      create_date: new Date().toISOString()
-    };
-    return mockProfile;
+    throw new Error('🤦‍♂️ ¡Ups! No configuraste Odoo, cuy. Actualizar perfiles necesita conexión real.');
   }
   
   try {
@@ -431,12 +385,7 @@ export async function updateUserAvatar(userId: number, avatarBase64: string) {
 }
 export async function getAcademyStats() {
   if (!isOdooConfigured) {
-    return {
-      totalStudents: 10000,
-      averageRating: 4.8,
-      totalReviews: 2340,
-      totalCourses: 50
-    };
+    throw new Error('🤦‍♂️ ¡Ups! No configuraste Odoo, cuy. Las estadísticas necesitan datos reales de Odoo.');
   }
   try {
     // Count total students enrolled in courses (using slide.channel.partner for enrollments)

@@ -537,6 +537,16 @@
         "pagination": {
             "previous": "Anterior",
             "next": "Siguiente"
+        },
+        "empty": {
+            "noCourses": "No hay cursos disponibles en este momento.",
+            "noResults": "No se encontraron cursos con los filtros aplicados.",
+            "tryDifferentFilters": "Intenta con diferentes filtros o términos de búsqueda.",
+            "browseAll": "Explorar todos los cursos"
+        },
+        "loading": {
+            "courses": "Cargando cursos...",
+            "searching": "Buscando cursos..."
         }
     },
     "common": {
