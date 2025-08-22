@@ -13,28 +13,28 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Valid subtotal is required' }, { status: 400 });
     }
 
-    const discount = await validateDiscountCode(code);
-    
-    if (!discount) {
-      return NextResponse.json({ 
-        error: 'Código de descuento inválido o expirado' 
-      }, { status: 404 });
-    }
+    try {
+      const appliedDiscount = await validateDiscountCode(code, subtotal);
+      
+      if (!appliedDiscount) {
+        return NextResponse.json({ 
+          error: 'Código de descuento inválido o expirado' 
+        }, { status: 404 });
+      }
 
-    const appliedDiscount = calculateDiscount(subtotal, discount);
-    
-    if (!appliedDiscount) {
-      return NextResponse.json({ 
-        error: `Este descuento requiere un mínimo de $${discount.minAmount}` 
-      }, { status: 400 });
-    }
+      return NextResponse.json({
+        valid: true,
+        discount: appliedDiscount.discount,
+        discountAmount: appliedDiscount.discountAmount,
+        message: `Código aplicado: $${appliedDiscount.discountAmount.toFixed(2)} de descuento`
+      });
 
-    return NextResponse.json({
-      valid: true,
-      discount,
-      discountAmount: appliedDiscount.discountAmount,
-      message: `Código aplicado: ${appliedDiscount.discountAmount.toFixed(2)} de descuento`
-    });
+    } catch (odooError: any) {
+      // Handle Odoo configuration error
+      return NextResponse.json({ 
+        error: odooError.message || 'Error de configuración del servidor' 
+      }, { status: 503 });
+    }
 
   } catch (error) {
     console.error('Error validating discount:', error);
