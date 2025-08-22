@@ -34,7 +34,7 @@ La sección "Top courses" mostraba datos demo aleatorios en lugar de usar los da
 
 #### Datos Reales vs Mock
 - ✅ **ANTES**: Datos aleatorios generados con `Math.random()`
-- ✅ **AHORA**: Datos reales de Odoo con fallback mínimo solo si no hay datos
+- ✅ **AHORA**: Solo datos reales de Odoo, sin valores aleatorios
 
 #### Corrección de Precio
 - ✅ **ANTES**: `$99.99000000000001` (error de precisión flotante)
@@ -80,6 +80,30 @@ Ahora la sección "Top courses" muestra:
 5. **Descripciones limpias** sin HTML
 6. **Tags de dificultad con colores apropiados**
 7. **Métricas reales** (estudiantes, rating, duración)
+
+## 🔧 Corrección Final - Eliminación Total de Datos Mock
+**Fecha**: Diciembre 2024
+
+### Problema detectado:
+Aún se estaban generando valores aleatorios para rating y estudiantes en algunos casos.
+
+### Solución aplicada:
+```tsx
+// ANTES (líneas 75-78 en CourseGridClient.tsx):
+...(course.students === 0 && course.rating === 0 && {
+  students: Math.floor(Math.random() * 100) + 10,
+  rating: 4 + Math.random() * 0.5
+})
+
+// DESPUÉS - ELIMINADO COMPLETAMENTE:
+// Solo datos reales de Odoo, sin fallbacks aleatorios
+```
+
+### Resultado final:
+✅ **100% datos reales**: No se generan más valores aleatorios  
+✅ **URL de imagen correcta**: Usa variable de entorno `ODOO_URL`  
+✅ **Rating real**: Solo el valor de `rating_avg` de Odoo  
+✅ **Estudiantes reales**: Solo el valor de `members_count` de Odoo
 
 ## Próximos Pasos Recomendados
 - [ ] Verificar que las imágenes se cargan correctamente desde Odoo

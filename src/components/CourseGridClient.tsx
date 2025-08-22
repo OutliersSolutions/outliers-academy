@@ -62,21 +62,15 @@ export function CourseGridClient() {
               .replace(/<[^>]*>/g, '') // Remove HTML tags
               .replace(/&nbsp;/g, ' ') // Replace &nbsp; with spaces
               .trim(),
-            // Use real Odoo image URL or fallback
-            image: course.image || (course.id ? `https://odoo.gamarradigital.com/web/image/slide.channel/${course.id}/image_1920` : `/images/course-${course.id}.jpg`),
-            // Use real data from Odoo instead of random mock data
+            // Use only real Odoo image URL - no fallback to avoid broken images
+            image: course.image,
+            // Use only real data from Odoo - no mock data
             duration: course.duration || 0,
             level: course.level || tDefaults('defaultLevel'),
             rating: course.rating || 0,
             students: course.students || 0,
             // Fix price precision issues
-            price: Math.round((course.price || 0) * 100) / 100,
-            // Only add fallback if no real data exists
-            ...(course.students === 0 && course.rating === 0 && {
-              // Minimal fallback only when no real data
-              students: Math.floor(Math.random() * 100) + 10,
-              rating: 4 + Math.random() * 0.5
-            })
+            price: Math.round((course.price || 0) * 100) / 100
           }));
           setCourses(mappedCourses);
         } else {
