@@ -679,6 +679,7 @@
         "title": "Shopping Cart",
         "addToCart": "Add to cart",
         "addedToCart": "Added",
+        "loginToAdd": "Sign in to add to cart",
         "removeFromCart": "Remove from cart",
         "clearCart": "Clear cart",
         "proceedToCheckout": "Proceed to checkout",
