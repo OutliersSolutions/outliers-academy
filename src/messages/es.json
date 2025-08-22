@@ -596,7 +596,20 @@
             "noRating": "Sin calificar",
             "hours": "horas",
             "hour": "hora",
-            "minutes": "min"
+            "minutes": "min",
+            "noData": "Sin datos",
+            "undefined": "No definido",
+            "pending": "Pendiente",
+            "processing": "Procesando",
+            "loading": "Cargando",
+            "error": "Error",
+            "unavailable": "No disponible",
+            "expired": "Vencido",
+            "active": "Activo",
+            "inactive": "Inactivo",
+            "draft": "Borrador",
+            "published": "Publicado",
+            "archived": "Archivado"
         },
         "ui": {
             "successfulTransformation": "Transformación exitosa"
@@ -674,30 +687,14 @@
         "processing": "Procesando...",
         "total": "Total",
         "orderSummary": "Resumen del Pedido",
-        "courseAccess": "Acceso completo al curso",
-        "digitalProduct": "Producto Digital",
-        "secureCheckout": "Pago seguro protegido",
+        "courseAccess": "Acceso de por vida al curso",
+        "digitalProduct": "Producto digital",
+        "secureCheckout": "Pago seguro con SSL",
         "loginRequired": "Debes iniciar sesión para continuar",
         "continueShopping": "Continuar comprando",
         "loginToAdd": "Inicia sesión para añadir",
-        "continueShopping": "Seguir comprando",
-        "itemsInCart": "{count, plural, =0 {No hay cursos} =1 {1 curso} other {# cursos}} en tu carrito",
-        "orderSummary": "Resumen del pedido",
-        "total": "Total",
-        "secureCheckout": "Pago seguro con SSL",
-        "processing": "Procesando...",
-        "loginRequired": "Debes iniciar sesión para comprar",
-        "courseAccess": "Acceso de por vida al curso",
-        "digitalProduct": "Producto digital",
         "oneTimePayment": "Pago único",
-        "addToCartError": "Error al agregar al carrito",
-        "removeError": "Error al quitar del carrito",
-        "clearError": "Error al vaciar el carrito",
-        "fetchError": "Error al cargar el carrito",
-        "checkoutError": "Error al procesar el pago",
-        "emptyCartError": "Tu carrito está vacío",
         "cartCleared": "Carrito vaciado",
-        "removedFromCart": "Curso {courseName} removido del carrito",
         "discountCode": "Código de descuento",
         "discountCodePlaceholder": "Ingresa tu código",
         "applyDiscount": "Aplicar",
@@ -839,6 +836,88 @@
             "loading": "Cargando...",
             "saved": "Guardado exitosamente",
             "deleted": "Eliminado exitosamente"
+        }
+    },
+    "pricing": {
+        "title": "Planes diseñados para tu crecimiento",
+        "description": "Elige el plan que mejor se adapte a tu objetivo. Cancela cuando quieras, actualiza o degrada tu plan en cualquier momento.",
+        "launchOffer": "🚀 Oferta de lanzamiento - 40% OFF",
+        "monthlyPeriod": "/mes",
+        "customPrice": "Personalizado",
+        "mostPopular": "Más Popular",
+        "startNow": "Comenzar Ahora",
+        "selectPlan": "Seleccionar Plan",
+        "contactSales": "Contactar Ventas",
+        "comingSoon": "Próximamente",
+        "youSave": "Ahorras ${amount} al mes",
+        "plans": {
+            "starter": {
+                "name": "Starter",
+                "description": "Perfecto para comenzar tu journey en AI y Automation",
+                "features": [
+                    "Acceso a cursos introductorios",
+                    "Comunidad exclusiva en Discord",
+                    "Recursos descargables básicos",
+                    "Actualizaciones mensuales",
+                    "Soporte por email"
+                ],
+                "limitations": [
+                    "Sin acceso a cursos avanzados",
+                    "Sin mentoría 1:1",
+                    "Sin proyectos prácticos"
+                ]
+            },
+            "pro": {
+                "name": "Pro",
+                "description": "Para profesionales que buscan transformar su carrera",
+                "features": [
+                    "Todo lo de Starter",
+                    "Acceso a todos los cursos avanzados",
+                    "Proyectos prácticos con feedback",
+                    "Mentoría grupal semanal",
+                    "Templates y herramientas premium",
+                    "Acceso a webinars en vivo",
+                    "Certificaciones oficiales",
+                    "Soporte prioritario"
+                ],
+                "limitations": [
+                    "Sin mentoría 1:1 ilimitada"
+                ]
+            },
+            "enterprise": {
+                "name": "Enterprise",
+                "description": "Solución completa para equipos y empresas",
+                "features": [
+                    "Todo lo de Pro",
+                    "Mentoría 1:1 ilimitada",
+                    "Consultoría estratégica",
+                    "Implementación personalizada",
+                    "Entrenamientos corporativos",
+                    "Soporte dedicado 24/7",
+                    "Desarrollo de soluciones custom",
+                    "SLA garantizado"
+                ]
+            }
+        },
+        "faq": {
+            "title": "Preguntas Frecuentes",
+            "changePlan": {
+                "question": "¿Puedo cambiar de plan en cualquier momento?",
+                "answer": "Sí, puedes actualizar o degradar tu plan cuando quieras. Los cambios se aplicarán en tu próximo ciclo de facturación."
+            },
+            "refund": {
+                "question": "¿Hay garantía de reembolso?",
+                "answer": "Ofrecemos una garantía de reembolso de 30 días. Si no estás satisfecho, contacta con nosotros y te devolveremos el dinero."
+            },
+            "updates": {
+                "question": "¿Los precios incluyen actualizaciones?",
+                "answer": "Sí, todos los planes incluyen actualizaciones automáticas del contenido y nuevas funcionalidades sin costo adicional."
+            }
+        },
+        "cta": {
+            "title": "¿No estás seguro qué plan elegir?",
+            "description": "Nuestro equipo te ayudará a encontrar la solución perfecta para tus necesidades.",
+            "button": "Hablar con un Experto"
         }
     },
     "legal": {

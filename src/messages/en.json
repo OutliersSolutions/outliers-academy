@@ -596,7 +596,20 @@
             "noRating": "No rating",
             "hours": "hours",
             "hour": "hour",
-            "minutes": "min"
+            "minutes": "min",
+            "noData": "No data",
+            "undefined": "Undefined",
+            "pending": "Pending",
+            "processing": "Processing",
+            "loading": "Loading",
+            "error": "Error",
+            "unavailable": "Unavailable",
+            "expired": "Expired",
+            "active": "Active",
+            "inactive": "Inactive",
+            "draft": "Draft",
+            "published": "Published",
+            "archived": "Archived"
         },
         "ui": {
             "successfulTransformation": "Successful transformation"
@@ -822,6 +835,88 @@
             "loading": "Loading...",
             "saved": "Saved successfully",
             "deleted": "Deleted successfully"
+        }
+    },
+    "pricing": {
+        "title": "Plans designed for your growth",
+        "description": "Choose the plan that best fits your goal. Cancel anytime, upgrade or downgrade your plan at any time.",
+        "launchOffer": "🚀 Launch offer - 40% OFF",
+        "monthlyPeriod": "/month",
+        "customPrice": "Custom",
+        "mostPopular": "Most Popular",
+        "startNow": "Start Now",
+        "selectPlan": "Select Plan",
+        "contactSales": "Contact Sales",
+        "comingSoon": "Coming Soon",
+        "youSave": "You save ${amount} per month",
+        "plans": {
+            "starter": {
+                "name": "Starter",
+                "description": "Perfect to start your journey in AI and Automation",
+                "features": [
+                    "Access to introductory courses",
+                    "Exclusive Discord community",
+                    "Basic downloadable resources",
+                    "Monthly updates",
+                    "Email support"
+                ],
+                "limitations": [
+                    "No access to advanced courses",
+                    "No 1:1 mentoring",
+                    "No practical projects"
+                ]
+            },
+            "pro": {
+                "name": "Pro",
+                "description": "For professionals looking to transform their career",
+                "features": [
+                    "Everything in Starter",
+                    "Access to all advanced courses",
+                    "Practical projects with feedback",
+                    "Weekly group mentoring",
+                    "Premium templates and tools",
+                    "Access to live webinars",
+                    "Official certifications",
+                    "Priority support"
+                ],
+                "limitations": [
+                    "No unlimited 1:1 mentoring"
+                ]
+            },
+            "enterprise": {
+                "name": "Enterprise",
+                "description": "Complete solution for teams and companies",
+                "features": [
+                    "Everything in Pro",
+                    "Unlimited 1:1 mentoring",
+                    "Strategic consulting",
+                    "Custom implementation",
+                    "Corporate training",
+                    "Dedicated 24/7 support",
+                    "Custom solution development",
+                    "Guaranteed SLA"
+                ]
+            }
+        },
+        "faq": {
+            "title": "Frequently Asked Questions",
+            "changePlan": {
+                "question": "Can I change plans at any time?",
+                "answer": "Yes, you can upgrade or downgrade your plan whenever you want. Changes will apply on your next billing cycle."
+            },
+            "refund": {
+                "question": "Is there a money-back guarantee?",
+                "answer": "We offer a 30-day money-back guarantee. If you're not satisfied, contact us and we'll refund your money."
+            },
+            "updates": {
+                "question": "Do prices include updates?",
+                "answer": "Yes, all plans include automatic content updates and new features at no additional cost."
+            }
+        },
+        "cta": {
+            "title": "Not sure which plan to choose?",
+            "description": "Our team will help you find the perfect solution for your needs.",
+            "button": "Talk to an Expert"
         }
     },
     "legal": {
