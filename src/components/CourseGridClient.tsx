@@ -29,6 +29,19 @@ export function CourseGridClient() {
   const router = useRouter();
   const pathname = usePathname();
   const locale = pathname.split('/')[1] || 'es';
+
+  // Function to get level colors based on difficulty
+  const getLevelColor = (level: string) => {
+    const normalizedLevel = level.toLowerCase();
+    if (normalizedLevel.includes('principiante') || normalizedLevel.includes('beginner') || normalizedLevel.includes('básico') || normalizedLevel.includes('basic')) {
+      return 'bg-green-500'; // Verde para principiante
+    } else if (normalizedLevel.includes('intermedio') || normalizedLevel.includes('intermediate')) {
+      return 'bg-yellow-500'; // Amarillo para intermedio
+    } else if (normalizedLevel.includes('avanzado') || normalizedLevel.includes('advanced')) {
+      return 'bg-red-500'; // Rojo para avanzado
+    }
+    return 'bg-blue-500'; // Azul por defecto
+  };
   useEffect(() => {
     const fetchCourses = async () => {
       try {
@@ -44,13 +57,20 @@ export function CourseGridClient() {
           const mappedCourses = coursesArray.map((course: any) => ({
             ...course,
             name: course.title || course.name || tDefaults('untitledCourse'),
-            description: course.description || tDefaults('courseDescription'),
-            image: course.image || `/images/course-${course.id}.jpg`,
+            // Clean HTML tags from description
+            description: (course.description || tDefaults('courseDescription'))
+              .replace(/<[^>]*>/g, '') // Remove HTML tags
+              .replace(/&nbsp;/g, ' ') // Replace &nbsp; with spaces
+              .trim(),
+            // Use real Odoo image URL or fallback
+            image: course.image || (course.id ? `https://odoo.gamarradigital.com/web/image/slide.channel/${course.id}/image_1920` : `/images/course-${course.id}.jpg`),
             // Use real data from Odoo instead of random mock data
             duration: course.duration || 0,
             level: course.level || tDefaults('defaultLevel'),
             rating: course.rating || 0,
             students: course.students || 0,
+            // Fix price precision issues
+            price: Math.round((course.price || 0) * 100) / 100,
             // Only add fallback if no real data exists
             ...(course.students === 0 && course.rating === 0 && {
               // Minimal fallback only when no real data
@@ -115,7 +135,23 @@ export function CourseGridClient() {
           {/* Course Image */}
             <Link href={`/${locale}/course/${c.slug}/overview`}>
               <div className="relative h-48 overflow-hidden cursor-pointer">
-                <div className="w-full h-full bg-gradient-to-br from-blue-400/30 via-purple-400/25 to-amber-400/20 flex items-center justify-center relative">
+                {/* Course Image */}
+                {c.image ? (
+                  <img 
+                    src={c.image} 
+                    alt={courseName}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    onError={(e) => {
+                      // Fallback to gradient design if image fails to load
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = 'none';
+                      const fallback = target.nextElementSibling as HTMLElement;
+                      if (fallback) fallback.style.display = 'flex';
+                    }}
+                  />
+                ) : null}
+                {/* Fallback gradient design */}
+                <div className={`w-full h-full bg-gradient-to-br from-blue-400/30 via-purple-400/25 to-amber-400/20 flex items-center justify-center relative ${c.image ? 'hidden' : 'flex'}`}>
                   {/* Tech pattern background */}
                   <div className="absolute inset-0 bg-gradient-to-br from-black/10 via-transparent to-white/10"></div>
                   <div className="absolute top-4 left-4 w-8 h-8 bg-white/20 rounded-full animate-pulse"></div>
@@ -133,11 +169,11 @@ export function CourseGridClient() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent group-hover:from-black/30 transition-all duration-500" />
                 {/* Price Badge tech style */}
                 <div className="absolute top-4 right-4 bg-white dark:bg-gray-800 backdrop-blur-sm px-3 py-1 rounded-xl shadow-lg border border-blue-200 dark:border-blue-500">
-                  <span className="font-bold text-blue-600 dark:text-blue-400 text-sm font-mono">${c.price}</span>
+                  <span className="font-bold text-blue-600 dark:text-blue-400 text-sm font-mono">${c.price.toFixed(2)}</span>
                 </div>
-                {/* Level badge tech style */}
+                {/* Level badge with appropriate colors */}
                 {c.level && (
-                  <div className="absolute bottom-4 left-4 bg-gradient-to-r from-blue-500 to-purple-500 backdrop-blur-sm px-3 py-1 rounded-full border border-white/30">
+                  <div className={`absolute bottom-4 left-4 backdrop-blur-sm px-3 py-1 rounded-full border border-white/30 ${getLevelColor(c.level)}`}>
                     <span className="text-white text-xs font-semibold font-mono">{c.level}</span>
                   </div>
                 )}
@@ -155,28 +191,28 @@ export function CourseGridClient() {
               </p>
               {/* Course Meta tech style */}
               <div className="flex items-center justify-between mb-4 text-xs">
-                {c.duration > 0 && (
+                {(c.duration ?? 0) > 0 && (
                   <span className="flex items-center gap-1 bg-blue-50 dark:bg-blue-900/30 px-2 py-1 rounded-lg border border-blue-200 dark:border-blue-700">
                     <svg className="w-3 h-3 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <span className="font-semibold text-blue-600 dark:text-blue-400 font-mono">{Math.round(c.duration)}h</span>
+                    <span className="font-semibold text-blue-600 dark:text-blue-400 font-mono">{Math.round(c.duration ?? 0)}h</span>
                   </span>
                 )}
-                {c.rating > 0 && (
+                {(c.rating ?? 0) > 0 && (
                   <span className="flex items-center gap-1 bg-amber-50 dark:bg-amber-900/30 px-2 py-1 rounded-lg border border-amber-200 dark:border-amber-700">
                     <svg className="w-3 h-3 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                     </svg>
-                    <span className="font-bold text-amber-600 dark:text-amber-400 font-mono">{c.rating.toFixed(1)}</span>
+                    <span className="font-bold text-amber-600 dark:text-amber-400 font-mono">{(c.rating ?? 0).toFixed(1)}</span>
                   </span>
                 )}
               </div>
               {/* Students Count tech style */}
-              {c.students > 0 && (
+              {(c.students ?? 0) > 0 && (
                 <div className="text-xs mb-4 bg-purple-50 dark:bg-purple-900/30 px-3 py-2 rounded-xl border border-purple-200 dark:border-purple-700">
                   <span className="font-semibold text-purple-600 dark:text-purple-400 font-mono">
-                    {c.students.toLocaleString()} {tCourse('students')}
+                    {(c.students ?? 0).toLocaleString()} {tCourse('students')}
                   </span>
                 </div>
               )}

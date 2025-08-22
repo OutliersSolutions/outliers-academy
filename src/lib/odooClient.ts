@@ -230,7 +230,8 @@ export async function fetchCourses(options?: {slug?: string, limit?: number, sor
     duration: c.total_time || 0,
     lessons_count: c.total_slides || 0,
     views: c.total_views || 0,
-    image: c.image_1920 ? `/web/image/slide.channel/${c.id}/image_1920` : null
+    // Generate proper Odoo image URL using environment variable
+    image: c.image_1920 ? `${ODOO_URL}/web/image/slide.channel/${c.id}/image_1920` : null
   }));
 }
 export async function fetchUserCourses(userId: number) {
