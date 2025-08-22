@@ -1,6 +1,7 @@
 'use client';
 
-import dynamic from 'next/dynamic';
+import { useState, useEffect } from 'react';
+import { AnimatedText } from './AnimatedText';
 
 interface AnimatedTextWrapperProps {
   words: string[];
@@ -12,19 +13,31 @@ interface AnimatedTextWrapperProps {
   effect?: 'typing' | 'glitch' | 'fade' | 'slide';
 }
 
-const AnimatedText = dynamic(() => import('./AnimatedText').then(mod => ({ default: mod.AnimatedText })), {
-  ssr: false,
-  loading: () => (
-    <span className="inline-block min-w-[200px] min-h-[2.5em] text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 font-heading font-bold">
-       
-    </span>
-  )
-});
-
 export function AnimatedTextWrapper(props: AnimatedTextWrapperProps) {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  // Provide fallback words if empty or undefined
+  const words = props.words && props.words.length > 0 ? props.words : ['skills', 'potential', 'future', 'career'];
+  
+  // Always render the component, but with a fallback for SSR
   return (
     <span className="inline-block min-w-[200px] min-h-[1.5em] align-baseline">
-      <AnimatedText {...props} />
+      {isClient ? (
+        <AnimatedText {...props} words={words} />
+      ) : (
+        // SSR fallback - show the first word statically
+        <span className={`inline-block ${props.className}`}>
+          {props.baseText}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 font-bold">
+            {words[0]}
+          </span>
+          <span className="inline-block w-0.5 sm:w-1 h-[1em] ml-0.5 sm:ml-1 bg-indigo-600 align-middle opacity-100" />
+        </span>
+      )}
     </span>
   );
 }

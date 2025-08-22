@@ -179,7 +179,7 @@ export default function PricingPage() {
 
         {/* CTA Final Mejorado */}
         <div className="mt-20">
-          <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-700 rounded-3xl p-8 md:p-12 text-center border border-gray-100 dark:border-gray-600">
+          <Card className="p-8 md:p-12 text-center">
             <h2 className="h2-section mb-4">
               {t('cta.title')}
             </h2>
@@ -239,7 +239,7 @@ export default function PricingPage() {
                 {t('cta.contact.whatsapp')}
               </a>
             </div>
-          </div>
+          </Card>
         </div>
       </div>
     </div>

@@ -23,19 +23,26 @@ export function AnimatedText({
 }: AnimatedTextProps) {
   const [mounted, setMounted] = useState(false);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  const [currentText, setCurrentText] = useState(words[0] || ''); // Start with first word for SSR
+  const [currentText, setCurrentText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
   const [isTyping, setIsTyping] = useState(true);
   const [showCursor, setShowCursor] = useState(true);
 
+  // Initialize with first word once mounted
   useEffect(() => {
     setMounted(true);
-  }, []);
+    if (words.length > 0) {
+      setCurrentText(words[0]);
+    }
+    // Note: Currently only 'typing' effect is implemented
+    console.debug('AnimatedText effect:', effect);
+  }, [words, effect]);
 
   useEffect(() => {
-    if (!mounted) return; // Only animate after mounted to prevent hydration issues
+    if (!mounted || words.length === 0) return;
     
     const currentWord = words[currentWordIndex];
+    if (!currentWord) return;
     
     const timeout = setTimeout(() => {
       if (isTyping && !isDeleting) {
@@ -73,27 +80,31 @@ export function AnimatedText({
     return () => clearInterval(cursorInterval);
   }, []);
 
-  // Simplified render without inline styles
-  const renderText = () => {
-    const cursorElement = mounted ? (
-      <span 
-        className={`inline-block w-0.5 sm:w-1 h-[1em] ml-0.5 sm:ml-1 bg-indigo-600 transition-opacity duration-100 align-middle ${
-          showCursor ? 'opacity-100' : 'opacity-0'
-        }`}
-      />
-    ) : null;
-
-    // Simplified version without complex animations for better LCP
+  // Safe guard against empty words array
+  if (!words || words.length === 0) {
     return (
       <span className={`inline-block ${className}`}>
         {baseText}
-        <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 font-bold">
-          {currentText}
+        <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 font-bold">
+          skills
         </span>
-        {cursorElement}
       </span>
     );
-  };
+  }
 
-  return renderText();
+  return (
+    <span className={`inline-block ${className}`}>
+      {baseText}
+      <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 font-bold">
+        {currentText || words[0] || 'skills'}
+      </span>
+      {mounted && (
+        <span 
+          className={`inline-block w-0.5 sm:w-1 h-[1em] ml-0.5 sm:ml-1 bg-indigo-600 transition-opacity duration-100 align-middle ${
+            showCursor ? 'opacity-100' : 'opacity-0'
+          }`}
+        />
+      )}
+    </span>
+  );
 }
