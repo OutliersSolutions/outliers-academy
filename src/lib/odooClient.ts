@@ -456,7 +456,7 @@ export async function getCompanyInfo() {
       };
     }
   } catch (error) {
-    console.log('Error fetching company info from Odoo:', error);
+    // Error fetching company info from Odoo, will use fallback
   }
 
   // Fallback to environment variables

@@ -6,6 +6,7 @@ import { getMessages, getTranslations } from "next-intl/server";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Layouts/Footer";
 import { ConditionalWhatsAppButton } from "@/components/ui/ConditionalWhatsAppButton";
+import { ConditionalFloatingCartButton } from "@/components/ui/ConditionalFloatingCartButton";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { GlobalLoader } from "@/components/GlobalLoader";
 import { CookieProvider } from "@/components/CookieProvider";
@@ -74,6 +75,7 @@ export default async function RootLayout({
                     </main>
                     <Footer locale={locale} />
                     <ConditionalWhatsAppButton />
+                    <ConditionalFloatingCartButton />
                   </div>
                 </GlobalLoader>
               </CookieProvider>
