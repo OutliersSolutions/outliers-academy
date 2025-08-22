@@ -48,15 +48,15 @@ export function CookieProvider({ children }: CookieProviderProps) {
         window.gtag('config', process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID!, {
           cookie_flags: 'SameSite=None;Secure',
           anonymize_ip: true,
-          allow_google_signals: consent?.marketing || false,
-          allow_ad_personalization_signals: consent?.marketing || false
+          allow_google_signals: false, // Will be updated via consent
+          allow_ad_personalization_signals: false // Will be updated via consent
         });
-        // Set initial consent state
+        // Set initial consent state as denied, will be updated later
         window.gtag('consent', 'default', {
-          analytics_storage: consent?.analytics ? 'granted' : 'denied',
-          ad_storage: consent?.marketing ? 'granted' : 'denied',
-          functionality_storage: consent?.preferences ? 'granted' : 'denied',
-          personalization_storage: consent?.preferences ? 'granted' : 'denied'
+          analytics_storage: 'denied',
+          ad_storage: 'denied',
+          functionality_storage: 'denied',
+          personalization_storage: 'denied'
         });
       };
     }
@@ -76,7 +76,7 @@ export function CookieProvider({ children }: CookieProviderProps) {
       noscript.innerHTML = `<iframe src="https://www.googletagmanager.com/ns.html?id=${process.env.NEXT_PUBLIC_GTM_ID}" height="0" width="0" style="display:none;visibility:hidden"></iframe>`;
       document.body.appendChild(noscript);
     }
-  }, [consent]);
+  }, []); // Remove consent dependency
 
   useEffect(() => {
     setIsClient(true);
@@ -86,14 +86,30 @@ export function CookieProvider({ children }: CookieProviderProps) {
       try {
         const parsed = JSON.parse(savedConsent);
         setConsent(parsed);
-        // Initialize Google Analytics based on saved consent
-        if (parsed.analytics && typeof window !== 'undefined') {
-          initializeAnalytics();
-        }
       } catch (error) {
+        console.error('Error parsing saved consent:', error);
       }
     }
-  }, [initializeAnalytics]);
+  }, []); // Remove initializeAnalytics from dependencies
+
+  // Separate effect for initializing analytics when consent changes
+  useEffect(() => {
+    if (consent?.analytics && typeof window !== 'undefined') {
+      initializeAnalytics();
+    }
+  }, [consent?.analytics, initializeAnalytics]); // Include both dependencies
+
+  // Separate effect for updating Google Analytics consent when consent changes
+  useEffect(() => {
+    if (consent && typeof window !== 'undefined' && window.gtag) {
+      window.gtag('consent', 'update', {
+        analytics_storage: consent.analytics ? 'granted' : 'denied',
+        ad_storage: consent.marketing ? 'granted' : 'denied',
+        functionality_storage: consent.preferences ? 'granted' : 'denied',
+        personalization_storage: consent.preferences ? 'granted' : 'denied'
+      });
+    }
+  }, [consent]); // Update consent when any part of consent changes
 
   const updateConsent = (newConsent: CookieConsent) => {
     const consentWithTimestamp = {

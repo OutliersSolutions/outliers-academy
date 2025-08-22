@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useTranslations } from 'next-intl';
 import { CourseSearch } from '@/components/CourseSearch';
 
@@ -45,21 +45,35 @@ export default function CatalogPage({ params }: CatalogPageProps) {
   ];
 
   // Course counts will be managed by CourseSearch component
+  const handleResultsChange = useCallback((total: number, filtered: number) => {
+    setTotalCourses(total);
+    setFilteredCourses(filtered);
+  }, []);
+
+  const handleClearSearch = useCallback(() => {
+    setSearchTerm('');
+  }, []);
+
+  const handleClearFilters = useCallback(() => {
+    setSearchTerm('');
+    setSelectedCategory('all');
+    setSelectedLevel('all');
+  }, []);
 
   return (
     <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-black">
       {/* Gradientes de fondo que cambian con el tema */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 pointer-events-none">
         {/* Gradiente principal */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-100/50 via-purple-50/30 to-pink-50/20 dark:from-blue-600/30 dark:via-purple-600/20 dark:to-pink-600/10"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-100/50 via-purple-50/30 to-pink-50/20 dark:from-blue-600/30 dark:via-purple-600/20 dark:to-pink-600/10 pointer-events-none"></div>
         
         {/* Elementos decorativos con gradientes */}
-        <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-blue-200/60 via-purple-200/40 to-transparent dark:from-blue-400/40 dark:via-purple-500/30 dark:to-transparent rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute top-20 right-0 w-80 h-80 bg-gradient-to-bl from-pink-200/50 via-purple-200/30 to-transparent dark:from-pink-400/30 dark:via-purple-400/20 dark:to-transparent rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
-        <div className="absolute bottom-0 left-1/3 w-72 h-72 bg-gradient-to-tr from-indigo-200/40 via-blue-200/25 to-transparent dark:from-indigo-400/25 dark:via-blue-400/15 dark:to-transparent rounded-full blur-3xl animate-pulse" style={{animationDelay: '4s'}}></div>
+        <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-blue-200/60 via-purple-200/40 to-transparent dark:from-blue-400/40 dark:via-purple-500/30 dark:to-transparent rounded-full blur-3xl animate-pulse pointer-events-none"></div>
+        <div className="absolute top-20 right-0 w-80 h-80 bg-gradient-to-bl from-pink-200/50 via-purple-200/30 to-transparent dark:from-pink-400/30 dark:via-purple-400/20 dark:to-transparent rounded-full blur-3xl animate-pulse pointer-events-none" style={{animationDelay: '2s'}}></div>
+        <div className="absolute bottom-0 left-1/3 w-72 h-72 bg-gradient-to-tr from-indigo-200/40 via-blue-200/25 to-transparent dark:from-indigo-400/25 dark:via-blue-400/15 dark:to-transparent rounded-full blur-3xl animate-pulse pointer-events-none" style={{animationDelay: '4s'}}></div>
         
         {/* Patrón de puntos decorativo */}
-        <div className="absolute inset-0 opacity-20 dark:opacity-10">
+        <div className="absolute inset-0 opacity-20 dark:opacity-10 pointer-events-none">
           <div className="absolute top-32 left-20 w-2 h-2 bg-gray-600 dark:bg-white rounded-full animate-ping"></div>
           <div className="absolute top-64 right-32 w-1 h-1 bg-blue-500 dark:bg-blue-300 rounded-full animate-ping" style={{animationDelay: '1s'}}></div>
           <div className="absolute bottom-32 left-1/4 w-1.5 h-1.5 bg-purple-500 dark:bg-purple-300 rounded-full animate-ping" style={{animationDelay: '3s'}}></div>
@@ -257,16 +271,9 @@ export default function CatalogPage({ params }: CatalogPageProps) {
             selectedCategory={selectedCategory}
             selectedLevel={selectedLevel}
             sortBy={sortBy}
-            onResultsChange={(total, filtered) => {
-              setTotalCourses(total);
-              setFilteredCourses(filtered);
-            }}
-            onClearSearch={() => setSearchTerm('')}
-            onClearFilters={() => {
-              setSearchTerm('');
-              setSelectedCategory('all');
-              setSelectedLevel('all');
-            }}
+            onResultsChange={handleResultsChange}
+            onClearSearch={handleClearSearch}
+            onClearFilters={handleClearFilters}
           />
 
           {/* Paginación mejorada */}

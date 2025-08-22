@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 
 interface AnimatedTextProps {
   words: string[];
@@ -28,49 +28,60 @@ export function AnimatedText({
   const [isTyping, setIsTyping] = useState(true);
   const [showCursor, setShowCursor] = useState(true);
 
+  // Memoize words array to prevent recreation on every render  
+  const stableWords = useMemo(() => words, [words]);
+
   // Initialize with first word once mounted
   useEffect(() => {
     setMounted(true);
-    if (words.length > 0) {
-      setCurrentText(words[0]);
+    if (stableWords.length > 0) {
+      setCurrentText(stableWords[0]);
     }
     // Note: Currently only 'typing' effect is implemented
     console.debug('AnimatedText effect:', effect);
-  }, [words, effect]);
+  }, [stableWords, effect]);
 
   useEffect(() => {
-    if (!mounted || words.length === 0) return;
+    if (!mounted || stableWords.length === 0) return;
     
-    const currentWord = words[currentWordIndex];
+    const currentWord = stableWords[currentWordIndex];
     if (!currentWord) return;
     
-    const timeout = setTimeout(() => {
-      if (isTyping && !isDeleting) {
-        // Typing forward
-        if (currentText.length < currentWord.length) {
+    let timeout: NodeJS.Timeout;
+    
+    if (isTyping && !isDeleting) {
+      // Typing forward
+      if (currentText.length < currentWord.length) {
+        timeout = setTimeout(() => {
           setCurrentText(currentWord.slice(0, currentText.length + 1));
-        } else {
-          // Finished typing, pause then start deleting
-          setTimeout(() => {
-            setIsDeleting(true);
-            setIsTyping(false);
-          }, pauseDuration);
-        }
-      } else if (isDeleting && !isTyping) {
-        // Deleting backward
-        if (currentText.length > 0) {
-          setCurrentText(currentText.slice(0, -1));
-        } else {
-          // Finished deleting, move to next word
+        }, typingSpeed + Math.random() * 50);
+      } else {
+        // Finished typing, pause then start deleting
+        timeout = setTimeout(() => {
+          setIsDeleting(true);
+          setIsTyping(false);
+        }, pauseDuration);
+      }
+    } else if (isDeleting && !isTyping) {
+      // Deleting backward
+      if (currentText.length > 0) {
+        timeout = setTimeout(() => {
+          setCurrentText(prev => prev.slice(0, -1));
+        }, deletingSpeed);
+      } else {
+        // Finished deleting, move to next word
+        timeout = setTimeout(() => {
           setIsDeleting(false);
           setIsTyping(true);
-          setCurrentWordIndex((prev) => (prev + 1) % words.length);
-        }
+          setCurrentWordIndex((prev) => (prev + 1) % stableWords.length);
+        }, 100);
       }
-    }, isTyping ? typingSpeed + Math.random() * 50 : deletingSpeed);
+    }
 
-    return () => clearTimeout(timeout);
-  }, [mounted, currentText, currentWordIndex, isDeleting, isTyping, words, typingSpeed, deletingSpeed, pauseDuration]);
+    return () => {
+      if (timeout) clearTimeout(timeout);
+    };
+  }, [mounted, currentText, currentWordIndex, isDeleting, isTyping, stableWords, typingSpeed, deletingSpeed, pauseDuration]);
 
   // Cursor blinking effect
   useEffect(() => {
@@ -81,7 +92,7 @@ export function AnimatedText({
   }, []);
 
   // Safe guard against empty words array
-  if (!words || words.length === 0) {
+  if (!stableWords || stableWords.length === 0) {
     return (
       <span className={`inline-block ${className}`}>
         {baseText}
@@ -96,7 +107,7 @@ export function AnimatedText({
     <span className={`inline-block ${className}`}>
       {baseText}
       <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 font-bold">
-        {currentText || words[0] || 'skills'}
+        {currentText || stableWords[0] || 'skills'}
       </span>
       {mounted && (
         <span 

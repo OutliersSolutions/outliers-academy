@@ -44,9 +44,9 @@ export function Navbar() {
   // cerrar dropdown al click fuera
   useEffect(() => {
     const onClickOutside = (e: MouseEvent) => {
-      const target = e.target as Node;
+      const target = e.target as Element;
       
-      if (!target) return;
+      if (!target || !target.nodeType) return;
       
       // Language dropdown
       if (dropdownRef.current && !dropdownRef.current.contains(target)) {
@@ -59,9 +59,12 @@ export function Navbar() {
       }
       
       // Mobile menu - only close if clicking completely outside the menu area
-      if (mobileMenuRef.current && !mobileMenuRef.current.contains(target) && 
-          !(target as Element).closest('[data-mobile-menu-trigger]')) {
-        setMobileMenuOpen(false);
+      if (mobileMenuRef.current && !mobileMenuRef.current.contains(target)) {
+        // Check if target is the mobile menu trigger button
+        const isTrigger = target.closest && target.closest('[data-mobile-menu-trigger]');
+        if (!isTrigger) {
+          setMobileMenuOpen(false);
+        }
       }
     };
 
