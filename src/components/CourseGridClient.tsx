@@ -227,9 +227,16 @@ export function CourseGridClient() {
               <div className="space-y-2">
                 <Link
                   href={`/${locale}/course/${c.slug}/overview`}
-                  className="w-full inline-flex items-center justify-center px-4 py-2 border border-blue-500 text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-500 hover:text-white dark:hover:bg-blue-500 dark:hover:text-white rounded-xl font-semibold transition-all duration-300 text-sm"
+                  className="group/cta w-full inline-flex items-center justify-center px-4 py-2 border border-blue-500 text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-500 hover:text-white dark:hover:bg-blue-500 dark:hover:text-white rounded-xl font-semibold transition-all duration-300 text-sm relative overflow-hidden"
                 >
-                  {tCourse('viewDetails')}
+                  <span className="flex items-center gap-2">
+                    <svg className="w-4 h-4 transition-transform group-hover/cta:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                    {tCourse('viewDetails')}
+                  </span>
+                  {/* Efecto de brillo en hover */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover/cta:translate-x-[100%] transition-transform duration-700"></div>
                 </Link>
                 <div className="grid grid-cols-2 gap-2">
                   <AddToCartButton
@@ -247,6 +254,19 @@ export function CourseGridClient() {
             </div>
             {/* Tech hover effect */}
             <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 via-purple-500/0 to-amber-500/0 group-hover:from-blue-500/5 group-hover:via-purple-500/5 group-hover:to-amber-500/5 transition-all duration-500 rounded-3xl pointer-events-none"></div>
+            
+            {/* Call to action overlay - se muestra en hover */}
+            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/60 transition-all duration-300 rounded-3xl flex items-center justify-center opacity-0 group-hover:opacity-100 pointer-events-none">
+              <div className="bg-white dark:bg-gray-800 px-6 py-3 rounded-xl shadow-lg transform scale-95 group-hover:scale-100 transition-all duration-300">
+                <p className="text-sm font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                  </svg>
+                  Haz clic para más información
+                </p>
+              </div>
+            </div>
           </div>
         );
       })}

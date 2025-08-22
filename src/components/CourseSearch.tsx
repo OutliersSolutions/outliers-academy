@@ -32,6 +32,7 @@ interface CourseSearchProps {
   selectedCategory: string;
   selectedLevel: string;
   sortBy: string;
+  viewMode?: 'grid' | 'list';
   onResultsChange?: (total: number, filtered: number) => void;
   onClearSearch?: () => void;
   onClearFilters?: () => void;
@@ -42,6 +43,7 @@ export function CourseSearch({
   selectedCategory, 
   selectedLevel, 
   sortBy,
+  viewMode = 'grid',
   onResultsChange,
   onClearSearch,
   onClearFilters
@@ -247,12 +249,104 @@ export function CourseSearch({
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div 
+      key={viewMode} // Fuerza el re-render con animación cuando cambia el viewMode
+      className={`transition-all duration-500 ease-in-out ${viewMode === 'grid' 
+        ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" 
+        : "space-y-6"
+      }`}
+    >
       {filteredCourses.map((c) => {
         const courseName = c.name || c.title || tDefaults('untitledCourse');
+        
+        if (viewMode === 'list') {
+          // Vista de lista
+          return (
+            <div key={c.id} className="group bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 dark:border-gray-700 overflow-hidden">
+              <div className="flex flex-col md:flex-row">
+                {/* Imagen del curso */}
+                <Link href={`/${locale}/course/${c.slug}/overview`} className="block md:w-64 flex-shrink-0">
+                  <div className="relative h-48 md:h-full overflow-hidden">
+                    {c.image ? (
+                      <img 
+                        src={c.image} 
+                        alt={courseName}
+                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-blue-400/30 via-purple-400/25 to-amber-400/20 flex items-center justify-center">
+                        <span className="text-2xl font-bold text-white drop-shadow-lg">
+                          {courseName.charAt(0)}
+                        </span>
+                      </div>
+                    )}
+                    <div className="absolute top-4 right-4 bg-white dark:bg-gray-800 px-3 py-1 rounded-lg shadow-md">
+                      <span className="font-bold text-blue-600 dark:text-blue-400 text-sm">${c.price.toFixed(2)}</span>
+                    </div>
+                  </div>
+                </Link>
+                
+                {/* Contenido del curso */}
+                <div className="flex-1 p-6 flex flex-col justify-between">
+                  <div>
+                    <Link href={`/${locale}/course/${c.slug}/overview`}>
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors cursor-pointer">
+                        {courseName}
+                      </h3>
+                    </Link>
+                    <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-2">
+                      {c.description || tCommon('learnNewSkills')}
+                    </p>
+                    
+                    {/* Metadatos en lista */}
+                    <div className="flex flex-wrap gap-3 mb-4 text-sm">
+                      <span className="flex items-center gap-1 bg-blue-50 dark:bg-blue-900/30 px-3 py-1 rounded-full">
+                        <svg className="w-3 h-3 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        {formatDuration(c.duration ?? 0)}
+                      </span>
+                      <span className="flex items-center gap-1 bg-amber-50 dark:bg-amber-900/30 px-3 py-1 rounded-full">
+                        <svg className="w-3 h-3 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        {(c.rating ?? 0) > 0 ? (c.rating ?? 0).toFixed(1) : tStats('notAvailable')}
+                      </span>
+                      <span className={`px-3 py-1 rounded-full text-white text-xs font-semibold ${getLevelColor(c.level || tDefaults('defaultLevel'))}`}>
+                        {c.level || tDefaults('defaultLevel')}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  {/* Botones de acción en lista */}
+                  <div className="flex gap-3">
+                    <Link
+                      href={`/${locale}/course/${c.slug}/overview`}
+                      className="flex-1 text-center px-4 py-2 border border-blue-500 text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-500 hover:text-white rounded-lg font-semibold transition-all duration-300 text-sm"
+                    >
+                      {tCourse('viewDetails')}
+                    </Link>
+                    <AddToCartButton
+                      courseId={c.id}
+                      productId={c.product_id}
+                      courseName={courseName}
+                      variant="outline"
+                      className="text-sm px-4 py-2"
+                    />
+                    <CheckoutButton courseId={c.id} className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-300 text-sm">
+                      {tCourse('enroll')}
+                    </CheckoutButton>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        }
+        
+        // Vista de grid (existente)
         return (
           <div key={c.id} className="group relative bg-white dark:bg-gray-800 backdrop-blur-sm rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-500 transform hover:scale-[1.02] hover:-translate-y-1 flex flex-col min-h-[520px]">
-          {/* Course Image */}
+            {/* Course Image */}
             <Link href={`/${locale}/course/${c.slug}/overview`}>
               <div className="relative h-48 overflow-hidden cursor-pointer">
                 {c.image ? (
@@ -302,7 +396,7 @@ export function CourseSearch({
                 </div>
               </div>
             </Link>
-          {/* Course Content */}
+            {/* Course Content */}
             <div className="p-6 flex-1 flex flex-col">
               <Link href={`/${locale}/course/${c.slug}/overview`}>
                 <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors cursor-pointer leading-tight line-clamp-2 min-h-[3.5rem]">
@@ -342,9 +436,15 @@ export function CourseSearch({
               <div className="space-y-2">
                 <Link
                   href={`/${locale}/course/${c.slug}/overview`}
-                  className="w-full inline-flex items-center justify-center px-4 py-2 border border-blue-500 text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-500 hover:text-white dark:hover:bg-blue-500 dark:hover:text-white rounded-xl font-semibold transition-all duration-300 text-sm"
+                  className="group/cta w-full inline-flex items-center justify-center px-4 py-2 border border-blue-500 text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-500 hover:text-white dark:hover:bg-blue-500 dark:hover:text-white rounded-xl font-semibold transition-all duration-300 text-sm relative overflow-hidden"
                 >
-                  {tCourse('viewDetails')}
+                  <span className="flex items-center gap-2">
+                    <svg className="w-4 h-4 transition-transform group-hover/cta:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                    {tCourse('viewDetails')}
+                  </span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover/cta:translate-x-[100%] transition-transform duration-700"></div>
                 </Link>
                 <div className="grid grid-cols-2 gap-2">
                   <AddToCartButton
@@ -361,6 +461,19 @@ export function CourseSearch({
               </div>
             </div>
             <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 via-purple-500/0 to-amber-500/0 group-hover:from-blue-500/5 group-hover:via-purple-500/5 group-hover:to-amber-500/5 transition-all duration-500 rounded-3xl pointer-events-none"></div>
+            
+            {/* Call to action overlay - se muestra en hover */}
+            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/60 transition-all duration-300 rounded-3xl flex items-center justify-center opacity-0 group-hover:opacity-100 pointer-events-none">
+              <div className="bg-white dark:bg-gray-800 px-6 py-3 rounded-xl shadow-lg transform scale-95 group-hover:scale-100 transition-all duration-300">
+                <p className="text-sm font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                  </svg>
+                  Haz clic para más información
+                </p>
+              </div>
+            </div>
           </div>
         );
       })}

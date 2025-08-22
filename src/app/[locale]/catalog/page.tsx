@@ -16,6 +16,7 @@ export default function CatalogPage({ params }: CatalogPageProps) {
   const [selectedLevel, setSelectedLevel] = useState('all');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [sortBy, setSortBy] = useState('popular');
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [totalCourses, setTotalCourses] = useState(0);
   const [filteredCourses, setFilteredCourses] = useState(0);
 
@@ -158,13 +159,13 @@ export default function CatalogPage({ params }: CatalogPageProps) {
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center justify-between mt-8 pt-8 border-t-2 border-gray-200/50 dark:border-gray-600/50">
-              <div className="flex items-center gap-4">
+            <div className="flex flex-wrap items-center justify-between mt-8 pt-8 border-t-2 border-gray-200/50 dark:border-gray-600/50 gap-4">
+              <div className="flex items-center gap-4 flex-wrap">
                 <span className="text-sm font-bold text-gray-800 dark:text-gray-200">
                   {t('sort.label') || 'Ordenar por:'}
                 </span>
                 <select
-                  className="py-3 px-4 border-2 border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-300 bg-white/80 dark:bg-gray-700/80 text-gray-800 dark:text-gray-200 text-sm font-medium"
+                  className="py-3 px-4 border-2 border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-300 bg-white/80 dark:bg-gray-700/80 text-gray-800 dark:text-gray-200 text-sm font-medium min-w-[180px]"
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
                 >
@@ -176,18 +177,34 @@ export default function CatalogPage({ params }: CatalogPageProps) {
                 </select>
               </div>
 
-              <div className="flex items-center gap-3 mt-4 lg:mt-0">
+              <div className="flex items-center gap-3 flex-wrap">
                 <span className="text-sm font-bold text-gray-800 dark:text-gray-200">
                   {t('view.label') || 'Ver como:'}
                 </span>
-                <div className="flex border-2 border-gray-200 dark:border-gray-600 rounded-xl overflow-hidden">
-                  <button className="p-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="flex border-2 border-gray-200 dark:border-gray-600 rounded-xl overflow-hidden shadow-md">
+                  <button 
+                    onClick={() => setViewMode('grid')}
+                    className={`p-3 transition-all duration-300 transform ${
+                      viewMode === 'grid' 
+                        ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg scale-105' 
+                        : 'bg-white dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 hover:scale-105'
+                    }`}
+                    title={t('view.grid') || 'Vista en cuadrícula'}
+                  >
+                    <svg className="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
                     </svg>
                   </button>
-                  <button className="p-3 bg-white dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <button 
+                    onClick={() => setViewMode('list')}
+                    className={`p-3 transition-all duration-300 transform ${
+                      viewMode === 'list' 
+                        ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg scale-105' 
+                        : 'bg-white dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 hover:scale-105'
+                    }`}
+                    title={t('view.list') || 'Vista de lista'}
+                  >
+                    <svg className="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
                     </svg>
                   </button>
@@ -271,6 +288,7 @@ export default function CatalogPage({ params }: CatalogPageProps) {
             selectedCategory={selectedCategory}
             selectedLevel={selectedLevel}
             sortBy={sortBy}
+            viewMode={viewMode}
             onResultsChange={handleResultsChange}
             onClearSearch={handleClearSearch}
             onClearFilters={handleClearFilters}

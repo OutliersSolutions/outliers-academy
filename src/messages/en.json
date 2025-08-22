@@ -524,7 +524,9 @@
             "priceHigh": "Price: high to low"
         },
         "view": {
-            "label": "View as:"
+            "label": "View as:",
+            "grid": "Grid view",
+            "list": "List view"
         },
         "activeFilters": "Active filters:",
         "searchFilter": "Search",

@@ -746,4 +746,36 @@ body {
   .dark .text-muted-foreground {
     color: #a1a1aa !important; /* Keep original dark mode */
   }
-} 
+}
+
+/* Animaciones para el fondo de partículas */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px);
+  }
+  25% {
+    transform: translateY(-10px) translateX(5px);
+  }
+  50% {
+    transform: translateY(0px) translateX(-5px);
+  }
+  75% {
+    transform: translateY(10px) translateX(0px);
+  }
+}
+
+/* Animaciones adicionales para las partículas */
+@keyframes particle-float {
+  0%, 100% {
+    transform: translate(0, 0);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translate(10px, -10px);
+    opacity: 0.8;
+  }
+}
+
+.particles-bg {
+  animation: particle-float 15s ease-in-out infinite;
+}

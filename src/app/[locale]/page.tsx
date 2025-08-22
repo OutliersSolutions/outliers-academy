@@ -174,7 +174,23 @@ export default async function HomePage({
   return (
     <div>
       <section className="hero-gradient relative overflow-hidden">
-        <ParticlesBackground particleColor="#ff5a1f" opacity={0.6} particleSize={3} drawLines={false} density={4500} className="absolute inset-0 w-full h-full z-0 pointer-events-none" />
+        {/* Fondo de partículas mejorado con CSS */}
+        <div className="absolute inset-0 w-full h-full z-0 pointer-events-none">
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5"></div>
+          <div className="absolute inset-0" style={{
+            backgroundImage: `
+              radial-gradient(circle at 25% 25%, #ff5a1f20 1px, transparent 1px),
+              radial-gradient(circle at 75% 25%, #ff5a1f15 1px, transparent 1px),
+              radial-gradient(circle at 25% 75%, #ff5a1f10 1px, transparent 1px),
+              radial-gradient(circle at 75% 75%, #ff5a1f25 1px, transparent 1px),
+              radial-gradient(circle at 50% 50%, #ff5a1f08 2px, transparent 2px)
+            `,
+            backgroundSize: '40px 40px, 60px 60px, 80px 80px, 50px 50px, 100px 100px',
+            backgroundPosition: '0 0, 30px 30px, 10px 10px, 70px 70px, 25px 25px',
+            animation: 'float 20s ease-in-out infinite'
+          }}></div>
+        </div>
+        <ParticlesBackground particleColor="#ff5a1f" opacity={0.3} particleSize={2} drawLines={false} density={2000} className="absolute inset-0 w-full h-full z-1 pointer-events-none" />
         <div className="container mx-auto px-6 py-20 md:py-32 relative z-10">
           <div className="flex flex-col lg:flex-row items-center lg:items-start gap-12 lg:gap-16">
             <div className="flex-shrink-0 lg:w-1/2 lg:max-w-lg">

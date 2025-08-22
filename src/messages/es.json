@@ -524,7 +524,9 @@
             "priceHigh": "Precio: mayor a menor"
         },
         "view": {
-            "label": "Ver como:"
+            "label": "Ver como:",
+            "grid": "Vista en cuadrícula",
+            "list": "Vista de lista"
         },
         "activeFilters": "Filtros activos:",
         "searchFilter": "Búsqueda",
