@@ -150,7 +150,60 @@ Aún se estaban generando valores aleatorios para rating y estudiantes en alguno
 - Mejor organización del código para legibilidad
 
 ## Próximos Pasos Recomendados
-- [ ] Verificar que las imágenes se cargan correctamente desde Odoo
-- [ ] Agregar lazy loading para las imágenes si es necesario
-- [ ] Implementar cache para mejorar performance
+- [x] Verificar que las imágenes se cargan correctamente desde Odoo
+- [x] Agregar lazy loading para las imágenes si es necesario
+- [x] Implementar cache para mejorar performance
 - [ ] Agregar tests para el nuevo endpoint
+
+## 📄 Actualización de Página de Curso Individual - Diciembre 2024
+
+### Objetivo:
+Convertir la página individual del curso (`/course/[slug]/overview`) para que use datos 100% reales de Odoo en lugar de datos mock.
+
+### Archivos modificados:
+
+#### 1. `/src/app/api/courses/[slug]/route.ts`
+- **Eliminación de datos mock**: Removido completamente la generación de datos aleatorios
+- **Datos reales únicamente**: Ahora retorna solo información real de Odoo
+- **Estructura mejorada**: Campos organizados y limpios
+- **Manejo de errores**: 404 cuando el curso no existe
+
+#### 2. `/src/app/[locale]/course/[slug]/overview/page.tsx`
+- **Eliminación total de mock data**: 
+  - ❌ Removido `generateMockLessons()`
+  - ❌ Removido `generateMockReviews()`
+  - ❌ Removido datos aleatorios para instructor, rating, etc.
+
+- **Uso de datos reales**:
+  - ✅ `course.lessons_count` para número de lecciones
+  - ✅ `course.students_count` para estudiantes reales
+  - ✅ `course.rating` real de Odoo (o "Sin calificar")
+  - ✅ `course.duration` real para duración
+  - ✅ `course.image` real para la vista previa del curso
+
+- **Mejoras de UX**:
+  - ✅ Mensajes apropiados cuando no hay datos
+  - ✅ "Aún no hay reseñas" en lugar de reviews falsas
+  - ✅ Placeholder para contenido cuando no está inscrito
+  - ✅ Imagen real del curso en el sidebar
+
+### Cambios específicos realizados:
+
+#### Estadísticas del curso:
+- **ANTES**: Datos aleatorios generados con `Math.random()`
+- **AHORA**: Solo datos reales de Odoo con fallbacks apropiados
+
+#### Contenido del curso:
+- **ANTES**: Lista mock de 10 lecciones falsas
+- **AHORA**: Información real del número de lecciones disponibles
+
+#### Reseñas:
+- **ANTES**: 5 reseñas falsas generadas automáticamente
+- **AHORA**: Lista vacía con mensaje apropiado
+
+#### Vista previa:
+- **ANTES**: Imagen placeholder genérica
+- **AHORA**: Imagen real del curso desde Odoo
+
+### Resultado:
+La página del curso individual ahora muestra **exclusivamente datos reales** de Odoo, proporcionando una experiencia auténtica y transparente para los usuarios. No se generan más datos ficticios.

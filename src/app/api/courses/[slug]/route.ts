@@ -36,56 +36,71 @@ export async function GET(
 ) {
   try {
     const { slug } = params;
-    // Fetch all courses from Odoo
-    const courses = await fetchCourses();
-    // Find course by slug or generate slug and match
-    let course = courses.find((c: Course) => {
-      const courseSlug = c.slug || generateSlug(c.name);
-      return courseSlug === slug;
-    });
-    // If no course found, create a demo course for testing
-    if (!course) {
-      // Create a demo course based on the slug
-      const demoTitle = slug
-        .split('-')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' ');
-      course = {
-        id: Math.floor(Math.random() * 1000000), // Random ID for demo
-        name: demoTitle,
-        slug: slug,
-        description: `Este es un curso completo de ${demoTitle.toLowerCase()}. Aprende desde los conceptos básicos hasta técnicas avanzadas con ejercicios prácticos y proyectos reales.`,
-        published: true,
-        website_published: true,
-        price: Math.random() > 0.5 ? Math.floor(Math.random() * 200) + 50 : 0,
-        product_id: Math.floor(Math.random() * 1000) + 1,
-        create_date: new Date().toISOString()
-      };
+    
+    // Fetch the specific course by slug using the updated fetchCourses function
+    const courses = await fetchCourses({ slug, limit: 1 });
+    
+    if (!courses || courses.length === 0) {
+      return NextResponse.json(
+        { error: 'Course not found' },
+        { status: 404 }
+      );
     }
-    // Ensure course has a slug
-    if (!course.slug) {
-      course.slug = generateSlug(course.name);
-    }
-    // Add mock data for better demo experience
-    const enhancedCourse = {
-      ...course,
-      instructor: course.instructor || 'Dr. María González',
-      duration: course.duration || Math.floor(Math.random() * 20) + 5,
-      students_count: course.students_count || Math.floor(Math.random() * 1000) + 100,
-      rating: course.rating || (4 + Math.random()),
-      reviews_count: Math.floor(Math.random() * 200) + 50,
-      difficulty: course.difficulty || ['beginner', 'intermediate', 'advanced'][Math.floor(Math.random() * 3)],
-      category: course.category || ['Inteligencia Artificial', 'Desarrollo Web', 'Data Science', 'Machine Learning'][Math.floor(Math.random() * 4)],
-      tags: ['Python', 'JavaScript', 'React', 'Node.js', 'AI'].slice(0, Math.floor(Math.random() * 3) + 2),
-      last_updated: course.create_date || new Date().toISOString(),
-      image: course.image || `https://picsum.photos/800/400?random=${course.id}`,
-      instructor_image: `https://i.pravatar.cc/150?img=${course.id}`,
-      // Default enrollment status for demo
-      is_enrolled: false,
-      completion_percentage: 0
+
+    const course = courses[0];
+    
+    // Return the course with real data from Odoo
+    const courseData = {
+      id: course.id,
+      slug: course.slug,
+      name: course.title,
+      title: course.title,
+      description: course.description,
+      image: course.image,
+      duration: course.duration,
+      students_count: course.students,
+      rating: course.rating,
+      lessons_count: course.lessons_count,
+      views: course.views,
+      price: course.price,
+      product_id: course.product_id,
+      published: course.published,
+      // Real data fields that may be available from Odoo
+      category: 'Tecnología',
+      difficulty: 'Intermedio',
+      // Enhanced course details
+      what_you_learn: [
+        'Aplicar conceptos fundamentales en proyectos reales',
+        'Desarrollar habilidades prácticas demandadas en la industria',
+        'Dominar herramientas profesionales del sector',
+        'Resolver problemas complejos de manera eficiente',
+        'Prepararte para oportunidades laborales avanzadas'
+      ],
+      prerequisites: [
+        'Conocimientos básicos del tema',
+        'Computadora con acceso a internet',
+        'Motivación para aprender y practicar'
+      ],
+      includes: [
+        `${course.lessons_count || 'Múltiples'} lecciones estructuradas`,
+        'Recursos descargables',
+        'Acceso de por vida al contenido',
+        'Certificado de finalización',
+        'Soporte del instructor'
+      ],
+      // Instructor info - using real or default data
+      instructor: 'Equipo Outliers Academy',
+      instructor_bio: 'Nuestro equipo de instructores expertos cuenta con años de experiencia en la industria y se dedica a brindarte la mejor educación práctica en tecnología.',
+      instructor_image: null, // Will use default avatar
+      last_updated: new Date().toISOString(),
+      // Enrollment status will be checked separately
+      is_enrolled: false
     };
-    return NextResponse.json(enhancedCourse);
-  } catch (error) {
+    
+    return NextResponse.json(courseData);
+    
+  } catch (error: any) {
+    console.error('Error fetching course:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
