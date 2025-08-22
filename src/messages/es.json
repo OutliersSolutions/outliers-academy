@@ -591,7 +591,12 @@
         },
         "stats": {
             "students": "estudiantes",
-            "reviews": "reseñas"
+            "reviews": "reseñas",
+            "notAvailable": "N/A",
+            "noRating": "Sin calificar",
+            "hours": "horas",
+            "hour": "hora",
+            "minutes": "min"
         },
         "ui": {
             "successfulTransformation": "Transformación exitosa"

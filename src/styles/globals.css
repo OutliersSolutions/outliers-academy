@@ -557,6 +557,13 @@ body {
   overflow: hidden;
 } 
 
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+} 
+
 /* Toast Customization */
 .toast-custom {
   @apply transition-all duration-300 ease-out !important;

@@ -591,7 +591,12 @@
         },
         "stats": {
             "students": "students",
-            "reviews": "reviews"
+            "reviews": "reviews",
+            "notAvailable": "N/A",
+            "noRating": "No rating",
+            "hours": "hours",
+            "hour": "hour",
+            "minutes": "min"
         },
         "ui": {
             "successfulTransformation": "Successful transformation"

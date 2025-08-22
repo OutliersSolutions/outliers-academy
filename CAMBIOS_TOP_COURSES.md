@@ -105,6 +105,50 @@ Aún se estaban generando valores aleatorios para rating y estudiantes en alguno
 ✅ **Rating real**: Solo el valor de `rating_avg` de Odoo  
 ✅ **Estudiantes reales**: Solo el valor de `members_count` de Odoo
 
+## 🎨 Mejoras Visuales y UX - Diciembre 2024
+
+### Problemas identificados:
+- Cards con alturas inconsistentes cuando faltaban datos
+- Elementos que no se mostraban cuando no había información
+- Falta de traducciones para casos sin datos
+- Layout desalineado entre cards
+
+### Soluciones aplicadas:
+
+#### 1. **Traducciones agregadas**:
+```json
+// es.json y en.json
+"stats": {
+  "notAvailable": "N/A",
+  "noRating": "Sin calificar", 
+  "hours": "horas",
+  "hour": "hora",
+  "minutes": "min"
+}
+```
+
+#### 2. **Layout consistente**:
+- ✅ **Cards con altura mínima**: `min-h-[520px]` para uniformidad
+- ✅ **Flexbox layout**: Distribución automática del contenido
+- ✅ **Elementos siempre visibles**: Rating, duración y estudiantes se muestran siempre
+- ✅ **Títulos con altura fija**: `min-h-[3.5rem]` para alineación
+- ✅ **Descripciones con líneas fijas**: `line-clamp-3` y `min-h-[4rem]`
+
+#### 3. **Mejoras en datos faltantes**:
+- ✅ **Rating**: Muestra "N/A" cuando es 0 o no existe
+- ✅ **Duración**: Muestra "N/A" cuando es 0, formatea minutos/horas correctamente
+- ✅ **Estudiantes**: Muestra "0 estudiantes" en lugar de ocultar el elemento
+- ✅ **Nivel**: Usa valor por defecto "Intermedio" cuando no existe
+
+#### 4. **Mejor manejo de imágenes**:
+- ✅ **Error handling mejorado**: onError y onLoad events
+- ✅ **Fallback visual consistente**: Gradientes con inicial del curso
+- ✅ **Animaciones suaves**: Transiciones entre imagen real y fallback
+
+#### 5. **Funciones helper agregadas**:
+- `formatDuration()`: Formato inteligente de duración (horas/minutos)
+- Mejor organización del código para legibilidad
+
 ## Próximos Pasos Recomendados
 - [ ] Verificar que las imágenes se cargan correctamente desde Odoo
 - [ ] Agregar lazy loading para las imágenes si es necesario
