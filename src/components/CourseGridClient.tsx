@@ -75,8 +75,14 @@ export function CourseGridClient() {
             name: course.title || course.name || tDefaults('untitledCourse'),
             // Clean HTML tags from description
             description: (course.description || tDefaults('courseDescription'))
-              .replace(/<[^>]*>/g, '') // Remove HTML tags
+              .replace(/<[^>]*>/g, '') // Remove ALL HTML tags including spans
               .replace(/&nbsp;/g, ' ') // Replace &nbsp; with spaces
+              .replace(/&lt;/g, '<') // Replace HTML entities
+              .replace(/&gt;/g, '>') 
+              .replace(/&amp;/g, '&')
+              .replace(/&quot;/g, '"')
+              .replace(/&#39;/g, "'")
+              .replace(/\s+/g, ' ') // Replace multiple spaces with single space
               .trim(),
             // Use only real Odoo image URL - no fallback to avoid broken images
             image: course.image,

@@ -79,8 +79,14 @@ export function CourseSearch({
         ...course,
         name: course.title || course.name || tDefaults('untitledCourse'),
         description: (course.description || tDefaults('courseDescription'))
-          .replace(/<[^>]*>/g, '')
-          .replace(/&nbsp;/g, ' ')
+          .replace(/<[^>]*>/g, '') // Remove ALL HTML tags including spans
+          .replace(/&nbsp;/g, ' ') // Replace &nbsp; with spaces
+          .replace(/&lt;/g, '<') // Replace HTML entities
+          .replace(/&gt;/g, '>') 
+          .replace(/&amp;/g, '&')
+          .replace(/&quot;/g, '"')
+          .replace(/&#39;/g, "'")
+          .replace(/\s+/g, ' ') // Replace multiple spaces with single space
           .trim(),
         image: course.image,
         duration: course.duration || 0,
