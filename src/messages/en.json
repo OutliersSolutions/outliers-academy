@@ -858,6 +858,7 @@
         "selectPlan": "Select Plan",
         "contactSales": "Contact Sales",
         "comingSoon": "Coming Soon",
+        "configureStripe": "Configure STRIPE_PRICE_ID_{planId} in .env",
         "youSave": "You save ${amount} per month",
         "plans": {
             "starter": {

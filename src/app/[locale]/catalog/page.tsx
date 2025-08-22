@@ -30,18 +30,18 @@ export default function CatalogPage({ params }: CatalogPageProps) {
   ];
 
   const levels = [
-    { id: 'all', name: t('levels.all') || 'Todos los niveles' },
-    { id: 'beginner', name: t('levels.beginner') || 'Principiante' },
-    { id: 'intermediate', name: t('levels.intermediate') || 'Intermedio' },
-    { id: 'advanced', name: t('levels.advanced') || 'Avanzado' }
+    { id: 'all', name: t('levels.all') },
+    { id: 'beginner', name: t('levels.beginner') },
+    { id: 'intermediate', name: t('levels.intermediate') },
+    { id: 'advanced', name: t('levels.advanced') }
   ];
 
   const sortOptions = [
-    { id: 'popular', name: t('sort.popular') || 'Más populares' },
-    { id: 'newest', name: t('sort.newest') || 'Más recientes' },
-    { id: 'rating', name: t('sort.rating') || 'Mejor valorados' },
-    { id: 'price-low', name: t('sort.priceLow') || 'Precio: menor a mayor' },
-    { id: 'price-high', name: t('sort.priceHigh') || 'Precio: mayor a menor' }
+    { id: 'popular', name: t('sort.popular') },
+    { id: 'newest', name: t('sort.newest') },
+    { id: 'rating', name: t('sort.rating') },
+    { id: 'price-low', name: t('sort.priceLow') },
+    { id: 'price-high', name: t('sort.priceHigh') }
   ];
 
   // Course counts will be managed by CourseSearch component

@@ -167,7 +167,7 @@ export default function PricingPage() {
                       {t('comingSoon')}
                     </button>
                     <p className="text-xs text-muted-foreground mt-2 text-center">
-                      Configura STRIPE_PRICE_ID_{plan.id.toUpperCase()} en .env
+                      {t('configureStripe', {planId: plan.id.toUpperCase()})}
                     </p>
                   </div>
                 )}
@@ -197,7 +197,7 @@ export default function PricingPage() {
                     </div>
                     <div className="absolute -top-1 -right-1 w-6 h-6 bg-blue-500 rounded-full opacity-20 group-hover:opacity-30 transition-opacity"></div>
                   </div>
-                  <h3 className="font-bold text-lg text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                  <h3 className="font-heading font-bold text-lg text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                     {t('cta.contact.form.title')}
                   </h3>
                   <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
@@ -220,7 +220,7 @@ export default function PricingPage() {
                     </div>
                     <div className="absolute -top-1 -right-1 w-6 h-6 bg-green-500 rounded-full opacity-20 group-hover:opacity-30 transition-opacity"></div>
                   </div>
-                  <h3 className="font-bold text-lg text-gray-900 dark:text-white mb-2 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">
+                  <h3 className="font-heading font-bold text-lg text-gray-900 dark:text-white mb-2 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">
                     {t('cta.contact.email.title')}
                   </h3>
                   <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
@@ -243,7 +243,7 @@ export default function PricingPage() {
                     </div>
                     <div className="absolute -top-1 -right-1 w-6 h-6 bg-purple-500 rounded-full opacity-20 group-hover:opacity-30 transition-opacity"></div>
                   </div>
-                  <h3 className="font-bold text-lg text-gray-900 dark:text-white mb-2 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+                  <h3 className="font-heading font-bold text-lg text-gray-900 dark:text-white mb-2 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
                     {t('cta.contact.calendar.title')}
                   </h3>
                   <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
