@@ -236,10 +236,33 @@ export async function fetchCourses(options?: {slug?: string, limit?: number, sor
 }
 export async function fetchUserCourses(userId: number) {
   if (!isOdooConfigured) return [];
-  const domain = [['partner_ids', 'in', [userId]]];
-  const fields = ['id', 'name', 'completion', 'slides_count'];
-  const enrollments = await odooExecuteKw('slide.channel.partner', 'search_read', [domain], {fields});
-  return enrollments || [];
+  
+  // First get user enrollments
+  const enrollmentDomain = [['partner_ids', 'in', [userId]]];
+  const enrollmentFields = ['id', 'channel_id', 'completion'];
+  const enrollments = await odooExecuteKw('slide.channel.partner', 'search_read', [enrollmentDomain], {fields: enrollmentFields});
+  
+  if (!enrollments || enrollments.length === 0) return [];
+  
+  // Get channel IDs from enrollments
+  const channelIds = enrollments.map((e: any) => Array.isArray(e.channel_id) ? e.channel_id[0] : e.channel_id);
+  
+  // Get only published courses that user is enrolled in
+  const courseDomain = [['id', 'in', channelIds], ['website_published', '=', true]];
+  const courseFields = ['id', 'name', 'slides_count', 'total_time'];
+  const courses = await odooExecuteKw('slide.channel', 'search_read', [courseDomain], {fields: courseFields});
+  
+  // Merge enrollment data with course data
+  return courses?.map((course: any) => {
+    const enrollment = enrollments.find((e: any) => {
+      const channelId = Array.isArray(e.channel_id) ? e.channel_id[0] : e.channel_id;
+      return channelId === course.id;
+    });
+    return {
+      ...course,
+      completion: enrollment?.completion || 0
+    };
+  }) || [];
 }
 export async function checkCourseAccess(courseId: number, userId: number): Promise<boolean> {
   if (!isOdooConfigured) {
@@ -272,9 +295,9 @@ export async function checkCourseAccess(courseId: number, userId: number): Promi
           [['id', 'in', order.order_line]]
         ], {fields: ['product_id']});
 
-        // Get the course's product_id
+        // Get the course's product_id (only if published)
         const course = await odooExecuteKw('slide.channel', 'search_read', [
-          [['id', '=', courseId]]
+          [['id', '=', courseId], ['website_published', '=', true]]
         ], {fields: ['product_id']});
 
         if (course?.[0]?.product_id) {
