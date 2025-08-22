@@ -454,3 +454,44 @@ export async function getAcademyStats() {
     };
   }
 }
+
+// Get company contact information from Odoo
+export async function getCompanyInfo() {
+  if (!isOdooConfigured) {
+    // Return fallback data when Odoo is not configured
+    return {
+      email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'info@outliersacademy.com',
+      phone: process.env.NEXT_PUBLIC_CONTACT_PHONE || '+51999999999',
+      whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '51999999999',
+      calendly: process.env.NEXT_PUBLIC_CALENDLY_URL || 'https://calendly.com/outliersacademy'
+    };
+  }
+
+  try {
+    // Get the main company record
+    const companies = await odooExecuteKw('res.company', 'search_read', [[]], {
+      fields: ['name', 'email', 'phone', 'mobile', 'website'],
+      limit: 1
+    });
+
+    if (companies && companies.length > 0) {
+      const company = companies[0];
+      return {
+        email: company.email || process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'info@outliersacademy.com',
+        phone: company.phone || company.mobile || process.env.NEXT_PUBLIC_CONTACT_PHONE || '+51999999999',
+        whatsapp: company.mobile || process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '51999999999',
+        calendly: process.env.NEXT_PUBLIC_CALENDLY_URL || 'https://calendly.com/outliersacademy'
+      };
+    }
+  } catch (error) {
+    console.log('Error fetching company info from Odoo:', error);
+  }
+
+  // Fallback to environment variables
+  return {
+    email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'info@outliersacademy.com',
+    phone: process.env.NEXT_PUBLIC_CONTACT_PHONE || '+51999999999',
+    whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '51999999999',
+    calendly: process.env.NEXT_PUBLIC_CALENDLY_URL || 'https://calendly.com/outliersacademy'
+  };
+}

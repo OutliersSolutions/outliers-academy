@@ -21,6 +21,14 @@ export default function PricingPage() {
   const t = useTranslations('pricing');
   const successUrl = `${process.env.NEXT_PUBLIC_APP_URL || ''}/dashboard?payment=success`;
   const cancelUrl = `${process.env.NEXT_PUBLIC_APP_URL || ''}/pricing?payment=cancelled`;
+  
+  // Contact information from environment variables (can be fetched from Odoo via API if needed)
+  const contactInfo = {
+    email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'info@outliersacademy.com',
+    phone: process.env.NEXT_PUBLIC_CONTACT_PHONE || '+51999999999',
+    whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '51999999999',
+    calendly: process.env.NEXT_PUBLIC_CALENDLY_URL || 'https://calendly.com/outliersacademy'
+  };
 
   const plans: Plan[] = [
     {
@@ -193,7 +201,7 @@ export default function PricingPage() {
               </a>
               
               <a 
-                href="mailto:info@outliersacademy.com" 
+                href={`mailto:${contactInfo.email}`}
                 className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-600 hover:shadow-lg transition-all duration-300 group"
               >
                 <div className="w-12 h-12 bg-green-100 dark:bg-green-900/20 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
@@ -204,7 +212,7 @@ export default function PricingPage() {
               </a>
               
               <a 
-                href="https://calendly.com/outliersacademy" 
+                href={contactInfo.calendly}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-600 hover:shadow-lg transition-all duration-300 group"
@@ -222,7 +230,7 @@ export default function PricingPage() {
                 {t('cta.button')}
               </a>
               <a 
-                href="https://wa.me/51999999999" 
+                href={`https://wa.me/${contactInfo.whatsapp}`}
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="btn-outline flex items-center gap-2"
