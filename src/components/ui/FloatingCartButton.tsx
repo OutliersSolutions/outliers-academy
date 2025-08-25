@@ -136,20 +136,20 @@ export function FloatingCartButton({
 
   // Listen for cart updates
   useEffect(() => {
-    // Only fetch cart if user is authenticated
-    if (isAuthenticated) {
+    // Always try to fetch cart (API will handle authentication)
+    if (!authLoading) {
       fetchCart();
     }
 
     const handleCartUpdate = () => {
-      if (isAuthenticated) {
+      if (!authLoading) {
         fetchCart();
       }
     };
 
     window.addEventListener('cartUpdated', handleCartUpdate);
     return () => window.removeEventListener('cartUpdated', handleCartUpdate);
-  }, [isAuthenticated]);
+  }, [authLoading]);
 
   const handleClick = () => {
     setIsAnimating(true);
@@ -161,10 +161,7 @@ export function FloatingCartButton({
     }, 300);
   };
 
-  // Don't show if user is not authenticated or cart is empty
-  if (!authLoading && (!isAuthenticated || cart.itemCount === 0)) {
-    return null;
-  }
+  // Always show the cart button - authentication is handled by individual actions
 
   return (
     <AnimatePresence>
@@ -172,7 +169,7 @@ export function FloatingCartButton({
         <>
           {/* Cart Button */}
           <motion.div 
-            className={`fixed bottom-6 left-6 z-50 ${className}`}
+            className={`fixed bottom-6 left-6 z-[60] ${className}`}
             initial={{ 
               y: 60, 
               opacity: 0, 
@@ -219,8 +216,8 @@ export function FloatingCartButton({
             >
               <CartIcon className="w-8 h-8 text-white drop-shadow-sm" />
               
-              {/* Cart item count badge */}
-              {cart.itemCount > 0 && (
+              {/* Cart item count badge - only show for authenticated users with items */}
+              {isAuthenticated && cart.itemCount > 0 && (
                 <Badge 
                   variant="destructive" 
                   className="absolute -top-2 -right-2 h-6 w-6 rounded-full p-0 flex items-center justify-center text-xs font-bold"
@@ -249,7 +246,7 @@ export function FloatingCartButton({
           <AnimatePresence>
             {isOpen && (
               <motion.div 
-                className="fixed inset-0 z-40 bg-black bg-opacity-50"
+                className="fixed inset-0 z-[55] bg-black bg-opacity-50"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -267,7 +264,9 @@ export function FloatingCartButton({
                   <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-2">
                       <CartIcon className="h-5 w-5" />
-                      <h2 className="text-lg font-semibold">Carrito ({cart.itemCount})</h2>
+                      <h2 className="text-lg font-semibold">
+                        {!isAuthenticated ? 'Carrito' : `Carrito ${cart.itemCount > 0 ? `(${cart.itemCount})` : ''}`}
+                      </h2>
                     </div>
                     <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)}>
                       <X className="h-4 w-4" />
@@ -277,7 +276,27 @@ export function FloatingCartButton({
                   {cart.items.length === 0 ? (
                     <div className="text-center py-8">
                       <CartIcon className="mx-auto h-12 w-12 text-gray-400 mb-4" />
-                      <p className="text-gray-500">Tu carrito está vacío</p>
+                      {!isAuthenticated ? (
+                        <>
+                          <p className="text-gray-500 mb-2">Inicia sesión para ver tu carrito</p>
+                          <Button 
+                            onClick={() => {
+                              setIsOpen(false);
+                              window.location.href = `/${locale}/login`;
+                            }}
+                            className="mt-2"
+                          >
+                            Iniciar Sesión
+                          </Button>
+                        </>
+                      ) : (
+                        <>
+                          <p className="text-gray-500 mb-2">Tu carrito está vacío</p>
+                          <p className="text-sm text-gray-400">
+                            Explora nuestros cursos y añade los que te interesen
+                          </p>
+                        </>
+                      )}
                     </div>
                   ) : (
                     <>

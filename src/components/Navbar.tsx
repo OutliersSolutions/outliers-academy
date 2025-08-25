@@ -22,6 +22,7 @@ import { SearchOverlay } from "@/components/ui/SearchOverlay";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { LoaderInline } from "@/components/ui/loader";
 import { useNewAuth } from "@/components/providers/AuthProvider";
+import { ShoppingCart } from "@/components/ShoppingCart";
 
 export function Navbar() {
   const pathname = usePathname();
@@ -219,6 +220,9 @@ export function Navbar() {
                     </div>
                   )}
                 </div>
+
+                {/* Shopping Cart - Desktop Only */}
+                <ShoppingCart />
               </div>
 
               {/* Auth Buttons - Desktop Only */}

@@ -5,23 +5,24 @@ import { Toaster } from 'sonner';
 export function ToastProvider() {
   return (
     <Toaster
-      position="bottom-left"
+      position="top-center"
       richColors
       closeButton
       expand={true}
-      offset={16}
+      offset={20}
+      dir="ltr"
       toastOptions={{
-        duration: 4000,
+        duration: 3000,
         style: {
-          background: 'hsl(var(--card))',
-          color: 'hsl(var(--card-foreground))',
+          background: 'hsl(var(--background))',
+          color: 'hsl(var(--foreground))',
           border: '1px solid hsl(var(--border))',
-          borderRadius: '0.75rem',
+          borderRadius: '0.5rem',
           fontFamily: 'var(--font-inter), system-ui, -apple-system, sans-serif',
           fontSize: '0.875rem',
-          fontWeight: '500',
-          boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
-          backdropFilter: 'blur(8px)',
+          fontWeight: '400',
+          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+          padding: '12px 16px',
         },
         className: 'toast-custom',
       }}

@@ -5,7 +5,7 @@ import { Sun, Menu, X, Languages, ChevronDown, Moon } from "lucide-react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
 import { useTranslations } from "next-intl";
-import { ShoppingCart } from "@/components/ShoppingCart";
+import { CartLink } from "@/components/CartLink";
 
 export const Header = () => {
     const { theme, setTheme } = useTheme();
@@ -155,7 +155,7 @@ export const Header = () => {
                     </div>
 
                     {/* Shopping Cart */}
-                    <ShoppingCart />
+                    <CartLink />
 
                     {/* Theme Toggle */}
                     <button
@@ -175,13 +175,19 @@ export const Header = () => {
                     </Link>
                 </div>
 
-                {/* Mobile Menu Button */}
-                <button
-                    onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                    className="md:hidden p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"
-                >
-                    {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-                </button>
+                {/* Mobile Actions */}
+                <div className="md:hidden flex items-center gap-2">
+                    {/* Mobile Cart */}
+                    <CartLink />
+                    
+                    {/* Mobile Menu Button */}
+                    <button
+                        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                        className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"
+                    >
+                        {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+                    </button>
+                </div>
 
                 {/* Mobile Menu */}
                 {mobileMenuOpen && (
