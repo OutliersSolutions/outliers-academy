@@ -22,7 +22,7 @@ import { SearchOverlay } from "@/components/ui/SearchOverlay";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { LoaderInline } from "@/components/ui/loader";
 import { useNewAuth } from "@/components/providers/AuthProvider";
-import { ShoppingCart } from "@/components/ShoppingCart";
+import { CartLink } from "@/components/CartLink";
 
 export function Navbar() {
   const pathname = usePathname();
@@ -222,7 +222,7 @@ export function Navbar() {
                 </div>
 
                 {/* Shopping Cart - Desktop Only */}
-                <ShoppingCart />
+                <CartLink />
               </div>
 
               {/* Auth Buttons - Desktop Only */}
@@ -304,8 +304,13 @@ export function Navbar() {
                 </div>
               )}
 
-              {/* Mobile Menu Button */}
-              <div className="block lg:hidden ml-2" ref={mobileMenuRef}>
+              {/* Mobile Actions */}
+              <div className="flex items-center gap-2 lg:hidden">
+                {/* Mobile Cart */}
+                <CartLink />
+                
+                {/* Mobile Menu Button */}
+                <div ref={mobileMenuRef}>
                 <motion.button
                   onClick={() => setMobileMenuOpen(prev => !prev)}
                   className="flex items-center justify-center p-3 w-11 h-11 text-solarized-base01 dark:text-gray-300 hover:text-primary dark:hover:text-white hover:bg-solarized-base2/50 dark:hover:bg-gray-800/50 rounded-xl transition-all duration-200 relative z-10"
@@ -564,6 +569,7 @@ export function Navbar() {
                     </motion.div>
                   )}
                 </AnimatePresence>
+              </div>
               </div>
             </div>
           </div>
